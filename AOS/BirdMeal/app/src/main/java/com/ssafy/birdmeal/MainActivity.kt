@@ -1,8 +1,10 @@
 package com.ssafy.birdmeal
 
 import android.content.SharedPreferences
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,14 +24,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun initNavigation(){
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_main) as NavHostFragment
         navController = navHostFragment.navController
+        binding.bottomNav.apply {
+            setupWithNavController(navController)
+            background = null
+        }
 
-        // 바텀 네비게이션 보이는 화면 구분
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.HomeFragment){
-
+            if(destination.id == R.id.homeFragment){ // 홈 화면에서 바텀 네비 미표시
+                if(binding.bottomNav.visibility == View.VISIBLE){
+                    binding.bottomNav.visibility = View.GONE
+                }
             }
-            else {
-
+            else { // 홈 화면 벗어나면 바텀 네비 표시
+                if(binding.bottomNav.visibility == View.GONE){
+                    binding.bottomNav.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -37,7 +46,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     // 홈 화면에서 뒤로가기 2번 클릭 시 앱 종료
     var waitTime = 0L
     override fun onBackPressed() {
-        if(navController.currentDestination?.id == R.id.HomeFragment){
+        if(navController.currentDestination?.id == R.id.homeFragment){
             if(System.currentTimeMillis() - waitTime >= 1500){
                 waitTime = System.currentTimeMillis()
                 showToast("뒤로가기 버튼을 누르면 종료됩니다.")

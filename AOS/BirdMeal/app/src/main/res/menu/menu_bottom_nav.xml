@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/HomeFragment"
-        android:icon="@drawable/ic_launcher_foreground"
+
+    <item android:id="@+id/donationFragment"
+        android:icon="@drawable/donate_24"
+        android:title=""
+        android:enabled="true"/>
+
+    <item android:id="@+id/categoryFragment"
+        android:icon="@drawable/market_24"
+        android:title=""
+        android:enabled="true"/>
+
+    <item android:id="@+id/myPageFragment"
+        android:icon="@drawable/my_page_24"
         android:title=""
         android:enabled="true"/>
 </menu>
