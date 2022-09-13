@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/HomeFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title=""
+        android:enabled="true"/>
+</menu>

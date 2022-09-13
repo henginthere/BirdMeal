@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_login"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ssafy.gibuntake.view.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_joinFragment"
+            app:destination="@id/joinFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_guideFragment"
+            app:destination="@id/guideFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/joinFragment"
+        android:name="com.ssafy.gibuntake.view.login.join.JoinFragment"
+        android:label="JoinFragment"
+        tools:layout="@layout/fragment_join">
+        <action
+            android:id="@+id/action_joinFragment_to_cardFragment"
+            app:destination="@id/cardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guideFragment"
+        android:name="com.ssafy.gibuntake.view.login.guide.GuideFragment"
+        android:label="fragment_guide"
+        tools:layout="@layout/fragment_guide" />
+    <fragment
+        android:id="@+id/cardFragment"
+        android:name="com.ssafy.gibuntake.view.login.join.card.CardFragment"
+        android:label="CardFragment"
+        tools:layout="@layout/fragment_card"/>
+
+</navigation>
