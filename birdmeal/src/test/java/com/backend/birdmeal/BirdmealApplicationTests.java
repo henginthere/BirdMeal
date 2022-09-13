@@ -1,4 +1,4 @@
-package java.backend.birdmeal;
+package com.backend.birdmeal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
