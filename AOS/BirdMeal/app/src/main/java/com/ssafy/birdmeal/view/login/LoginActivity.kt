@@ -17,7 +17,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     lateinit var sharedPref: SharedPreferences
 
     override fun init() {
-        autoLogin()
+//        autoLogin()
     }
 
     private fun autoLogin(){ // 자동 로그인
