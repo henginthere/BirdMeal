@@ -13,11 +13,38 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tv_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="30dp"
-            android:text="홈 화면 입니다."/>
+            android:text="홈 화면 입니다."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_show_donate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기부"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_main_color"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_main"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_show_market"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="마켓"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_main_color"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_show_donate"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
