@@ -7,4 +7,5 @@ public interface SellerInfoRepository extends JpaRepository<SellerEntity, Long> 
 
     SellerEntity findBySellerSeq(long sellerSeq);
 
+
 }
