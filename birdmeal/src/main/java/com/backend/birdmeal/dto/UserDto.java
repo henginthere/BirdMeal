@@ -1,4 +1,4 @@
-package com.backend.birdmeal.dto.user;
+package com.backend.birdmeal.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
