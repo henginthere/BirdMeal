@@ -5,7 +5,6 @@ pipeline {
             steps {
                 dir ('./birdmeal') {
                     sh 'chmod +x gradlew'
-                    sh './gradlew clean bootJar'
                 }
             }
         }
