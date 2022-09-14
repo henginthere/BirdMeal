@@ -4,7 +4,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/birdmeal?serverTimezone=Asia/Seoul
     username: root
-    password: 1234
+    password: hy1234
 
   # jpa 설정
   jpa:
