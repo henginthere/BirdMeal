@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.CategoryDto
+import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
 import com.ssafy.birdmeal.utils.SingleLiveEvent
 import com.ssafy.birdmeal.utils.Result
@@ -25,13 +26,18 @@ class MarketViewModel @Inject constructor(
 //    val categoryList get() = _categoryList.asStateFlow()
 
     val categoryList : List<CategoryDto>
-        = listOf(CategoryDto(1, "육류", "a"),
-            CategoryDto(2, "양식", "b"),
-            CategoryDto(3, "중식", "c"),
-            CategoryDto(4, "분식", "d"),
-            CategoryDto(5, "한식", "e"),
-            CategoryDto(6, "햄버거", "f"),
-        )
+            = listOf(
+        CategoryDto(1, "육류", "a"),
+        CategoryDto(2, "양식", "b"),
+        CategoryDto(3, "중식", "c"),
+        CategoryDto(4, "분식", "d"),
+        CategoryDto(5, "한식", "e"),
+        CategoryDto(6, "햄버거", "f"),
+    )
+
+    private val _productList : MutableStateFlow<Result<BaseResponse<List<ProductDto>>>>
+        = MutableStateFlow(Result.Uninitialized)
+    val productList get() = _productList.asStateFlow()
 
     private val _errorMsgEvent = SingleLiveEvent<String>()
     val errorMsgEvent get() = _errorMsgEvent
@@ -58,7 +64,7 @@ class MarketViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getProductList(categorySeq).collectLatest {
                 if(it is Result.Success){ // 값을 제대로 받아옴
-                    // _categoryList.value = it
+                     _productList.value = it
                 }
                 else if(it is Result.Fail){ // 값을 제대로 받아오지 못함
                     _errorMsgEvent.postValue(it.data.msg)

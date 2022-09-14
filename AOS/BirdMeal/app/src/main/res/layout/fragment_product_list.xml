@@ -5,7 +5,9 @@
     tools:context=".view.market.product.ProductListFragment">
 
     <data>
-
+        <variable
+            name="marketVM"
+            type="com.ssafy.birdmeal.view.market.MarketViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,6 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2" />
+            app:spanCount="2"
+            submitList="@{marketVM.productList}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
