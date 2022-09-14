@@ -7,4 +7,6 @@
 
     <dimen name="toolbar_margin">8dp</dimen>
     <dimen name="toolbar_title">18sp</dimen>
+
+    <dimen name="categoryImg">80dp</dimen>
 </resources>
