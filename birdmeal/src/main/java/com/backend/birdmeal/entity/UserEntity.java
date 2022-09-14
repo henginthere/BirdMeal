@@ -1,4 +1,4 @@
-package com.backend.birdmeal.entity.user;
+package com.backend.birdmeal.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -61,14 +61,12 @@ public class UserEntity implements Serializable {
     private String userUpdateDate;
 
 
-//
-//    // 회원 권한
-//    @ManyToMany // user와 authority 다대다 관계를 일대다, 다대일 관계의 조인테이블로 정의
-//    @JoinTable(
-//            name = "t_user_authority",
-//            joinColumns = {@JoinColumn(name = "id", referencedColumnName = "user_seq")},
-//            inverseJoinColumns = {@JoinColumn(name = "user_role", referencedColumnName = "user_role")})
-//    private Set<Authority> authorities;
-
+    // 회원 권한
+    @ManyToMany // user와 authority 다대다 관계를 일대다, 다대일 관계의 조인테이블로 정의
+    @JoinTable(
+            name = "t_user_authority",
+            joinColumns = {@JoinColumn(name = "user_seq", referencedColumnName = "user_seq")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
 }

@@ -1,4 +1,4 @@
-package com.backend.birdmeal.entity.user;
+package com.backend.birdmeal.entity;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_user_authority")
+@Table(name = "authority")
 @Getter
 @Setter
 @Builder
@@ -16,6 +16,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Authority {
     @Id
-    @Column(name = "user_role", length = 20)
-    private String userRole;
+    @Column(name = "authority_name", length = 20)
+    private String authorityName;
 }
