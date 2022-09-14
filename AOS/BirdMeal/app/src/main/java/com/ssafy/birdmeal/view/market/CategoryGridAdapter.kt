@@ -5,12 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.birdmeal.databinding.ItemCategoryBinding
+import com.ssafy.birdmeal.databinding.ItemCategoryGridBinding
 import com.ssafy.birdmeal.model.dto.CategoryDto
 
-class CategoryAdapter : ListAdapter<CategoryDto, CategoryAdapter.ViewHolder>(diffUtil){
+class CategoryGridAdapter(private val listener: CategoryListener)
+    : ListAdapter<CategoryDto, CategoryGridAdapter.ViewHolder>(diffUtil){
 
-    inner class ViewHolder(private val binding : ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding : ItemCategoryGridBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClick(getItem(adapterPosition).categorySeq)
+            }
+        }
 
         fun bind(item : CategoryDto){
             binding.category = item
@@ -19,7 +26,7 @@ class CategoryAdapter : ListAdapter<CategoryDto, CategoryAdapter.ViewHolder>(dif
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCategoryGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

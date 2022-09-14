@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryViewModel @Inject constructor(
+class MarketViewModel @Inject constructor(
     private val productRepository: ProductRepository
 ): ViewModel(){
 
@@ -33,13 +33,30 @@ class CategoryViewModel @Inject constructor(
             CategoryDto(6, "햄버거", "f"),
         )
 
-
     private val _errorMsgEvent = SingleLiveEvent<String>()
     val errorMsgEvent get() = _errorMsgEvent
 
+    // 카테고리 목록 조회
     fun getCategoryList(){
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getCategoryList().collectLatest {
+                if(it is Result.Success){ // 값을 제대로 받아옴
+                    // _categoryList.value = it
+                }
+                else if(it is Result.Fail){ // 값을 제대로 받아오지 못함
+                    _errorMsgEvent.postValue(it.data.msg)
+                }
+                else if(it is Result.Error){ // 서버 통신 자체 오류
+                    _errorMsgEvent.postValue("상품 목록 조회 중 통신에 실패했습니다.")
+                }
+            }
+        }
+    }
+
+    // 카테고리 내 상품 목록 조회
+    fun getProductList(categorySeq: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            productRepository.getProductList(categorySeq).collectLatest {
                 if(it is Result.Success){ // 값을 제대로 받아옴
                     // _categoryList.value = it
                 }

@@ -32,7 +32,7 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_category"
+            android:id="@+id/rv_category_grid"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -43,6 +43,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/item_category"/>
+            tools:listitem="@layout/item_category_grid"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

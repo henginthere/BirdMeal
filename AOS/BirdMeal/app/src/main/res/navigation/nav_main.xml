@@ -59,6 +59,10 @@
         <action
             android:id="@+id/action_productListFragment_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <argument
+            android:name="categorySeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
