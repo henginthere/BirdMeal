@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
-    private val userVM by viewModels<LoginViewModel>()
+    private val loginViewModel by activityViewModels<LoginViewModel>()
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun init() {
@@ -67,16 +67,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     private fun initViewModelCallBack() {
-        userVM.errMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.errMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
         }
-        userVM.loginMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.loginMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 홈 화면 이동
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
-        userVM.joinMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.joinMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 회원가입 화면 이동
             findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
@@ -107,7 +107,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             val email = account.email!!
             Log.d(TAG, "accessToken: $accessToken")
             Log.d(TAG, "email: $email")
-            userVM.googleLogin(accessToken, email)
+            loginViewModel.googleLogin(accessToken, email)
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
