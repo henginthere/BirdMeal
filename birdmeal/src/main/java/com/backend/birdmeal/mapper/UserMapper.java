@@ -1,11 +1,10 @@
-package com.backend.birdmeal.mapper.user;
+package com.backend.birdmeal.mapper;
 
-import com.backend.birdmeal.dto.user.UserDto;
+import com.backend.birdmeal.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.backend.birdmeal.entity.user.UserEntity;
-import com.backend.birdmeal.mapper.StructMapper;
+import com.backend.birdmeal.entity.UserEntity;
 
 @Mapper
 public interface UserMapper extends StructMapper<UserDto, UserEntity> {

@@ -1,4 +1,4 @@
-package com.backend.birdmeal.entity.user;
+package com.backend.birdmeal.entity;
 
 import lombok.*;
 
