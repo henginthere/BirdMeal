@@ -1,4 +1,4 @@
-package com.backend.birdmeal.controller.user;
+package com.backend.birdmeal.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
