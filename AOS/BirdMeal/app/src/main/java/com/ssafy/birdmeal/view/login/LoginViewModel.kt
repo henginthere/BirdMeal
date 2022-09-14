@@ -1,16 +1,15 @@
 package com.ssafy.birdmeal.view.login
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.repository.Oauth2Repository
-import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +30,9 @@ class LoginViewModel @Inject constructor(
 
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
+
+    private val _successMsgEvent = SingleLiveEvent<String>()
+    val successMsgEvent get() = _successMsgEvent
 
     fun googleLogin(code: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -65,4 +67,30 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    // 회원가입 요청
+    fun join(userRole: String) = viewModelScope.launch(Dispatchers.IO) {
+        val nickname = email.value.split("@")[0]
+        val request = JoinRequest(email.value, nickname, userRole)
+
+        /*
+        테스트용 코드
+         */
+        _successMsgEvent.postValue("회원 가입 성공")
+
+        /*
+        oauth2Repository.join(request).collectLatest {
+            Log.d(TAG, "join response: $it")
+            if (it is Result.Success) {
+                Log.d(TAG, "join data: ${it.data}")
+
+                // 회원가입 성공한 경우
+                if (it.data.success) {
+                    _successMsgEvent.postValue("회원 가입 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+         */
+    }
 }

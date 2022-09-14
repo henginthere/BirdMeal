@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.repository
 
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.datasource.remote.Oauth2RemoteDataSource
+import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.response.OauthResponse
 import com.ssafy.birdmeal.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -22,5 +23,11 @@ class Oauth2Repository @Inject constructor(
         }
     }.catch { e ->
         emit(Result.Error(e))
+    }
+
+    fun join(request: JoinRequest): Flow<Result<BaseResponse<Boolean>>> = flow {
+        oauth2RemoteDataSource.join(request).collect {
+            emit(Result.Success(it))
+        }
     }
 }

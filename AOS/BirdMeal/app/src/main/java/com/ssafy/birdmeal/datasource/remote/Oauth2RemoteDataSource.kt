@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.datasource.remote
 
 import com.ssafy.birdmeal.api.Oauth2Api
 import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.response.OauthResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,5 +15,9 @@ class Oauth2RemoteDataSource @Inject constructor(
 ) {
     fun googleLogin(code: String): Flow<BaseResponse<OauthResponse>> = flow {
         emit(oauth2Api.googleLogin(code))
+    }
+
+    fun join(request: JoinRequest): Flow<BaseResponse<Boolean>> = flow {
+        emit(oauth2Api.join(request))
     }
 }
