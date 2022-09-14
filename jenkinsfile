@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Gradle build') { 
             steps {
-                dir ('birdmeal') {
+                dir ('./birdmeal') {
                     sh 'chmod +x gradlew'
                     sh './gradlew clean bootJar'
                 }
