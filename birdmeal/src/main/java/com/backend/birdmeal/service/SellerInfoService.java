@@ -16,9 +16,9 @@ import javax.transaction.Transactional;
 public class SellerInfoService {
 
     private final SellerInfoRepository sellerInfoRepository;
-    
+
     // 판매자 정보 요청
-    public SellerDto getSellerInfo(long sellerSeq){
+    public SellerDto getSellerInfo(long sellerSeq) {
         // db에서 찾기
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerSeq);
 
@@ -30,9 +30,9 @@ public class SellerInfoService {
 
 
     // 판매자 정보 등록
-    public boolean setSellerInfo(SellerDto sellerDto){
+    public boolean setSellerInfo(SellerDto sellerDto) {
         // 판매자 정보가 없으면 false
-        if(sellerDto == null) return false;
+        if (sellerDto == null) return false;
 
         // Dto -> Entity
         SellerEntity sellerEntity = SellerMapper.MAPPER.toEntity(sellerDto);
@@ -44,9 +44,9 @@ public class SellerInfoService {
     }
 
     // 판매자 정보 수정
-    public boolean updateSellerInfo(SellerUpdateDto sellerUpdateDto){
+    public boolean updateSellerInfo(SellerUpdateDto sellerUpdateDto) {
         // 판매자 정보가 없으면 false
-        if(sellerUpdateDto == null) return false;
+        if (sellerUpdateDto == null) return false;
 
         // 먼저 SellerSeq로 Seller 정보 가져오기
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerUpdateDto.getSellerSeq());
@@ -61,5 +61,20 @@ public class SellerInfoService {
         sellerInfoRepository.save(sellerEntity);
 
         return true;
+    }
+
+    // 판매자 정보 유무 확인
+    public boolean checkSellerInfo(long sellerSeq) {
+        // db에서 판매자 정보 가져오기
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerSeq);
+
+        // 판매자 정보가 있으면 true, 없으면 false
+        String sellerInfo = sellerEntity.getSellerInfo();
+        
+        if (sellerInfo == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

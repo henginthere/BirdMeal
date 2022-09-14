@@ -72,5 +72,23 @@ public class SellerInfoController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    /**
+     * 판매자 정보 유무 확인
+     *
+     * @param sellerSeq
+     * @return Object
+     */
 
+    @ApiOperation(value="판매자 정보 유무 확인",response = Object.class)
+    @GetMapping("/info/{seller-seq}")
+    public ResponseEntity<?> checkSellerInfo(@PathVariable("seller-seq") long sellerSeq){
+        boolean success = sellerInfoService.checkSellerInfo(sellerSeq);
+        ResponseFrame<?> res;
+        if(success) {
+            res = ResponseFrame.of("true", "판매자 정보가 있습니다.");
+        }else{
+            res = ResponseFrame.of("false", "판매자 정보가 없습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }
