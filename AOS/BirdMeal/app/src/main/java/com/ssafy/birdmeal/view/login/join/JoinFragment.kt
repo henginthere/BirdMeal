@@ -24,13 +24,13 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     private fun initClickListener() = with(binding) {
 
         // 일반 회원가입
-        containerGeneral.setOnClickListener {
+        layoutGeneral.setOnClickListener {
             // 회원가입 api 호출
             loginViewModel.join("buyer")
         }
 
         // 아동 회원가입입
-        containerChild.setOnClickListener {
+        layoutChild.setOnClickListener {
             // 카드 인증 페이지 이동
             findNavController().navigate(R.id.action_joinFragment_to_cardFragment)
         }
