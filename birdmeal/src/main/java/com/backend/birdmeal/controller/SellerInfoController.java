@@ -1,6 +1,5 @@
 package com.backend.birdmeal.controller;
 
-import com.backend.birdmeal.dto.CategoryDto;
 import com.backend.birdmeal.dto.SellerDto;
 import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -20,6 +19,24 @@ public class SellerInfoController {
     private final SellerInfoService sellerInfoService;
 
     /**
+     * 판매자 정보 요청
+     *
+     * @param sellerSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="판매자 정보 요청",response = Object.class)
+    @GetMapping("/{seller-seq}")
+    public ResponseEntity<?> getSellerInfo(@PathVariable("seller-seq") long sellerSeq){
+        SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
+
+        ResponseFrame<?> res = ResponseFrame.of(sellerDto,"판매자 정보 요청을 성공했습니다.");
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
+    /**
      * 판매자 정보 등록
      *
      * @param sellerDto
@@ -36,21 +53,6 @@ public class SellerInfoController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    /**
-     * 판매자 정보 요청
-     *
-     * @param sellerSeq
-     * @return Object
-     */
 
-    @ApiOperation(value="판매자 정보 요청",response = Object.class)
-    @GetMapping("/{seller-seq}")
-    public ResponseEntity<?> getSellerInfo(@PathVariable("seller-seq") long sellerSeq){
-        SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
-
-        ResponseFrame<?> res = ResponseFrame.of(sellerDto,"판매자 정보 요청을 성공했습니다.");
-
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
 
 }

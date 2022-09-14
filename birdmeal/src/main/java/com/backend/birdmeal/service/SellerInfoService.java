@@ -27,7 +27,8 @@ public class SellerInfoService {
 
         return sellerDto;
     }
-    
+
+
     // 판매자 정보 등록
     public boolean setSellerInfo(SellerDto sellerDto){
         // 판매자 정보가 없으면 false
