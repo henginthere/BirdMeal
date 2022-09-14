@@ -34,9 +34,17 @@ class LoginViewModel @Inject constructor(
 
     fun googleLogin(code: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            /*
+            테스트용 코드
+             */
+            _email.value = email
+            _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
+
 //            oauth2Repository.googleLogin(code).collectLatest {
-//                Log.d(TAG, "googleLogin: $it")
+//                Log.d(TAG, "googleLogin response: $it")
 //                if (it is Result.Success) {
+//                    Log.d(TAG, "googleLogin data: ${it.data}")
+//
 //                    // 등록 되지 않은 사용자면 회원가입으로
 //                    if (!it.data.success) {
 //                        _email.value = email

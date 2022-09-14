@@ -6,6 +6,6 @@ import retrofit2.http.Query
 
 interface Oauth2Api {
 
-    @GET("login/oauth2/code/google")
+    @GET("user/login")
     suspend fun googleLogin(@Query("code") code: String): OauthResponse
 }
