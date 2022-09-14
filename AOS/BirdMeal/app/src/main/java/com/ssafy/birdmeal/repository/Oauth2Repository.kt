@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.repository
 
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.datasource.remote.Oauth2RemoteDataSource
+import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.response.OauthResponse
 import com.ssafy.birdmeal.utils.Result
@@ -33,6 +34,12 @@ class Oauth2Repository @Inject constructor(
 
     fun checkCard(cardNumber: String): Flow<Result<BaseResponse<Boolean>>> = flow {
         oauth2RemoteDataSource.checkCard(cardNumber).collect {
+            emit(Result.Success(it))
+        }
+    }
+
+    fun getUserInfo(userSeq: Int): Flow<Result<BaseResponse<UserDto>>> = flow {
+        oauth2RemoteDataSource.getUserInfo(userSeq).collect {
             emit(Result.Success(it))
         }
     }

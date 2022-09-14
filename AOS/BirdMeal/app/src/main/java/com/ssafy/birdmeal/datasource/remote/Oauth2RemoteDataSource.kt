@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.datasource.remote
 
 import com.ssafy.birdmeal.api.Oauth2Api
 import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.response.OauthResponse
 import kotlinx.coroutines.flow.Flow
@@ -24,5 +25,9 @@ class Oauth2RemoteDataSource @Inject constructor(
 
     fun checkCard(cardNumber: String): Flow<BaseResponse<Boolean>> = flow {
         emit(oauth2Api.checkCard(cardNumber))
+    }
+
+    fun getUserInfo(userSeq: Int): Flow<BaseResponse<UserDto>> = flow {
+        emit(oauth2Api.getUserInfo(userSeq))
     }
 }
