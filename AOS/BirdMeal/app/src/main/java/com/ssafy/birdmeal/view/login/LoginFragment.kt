@@ -25,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
-    private val loginVM by activityViewModels<LoginViewModel>()
+    private val loginViewModel by activityViewModels<LoginViewModel>()
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun init() {
@@ -67,16 +67,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     }
 
     private fun initViewModelCallBack() {
-        loginVM.errMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.errMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
         }
-        loginVM.loginMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.loginMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 홈 화면 이동
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
-        loginVM.joinMsgEvent.observe(viewLifecycleOwner) {
+        loginViewModel.joinMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 회원가입 화면 이동
             findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
@@ -107,7 +107,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             val email = account.email!!
             Log.d(TAG, "accessToken: $accessToken")
             Log.d(TAG, "email: $email")
-            loginVM.googleLogin(accessToken, email)
+            loginViewModel.googleLogin(accessToken, email)
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
