@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ssafy.birdmeal.api.Oauth2Api
+import com.ssafy.birdmeal.api.ProductApi
 import com.ssafy.birdmeal.utils.AccessTokenInterceptor
 import com.ssafy.birdmeal.utils.BASE_URL
 import dagger.Module
@@ -48,7 +49,15 @@ object RemoteDataModule {
     // Oauth2Api DI
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit) : Oauth2Api {
+    fun provideOauthApi(retrofit: Retrofit) : Oauth2Api {
         return retrofit.create(Oauth2Api::class.java)
     }
+
+    // ProductApi DI
+    @Provides
+    @Singleton
+    fun provideProductApi(retrofit: Retrofit) : ProductApi {
+        return retrofit.create(ProductApi::class.java)
+    }
+
 }
