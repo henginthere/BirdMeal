@@ -30,4 +30,10 @@ class Oauth2Repository @Inject constructor(
             emit(Result.Success(it))
         }
     }
+
+    fun checkCard(cardNumber: String): Flow<Result<BaseResponse<Boolean>>> = flow {
+        oauth2RemoteDataSource.checkCard(cardNumber).collect {
+            emit(Result.Success(it))
+        }
+    }
 }

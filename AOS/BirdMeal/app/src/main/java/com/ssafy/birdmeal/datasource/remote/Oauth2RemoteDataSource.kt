@@ -6,6 +6,7 @@ import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.response.OauthResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.http.Body
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,5 +20,9 @@ class Oauth2RemoteDataSource @Inject constructor(
 
     fun join(request: JoinRequest): Flow<BaseResponse<Boolean>> = flow {
         emit(oauth2Api.join(request))
+    }
+
+    fun checkCard(cardNumber: String): Flow<BaseResponse<Boolean>> = flow {
+        emit(oauth2Api.checkCard(cardNumber))
     }
 }

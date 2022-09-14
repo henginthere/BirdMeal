@@ -1,15 +1,21 @@
 package com.ssafy.birdmeal.view.login
 
 import android.content.SharedPreferences
+import android.text.TextUtils
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.repository.Oauth2Repository
+import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
+import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,8 +37,16 @@ class LoginViewModel @Inject constructor(
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
-    private val _successMsgEvent = SingleLiveEvent<String>()
-    val successMsgEvent get() = _successMsgEvent
+    private val _joinSuccessMsgEvent = SingleLiveEvent<String>()
+    val joinSuccessMsgEvent get() = _joinSuccessMsgEvent
+
+    val cardNumber = MutableStateFlow("")
+
+    private val _childSuccessMsgEvent = SingleLiveEvent<String>()
+    val childSuccessMsgEvent get() = _childSuccessMsgEvent
+
+    private val _childFailMsgEvent = SingleLiveEvent<String>()
+    val childFailMsgEvent get() = _childFailMsgEvent
 
     fun googleLogin(code: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -75,7 +89,7 @@ class LoginViewModel @Inject constructor(
         /*
         테스트용 코드
          */
-        _successMsgEvent.postValue("회원 가입 성공")
+        _joinSuccessMsgEvent.postValue("회원 가입 성공")
 
         /*
         oauth2Repository.join(request).collectLatest {
@@ -86,6 +100,42 @@ class LoginViewModel @Inject constructor(
                 // 회원가입 성공한 경우
                 if (it.data.success) {
                     _successMsgEvent.postValue("회원 가입 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+         */
+    }
+
+    // 결식카드 맞는지 확인
+    fun checkCard() = viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "checkCard: ${cardNumber.asStateFlow().value}")
+        // 유효성 검사
+        if (TextUtils.isEmpty(cardNumber.asStateFlow().value)) {
+
+            _errMsgEvent.postValue("카드 번호를 인식해주세요")
+            return@launch
+        }
+
+        /*
+        테스트용 코드
+         */
+        _childSuccessMsgEvent.postValue("결식 아동 인증 성공")
+
+        /*
+        oauth2Repository.checkCard(cardNumber.value!!).collectLatest {
+            Log.d(TAG, "join response: $it")
+            if (it is Result.Success) {
+                Log.d(TAG, "join data: ${it.data}")
+
+                // 카드 인증 성공
+                if (it.data.success) {
+                    _childSuccessMsgEvent.postValue("결식 아동 인증 성공")
+                }
+                // 카드 인증 실패
+                else {
+                    _childFailMsgEvent.postValue("결식 아동 인증 실패")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
