@@ -2,9 +2,10 @@ spring:
   # mysql DB 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/birdmeal?serverTimezone=Asia/Seoul
-    username: root
-    password: hy1234
+#    url: jdbc:mysql://localhost:3306/birdmeal?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://j7d101.p.ssafy.io:3306/birdmeal?serverTimezone=Asia/Seoul
+    username: s07d101
+    password: ssafy7d101
 
   # jpa 설정
   jpa:
@@ -18,3 +19,8 @@ spring:
         format_sql: true  # 로깅에 표시되는 sql을 보기 좋게 해준다
 
 
+jwt:
+  header: Authorization
+  secret: dkssudgktpdywjsmsqogPdusdlqslekskdjqtsmsepvlrhsgkekekemfghkdlxldTkdTkdqk
+  access-token-validity-in-seconds: 1800 # 초 단위
+  refresh-token-validity-in-seconds: 604800

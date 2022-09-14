@@ -1,16 +1,16 @@
-package com.backend.birdmeal.mapper.user;
+package com.backend.birdmeal.mapper;
 
-import com.backend.birdmeal.dto.user.UserDto;
-import com.backend.birdmeal.dto.user.UserDto.UserDtoBuilder;
-import com.backend.birdmeal.entity.user.UserEntity;
+import com.backend.birdmeal.dto.UserDto;
+import com.backend.birdmeal.dto.UserDto.UserDtoBuilder;
+import com.backend.birdmeal.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-13T16:54:57+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
+    date = "2022-09-14T14:14:26+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
 
