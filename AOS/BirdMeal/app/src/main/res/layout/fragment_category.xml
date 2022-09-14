@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent" >
 
             <TextView
-                android:id="@+id/text"
+                android:id="@+id/tv_toolbar"
                 style="@style/toolbar_text"
                 android:text="BirdMeal" />
         </com.google.android.material.appbar.MaterialToolbar>
