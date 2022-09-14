@@ -1,0 +1,15 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Gradle build') { 
+            steps {
+                dir('birdmeal') {sh './gradlew clean bootJar'}
+            }
+        }
+        stage('Dockerfile') { 
+            steps {
+                // 
+            }
+        }
+    }
+}
