@@ -1,6 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.SellerDto;
+import com.backend.birdmeal.dto.SellerUpdateDto;
 import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.util.ResponseFrame;
 import io.swagger.annotations.Api;
@@ -53,6 +54,23 @@ public class SellerInfoController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+
+    /**
+     * 판매자 정보 수정
+     *
+     * @param sellerUpdateDto
+     * @return Object
+     */
+
+    @ApiOperation(value="판매자 정보 수정",response = Object.class)
+    @PutMapping("")
+    public ResponseEntity<?> updateSellerInfo(@RequestBody SellerUpdateDto sellerUpdateDto){
+        boolean success = sellerInfoService.updateSellerInfo(sellerUpdateDto);
+
+        ResponseFrame<?> res = ResponseFrame.of(success,"판매자 정보 수정을 성공했습니다.");
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
 
 }
