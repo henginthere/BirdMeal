@@ -10,4 +10,5 @@ data class UserDto(
     @SerializedName("userTel") val userTel: String?,
     @SerializedName("userAdd") val userAdd: String?,
     @SerializedName("userChargeState") val userChargeState: Boolean,
+    @SerializedName("userAuthority") val userAuthority: String
 )
