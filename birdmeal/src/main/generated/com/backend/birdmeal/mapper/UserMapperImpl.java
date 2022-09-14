@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-14T14:14:26+0900",
+    date = "2022-09-14T17:54:29+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -52,12 +52,10 @@ public class UserMapperImpl implements UserMapper {
 
         userEntity.setUserSeq( userDto.getUserSeq() );
         userEntity.setUserEmail( userDto.getUserEmail() );
-        userEntity.setUserNickname( userDto.getUserNickname() );
+        userEntity.setUserAuthority( userDto.getUserAuthority() );
         userEntity.setUserEoa( userDto.getUserEoa() );
         userEntity.setUserTel( userDto.getUserTel() );
-        userEntity.setUserAdd( userDto.getUserAdd() );
         userEntity.setUserChargeState( userDto.isUserChargeState() );
-        userEntity.setUserRegistDate( userDto.getUserRegistDate() );
         userEntity.setUserUpdateDate( userDto.getUserUpdateDate() );
 
         return userEntity;
@@ -73,12 +71,10 @@ public class UserMapperImpl implements UserMapper {
 
         userDto.userSeq( userEntity.getUserSeq() );
         userDto.userEmail( userEntity.getUserEmail() );
-        userDto.userNickname( userEntity.getUserNickname() );
+        userDto.userAuthority( userEntity.getUserAuthority() );
         userDto.userEoa( userEntity.getUserEoa() );
         userDto.userTel( userEntity.getUserTel() );
-        userDto.userAdd( userEntity.getUserAdd() );
         userDto.userChargeState( userEntity.isUserChargeState() );
-        userDto.userRegistDate( userEntity.getUserRegistDate() );
         userDto.userUpdateDate( userEntity.getUserUpdateDate() );
 
         return userDto.build();
