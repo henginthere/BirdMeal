@@ -31,6 +31,10 @@ public class UserEntity implements Serializable {
     private String userEmail;
 
     @Basic
+    @Column(name="user_authority",length = 20)
+    private String userAuthority;
+
+    @Basic
     @Column(name="user_nickname",length = 30)
     private String userNickname;
 
@@ -52,21 +56,12 @@ public class UserEntity implements Serializable {
 
     @CreatedDate
     @Basic
-    @Column(name = "user_regist_date")
+    @Column(name = "user_regist_date", length = 30)
     private String userRegistDate;
 
     @LastModifiedDate
     @Basic
-    @Column(name = "user_update_date")
+    @Column(name = "user_update_date", length = 30)
     private String userUpdateDate;
-
-
-    // 회원 권한
-    @ManyToMany // user와 authority 다대다 관계를 일대다, 다대일 관계의 조인테이블로 정의
-    @JoinTable(
-            name = "t_user_authority",
-            joinColumns = {@JoinColumn(name = "user_seq", referencedColumnName = "user_seq")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
-    private Set<Authority> authorities;
 
 }

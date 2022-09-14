@@ -10,11 +10,11 @@ import lombok.Data;
 public class UserDto {
     private long userSeq;
     private String userEmail;
-    private String userNickname;
+    private String userAuthority;
     private String userEoa;
     private String userTel;
-    private String userAdd;
+    private String userAddress;
     private boolean userChargeState;
-    private String userRegistDate;
+    private String userCreateDate;
     private String userUpdateDate;
 }
