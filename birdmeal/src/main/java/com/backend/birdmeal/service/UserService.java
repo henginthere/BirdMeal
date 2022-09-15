@@ -2,6 +2,7 @@ package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.RegistUserDto;
 import com.backend.birdmeal.dto.ResponseLoginDto;
+import com.backend.birdmeal.dto.UpdateUserDto;
 import com.backend.birdmeal.entity.AuthorityEntity;
 import com.backend.birdmeal.entity.UserEntity;
 import com.backend.birdmeal.repository.AuthorityRepository;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -74,7 +76,20 @@ public class UserService {
 
         return responseLoginDto;
 
+    }
 
+    public boolean updateUser(Long userSeq, UpdateUserDto updateUserDto){
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
 
+        if(userOptional.isEmpty()){
+            return false;
+        }
+
+        UserEntity user = userOptional.get();
+
+        user.setUserAdd(updateUserDto.getUserAdd());
+        user.setUserTel(updateUserDto.getUserTel());
+
+        return true;
     }
 }

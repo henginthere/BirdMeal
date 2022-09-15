@@ -9,6 +9,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUserEmail(String email);
 
-    UserEntity findByUserSeq(Long seq);
+    Optional<UserEntity> findByUserSeq(Long seq);
 
 }

@@ -2,6 +2,7 @@ package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.RegistUserDto;
 import com.backend.birdmeal.dto.ResponseLoginDto;
+import com.backend.birdmeal.dto.UpdateUserDto;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.UserService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -101,5 +102,28 @@ public class UserController {
 
         res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * 회원 정보 수정
+     *
+     * @param updateUserDto
+     * @return Object
+     */
+    @ApiOperation(value="회원 정보 수정",response = Object.class)
+    @PutMapping("/{userSeq}")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long userSeq){
+        boolean success = userService.updateUser(userSeq, updateUserDto);
+        ResponseFrame<?> res;
+
+        if(success){
+            res = ResponseFrame.of(true,"회원 정보 수정을 성공했습니다.");
+        }
+        else{
+            res = ResponseFrame.of(false,"회원 정보 수정을 실패했습니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
     }
 }
