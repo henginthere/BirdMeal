@@ -86,4 +86,21 @@ public class SellerOrderService {
         return sellerOrderResponseDtoList;
     }
 
+    // 배송 정보 입력
+    public boolean updateSellerOrderInfo(OrderDeatilInfoDto orderDeatilInfoDto){
+        OrderDetailEntity orderDetailEntity = orderDetailRepository.findByOrderDetailSeq(orderDeatilInfoDto.getOrderDetailSeq());
+
+        // 주문이 없는 경우 false
+        if(orderDetailEntity == null) return false;
+
+        // 배송 정보 입력
+        orderDetailEntity.setOrderDeliveryNumber(orderDeatilInfoDto.getOrderDeliveryNumber());
+        orderDetailEntity.setOrderDeliveryCompany(orderDeatilInfoDto.getOrderDeliveryCompany());
+
+        // 저장하기
+        orderDetailRepository.save(orderDetailEntity);
+
+        return true;
+    }
+
 }
