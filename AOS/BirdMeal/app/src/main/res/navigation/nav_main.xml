@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_productListFragment"
             app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
     <fragment
         android:id="@+id/productListFragment"
@@ -89,6 +92,9 @@
             android:name="sellerSeq"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_sellerDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"

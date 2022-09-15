@@ -18,11 +18,19 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
         binding.rvCategoryGrid.adapter = adapter
 
         initViewModelCallBack()
+
+        initClickListener()
     }
 
     private fun initViewModelCallBack() {
         categoryViewModel.errorMsgEvent.observe(this){
             showToast(it)
+        }
+    }
+
+    private fun initClickListener() {
+        binding.ivShoppingCart.setOnClickListener {
+            findNavController().navigate(R.id.action_categoryFragment_to_shoppingCartFragment)
         }
     }
 

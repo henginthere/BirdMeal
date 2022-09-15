@@ -50,6 +50,9 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
             toolbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
+            ivShoppingCart.setOnClickListener {
+                findNavController().navigate(R.id.action_productListFragment_to_shoppingCartFragment)
+            }
         }
     }
 
