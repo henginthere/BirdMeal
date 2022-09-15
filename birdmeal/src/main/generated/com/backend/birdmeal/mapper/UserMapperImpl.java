@@ -3,14 +3,15 @@ package com.backend.birdmeal.mapper;
 import com.backend.birdmeal.dto.UserDto;
 import com.backend.birdmeal.dto.UserDto.UserDtoBuilder;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.entity.UserEntity.UserEntityBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T03:28:23+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
+    date = "2022-09-15T10:58:38+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
 
@@ -48,17 +49,18 @@ public class UserMapperImpl implements UserMapper {
             return null;
         }
 
-        UserEntity userEntity = new UserEntity();
+        UserEntityBuilder userEntity = UserEntity.builder();
 
-        userEntity.setUserSeq( userDto.getUserSeq() );
-        userEntity.setUserEmail( userDto.getUserEmail() );
-        userEntity.setUserAuthority( userDto.getUserAuthority() );
-        userEntity.setUserEoa( userDto.getUserEoa() );
-        userEntity.setUserTel( userDto.getUserTel() );
-        userEntity.setUserChargeState( userDto.isUserChargeState() );
-        userEntity.setUserUpdateDate( userDto.getUserUpdateDate() );
+        userEntity.userSeq( userDto.getUserSeq() );
+        userEntity.userEmail( userDto.getUserEmail() );
+        userEntity.userAuthority( userDto.getUserAuthority() );
+        userEntity.userNickname( userDto.getUserNickname() );
+        userEntity.userEoa( userDto.getUserEoa() );
+        userEntity.userTel( userDto.getUserTel() );
+        userEntity.userChargeState( userDto.isUserChargeState() );
+        userEntity.userUpdateDate( userDto.getUserUpdateDate() );
 
-        return userEntity;
+        return userEntity.build();
     }
 
     @Override
@@ -72,6 +74,7 @@ public class UserMapperImpl implements UserMapper {
         userDto.userSeq( userEntity.getUserSeq() );
         userDto.userEmail( userEntity.getUserEmail() );
         userDto.userAuthority( userEntity.getUserAuthority() );
+        userDto.userNickname( userEntity.getUserNickname() );
         userDto.userEoa( userEntity.getUserEoa() );
         userDto.userTel( userEntity.getUserTel() );
         userDto.userChargeState( userEntity.isUserChargeState() );

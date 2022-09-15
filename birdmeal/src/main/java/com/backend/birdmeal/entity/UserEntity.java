@@ -1,9 +1,6 @@
 package com.backend.birdmeal.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -27,15 +25,15 @@ public class UserEntity implements Serializable {
     private long userSeq;
 
     @Basic
-    @Column(name="user_email",length = 50)
+    @Column(name="user_email",length = 50,nullable = false)
     private String userEmail;
 
     @Basic
-    @Column(name="user_authority",length = 20)
+    @Column(name="user_authority",length = 20,nullable = false)
     private String userAuthority;
 
     @Basic
-    @Column(name="user_nickname",length = 30)
+    @Column(name="user_nickname",length = 30,nullable = false)
     private String userNickname;
 
     @Basic
