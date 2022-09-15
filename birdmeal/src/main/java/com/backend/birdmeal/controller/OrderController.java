@@ -2,6 +2,7 @@ package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.MyOrderResponseDto;
 import com.backend.birdmeal.dto.OrderRequestDto;
+import com.backend.birdmeal.dto.OrderStateRequestDto;
 import com.backend.birdmeal.entity.UserEntity;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.OrderService;
@@ -70,4 +71,28 @@ public class OrderController {
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+
+    /**
+     * 상품 인수 상태 변경
+     *
+     * @param orderStateRequestDto
+     * @return Object
+     */
+
+    @ApiOperation(value="상품 인수 상태 변경",response = Object.class)
+    @PutMapping("")
+    public ResponseEntity<?> updateProductState(@RequestBody OrderStateRequestDto orderStateRequestDto){
+        boolean success = orderService.updateProductState(orderStateRequestDto);
+        ResponseFrame<?> res;
+
+        if(success) {
+            res = ResponseFrame.of(success, "상품 인수 상태 변경을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "주문이 없어 상품 인수 상태 변경을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+    
+    
 }
