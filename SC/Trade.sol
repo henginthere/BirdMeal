@@ -16,8 +16,8 @@ contract Trade {
 
 
     // 판매자와 물건 가격 계약생성시 정의
-    constructor (string memory _name ,uint _price, address _elenaToken) {
-        seller = msg.sender;
+    constructor (string memory _name ,uint _price, address _elenaToken, address _seller) {
+        seller = _seller;
         name = _name;
         price = _price;
         elenaToken = _elenaToken;
@@ -26,24 +26,35 @@ contract Trade {
 
     // 1. 물건 주문시 미리 컨트랙트로 토큰을 보냄
     // 현재 컨트랙트에 토큰이 쌓임
-    function buying(uint paymentAmount) public payable {
-        _currencyContract.transferFrom(msg.sender, address(this), paymentAmount*10**18);
+    // 인자로는 물건갯수를 보냄
+    function buying(uint num) public payable {
+        require(num > 0, "The minimum number of orders is 0");
+        _currencyContract.transferFrom(msg.sender, address(this), num*price*10**18);
     }
 
     // 2. 주문하면서 생긴 트랜잭션과 주문액 매핑하기
-    function addOrderSheet(string memory orderTransaction, uint amount ) public {
-        orderSheet[orderTransaction] = amount;
+    function addOrderSheet(string memory orderTransaction, uint num ) public {
+        orderSheet[orderTransaction] = num;
     }
 
     // 3. 상품인수시 orderSheet에서 방금 보낸 트랜잭션으로 매핑된 크기만큼 컨트랙트에서 판매자에게 돈 송금
     function paying(string memory orderTransaction) public payable {
 
-        uint paymentAmount = orderSheet[orderTransaction];
+        uint paymentAmount = orderSheet[orderTransaction]*price;
 
         _currencyContract.transfer(seller,paymentAmount*10**18);
     }
 
 
+    function setName(string memory _name) public {
+        require(msg.sender == seller, "only seller change name");
+        name = _name;
+    }
+
+    function setPrice(uint _price) public {
+        require(msg.sender == seller, "only seller change price");
+        price = _price;
+    }
 
 
 }
