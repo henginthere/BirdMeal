@@ -2,7 +2,6 @@ package com.ssafy.birdmeal.view.market
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.CategoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
@@ -50,12 +49,15 @@ class MarketViewModel @Inject constructor(
     )
 
 
-    private val _product : MutableStateFlow<Result<BaseResponse<ProductDto>>>
-        = MutableStateFlow(Result.Uninitialized)
+    private val _product : MutableStateFlow<ProductDto>
+        = MutableStateFlow(ProductDto(-1, -1, -1, "", 0, "", "", "", false, "", ""))
     val product get() = _product.asStateFlow()
 
     private val _errorMsgEvent = SingleLiveEvent<String>()
     val errorMsgEvent get() = _errorMsgEvent
+
+    private val _successMsgEvent = SingleLiveEvent<String>()
+    val successMsgEvent get() = _successMsgEvent
 
     // 카테고리 목록 조회
     fun getCategoryList(){
@@ -96,7 +98,8 @@ class MarketViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getProduct(productSeq).collectLatest {
                 if(it is Result.Success){
-                    _product.value = it
+                    _product.value = it.data.data
+                    _successMsgEvent.postValue(it.data.msg)
                 }
                 else if(it is Result.Fail){
                     _errorMsgEvent.postValue(it.data.msg)
