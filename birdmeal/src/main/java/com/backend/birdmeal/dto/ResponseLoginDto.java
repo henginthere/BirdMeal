@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistUserDto {
+public class ResponseLoginDto {
 
-    private String userEmail;
-    private boolean userRole; //0이면 일반사용자, 1이면 child
-    private String userNickname;
+    private Long userSeq;
+    private TokenDto tokenDto;
 
 }

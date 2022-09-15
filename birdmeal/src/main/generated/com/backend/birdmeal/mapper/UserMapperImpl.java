@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T10:58:38+0900",
+    date = "2022-09-15T17:10:14+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
@@ -53,7 +53,7 @@ public class UserMapperImpl implements UserMapper {
 
         userEntity.userSeq( userDto.getUserSeq() );
         userEntity.userEmail( userDto.getUserEmail() );
-        userEntity.userAuthority( userDto.getUserAuthority() );
+        userEntity.userRole( userDto.isUserRole() );
         userEntity.userNickname( userDto.getUserNickname() );
         userEntity.userEoa( userDto.getUserEoa() );
         userEntity.userTel( userDto.getUserTel() );
@@ -73,7 +73,9 @@ public class UserMapperImpl implements UserMapper {
 
         userDto.userSeq( userEntity.getUserSeq() );
         userDto.userEmail( userEntity.getUserEmail() );
-        userDto.userAuthority( userEntity.getUserAuthority() );
+        if ( userEntity.getUserRole() != null ) {
+            userDto.userRole( userEntity.getUserRole() );
+        }
         userDto.userNickname( userEntity.getUserNickname() );
         userDto.userEoa( userEntity.getUserEoa() );
         userDto.userTel( userEntity.getUserTel() );
