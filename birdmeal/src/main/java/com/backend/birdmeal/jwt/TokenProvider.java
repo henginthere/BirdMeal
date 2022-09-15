@@ -52,12 +52,12 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenDto createUserDto(String email,
+    public TokenDto createUserToken(String email,
                                        String authorities) {
         long now = (new Date()).getTime();
 
 //        Manager manager = managerRepository.findBymanagerId(id).orElseThrow(()->new ManagerNotFoundException("가입되지 않은 정보입니다."));
-        UserEntity user = userRepository.findByUserEmail(email);
+        UserEntity user = userRepository.findByUserEmail(email).get();
 
         //claim에 managerSeq정보 추가
         String accessToken = Jwts.builder()

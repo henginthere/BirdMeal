@@ -6,6 +6,14 @@ spring:
     url: jdbc:mysql://j7d101.p.ssafy.io:3306/birdmeal?serverTimezone=Asia/Seoul
     username: s07d101
     password: ssafy7d101
+  security:
+    google_id_token: [ ]
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 603496138054-ap705pl2e3qpvgp856mp0aubcb8mj33v.apps.googleusercontent.com
+            scope: profile, email
 
   # jpa 설정
   jpa:
@@ -21,6 +29,6 @@ spring:
 
 jwt:
   header: Authorization
-  secret: dkssudgktpdywjsmsqogPdusdlqslekskdjqtsmsepvlrhsgkekekemfghkdlxldTkdTkdqk
+  secret: dkssudgktpdywjsmsqogPdusdlqslekskdjqtsmsepvlrhsgkekekemfghkdlxldTkdTkdqkuZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
   access-token-validity-in-seconds: 1800 # 초 단위
   refresh-token-validity-in-seconds: 604800
