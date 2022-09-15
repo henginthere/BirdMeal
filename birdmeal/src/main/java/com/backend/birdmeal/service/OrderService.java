@@ -2,6 +2,7 @@ package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.MyOrderResponseDto;
 import com.backend.birdmeal.dto.OrderRequestDto;
+import com.backend.birdmeal.dto.OrderStateRequestDto;
 import com.backend.birdmeal.entity.OrderDetailEntity;
 import com.backend.birdmeal.entity.OrderEntity;
 import com.backend.birdmeal.entity.ProductEntity;
@@ -136,5 +137,24 @@ public class OrderService {
         }
 
         return responseList;
+    }
+
+    // 상품 인수 상태 변경
+    public boolean updateProductState(OrderStateRequestDto orderStateRequestDto) {
+        // 주문이 없으면 false
+        OrderEntity orderEntity = orderRepository.findByOrderSeq(orderStateRequestDto.getOrderSeq());
+        if(orderEntity == null) return false;
+
+        // 주문 상세 리스트 받아오기
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderStateRequestDto.getOrderSeq());
+        for(int i=0; i<orderDetailEntityList.size(); i++){
+            // 상태 바꿔주기
+            orderDetailEntityList.get(i).setOrderToState(orderStateRequestDto.isOrderToState());
+
+            // 저장
+            orderDetailRepository.save(orderDetailEntityList.get(i));
+        }
+
+        return true;
     }
 }
