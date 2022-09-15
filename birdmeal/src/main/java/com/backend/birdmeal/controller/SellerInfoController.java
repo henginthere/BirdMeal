@@ -30,9 +30,13 @@ public class SellerInfoController {
     @GetMapping("/{seller-seq}")
     public ResponseEntity<?> getSellerInfo(@PathVariable("seller-seq") long sellerSeq){
         SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
+        ResponseFrame<?> res;
 
-        ResponseFrame<?> res = ResponseFrame.of(sellerDto,"판매자 정보 요청을 성공했습니다.");
-
+        if(sellerDto == null){
+            res = ResponseFrame.of(false, "판매자가 없어서 판매자 정보 요청을 실패했습니다.");
+        }else {
+            res = ResponseFrame.of(sellerDto, "판매자 정보 요청을 성공했습니다.");
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
