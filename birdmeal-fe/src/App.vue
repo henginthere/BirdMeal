@@ -8,11 +8,16 @@
 
 <script>
 
+import {MetaMaskLogin} from "@/web3util/events"
+
 export default {
   name: 'App',
 
   data: () => ({
     //
   }),
+  created() {
+      MetaMaskLogin()
+    }
 }
 </script>
