@@ -85,9 +85,9 @@ public class SellerInfoController {
         boolean success = sellerInfoService.checkSellerInfo(sellerSeq);
         ResponseFrame<?> res;
         if(success) {
-            res = ResponseFrame.of("true", "판매자 정보가 있습니다.");
+            res = ResponseFrame.of(success, "판매자 정보가 있습니다.");
         }else{
-            res = ResponseFrame.of("false", "판매자 정보가 없습니다.");
+            res = ResponseFrame.of(success, "판매자 정보가 없습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
