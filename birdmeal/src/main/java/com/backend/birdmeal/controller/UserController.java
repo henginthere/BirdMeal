@@ -149,4 +149,29 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
 
     }
+
+    /**
+     * 지갑 eoa 저장
+     *
+     * @param userEoa
+     * @return Object
+     */
+    @ApiOperation(value="지갑 eoa 저장",response = Object.class)
+    @PutMapping("/{userSeq}/wallet")
+    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable Long userSeq){
+        boolean success = userService.saveWallet(userSeq, userEoa);
+        ResponseFrame<?> res;
+
+        if(success){
+            res = ResponseFrame.of(true,"지갑 eoa 저장을 완료했습니다.");
+        }
+        else{
+            res = ResponseFrame.of(false,"지갑 eoa 저장을 실패했습니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
+    }
+
+
 }
