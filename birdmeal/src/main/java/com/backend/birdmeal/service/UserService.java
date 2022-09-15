@@ -110,4 +110,16 @@ public class UserService {
 
         return false;
     }
+
+    public boolean saveWallet(Long userSeq, String userEoa){
+
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
+
+        if(userOptional.isPresent()){
+            userOptional.get().setUserEoa(userEoa);
+            return true;
+        }
+
+        return false;
+    }
 }
