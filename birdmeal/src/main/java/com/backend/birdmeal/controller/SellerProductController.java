@@ -60,4 +60,28 @@ public class SellerProductController {
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+
+    /**
+     * 상품 삭제
+     *
+     * @param productSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="상품 삭제",response = Object.class)
+    @PutMapping("/{product-seq}")
+    public ResponseEntity<?> deleteSellerProduct(@PathVariable("product-seq") long productSeq){
+        boolean success = sellerProductService.deleteSellerProduct(productSeq);
+        ResponseFrame<?> res;
+
+        if(success){
+            res = ResponseFrame.of(success,"상품 상품 삭제을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success,"상품이 없어 상품 삭제을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
 }
