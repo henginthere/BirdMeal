@@ -46,4 +46,19 @@ class ProductRepository @Inject constructor(
         emit(Result.Error(e))
     }
 
+    // 상품 상세정보 조회
+    fun getProduct(productSeq: Int) : Flow<Result<BaseResponse<ProductDto>>> = flow {
+        emit(Result.Loading)
+        productRemoteDataSource.getProduct(productSeq).collect {
+            if(it.success){
+                emit(Result.Success(it))
+            }
+            else if(!it.success){
+                emit(Result.Fail(it))
+            }
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
 }

@@ -6,8 +6,8 @@ import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.CategoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
-import com.ssafy.birdmeal.utils.SingleLiveEvent
 import com.ssafy.birdmeal.utils.Result
+import com.ssafy.birdmeal.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,9 +35,24 @@ class MarketViewModel @Inject constructor(
         CategoryDto(6, "햄버거", "f"),
     )
 
-    private val _productList : MutableStateFlow<Result<BaseResponse<List<ProductDto>>>>
+//    private val _productList : MutableStateFlow<Result<BaseResponse<List<ProductDto>>>>
+//        = MutableStateFlow(Result.Uninitialized)
+//    val productList get() = _productList.asStateFlow()
+
+    val productList : List<ProductDto>
+        = listOf(
+        ProductDto(1, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(2, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(3, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(4, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(5, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(6, 1, 1, "", 11, "", "", "", false, "", ""),
+    )
+
+
+    private val _product : MutableStateFlow<Result<BaseResponse<ProductDto>>>
         = MutableStateFlow(Result.Uninitialized)
-    val productList get() = _productList.asStateFlow()
+    val product get() = _product.asStateFlow()
 
     private val _errorMsgEvent = SingleLiveEvent<String>()
     val errorMsgEvent get() = _errorMsgEvent
@@ -53,7 +68,7 @@ class MarketViewModel @Inject constructor(
                     _errorMsgEvent.postValue(it.data.msg)
                 }
                 else if(it is Result.Error){ // 서버 통신 자체 오류
-                    _errorMsgEvent.postValue("상품 목록 조회 중 통신에 실패했습니다.")
+                    _errorMsgEvent.postValue("카테고리 목록 조회 중 통신에 실패했습니다.")
                 }
             }
         }
@@ -64,13 +79,30 @@ class MarketViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getProductList(categorySeq).collectLatest {
                 if(it is Result.Success){ // 값을 제대로 받아옴
-                     _productList.value = it
+                     // _productList.value = it
                 }
                 else if(it is Result.Fail){ // 값을 제대로 받아오지 못함
                     _errorMsgEvent.postValue(it.data.msg)
                 }
                 else if(it is Result.Error){ // 서버 통신 자체 오류
                     _errorMsgEvent.postValue("상품 목록 조회 중 통신에 실패했습니다.")
+                }
+            }
+        }
+    }
+
+    // 상품 상세정보 조회
+    fun getProduct(productSeq: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            productRepository.getProduct(productSeq).collectLatest {
+                if(it is Result.Success){
+                    _product.value = it
+                }
+                else if(it is Result.Fail){
+                    _errorMsgEvent.postValue(it.data.msg)
+                }
+                else if(it is Result.Error){
+                    _errorMsgEvent.postValue("상품 상세정보 조회 중 통신에 실패했습니다.")
                 }
             }
         }
