@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T21:25:12+0900",
+    date = "2022-09-16T00:01:20+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class SellerProductMapperImpl implements SellerProductMapper {
 
     @Override
-    public List<ProductEntity> toEntityList(List<ProductDto> arg0) {
-        if ( arg0 == null ) {
+    public List<ProductEntity> toEntityList(List<ProductDto> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<ProductEntity> list = new ArrayList<ProductEntity>( arg0.size() );
-        for ( ProductDto productDto : arg0 ) {
+        List<ProductEntity> list = new ArrayList<ProductEntity>( dtoList.size() );
+        for ( ProductDto productDto : dtoList ) {
             list.add( toEntity( productDto ) );
         }
 

@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T21:25:12+0900",
+    date = "2022-09-16T00:01:20+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class ProductMapperImpl implements ProductMapper {
 
     @Override
-    public List<ProductDto> toDtoList(List<ProductEntity> arg0) {
-        if ( arg0 == null ) {
+    public List<ProductDto> toDtoList(List<ProductEntity> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<ProductDto> list = new ArrayList<ProductDto>( arg0.size() );
-        for ( ProductEntity productEntity : arg0 ) {
+        List<ProductDto> list = new ArrayList<ProductDto>( entityList.size() );
+        for ( ProductEntity productEntity : entityList ) {
             list.add( toDto( productEntity ) );
         }
 
@@ -30,13 +30,13 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public List<ProductEntity> toEntityList(List<ProductDto> arg0) {
-        if ( arg0 == null ) {
+    public List<ProductEntity> toEntityList(List<ProductDto> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<ProductEntity> list = new ArrayList<ProductEntity>( arg0.size() );
-        for ( ProductDto productDto : arg0 ) {
+        List<ProductEntity> list = new ArrayList<ProductEntity>( dtoList.size() );
+        for ( ProductDto productDto : dtoList ) {
             list.add( toEntity( productDto ) );
         }
 
