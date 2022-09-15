@@ -5,16 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.ssafy.birdmeal.databinding.ItemProdcutListBinding
+import com.ssafy.birdmeal.databinding.ItemProductListBinding
 import com.ssafy.birdmeal.model.dto.ProductDto
 
 class ProductListAdapter(private val listener: ProductListener)
     : ListAdapter<ProductDto, ProductListAdapter.ViewHolder>(diffUtil){
 
-    inner class ViewHolder(private val binding : ItemProdcutListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding : ItemProductListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
+            binding.cardProduct.setOnClickListener {
                 listener.onItemClick(getItem(adapterPosition).productSeq)
             }
         }
@@ -26,7 +26,7 @@ class ProductListAdapter(private val listener: ProductListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemProdcutListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemProductListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
