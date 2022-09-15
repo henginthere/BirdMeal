@@ -22,6 +22,8 @@ public class SellerInfoService {
         // db에서 찾기
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerSeq);
 
+        if(sellerEntity == null) return null;
+
         // Entity -> Dto
         SellerDto sellerDto = SellerMapper.MAPPER.toDto(sellerEntity);
 
