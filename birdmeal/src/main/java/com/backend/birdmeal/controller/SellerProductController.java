@@ -38,9 +38,9 @@ public class SellerProductController {
         ResponseFrame<?> res;
 
         if(success) {
-            res = ResponseFrame.of("true", "상품 판매 등록을 성공했습니다.");
+            res = ResponseFrame.of(success, "상품 판매 등록을 성공했습니다.");
         }else{
-            res = ResponseFrame.of("false", "카테고리 혹은 판매자 정보가 없으므로 상품 판매 등록을 실패했습니다.");
+            res = ResponseFrame.of(success, "카테고리 혹은 판매자 정보가 없으므로 상품 판매 등록을 실패했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

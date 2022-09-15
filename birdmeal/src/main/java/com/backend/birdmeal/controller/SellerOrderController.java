@@ -31,23 +31,23 @@ public class SellerOrderController {
      * @return Object
      */
 
-    @ApiOperation(value="구매 내역 목록 보기",response = Object.class)
-    @GetMapping("/{seller-seq}")
-    public ResponseEntity<?> getSellerOrderProduct(@PathVariable("seller-seq") long sellerSeq){
-        List<SellerOrderResponseDto> sellerOrderResponseDtoList = sellerOrderService.getSellerOrderProduct(sellerSeq);
-        ResponseFrame<?> res;
-
-        // 판매자 정보
-        SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
-
-
-        if(sellerDto == null){
-            res = ResponseFrame.of(false,"판매자의 정보가 존재하지 않아 구매 내역 목록 보기을 실패했습니다.");
-        }else{
-            res = ResponseFrame.of(sellerOrderResponseDtoList,"구매 내역 목록 보기을 성공했습니다.");
-        }
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
+//    @ApiOperation(value="구매 내역 목록 보기",response = Object.class)
+//    @GetMapping("/{seller-seq}")
+//    public ResponseEntity<?> getSellerOrderProduct(@PathVariable("seller-seq") long sellerSeq){
+//        List<SellerOrderResponseDto> sellerOrderResponseDtoList = sellerOrderService.getSellerOrderProduct(sellerSeq);
+//        ResponseFrame<?> res;
+//
+//        // 판매자 정보
+//        SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
+//
+//
+//        if(sellerDto == null){
+//            res = ResponseFrame.of(false,"판매자의 정보가 존재하지 않아 구매 내역 목록 보기을 실패했습니다.");
+//        }else{
+//            res = ResponseFrame.of(sellerOrderResponseDtoList,"구매 내역 목록 보기을 성공했습니다.");
+//        }
+//        return new ResponseEntity<>(res, HttpStatus.OK);
+//    }
 
 
     /**

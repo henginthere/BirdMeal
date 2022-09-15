@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T15:18:39+0900",
+    date = "2022-09-15T21:44:22+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class OrderDetailMapperImpl implements OrderDetailMapper {
@@ -40,6 +40,7 @@ public class OrderDetailMapperImpl implements OrderDetailMapper {
         orderDetailEntity.orderDetailSeq( orderDetailDto.getOrderDetailSeq() );
         orderDetailEntity.orderSeq( orderDetailDto.getOrderSeq() );
         orderDetailEntity.productSeq( orderDetailDto.getProductSeq() );
+        orderDetailEntity.sellerSeq( orderDetailDto.getSellerSeq() );
         orderDetailEntity.orderQuantity( orderDetailDto.getOrderQuantity() );
         orderDetailEntity.orderTHash( orderDetailDto.getOrderTHash() );
         orderDetailEntity.orderToState( orderDetailDto.isOrderToState() );
@@ -60,6 +61,7 @@ public class OrderDetailMapperImpl implements OrderDetailMapper {
         orderDetailDto.orderDetailSeq( orderDetailEntity.getOrderDetailSeq() );
         orderDetailDto.orderSeq( orderDetailEntity.getOrderSeq() );
         orderDetailDto.productSeq( orderDetailEntity.getProductSeq() );
+        orderDetailDto.sellerSeq( orderDetailEntity.getSellerSeq() );
         orderDetailDto.orderQuantity( orderDetailEntity.getOrderQuantity() );
         orderDetailDto.orderTHash( orderDetailEntity.getOrderTHash() );
         orderDetailDto.orderToState( orderDetailEntity.isOrderToState() );
