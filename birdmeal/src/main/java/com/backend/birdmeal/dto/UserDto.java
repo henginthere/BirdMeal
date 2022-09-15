@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private long userSeq;
     private String userEmail;
-    private String userAuthority;
+    private boolean userRole; //0이면 일반사용자, 1이면 child
     private String userNickname;
     private String userEoa;
     private String userTel;
