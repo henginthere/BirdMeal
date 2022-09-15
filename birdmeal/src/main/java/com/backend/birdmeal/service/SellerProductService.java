@@ -1,6 +1,7 @@
 package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.ProductDto;
+import com.backend.birdmeal.dto.ProductUpdateDto;
 import com.backend.birdmeal.entity.CategoryEntity;
 import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.entity.SellerEntity;
@@ -40,6 +41,25 @@ public class SellerProductService {
         ProductEntity productEntity = SellerProductMapper.MAPPER.toEntity(productDto);
 
         // 상품 등록 하기
+        sellerProductRepository.save(productEntity);
+
+        return true;
+    }
+
+    // 상품 정보 수정
+    public boolean updateSellerProduct(ProductUpdateDto productUpdateDto){
+        // 상품 불러오기
+        ProductEntity productEntity = sellerProductRepository.findByProductSeq(productUpdateDto.getProductSeq());
+        
+        // 상품이 없으면 false
+        if(productEntity == null) return false;
+
+        // 수정하기
+        productEntity.setProductPrice(productUpdateDto.getProductPrice());
+        productEntity.setProductThumbnailImg(productUpdateDto.getProductThumbnailImg());
+        productEntity.setProductDescriptionImg(productUpdateDto.getProductDescriptionImg());
+
+        // 저장
         sellerProductRepository.save(productEntity);
 
         return true;
