@@ -61,29 +61,28 @@ public class UserController {
      */
     @ApiOperation(value="로그인",response = Object.class)
     @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
-    public ResponseEntity<?> login(@RequestBody String userEmail) throws IOException, GeneralSecurityException {
+    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
         ResponseFrame<?> res;
-//        String userEmail;
-//        JsonFactory jsonFactory = new JacksonFactory();
-//        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
-//
-//
-//        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(new NetHttpTransport(),
-//                new JacksonFactory());
-//        if (verifier.verify(idToken)) {
-//            Payload payload = idToken.getPayload();
-//            userEmail = payload.getEmail();
-//            System.out.println("User Email: "+userEmail);
-////            String userNickname = (String)payload.get("name");
-////            System.out.println("User Name: "+userNickname);
-//        }
-//        else {
-//            //Invalid ID token
-//            System.out.println("만료된 토큰");
-//            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-//            return new ResponseEntity<>(res, HttpStatus.OK);
-//        }
+        String userEmail;
+        JsonFactory jsonFactory = new JacksonFactory();
+        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
+
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(new NetHttpTransport(),
+                new JacksonFactory());
+        if (verifier.verify(idToken)) {
+            Payload payload = idToken.getPayload();
+            userEmail = payload.getEmail();
+            System.out.println("User Email: "+userEmail);
+//            String userNickname = (String)payload.get("name");
+//            System.out.println("User Name: "+userNickname);
+        }
+        else {
+            //Invalid ID token
+            System.out.println("만료된 토큰");
+            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
 
         //t_user에 email 존재 여부 확인
         if(userRepository.findByUserEmail(userEmail)!=null){
