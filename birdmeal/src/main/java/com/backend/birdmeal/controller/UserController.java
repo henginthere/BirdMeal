@@ -126,4 +126,27 @@ public class UserController {
         return new ResponseEntity<>(res, HttpStatus.OK);
 
     }
+
+    /**
+     * 결식 아동 확인
+     *
+     * @param cardNum
+     * @return Object
+     */
+    @ApiOperation(value="결식 아동 확인",response = Object.class)
+    @PostMapping("/{userSeq}/check-child")
+    public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable Long userSeq){
+        boolean success = userService.checkChild(userSeq, cardNum);
+        ResponseFrame<?> res;
+
+        if(success){
+            res = ResponseFrame.of(true,"결식 아동입니다.");
+        }
+        else{
+            res = ResponseFrame.of(false,"결식 아동이 아닙니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
+    }
 }

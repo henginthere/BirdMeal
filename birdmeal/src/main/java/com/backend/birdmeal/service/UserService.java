@@ -4,8 +4,10 @@ import com.backend.birdmeal.dto.RegistUserDto;
 import com.backend.birdmeal.dto.ResponseLoginDto;
 import com.backend.birdmeal.dto.UpdateUserDto;
 import com.backend.birdmeal.entity.AuthorityEntity;
+import com.backend.birdmeal.entity.StarvingChildEntity;
 import com.backend.birdmeal.entity.UserEntity;
 import com.backend.birdmeal.repository.AuthorityRepository;
+import com.backend.birdmeal.repository.StarvingChildRepository;
 import com.backend.birdmeal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,7 @@ public class UserService {
 
     final UserRepository userRepository;
     final AuthorityRepository authorityRepository;
+    final StarvingChildRepository starvingChildRepository;
     private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
     public boolean signup(RegistUserDto registUserDto){
@@ -91,5 +94,20 @@ public class UserService {
         user.setUserTel(updateUserDto.getUserTel());
 
         return true;
+    }
+
+    public boolean checkChild(Long userSeq, String cardNum){
+
+        Long tmp = Long.parseLong(cardNum);
+        Optional<StarvingChildEntity> starvingChildOptional = starvingChildRepository.findByChildCardNum(tmp);
+
+        if(starvingChildOptional.isPresent()){
+            //결식 아동이라면 starvingChild에 userSeq Update
+            StarvingChildEntity starvingChild = starvingChildOptional.get();
+            starvingChild.setUserSeq(userSeq);
+            return true;
+        }
+
+        return false;
     }
 }
