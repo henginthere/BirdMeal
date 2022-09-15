@@ -9,15 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private long userSeq;
+public class RegistUserDto {
+
     private String userEmail;
     private String userAuthority;
     private String userNickname;
-    private String userEoa;
-    private String userTel;
-    private String userAddress;
-    private boolean userChargeState;
-    private String userCreateDate;
-    private String userUpdateDate;
+
 }
