@@ -1,8 +1,12 @@
 package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.ProductDto;
+import com.backend.birdmeal.entity.CategoryEntity;
 import com.backend.birdmeal.entity.ProductEntity;
+import com.backend.birdmeal.entity.SellerEntity;
 import com.backend.birdmeal.mapper.SellerProductMapper;
+import com.backend.birdmeal.repository.CategoryRepository;
+import com.backend.birdmeal.repository.SellerInfoRepository;
 import com.backend.birdmeal.repository.SellerProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,11 +18,23 @@ import javax.transaction.Transactional;
 @Transactional
 public class SellerProductService {
 
+    private final SellerInfoRepository sellerInfoRepository;
     private final SellerProductRepository sellerProductRepository;
+    private final CategoryRepository categoryRepository;
 
     // 상품 판매 등록
     public boolean setSellerProduct(ProductDto productDto) {
         if (productDto == null) return false;
+
+        // 카테고리 정보가 있는지 확인
+        // 없으면 false
+        CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(productDto.getCategorySeq());
+        if(categoryEntity == null) return false;
+
+        // 판매자 정보가 있는지 확인
+        // 없으면 false
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(productDto.getSellerSeq());
+        if(sellerEntity == null) return false;
 
         // Dto -> Entity
         ProductEntity productEntity = SellerProductMapper.MAPPER.toEntity(productDto);
