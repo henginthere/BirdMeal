@@ -37,6 +37,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         categoryAdapter.submitList(marketViewModel.categoryList)
 
         val productAdapter = ProductListAdapter(productListener)
+        productAdapter.submitList(marketViewModel.productList)
 
         binding.apply {
             rvCategoryHorizon.adapter = categoryAdapter
@@ -60,6 +61,8 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
 
     private val categoryListener = object : CategoryListener {
         override fun onItemClick(categorySeq: Int) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
+            // val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(categorySeq)
+            // findNavController().navigate(action)
             showToast("재호출 합니다.")
         }
     }
@@ -67,6 +70,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     private val productListener = object : ProductListener {
         override fun onItemClick(productSeq: Int) {  // 상품 상세정보로 이동
             // val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(productSeq)
+            // findNavController().navigate(action)
             findNavController().navigate(R.id.action_productListFragment_to_productDetailFragment)
         }
     }
