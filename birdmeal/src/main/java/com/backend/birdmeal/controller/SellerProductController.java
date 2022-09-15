@@ -3,8 +3,6 @@ package com.backend.birdmeal.controller;
 import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.ProductUpdateDto;
 import com.backend.birdmeal.dto.SellerDto;
-import com.backend.birdmeal.entity.SellerEntity;
-import com.backend.birdmeal.repository.SellerInfoRepository;
 import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.service.SellerProductService;
 import com.backend.birdmeal.util.ResponseFrame;
