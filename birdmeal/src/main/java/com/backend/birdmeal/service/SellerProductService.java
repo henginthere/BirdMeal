@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -80,5 +82,15 @@ public class SellerProductService {
         sellerProductRepository.save(productEntity);
 
         return true;
+    }
+
+    public List<ProductDto> getSellerProduct(long sellerSeq) {
+        // 판매자 번호로 물품 찾기
+        List<ProductEntity> productEntityList = sellerProductRepository.findAllBySellerSeqOrderByProductCreateDateDesc(sellerSeq);
+
+        // Entity -> Dto
+        List<ProductDto> productDtoList = SellerProductMapper.MAPPER.toDtoList(productEntityList);
+
+        return productDtoList;
     }
 }

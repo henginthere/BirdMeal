@@ -2,6 +2,10 @@ package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.ProductUpdateDto;
+import com.backend.birdmeal.dto.SellerDto;
+import com.backend.birdmeal.entity.SellerEntity;
+import com.backend.birdmeal.repository.SellerInfoRepository;
+import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.service.SellerProductService;
 import com.backend.birdmeal.util.ResponseFrame;
 import io.swagger.annotations.Api;
@@ -11,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Api("SellerProductController")
 @RequiredArgsConstructor
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class SellerProductController {
 
     private final SellerProductService sellerProductService;
+    private final SellerInfoService sellerInfoService;
 
     /**
      * 상품 판매 등록
@@ -83,5 +90,30 @@ public class SellerProductController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+
+    /**
+     * 등록 상품 목록 보기
+     *
+     * @param sellerSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="등록 상품 목록 보기",response = Object.class)
+    @GetMapping("/{seller-seq}")
+    public ResponseEntity<?> getSellerProduct(@PathVariable("seller-seq") long sellerSeq){
+        List<ProductDto> productDtoList = sellerProductService.getSellerProduct(sellerSeq);
+        ResponseFrame<?> res;
+
+        // 판매자 정보
+        SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
+
+
+        if(sellerDto == null){
+            res = ResponseFrame.of(false,"판매자의 정보가 존재하지 않아 등록 상품 목록 보기을 실패했습니다.");
+        }else{
+            res = ResponseFrame.of(productDtoList,"등록 상품 목록 보기을 성공했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
 }

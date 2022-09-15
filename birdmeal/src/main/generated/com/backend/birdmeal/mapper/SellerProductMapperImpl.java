@@ -10,24 +10,10 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-15T10:02:25+0900",
+    date = "2022-09-15T13:48:48+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class SellerProductMapperImpl implements SellerProductMapper {
-
-    @Override
-    public List<ProductDto> toDtoList(List<ProductEntity> arg0) {
-        if ( arg0 == null ) {
-            return null;
-        }
-
-        List<ProductDto> list = new ArrayList<ProductDto>( arg0.size() );
-        for ( ProductEntity productEntity : arg0 ) {
-            list.add( toDto( productEntity ) );
-        }
-
-        return list;
-    }
 
     @Override
     public List<ProductEntity> toEntityList(List<ProductDto> arg0) {
@@ -87,5 +73,19 @@ public class SellerProductMapperImpl implements SellerProductMapper {
         productDto.productUpdateDate( productEntity.getProductUpdateDate() );
 
         return productDto.build();
+    }
+
+    @Override
+    public List<ProductDto> toDtoList(List<ProductEntity> entityList) {
+        if ( entityList == null ) {
+            return null;
+        }
+
+        List<ProductDto> list = new ArrayList<ProductDto>( entityList.size() );
+        for ( ProductEntity productEntity : entityList ) {
+            list.add( toDto( productEntity ) );
+        }
+
+        return list;
     }
 }

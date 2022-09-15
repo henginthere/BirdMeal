@@ -5,6 +5,8 @@ import com.backend.birdmeal.entity.ProductEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface SellerProductMapper extends StructMapper<ProductDto, ProductEntity> {
     SellerProductMapper MAPPER = Mappers.getMapper(SellerProductMapper.class);
@@ -14,4 +16,7 @@ public interface SellerProductMapper extends StructMapper<ProductDto, ProductEnt
 
     @Override
     ProductDto toDto(final ProductEntity productEntity);
+
+    @Override
+    List<ProductDto> toDtoList(List<ProductEntity> entityList);
 }
