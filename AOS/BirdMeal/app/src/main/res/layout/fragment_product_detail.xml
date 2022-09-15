@@ -83,7 +83,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tv_product_name"
                     app:layout_constraintEnd_toEndOf="@id/iv_product"
                     app:layout_constraintTop_toTopOf="@id/tv_product_name"
-                    tools:text="5,000원" />
+                    tools:text="5,000 ETL" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_seller_info"

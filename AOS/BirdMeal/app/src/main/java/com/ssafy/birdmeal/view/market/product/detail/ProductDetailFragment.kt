@@ -32,13 +32,17 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             toolbar.setNavigationOnClickListener { // 툴바 뒤로가기
                 findNavController().popBackStack()
             }
+            ivShoppingCart.setOnClickListener {
+                findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
+            }
             tvSellerInfo.setOnClickListener { // 판매자 정보
                 // val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(marketViewModel.product.value.sellerSeq)
                 // findNavController().navigate(action)
                 findNavController().navigate(R.id.action_productDetailFragment_to_sellerDetailFragment)
             }
             btnBuy.setOnClickListener { // 구매하기 버튼
-
+                val dialog = BuyBottomSheetDialog(requireContext(), marketViewModel.product.value, listener)
+                dialog.show()
             }
         }
     }
@@ -46,6 +50,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
     private fun initViewModelCallBack() {
         marketViewModel.successMsgEvent.observe(viewLifecycleOwner){
             binding.productDto = marketViewModel.product.value
+        }
+    }
+
+    private val listener = object : BuyDialogListener { // 장바구니에 담기
+        override fun onItemClick(productSeq: Int) {
+            findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
         }
     }
 
