@@ -17,7 +17,7 @@ export default {
     //
   }),
   created() {
-      MetaMaskLogin()
-    }
+    MetaMaskLogin()
+  }
 }
 </script>
