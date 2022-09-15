@@ -14,13 +14,9 @@ interface Oauth2Api {
 
     // 회원가입 요청
     @POST("user/register")
-    suspend fun join(@Body request: JoinRequest): BaseResponse<Boolean>
+    suspend fun join(@Body request: JoinRequest): BaseResponse<OauthResponse>
 
     // 결식카드 인증 요청
     @POST("user/check-child")
     suspend fun checkCard(@Body cardNumber: String): BaseResponse<Boolean>
-
-    // 회원정보 불러오기
-    @GET("userInfo/{user-seq}")
-    suspend fun getUserInfo(@Path("user-seq") userSeq: Int): BaseResponse<UserDto>
 }

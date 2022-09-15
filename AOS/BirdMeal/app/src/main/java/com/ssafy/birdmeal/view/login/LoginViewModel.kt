@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.repository.Oauth2Repository
-import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,7 +52,10 @@ class LoginViewModel @Inject constructor(
             테스트용 코드
              */
             _email.value = email
-            _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
+            _loginMsgEvent.postValue("로그인 완료")
+            sharedPreferences.edit().putInt(USER_SEQ, 1)
+                .apply()
+            sharedPreferences.edit().putString(JWT, "").apply()
 
 //            oauth2Repository.googleLogin(code).collectLatest {
 //                Log.d(TAG, "googleLogin response: $it")
@@ -68,7 +69,7 @@ class LoginViewModel @Inject constructor(
 //                    }
 //                    // 등록된 사용자면 홈 화면으로
 //                    else {
-//                        sharedPreferences.edit().putString(USER_SEQ, it.data.data?.userDto?.userSeq.toString())
+//                        sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
 //                            .apply()
 //                        // 이미 등록된 사용자라서 토큰 바로 저장
 //                        sharedPreferences.edit().putString(JWT, it.data.data?.token).apply()
@@ -90,6 +91,9 @@ class LoginViewModel @Inject constructor(
         테스트용 코드
          */
         _joinSuccessMsgEvent.postValue("회원 가입 성공")
+        sharedPreferences.edit().putInt(USER_SEQ, 1)
+            .apply()
+        sharedPreferences.edit().putString(JWT, "").apply()
 
         /*
         oauth2Repository.join(request).collectLatest {
@@ -99,13 +103,17 @@ class LoginViewModel @Inject constructor(
 
                 // 회원가입 성공한 경우
                 if (it.data.success) {
-                    _successMsgEvent.postValue("회원 가입 성공")
+                    sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
+                        .apply()
+                    sharedPreferences.edit().putString(JWT, it.data.data?.token).apply()
+                    _joinSuccessMsgEvent.postValue("회원 가입 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
-         */
+        */
+
     }
 
     // 결식카드 맞는지 확인

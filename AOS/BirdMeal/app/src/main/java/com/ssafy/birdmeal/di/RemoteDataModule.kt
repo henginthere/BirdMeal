@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ssafy.birdmeal.api.Oauth2Api
 import com.ssafy.birdmeal.api.ProductApi
+import com.ssafy.birdmeal.api.UserApi
 import com.ssafy.birdmeal.utils.AccessTokenInterceptor
 import com.ssafy.birdmeal.utils.BASE_URL
 import dagger.Module
@@ -58,6 +59,13 @@ object RemoteDataModule {
     @Singleton
     fun provideProductApi(retrofit: Retrofit) : ProductApi {
         return retrofit.create(ProductApi::class.java)
+    }
+
+    // UserApi DI
+    @Provides
+    @Singleton
+    fun provideUserApi(retrofit: Retrofit) : UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 
 }
