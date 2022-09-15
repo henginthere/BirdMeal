@@ -47,11 +47,12 @@ public class SellerInfoService {
 
     // 판매자 정보 수정
     public boolean updateSellerInfo(SellerUpdateDto sellerUpdateDto) {
-        // 판매자 정보가 없으면 false
-        if (sellerUpdateDto == null) return false;
 
         // 먼저 SellerSeq로 Seller 정보 가져오기
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerUpdateDto.getSellerSeq());
+
+        // 판매자 정보가 없으면 false
+        if (sellerEntity == null) return false;
 
         // update 해주기
         sellerEntity.setSellerNickname(sellerUpdateDto.getSellerNickname());
