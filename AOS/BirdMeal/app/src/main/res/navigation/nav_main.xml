@@ -84,7 +84,12 @@
         android:id="@+id/sellerDetailFragment"
         android:name="com.ssafy.birdmeal.view.market.product.detail.SellerDetailFragment"
         android:label="fragment_seller_detail"
-        tools:layout="@layout/fragment_seller_detail" />
+        tools:layout="@layout/fragment_seller_detail" >
+        <argument
+            android:name="sellerSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.ssafy.birdmeal.view.market.shopping.cart.ShoppingCartFragment"

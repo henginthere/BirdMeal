@@ -23,13 +23,29 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
         }
 
         initClickListener()
+
+        initViewModelCallBack()
     }
 
     private fun initClickListener() {
         binding.apply {
-            toolbar.setNavigationOnClickListener {
+            toolbar.setNavigationOnClickListener { // 툴바 뒤로가기
                 findNavController().popBackStack()
             }
+            tvSellerInfo.setOnClickListener { // 판매자 정보
+                // val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(marketViewModel.product.value.sellerSeq)
+                // findNavController().navigate(action)
+                findNavController().navigate(R.id.action_productDetailFragment_to_sellerDetailFragment)
+            }
+            btnBuy.setOnClickListener { // 구매하기 버튼
+
+            }
+        }
+    }
+
+    private fun initViewModelCallBack() {
+        marketViewModel.successMsgEvent.observe(viewLifecycleOwner){
+            binding.productDto = marketViewModel.product.value
         }
     }
 
