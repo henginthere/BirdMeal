@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+  <v-app>
+    회원가입
+  </v-app>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+  <v-app>
+    오더 뷰
+  </v-app>
 </template>
 
 <script>

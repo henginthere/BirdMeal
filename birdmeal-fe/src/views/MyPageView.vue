@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+  <v-app>
+    마이 페이지
+  </v-app>
 </template>
 
 <script>

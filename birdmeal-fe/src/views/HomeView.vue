@@ -1,5 +1,7 @@
 <template>
-
+  <v-app>
+    홈 뷰
+  </v-app>
 </template>
 
 <script>

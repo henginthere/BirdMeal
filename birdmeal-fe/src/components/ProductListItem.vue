@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    프로덕트 리스트 아이템 컴포넌트
   </div>
 </template>
 

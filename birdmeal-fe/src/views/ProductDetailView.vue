@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+  <v-app>
+    상품 디테일 뷰
+  </v-app>
 </template>
 
 <script>

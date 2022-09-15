@@ -1,7 +1,7 @@
 <template>
-  <div>
-
-  </div>
+  <v-app>
+    상품목록
+  </v-app>
 </template>
 
 <script>

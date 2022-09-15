@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    오더 디테일 아이템 리스트 컴포넌트
   </div>
 </template>
 
