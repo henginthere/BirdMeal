@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, Long> {
     List<OrderDetailEntity> findAllByOrderSeq(long orderSeq);
+
+    OrderDetailEntity findByOrderDetailSeq(Long orderDetailSeq);
 }
