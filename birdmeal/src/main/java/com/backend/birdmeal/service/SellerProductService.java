@@ -64,4 +64,21 @@ public class SellerProductService {
 
         return true;
     }
+
+    // 상품 삭제
+    public boolean deleteSellerProduct(long productSeq){
+        // 상품 불러오기
+        ProductEntity productEntity = sellerProductRepository.findByProductSeq(productSeq);
+
+        // 상품이 없으면 false
+        if(productEntity == null) return false;
+
+        // 삭제하기 ( soft delete )
+        productEntity.setProductIsDeleted(true);
+
+        // 저장
+        sellerProductRepository.save(productEntity);
+
+        return true;
+    }
 }
