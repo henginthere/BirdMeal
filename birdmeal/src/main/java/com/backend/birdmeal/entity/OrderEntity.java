@@ -30,8 +30,4 @@ public class OrderEntity {
     @Column(name = "order_date", length = 30)
     private String orderDate;
 
-    @Basic
-    @Column(name = "seller_seq")
-    private Long sellerSeq;
-
 }
