@@ -1,6 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.ProductDto;
+import com.backend.birdmeal.dto.ProductUpdateDto;
 import com.backend.birdmeal.service.SellerProductService;
 import com.backend.birdmeal.util.ResponseFrame;
 import io.swagger.annotations.Api;
@@ -8,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api("SellerProductController")
@@ -42,17 +40,24 @@ public class SellerProductController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-//    /**
-//     * 상품 정보 수정
-//     *
-//     * @param productDto
-//     * @return Object
-//     */
-//
-//    @ApiOperation(value="상품 정보 수정",response = Object.class)
-//    @PostMapping("")
-//    public ResponseEntity<?> updateSellerProduct(@RequestBody ProductDto productDto){
-//        ResponseFrame<?> res = ResponseFrame.of(sellerProductService.setSellerProduct(productDto),"상품 정보 수정을 성공했습니다.");
-//        return new ResponseEntity<>(res, HttpStatus.OK);
-//    }
+    /**
+     * 상품 정보 수정
+     *
+     * @param productUpdateDto
+     * @return Object
+     */
+
+    @ApiOperation(value="상품 정보 수정",response = Object.class)
+    @PutMapping("")
+    public ResponseEntity<?> updateSellerProduct(@RequestBody ProductUpdateDto productUpdateDto){
+        boolean success = sellerProductService.updateSellerProduct(productUpdateDto);
+        ResponseFrame<?> res;
+
+        if(success){
+            res = ResponseFrame.of(success,"상품 정보 수정을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success,"상품이 없어 상품 정보 수정을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }
