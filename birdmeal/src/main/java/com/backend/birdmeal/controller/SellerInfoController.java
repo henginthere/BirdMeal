@@ -30,9 +30,13 @@ public class SellerInfoController {
     @GetMapping("/{seller-seq}")
     public ResponseEntity<?> getSellerInfo(@PathVariable("seller-seq") long sellerSeq){
         SellerDto sellerDto = sellerInfoService.getSellerInfo(sellerSeq);
+        ResponseFrame<?> res;
 
-        ResponseFrame<?> res = ResponseFrame.of(sellerDto,"판매자 정보 요청을 성공했습니다.");
-
+        if(sellerDto == null){
+            res = ResponseFrame.of(false, "판매자가 없어서 판매자 정보 요청을 실패했습니다.");
+        }else {
+            res = ResponseFrame.of(sellerDto, "판매자 정보 요청을 성공했습니다.");
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -48,9 +52,13 @@ public class SellerInfoController {
     @PostMapping("")
     public ResponseEntity<?> setSellerInfo(@RequestBody SellerDto sellerDto){
         boolean success = sellerInfoService.setSellerInfo(sellerDto);
+        ResponseFrame<?> res;
 
-        ResponseFrame<?> res = ResponseFrame.of(success,"판매자 정보 등록을 성공했습니다.");
-
+        if(success) {
+           res = ResponseFrame.of(success, "판매자 정보 등록을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "판매자 정보가 없어서 판매자 정보 등록을 실패했습니다.");
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -66,9 +74,12 @@ public class SellerInfoController {
     @PutMapping("")
     public ResponseEntity<?> updateSellerInfo(@RequestBody SellerUpdateDto sellerUpdateDto){
         boolean success = sellerInfoService.updateSellerInfo(sellerUpdateDto);
-
-        ResponseFrame<?> res = ResponseFrame.of(success,"판매자 정보 수정을 성공했습니다.");
-
+        ResponseFrame<?> res;
+        if(success) {
+            res = ResponseFrame.of(success, "판매자 정보 수정을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "판매자가 존재하지 않아 판매자 정보 수정을 실패했습니다.");
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -85,9 +96,9 @@ public class SellerInfoController {
         boolean success = sellerInfoService.checkSellerInfo(sellerSeq);
         ResponseFrame<?> res;
         if(success) {
-            res = ResponseFrame.of("true", "판매자 정보가 있습니다.");
+            res = ResponseFrame.of(success, "판매자 정보가 있습니다.");
         }else{
-            res = ResponseFrame.of("false", "판매자 정보가 없습니다.");
+            res = ResponseFrame.of(success, "판매자 정보가 없습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
