@@ -50,7 +50,8 @@
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
-            tools:listitem="@layout/item_category_horizon"/>
+            tools:listitem="@layout/item_category_horizon"
+            submitList="@{marketVM.cateList}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_list"
