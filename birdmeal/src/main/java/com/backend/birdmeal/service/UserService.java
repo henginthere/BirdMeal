@@ -1,9 +1,6 @@
 package com.backend.birdmeal.service;
 
-import com.backend.birdmeal.dto.RegistUserDto;
-import com.backend.birdmeal.dto.ResponseLoginDto;
-import com.backend.birdmeal.dto.UpdateUserDto;
-import com.backend.birdmeal.dto.UserDto;
+import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.entity.AuthorityEntity;
 import com.backend.birdmeal.entity.StarvingChildEntity;
 import com.backend.birdmeal.entity.UserEntity;
@@ -116,18 +113,16 @@ public class UserService {
         return true;
     }
 
-    public boolean checkChild(Long userSeq, String cardNum){
+    public boolean checkChild(StarvingChildDto starvingChildDto){
 
-        Long tmp = Long.parseLong(cardNum);
-        Optional<StarvingChildEntity> starvingChildOptional = starvingChildRepository.findByChildCardNum(tmp);
+        Optional<StarvingChildEntity> starvingChildOptional = starvingChildRepository.findByChildCardNum(starvingChildDto.getChildCardNum());
 
         if(starvingChildOptional.isPresent()){
             //결식 아동이라면 starvingChild에 userSeq Update
             StarvingChildEntity starvingChild = starvingChildOptional.get();
-            starvingChild.setUserSeq(userSeq);
+            starvingChild.setUserEmail(starvingChildDto.getUserEmail());
             return true;
         }
-
         return false;
     }
 
