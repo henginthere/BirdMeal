@@ -1,7 +1,7 @@
 package com.ssafy.birdmeal.utils
 
 // 서버 통신
-const val BASE_URL = "http://www.google.com"
+const val BASE_URL = "http://j7d101.p.ssafy.io:8081/api/"
 
 // JWT
 const val JWT = "JWT-AUTHENTICATION"
@@ -10,4 +10,4 @@ const val JWT = "JWT-AUTHENTICATION"
 const val USER_SEQ = "user_seq"
 
 // TAG
-const val TAG = "log_tag"
+const val TAG = "TAG"
