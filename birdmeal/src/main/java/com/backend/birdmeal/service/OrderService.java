@@ -34,8 +34,6 @@ public class OrderService {
 
         if(userEntity.get().getUserRole()) isChild = true;
 
-        System.out.println("아이인지 아닌지 " + isChild);
-
         // 리스트가 없으면 주문 실패
         if(orderRequestList.size()==0) return false;
 
@@ -46,7 +44,8 @@ public class OrderService {
         long orderSeq = 0;
 
         // 만약 상품이 없다면 false ( 처음 것 체크 )
-        if(productRepository.findByProductSeq(orderRequestList.get(0).getProductSeq()) == null) return false;
+        ProductEntity productEntityCheck = productRepository.findByProductSeq(orderRequestList.get(0).getProductSeq());
+        if(productEntityCheck == null || productEntityCheck.isProductIsDeleted()) return false;
 
         // 주문 Table에 컬럼 생성하기 - 1개
         OrderEntity orderEntity = OrderEntity.builder()

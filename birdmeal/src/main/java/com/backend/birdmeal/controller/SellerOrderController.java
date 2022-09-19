@@ -24,13 +24,13 @@ public class SellerOrderController {
     private final SellerOrderService sellerOrderService;
     private final SellerInfoService sellerInfoService;
 
-    /**
-     * 구매 내역 목록 보기
-     *
-     * @param sellerSeq
-     * @return Object
-     */
-
+//    /**
+//     * 구매 내역 목록 보기
+//     *
+//     * @param sellerSeq
+//     * @return Object
+//     */
+//
 //    @ApiOperation(value="구매 내역 목록 보기",response = Object.class)
 //    @GetMapping("/{seller-seq}")
 //    public ResponseEntity<?> getSellerOrderProduct(@PathVariable("seller-seq") long sellerSeq){
@@ -48,7 +48,7 @@ public class SellerOrderController {
 //        }
 //        return new ResponseEntity<>(res, HttpStatus.OK);
 //    }
-
+//
 
     /**
      * 배송 정보 입력

@@ -80,13 +80,14 @@ public class SellerInfoService {
     // 판매자 정보 등록
     public boolean setSellerInfo(SellerDto sellerDto) {
         // 판매자 정보가 없으면 false
-        if (sellerDto == null) return false;
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerDto.getSellerSeq());
+        if (sellerEntity == null) return false;
 
         // Dto -> Entity
-        SellerEntity sellerEntity = SellerMapper.MAPPER.toEntity(sellerDto);
+        SellerEntity sellerEntitySave = SellerMapper.MAPPER.toEntity(sellerDto);
 
         // 저장하기
-        sellerInfoRepository.save(sellerEntity);
+        sellerInfoRepository.save(sellerEntitySave);
 
         return true;
     }
