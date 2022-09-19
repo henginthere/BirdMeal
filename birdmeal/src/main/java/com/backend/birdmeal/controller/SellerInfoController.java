@@ -1,6 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.*;
+import com.backend.birdmeal.repository.SellerInfoRepository;
 import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.util.ResponseFrame;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -25,6 +26,7 @@ import java.security.GeneralSecurityException;
 public class SellerInfoController {
 
     private final SellerInfoService sellerInfoService;
+    private final SellerInfoRepository sellerInfoRepository;
 
     /**
      * 회원가입
@@ -48,58 +50,56 @@ public class SellerInfoController {
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
-//
-//    /**
-//     * 로그인
-//     *
-//     * @param googleAccessToken
-//     * @return Object
-//     */
-//    @ApiOperation(value="로그인",response = Object.class)
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
-//        ResponseFrame<?> res;
-//        String userEmail;
-//        JsonFactory jsonFactory = new JacksonFactory();
-//        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
-//
-//
-//        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(new NetHttpTransport(),
-//                new JacksonFactory());
-//        if (verifier.verify(idToken)) {
-//            GoogleIdToken.Payload payload = idToken.getPayload();
-//            userEmail = payload.getEmail();
-//            System.out.println("User Email: "+userEmail);
-////            String userNickname = (String)payload.get("name");
-////            System.out.println("User Name: "+userNickname);
-//        }
-//        else {
-//            //Invalid ID token
-//            System.out.println("만료된 토큰");
-//            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-//            return new ResponseEntity<>(res, HttpStatus.OK);
-//        }
-//
-//        //t_user에 email 존재 여부 확인
-//        if(userRepository.findByUserEmail(userEmail)!=null){
-//
-//            ResponseLoginDto responseLoginDto = userService.login(userEmail);
-//            if(responseLoginDto!=null){
-//                res = ResponseFrame.of(responseLoginDto,"로그인에 성공하였습니다.");
-//                return new ResponseEntity<>(res,HttpStatus.OK);
-//            }
-//            else{
-//                res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-//                return new ResponseEntity<>(res, HttpStatus.OK);
-//            }
-//
-//        }
-//
-//        res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-//        return new ResponseEntity<>(res, HttpStatus.OK);
-//    }
-//
-//
+
+    /**
+     * 로그인
+     *
+     * @param googleAccessToken
+     * @return Object
+     */
+    @ApiOperation(value="로그인",response = Object.class)
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
+        ResponseFrame<?> res;
+        String sellerEmail;
+        JsonFactory jsonFactory = new JacksonFactory();
+        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
+
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(new NetHttpTransport(),
+                new JacksonFactory());
+        // 토큰 유효성 확인
+        if (verifier.verify(idToken)) {
+            GoogleIdToken.Payload payload = idToken.getPayload();
+            sellerEmail = payload.getEmail();
+        }
+        else {
+            //Invalid ID token
+            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
+
+        //t_seller에 email 존재 여부 확인
+        if(sellerInfoRepository.findBySellerEmail(sellerEmail)!=null){
+
+            ResponseSellerLoginDto responseSellerLoginDto = sellerInfoService.login(sellerEmail);
+
+            if(responseSellerLoginDto!=null){
+                res = ResponseFrame.of(responseSellerLoginDto,"로그인에 성공하였습니다.");
+                return new ResponseEntity<>(res,HttpStatus.OK);
+            }
+            else{
+                res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+                return new ResponseEntity<>(res, HttpStatus.OK);
+            }
+
+        }
+
+        res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
 
 
     /**
