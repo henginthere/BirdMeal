@@ -17,8 +17,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
     override fun init() {
         this.productSeq = args.productSeq
         if(productSeq > 0){ // 파라미터가 잘 전달된 경우
-            // marketViewModel.getProduct(productSeq)
-            showToast("productSeq 잘 받았습니다.")
+            marketViewModel.getProduct(productSeq)
         } else { // 파라미터가 전달되지 않은 경우
             showToast("productSeq 전달받지 못했스빈다.")
         }
@@ -49,13 +48,15 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
 
     private fun initViewModelCallBack() {
         marketViewModel.successMsgEvent.observe(viewLifecycleOwner){
-            binding.productDto = marketViewModel.product.value
+            binding.product = marketViewModel.product.value
         }
     }
 
     private val listener = object : BuyDialogListener { // 장바구니에 담기
         override fun onItemClick(productSeq: Int) {
-            findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
+            // RoomDB에 담는 로직
+
+            findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment) // 장바구니 이동
         }
     }
 

@@ -14,17 +14,18 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     private val marketViewModel by activityViewModels<MarketViewModel>()
     private val args by navArgs<ProductListFragmentArgs>()
     private var categorySeq = -1
+    private var categoryName = ""
 
     override fun init() {
         this.categorySeq = args.categorySeq
+        this.categoryName = args.categoryName
         if(categorySeq > 0){ // 파라미터가 잘 전달된 경우
-            // marketViewModel.getProductList(categorySeq)
-            showToast("상품 카테고리Seq 잘 전달 받았습니다.")
+            marketViewModel.getProductList(1)
         } else { // 파라미터가 전달되지 않은 경우
             showToast("상품 카테고리Seq 전달 받지 못했습니다.")
         }
-
         binding.marketVM = marketViewModel
+        binding.tvToolbar.text = categoryName
 
         initRecyclerView()
 
@@ -36,7 +37,6 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     private fun initRecyclerView() {
         val categoryAdapter = CategoryHorizonAdapter(categoryListener)
         val productAdapter = ProductListAdapter(productListener)
-        productAdapter.submitList(marketViewModel.productList)
 
         binding.apply {
             rvCategoryHorizon.adapter = categoryAdapter
@@ -62,7 +62,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     }
 
     private val categoryListener = object : CategoryListener {
-        override fun onItemClick(categorySeq: Int) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
+        override fun onItemClick(categorySeq: Int, categoryName: String) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
             showToast("재호출 합니다.")
         }
     }

@@ -39,8 +39,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     }
 
     private val listener = object : CategoryListener{
-        override fun onItemClick(categorySeq: Int) {
-            val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(categorySeq)
+        override fun onItemClick(categorySeq: Int, categoryName: String) {
+            val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(categorySeq, categoryName)
             findNavController().navigate(action)
         }
     }

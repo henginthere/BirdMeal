@@ -15,7 +15,7 @@ class CategoryGridAdapter(private val listener: CategoryListener)
 
         init {
             binding.root.setOnClickListener {
-                listener.onItemClick(getItem(adapterPosition).categorySeq)
+                listener.onItemClick(getItem(adapterPosition).categorySeq, getItem(absoluteAdapterPosition).categoryName)
             }
         }
 

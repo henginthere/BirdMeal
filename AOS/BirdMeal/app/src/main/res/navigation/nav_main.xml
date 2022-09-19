@@ -66,6 +66,9 @@
             android:name="categorySeq"
             app:argType="integer"
             android:defaultValue="-1" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
