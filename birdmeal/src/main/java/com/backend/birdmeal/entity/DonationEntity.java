@@ -10,17 +10,17 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "t_donation_history", schema = "birdmeal", catalog = "")
-public class DonationHistoryEntity {
+@Table(name = "t_donation", schema = "birdmeal", catalog = "")
+public class DonationEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "donation_seq")
-    private Long donationHistorySeq;
+    private long donationSeq;
 
     @Basic
     @Column(name = "user_seq")
-    private Long userSeq;
+    private long userSeq;
 
     @Basic
     @Column(name = "donation_price")
