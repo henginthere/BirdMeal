@@ -1,8 +1,15 @@
 package com.backend.birdmeal.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -10,6 +17,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "t_seller", schema = "birdmeal", catalog = "")
 public class SellerEntity {
 
@@ -43,10 +51,19 @@ public class SellerEntity {
     private String sellerInfo;
 
     @Basic
-    @Column(name="seller_create_date",length = 30)
-    private String sellerCreateDate;
+    @CreatedDate
+    @Column(name="seller_create_date")
+    private LocalDateTime sellerCreateDate;
 
     @Basic
-    @Column(name="seller_update_date",length = 30)
-    private String sellerUpdateDate;
+    @LastModifiedDate
+    @Column(name="seller_update_date")
+    private LocalDateTime sellerUpdateDate;
+
+    @Basic
+    @JsonIgnore
+    // 쓰기 전용 및 조회 불가
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(name="seller_pass",length = 100)
+    private String sellerPass;
 }

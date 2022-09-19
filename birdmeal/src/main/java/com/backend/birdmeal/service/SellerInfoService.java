@@ -1,11 +1,16 @@
 package com.backend.birdmeal.service;
 
+import com.backend.birdmeal.dto.RegistSellerDto;
 import com.backend.birdmeal.dto.SellerDto;
 import com.backend.birdmeal.dto.SellerUpdateDto;
+import com.backend.birdmeal.entity.AuthorityEntity;
 import com.backend.birdmeal.entity.SellerEntity;
+import com.backend.birdmeal.entity.UserEntity;
 import com.backend.birdmeal.mapper.SellerMapper;
+import com.backend.birdmeal.repository.AuthorityRepository;
 import com.backend.birdmeal.repository.SellerInfoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,6 +21,33 @@ import javax.transaction.Transactional;
 public class SellerInfoService {
 
     private final SellerInfoRepository sellerInfoRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    // 판매자 회원가입
+    public boolean signup(RegistSellerDto registSellerDto) {
+        // 이메일 정보가 중복이면 false
+        if(sellerInfoRepository.findBySellerEmail(registSellerDto.getSellerEmail()) != null){
+            return false;
+        }
+        
+        // 이메일 아이디로 비밀번호
+        String pass = registSellerDto.getSellerEmail().split("@")[0];
+
+        // 판매자 정보
+        SellerEntity sellerEntity = SellerEntity.builder()
+                .sellerSeq(0)
+                .sellerEmail(registSellerDto.getSellerEmail())
+                .sellerNickname(registSellerDto.getSellerNickname())
+                .sellerPass(passwordEncoder.encode(pass))
+                .build();
+
+        sellerInfoRepository.save(sellerEntity);
+
+        return true;
+    }
+
+
 
     // 판매자 정보 요청
     public SellerDto getSellerInfo(long sellerSeq) {
@@ -80,4 +112,5 @@ public class SellerInfoService {
             return true;
         }
     }
+
 }
