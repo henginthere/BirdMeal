@@ -1,9 +1,6 @@
 package com.backend.birdmeal.controller;
 
-import com.backend.birdmeal.dto.RegistUserDto;
-import com.backend.birdmeal.dto.ResponseLoginDto;
-import com.backend.birdmeal.dto.UpdateUserDto;
-import com.backend.birdmeal.dto.UserDto;
+import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.UserService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -58,14 +55,15 @@ public class UserController {
     /**
      * 로그인
      *
-     * @param googleAccessToken
+     * @param googleLoginDto
      * @return Object
      */
     @ApiOperation(value="로그인",response = Object.class)
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
+    public ResponseEntity<?> login(@RequestBody GoogleLoginDto googleLoginDto) throws IOException, GeneralSecurityException {
         ResponseFrame<?> res;
         String userEmail;
+        String googleAccessToken = googleLoginDto.getGoogleAccessToken();
         JsonFactory jsonFactory = new JacksonFactory();
         GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
 
@@ -161,7 +159,8 @@ public class UserController {
     @ApiOperation(value="결식 아동 확인",response = Object.class)
     @PostMapping("/{user-seq}/check-child")
     public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable("user-seq") Long userSeq){
-        boolean success = userService.checkChild(userSeq, cardNum);
+        //boolean success = userService.checkChild(userSeq, cardNum);
+        boolean success = true;
         ResponseFrame<?> res;
 
         if(success){
