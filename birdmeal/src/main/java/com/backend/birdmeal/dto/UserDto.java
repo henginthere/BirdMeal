@@ -16,7 +16,7 @@ public class UserDto {
     private String userNickname;
     private String userEoa;
     private String userTel;
-    private String userAddress;
+    private String userAdd;
     private boolean userChargeState;
     private String userCreateDate;
     private String userUpdateDate;
