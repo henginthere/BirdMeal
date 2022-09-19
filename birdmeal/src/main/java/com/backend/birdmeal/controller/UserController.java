@@ -177,13 +177,13 @@ public class UserController {
     /**
      * 지갑 eoa 저장
      *
-     * @param userEoa
+     * @param saveWalletDto
      * @return Object
      */
     @ApiOperation(value="지갑 eoa 저장",response = Object.class)
-    @PutMapping("/{user-seq}/wallet")
-    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable("user-seq") long userSeq){
-        boolean success = userService.saveWallet(userSeq, userEoa);
+    @PutMapping("/wallet")
+    public ResponseEntity<?> saveWallet(@RequestBody SaveWalletDto saveWalletDto){
+        boolean success = userService.saveWallet(saveWalletDto.getUserSeq(), saveWalletDto.getUserEoa());
         ResponseFrame<?> res;
 
         if(success){
