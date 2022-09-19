@@ -45,6 +45,10 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 
+	// LocalDateTime 포맷처리
+	compileOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+
 }
 
 tasks.named('test') {

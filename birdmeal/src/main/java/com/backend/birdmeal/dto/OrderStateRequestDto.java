@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderStateRequestDto {
-    private Long orderSeq;
+    private long orderSeq;
     private boolean orderToState;
 }

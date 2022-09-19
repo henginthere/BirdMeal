@@ -2,11 +2,6 @@ package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.entity.OrderDetailEntity;
-import com.backend.birdmeal.entity.OrderEntity;
-import com.backend.birdmeal.entity.ProductEntity;
-import com.backend.birdmeal.mapper.OrderDetailMapper;
-import com.backend.birdmeal.mapper.OrderMapper;
-import com.backend.birdmeal.mapper.ProductMapper;
 import com.backend.birdmeal.repository.OrderDetailRepository;
 import com.backend.birdmeal.repository.OrderRepository;
 import com.backend.birdmeal.repository.ProductRepository;
@@ -14,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

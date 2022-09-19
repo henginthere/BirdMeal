@@ -116,15 +116,12 @@ public class SellerInfoService {
     public boolean checkSellerInfo(long sellerSeq) {
         // db에서 판매자 정보 가져오기
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerSeq);
+        if(sellerEntity == null) return false;
 
         // 판매자 정보가 있으면 true, 없으면 false
         String sellerInfo = sellerEntity.getSellerInfo();
         
-        if (sellerInfo == null) {
-            return false;
-        } else {
             return true;
-        }
     }
 
 }

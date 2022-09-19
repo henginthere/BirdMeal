@@ -7,6 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface ProductMapper extends StructMapper<ProductDto, ProductEntity> {
+
     ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
     @Override

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SaveDonationDto {
 
-    private Long userSeq;
+    private long userSeq;
     private int donationPrice;
     private boolean donationType;
 

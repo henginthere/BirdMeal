@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DonationDto {
-    private Long donationSeq;
-    private Long userSeq;
+    private long donationSeq;
+    private long userSeq;
     private int donationPrice;
     private String donationDate;
     private boolean donationType;

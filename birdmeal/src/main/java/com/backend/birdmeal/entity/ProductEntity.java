@@ -1,8 +1,11 @@
 package com.backend.birdmeal.entity;
 
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -10,21 +13,22 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "t_product", schema = "birdmeal", catalog = "")
 public class ProductEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "product_seq")
-    private Long productSeq;
+    private long productSeq;
 
     @Basic
     @Column(name = "category_seq")
-    private Long categorySeq;
+    private long categorySeq;
 
     @Basic
     @Column(name = "seller_seq")
-    private Long sellerSeq;
+    private long sellerSeq;
 
     @Basic
     @Column(name = "product_name", length = 256)
@@ -51,11 +55,22 @@ public class ProductEntity {
     private boolean productIsDeleted;
 
     @Basic
-    @Column(name = "product_create_date", length = 30)
+    @Column(name = "product_create_date")
     private String productCreateDate;
 
     @Basic
-    @Column(name = "product_update_date", length = 30)
+    @Column(name = "product_update_date")
     private String productUpdateDate;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.productCreateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.productUpdateDate = this.productCreateDate;
+    }
+
+    @PreUpdate
+    private void onPreUpdate(){
+        this.productUpdateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
 
 }

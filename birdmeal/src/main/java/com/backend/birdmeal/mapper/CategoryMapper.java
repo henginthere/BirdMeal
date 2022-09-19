@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper extends StructMapper<CategoryDto, CategoryEntity> {
-
     CategoryMapper MAPPER = Mappers.getMapper(CategoryMapper.class);
 
     @Override
@@ -22,5 +21,6 @@ public interface CategoryMapper extends StructMapper<CategoryDto, CategoryEntity
 
     @Override
     List<CategoryEntity> toEntityList(List<CategoryDto> dtoList);
+
 
 }

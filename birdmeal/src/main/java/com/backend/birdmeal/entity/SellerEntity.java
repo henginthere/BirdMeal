@@ -3,13 +3,11 @@ package com.backend.birdmeal.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -51,14 +49,12 @@ public class SellerEntity {
     private String sellerInfo;
 
     @Basic
-    @CreatedDate
-    @Column(name="seller_create_date")
-    private LocalDateTime sellerCreateDate;
+    @Column(name="seller_create_date", length = 30)
+    private String sellerCreateDate;
 
     @Basic
-    @LastModifiedDate
-    @Column(name="seller_update_date")
-    private LocalDateTime sellerUpdateDate;
+    @Column(name="seller_update_date", length = 30)
+    private String sellerUpdateDate;
 
     @Basic
     @JsonIgnore
@@ -66,4 +62,16 @@ public class SellerEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name="seller_pass",length = 100)
     private String sellerPass;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.sellerCreateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.sellerUpdateDate = this.sellerCreateDate;
+    }
+
+    @PreUpdate
+    private void onPreUpdate(){
+        this.sellerUpdateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
+
 }

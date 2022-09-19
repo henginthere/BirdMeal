@@ -3,12 +3,12 @@ package com.backend.birdmeal.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Entity
@@ -62,12 +62,10 @@ public class UserEntity implements Serializable {
     @Column(name="user_charge_state", columnDefinition = "boolean default false")
     private boolean userChargeState;
 
-    @CreatedDate
     @Basic
     @Column(name = "user_regist_date", length = 30)
     private String userRegistDate;
 
-    @LastModifiedDate
     @Basic
     @Column(name = "user_update_date", length = 30)
     private String userUpdateDate;
@@ -78,4 +76,15 @@ public class UserEntity implements Serializable {
             joinColumns = {@JoinColumn(name = "email", referencedColumnName = "user_email")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<AuthorityEntity> authorities;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.userRegistDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        this.userUpdateDate = this.userRegistDate;
+    }
+
+    @PreUpdate
+    private void onPreUpdate(){
+        this.userUpdateDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    }
 }

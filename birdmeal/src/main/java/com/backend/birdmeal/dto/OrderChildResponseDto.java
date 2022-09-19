@@ -11,14 +11,10 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyOrderDetailResponseDto {
-    private long orderDetailSeq;
+public class OrderChildResponseDto {
     private String productName;
     private int productPrice;
+    private String productThumbnailImg;
     private int orderQuantity;
     private String orderDate;
-    private boolean orderToState;
-    private String orderDeliveryNumber;
-    private String orderDeliveryCompany;
-    private String productThumbnailImg;
 }

@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MyOrderResponseDto {
 
-    private Long orderSeq;
-    private Long userSeq;
+    private long orderSeq;
+    private long userSeq;
     private int orderPrice;
-    private LocalDateTime orderDate;
+    private String orderDate;
     private String orderFirstName;
     private Long orderCnt;
     private String productThumbnailImg;

@@ -14,28 +14,45 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "t_order", schema = "birdmeal", catalog = "")
-public class OrderEntity {
+@Table(name = "t_order_child", schema = "birdmeal", catalog = "")
+public class OrderChildEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "order_seq")
-    private long orderSeq;
+    @Column(name = "order_child_detail_seq")
+    private long orderChildDetailSeq;
 
     @Basic
     @Column(name = "user_seq")
     private long userSeq;
 
     @Basic
-    @Column(name = "order_price")
-    private int orderPrice; //총 가격
+    @Column(name = "user_nickname")
+    private String userNickname;
 
     @Basic
     @Column(name = "order_date")
     private String orderDate;
 
+    @Basic
+    @Column(name = "order_quantity")
+    private int orderQuantity;
+
+    @Basic
+    @Column(name = "product_name")
+    private String productName;
+
+    @Basic
+    @Column(name = "product_price")
+    private int productPrice;
+
+    @Basic
+    @Column(name = "product_thumbnail_img")
+    private String productThumbnailImg;
+
     @PrePersist
     public void onPrePersist(){
         this.orderDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     }
+
 }

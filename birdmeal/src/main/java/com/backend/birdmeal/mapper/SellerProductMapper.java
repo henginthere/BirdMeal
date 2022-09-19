@@ -12,11 +12,11 @@ public interface SellerProductMapper extends StructMapper<ProductDto, ProductEnt
     SellerProductMapper MAPPER = Mappers.getMapper(SellerProductMapper.class);
 
     @Override
-    ProductEntity toEntity(final ProductDto productDto);
-
-    @Override
     ProductDto toDto(final ProductEntity productEntity);
 
     @Override
+    ProductEntity toEntity(final ProductDto productDto);
+
     List<ProductDto> toDtoList(List<ProductEntity> entityList);
+
 }
