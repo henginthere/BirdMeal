@@ -154,14 +154,13 @@ public class UserController {
     /**
      * 결식 아동 확인
      *
-     * @param cardNum
+     * @param starvingChildDto
      * @return Object
      */
     @ApiOperation(value="결식 아동 확인",response = Object.class)
-    @PostMapping("/{user-seq}/check-child")
-    public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable("user-seq") Long userSeq){
-        //boolean success = userService.checkChild(userSeq, cardNum);
-        boolean success = true;
+    @PostMapping("/check-child")
+    public ResponseEntity<?> checkChild(@RequestBody StarvingChildDto starvingChildDto){
+        boolean success = userService.checkChild(starvingChildDto);
         ResponseFrame<?> res;
 
         if(success){

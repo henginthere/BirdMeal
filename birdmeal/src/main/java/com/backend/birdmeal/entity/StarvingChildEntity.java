@@ -24,7 +24,7 @@ public class StarvingChildEntity {
     private String userEmail;
 
     @Basic
-    @Column(name="child_card_num")
-    private Long childCardNum;
+    @Column(name="child_card_num",length = 50)
+    private String childCardNum;
 
 }
