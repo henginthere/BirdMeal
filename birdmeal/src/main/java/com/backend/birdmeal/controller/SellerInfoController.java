@@ -59,11 +59,11 @@ public class SellerInfoController {
      */
     @ApiOperation(value="로그인",response = Object.class)
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
+    public ResponseEntity<?> login(@RequestBody GoogleLoginDto googleAccessToken) throws IOException, GeneralSecurityException {
         ResponseFrame<?> res;
         String sellerEmail;
         JsonFactory jsonFactory = new JacksonFactory();
-        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
+        GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken.getGoogleAccessToken());
 
 
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier(new NetHttpTransport(),
