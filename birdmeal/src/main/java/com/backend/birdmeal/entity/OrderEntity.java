@@ -1,8 +1,11 @@
 package com.backend.birdmeal.entity;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -10,6 +13,7 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "t_order", schema = "birdmeal", catalog = "")
 public class OrderEntity {
 
@@ -26,8 +30,8 @@ public class OrderEntity {
     @Column(name = "order_price")
     private int orderPrice; //총 가격
 
-    @Basic
-    @Column(name = "order_date", length = 30)
-    private String orderDate;
+    @CreatedDate
+    @Column(name = "order_date")
+    private LocalDateTime orderDate;
 
 }

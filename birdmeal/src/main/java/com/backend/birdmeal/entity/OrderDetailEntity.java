@@ -17,19 +17,19 @@ public class OrderDetailEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "order_detail_seq")
-    private Long orderDetailSeq;
+    private long orderDetailSeq;
 
     @Basic
     @Column(name = "order_seq")
-    private Long orderSeq;
+    private long orderSeq;
 
     @Basic
     @Column(name = "product_seq")
-    private Long productSeq;
+    private long productSeq;
 
     @Basic
     @Column(name = "seller_seq")
-    private Long sellerSeq;
+    private long sellerSeq;
 
     @Basic
     @Column(name = "order_quantity")

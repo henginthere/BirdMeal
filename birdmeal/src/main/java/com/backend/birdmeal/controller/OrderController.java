@@ -1,9 +1,12 @@
 package com.backend.birdmeal.controller;
 
+import com.backend.birdmeal.dto.MyOrderDetailResponseDto;
 import com.backend.birdmeal.dto.MyOrderResponseDto;
 import com.backend.birdmeal.dto.OrderRequestDto;
 import com.backend.birdmeal.dto.OrderStateRequestDto;
+import com.backend.birdmeal.entity.OrderEntity;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.repository.OrderRepository;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.OrderService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -27,6 +30,7 @@ public class OrderController {
     // 나중에 Service로 대체 ( 회원정보 불러오기로 )
     private final UserRepository userRepository; 
 
+    private final OrderRepository orderRepository;
     /**
      * 주문 내역 저장
      *
@@ -67,6 +71,34 @@ public class OrderController {
         
         if(userEntity.isPresent()) {
             res = ResponseFrame.of(list, "내 주문 불러오기을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(false, "사용자가 없어 내 주문 불러오기을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * 내 주문 상세 내역 불러오기
+     *
+     * @param userSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="내 주문 상세 내역 불러오기",response = Object.class)
+    @GetMapping("/list/{user-seq}/{order-seq}")
+    public ResponseEntity<?> getMyOrderInfo(@PathVariable("user-seq") long userSeq, @PathVariable("order-seq") long orderSeq){
+        List<MyOrderDetailResponseDto> list = orderService.getMyOrderDetailInfo(userSeq,orderSeq);
+        ResponseFrame<?> res;
+
+        // 회원정보 확인
+        Optional<UserEntity> userEntity = userRepository.findByUserSeq(userSeq);
+
+        if(userEntity.isPresent()) {
+            if(list != null){
+            res = ResponseFrame.of(list, "내 주문 불러오기을 성공했습니다.");
+            }else{
+                res = ResponseFrame.of(false, "주문이 없어 내 주문 불러오기을 실패했습니다.");
+            }
         }else{
             res = ResponseFrame.of(false, "사용자가 없어 내 주문 불러오기을 실패했습니다.");
         }
