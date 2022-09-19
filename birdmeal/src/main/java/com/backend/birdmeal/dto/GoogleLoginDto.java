@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StarvingChildDto {
+public class GoogleLoginDto {
 
-    private Long starvingChildSeq;
-    private String userEmail;
-    private int childCardNum;
+    private String googleAccessToken;
 
 }

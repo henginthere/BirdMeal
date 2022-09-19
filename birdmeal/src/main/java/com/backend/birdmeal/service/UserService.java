@@ -116,7 +116,7 @@ public class UserService {
         return true;
     }
 
-    public boolean checkChild(Long userSeq, String cardNum){
+    public boolean checkChild(String userEmail, String cardNum){
 
         Long tmp = Long.parseLong(cardNum);
         Optional<StarvingChildEntity> starvingChildOptional = starvingChildRepository.findByChildCardNum(tmp);
@@ -124,7 +124,7 @@ public class UserService {
         if(starvingChildOptional.isPresent()){
             //결식 아동이라면 starvingChild에 userSeq Update
             StarvingChildEntity starvingChild = starvingChildOptional.get();
-            starvingChild.setUserSeq(userSeq);
+            starvingChild.setUserEmail(userEmail);
             return true;
         }
 
