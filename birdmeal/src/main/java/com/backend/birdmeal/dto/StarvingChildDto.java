@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StarvingChildDto {
 
-    private Long starvingChildSeq;
     private String userEmail;
-    private int childCardNum;
+    private String childCardNum;
 
 }
