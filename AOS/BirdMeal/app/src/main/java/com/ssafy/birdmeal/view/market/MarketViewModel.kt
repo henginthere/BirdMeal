@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.view.market
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
@@ -9,7 +8,6 @@ import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,11 +32,11 @@ class MarketViewModel @Inject constructor(
     val productList : List<ProductDto>
         = listOf(
         ProductDto(1, 1, 1, "", 11, "", "", "", false, "", ""),
-        ProductDto(2, 1, 1, "", 11, "", "", "", false, "", ""),
-        ProductDto(3, 1, 1, "", 11, "", "", "", false, "", ""),
-        ProductDto(4, 1, 1, "", 11, "", "", "", false, "", ""),
-        ProductDto(5, 1, 1, "", 11, "", "", "", false, "", ""),
-        ProductDto(6, 1, 1, "", 11, "", "", "", false, "", ""),
+        ProductDto(2, 1, 2, "", 11, "", "", "", false, "", ""),
+        ProductDto(3, 1, 3, "", 11, "", "", "", false, "", ""),
+        ProductDto(4, 1, 4, "", 11, "", "", "", false, "", ""),
+        ProductDto(5, 1, 5, "", 11, "", "", "", false, "", ""),
+        ProductDto(6, 1, 6, "", 11, "", "", "", false, "", ""),
     )
 
     private val _product : MutableStateFlow<ProductDto>
@@ -53,7 +51,6 @@ class MarketViewModel @Inject constructor(
 
     // 카테고리 목록 조회
     fun getCategoryList(){
-        Log.d(TAG, "getCategoryList: 오오호호")
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getCategoryList().collectLatest {
                 if(it is Result.Success){ // 값을 제대로 받아옴

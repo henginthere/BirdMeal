@@ -5,7 +5,9 @@
     tools:context=".view.market.product.detail.SellerDetailFragment">
 
     <data>
-
+        <variable
+            name="seller"
+            type="com.ssafy.birdmeal.model.dto.SellerDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +46,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="30dp"
-            android:text="상품 판매자 정보 화면 입니다."/>
+            android:text="@{seller.sellerNickname}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

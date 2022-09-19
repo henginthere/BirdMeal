@@ -18,8 +18,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
         this.productSeq = args.productSeq
         if(productSeq > 0){ // 파라미터가 잘 전달된 경우
             // marketViewModel.getProduct(productSeq)
+            showToast("productSeq 잘 받았습니다.")
         } else { // 파라미터가 전달되지 않은 경우
-            showToast("상품 정보를 전달 받지 못했습니다.")
+            showToast("productSeq 전달받지 못했스빈다.")
         }
 
         initClickListener()
@@ -35,10 +36,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             ivShoppingCart.setOnClickListener {
                 findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
             }
-            tvSellerInfo.setOnClickListener { // 판매자 정보
-                // val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(marketViewModel.product.value.sellerSeq)
-                // findNavController().navigate(action)
-                findNavController().navigate(R.id.action_productDetailFragment_to_sellerDetailFragment)
+            tvSellerInfo.setOnClickListener { // 판매자 정보 - 상품
+                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(1)
+                findNavController().navigate(action)
             }
             btnBuy.setOnClickListener { // 구매하기 버튼
                 val dialog = BuyBottomSheetDialog(requireContext(), marketViewModel.product.value, listener)
