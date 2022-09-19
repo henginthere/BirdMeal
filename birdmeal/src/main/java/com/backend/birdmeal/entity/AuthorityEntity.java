@@ -12,11 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorityEntity {
-    @Id
-    @Column(name = "authority_seq")
-    private int authoritySeq;
 
-    @Basic
+    @Id
     @Column(name = "authority_name",length = 30)
     private String authorityName;
 }

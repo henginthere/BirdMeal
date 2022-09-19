@@ -48,6 +48,8 @@ public class UserService {
             authority = AuthorityEntity.builder()
                     .authorityName("ROLE_ADMIN")
                     .build();
+
+            System.out.println(authority.getAuthorityName());
         }
         else{
             role = true;
