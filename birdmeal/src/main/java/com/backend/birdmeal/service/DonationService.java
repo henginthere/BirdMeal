@@ -1,11 +1,16 @@
 package com.backend.birdmeal.service;
 
+import com.backend.birdmeal.dto.DonationDto;
+import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.SaveDonationDto;
 import com.backend.birdmeal.entity.DonationEntity;
+import com.backend.birdmeal.mapper.DonationMapper;
+import com.backend.birdmeal.mapper.ProductMapper;
 import com.backend.birdmeal.repository.DonationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Service
@@ -35,5 +40,10 @@ public class DonationService {
         donationRepository.save(donationEntity);
         return true;
     }
+    public List<DonationDto> getAllDonation(){
+        List<DonationDto> donationList = DonationMapper.MAPPER.toDtoList(donationRepository.findAll());
+        return donationList;
+    }
+
 
 }
