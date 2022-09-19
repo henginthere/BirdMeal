@@ -3,15 +3,19 @@ package com.backend.birdmeal.service;
 import com.backend.birdmeal.dto.RegistUserDto;
 import com.backend.birdmeal.dto.ResponseLoginDto;
 import com.backend.birdmeal.dto.UpdateUserDto;
+import com.backend.birdmeal.dto.UserDto;
 import com.backend.birdmeal.entity.AuthorityEntity;
 import com.backend.birdmeal.entity.StarvingChildEntity;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.mapper.UserMapper;
 import com.backend.birdmeal.repository.AuthorityRepository;
 import com.backend.birdmeal.repository.StarvingChildRepository;
 import com.backend.birdmeal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
@@ -79,6 +83,17 @@ public class UserService {
 
         return responseLoginDto;
 
+    }
+
+    public UserDto getUserInfo(Long userSeq){
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
+        if(userOptional.isEmpty()){
+            return null;
+        }
+        UserEntity user = userOptional.get();
+        UserDto userDto = UserMapper.MAPPER.toDto(user);
+
+        return userDto;
     }
 
     public boolean updateUser(Long userSeq, UpdateUserDto updateUserDto){
