@@ -17,14 +17,14 @@ public class StarvingChildEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "starving_child_seq")
-    private Long starvingChildSeq;
+    private long starvingChildSeq;
 
     @Basic
-    @Column(name="user_seq")
-    private Long userSeq;
+    @Column(name="user_email",length = 50)
+    private String userEmail;
 
     @Basic
-    @Column(name="child_card_num")
-    private Long childCardNum;
+    @Column(name="child_card_num",length = 50)
+    private String childCardNum;
 
 }

@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface StarvingChildRepository extends JpaRepository<StarvingChildEntity, Long> {
 
-    Optional<StarvingChildEntity> findByChildCardNum(Long cardNum);
+    Optional<StarvingChildEntity> findByChildCardNum(String cardNum);
 
 }

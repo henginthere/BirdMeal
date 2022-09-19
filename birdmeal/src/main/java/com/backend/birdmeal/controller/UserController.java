@@ -1,9 +1,6 @@
 package com.backend.birdmeal.controller;
 
-import com.backend.birdmeal.dto.RegistUserDto;
-import com.backend.birdmeal.dto.ResponseLoginDto;
-import com.backend.birdmeal.dto.UpdateUserDto;
-import com.backend.birdmeal.dto.UserDto;
+import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.UserService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -58,14 +55,15 @@ public class UserController {
     /**
      * 로그인
      *
-     * @param googleAccessToken
+     * @param googleLoginDto
      * @return Object
      */
     @ApiOperation(value="로그인",response = Object.class)
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody String googleAccessToken) throws IOException, GeneralSecurityException {
+    public ResponseEntity<?> login(@RequestBody GoogleLoginDto googleLoginDto) throws IOException, GeneralSecurityException {
         ResponseFrame<?> res;
         String userEmail;
+        String googleAccessToken = googleLoginDto.getGoogleAccessToken();
         JsonFactory jsonFactory = new JacksonFactory();
         GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, googleAccessToken);
 
@@ -87,8 +85,7 @@ public class UserController {
         }
 
         //t_user에 email 존재 여부 확인
-        if(userRepository.findByUserEmail(userEmail)!=null){
-
+        if(userRepository.findByUserEmail(userEmail).isPresent()){
             ResponseLoginDto responseLoginDto = userService.login(userEmail);
             if(responseLoginDto!=null){
                 res = ResponseFrame.of(responseLoginDto,"로그인에 성공하였습니다.");
@@ -100,9 +97,11 @@ public class UserController {
             }
 
         }
+        else {
+            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
 
-        res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     /**
@@ -155,13 +154,13 @@ public class UserController {
     /**
      * 결식 아동 확인
      *
-     * @param cardNum
+     * @param starvingChildDto
      * @return Object
      */
     @ApiOperation(value="결식 아동 확인",response = Object.class)
-    @PostMapping("/{user-seq}/check-child")
-    public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable("user-seq") Long userSeq){
-        boolean success = userService.checkChild(userSeq, cardNum);
+    @PostMapping("/check-child")
+    public ResponseEntity<?> checkChild(@RequestBody StarvingChildDto starvingChildDto){
+        boolean success = userService.checkChild(starvingChildDto);
         ResponseFrame<?> res;
 
         if(success){
