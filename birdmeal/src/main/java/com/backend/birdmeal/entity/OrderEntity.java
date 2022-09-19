@@ -31,7 +31,7 @@ public class OrderEntity {
     private int orderPrice; //총 가격
 
     @Basic
-    @Column(name = "order_date")
+    @Column(name = "order_date",length = 30)
     private String orderDate;
 
     @PrePersist

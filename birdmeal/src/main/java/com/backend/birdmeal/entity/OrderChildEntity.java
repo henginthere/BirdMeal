@@ -31,7 +31,7 @@ public class OrderChildEntity {
     private String userNickname;
 
     @Basic
-    @Column(name = "order_date")
+    @Column(name = "order_date",length = 30)
     private String orderDate;
 
     @Basic

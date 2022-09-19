@@ -55,11 +55,11 @@ public class ProductEntity {
     private boolean productIsDeleted;
 
     @Basic
-    @Column(name = "product_create_date")
+    @Column(name = "product_create_date",length = 30)
     private String productCreateDate;
 
     @Basic
-    @Column(name = "product_update_date")
+    @Column(name = "product_update_date",length = 30)
     private String productUpdateDate;
 
     @PrePersist
