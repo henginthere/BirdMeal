@@ -1,10 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.DonationDto;
-import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.SaveDonationDto;
-import com.backend.birdmeal.dto.UpdateUserDto;
-import com.backend.birdmeal.entity.DonationEntity;
 import com.backend.birdmeal.service.DonationService;
 import com.backend.birdmeal.util.ResponseFrame;
 import io.swagger.annotations.Api;
@@ -58,9 +55,40 @@ public class DonationController {
         List<DonationDto> donationList = donationService.getAllDonation();
         ResponseFrame<List<DonationDto>> res;
         if (donationList != null) {
-            res = ResponseFrame.of(donationList, "카테고리별 상품 목록 요청을 성공했습니다.");
+            if(donationList.size()==0){
+                res = ResponseFrame.of(donationList, "전체 기부 내역이 없습니다.");
+            }
+            else{
+                res = ResponseFrame.of(donationList, "전체 기부 내역 불러오기를 성공했습니다.");
+            }
+
         } else {
-            res = ResponseFrame.of(null, "카테고리별 상품 목록 요청을 실패했습니다.");
+            res = ResponseFrame.of(null, "전체 기부 내역 불러오기를 실패했습니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * 내 기부 내역 불러오기
+     *
+     * @param userSeq
+     * @return List
+     */
+    @ApiOperation(value = "내 기부 내역 불러오기", response = List.class)
+    @GetMapping("/{user-seq}")
+    public ResponseEntity<?> getMyDonation(@PathVariable("user-seq") long userSeq) {
+        List<DonationDto> donationList = donationService.getMyDonation(userSeq);
+        ResponseFrame<List<DonationDto>> res;
+        if (donationList != null) {
+            if(donationList.size()==0) {
+                res = ResponseFrame.of(donationList, "내 기부 내역이 없습니다.");
+            }
+            else{
+                res = ResponseFrame.of(donationList, "내 기부 내역 불러오기를 성공했습니다.");
+            }
+        } else {
+            res = ResponseFrame.of(null, "내 기부 내역 불러오기를 실패했습니다.");
         }
 
         return new ResponseEntity<>(res, HttpStatus.OK);
