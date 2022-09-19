@@ -1,5 +1,6 @@
 package com.backend.birdmeal.service;
 
+import com.backend.birdmeal.dto.MyOrderDetailResponseDto;
 import com.backend.birdmeal.dto.MyOrderResponseDto;
 import com.backend.birdmeal.dto.OrderRequestDto;
 import com.backend.birdmeal.dto.OrderStateRequestDto;
@@ -156,5 +157,43 @@ public class OrderService {
         }
 
         return true;
+    }
+
+    // 내 주문 상세 내역 불러오기
+    public List<MyOrderDetailResponseDto> getMyOrderDetailInfo(long userSeq, long orderSeq) {
+        List<MyOrderDetailResponseDto> myOrderDetailResponseDtoList = new ArrayList<>();
+
+        // 사용자 번호와 주문 번호로 List 개수 구하기
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderSeq);
+        int size = orderDetailEntityList.size();
+
+        if(size==0) return null;
+
+        // 주문디테일 리스트 개수만큼 돌면서
+        for(int i=0; i<size; i++){
+            // 주문 디테일 가져오기
+            OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(i);
+            
+            // 주문 가져오기
+            OrderEntity orderEntity = orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq());
+
+            // 상품 정보 가져오기
+            ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
+
+            MyOrderDetailResponseDto myOrderDetailResponseDto = MyOrderDetailResponseDto.builder()
+                    .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
+                    .productName(productEntity.getProductName())
+                    .productPrice(productEntity.getProductPrice())
+                    .orderQuantity(orderDetailEntity.getOrderQuantity())
+                    .orderDate(orderEntity.getOrderDate())
+                    .orderToState(orderDetailEntity.isOrderToState())
+                    .orderDeliveryNumber(orderDetailEntity.getOrderDeliveryNumber())
+                    .orderDeliveryCompany(orderDetailEntity.getOrderDeliveryCompany())
+                    .productThumbnailImg(productEntity.getProductThumbnailImg())
+                    .build();
+
+            myOrderDetailResponseDtoList.add(myOrderDetailResponseDto);
+        }
+        return myOrderDetailResponseDtoList;
     }
 }

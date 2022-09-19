@@ -9,4 +9,5 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     List<OrderDetailEntity> findAllByOrderSeq(long orderSeq);
 
     OrderDetailEntity findByOrderDetailSeq(Long orderDetailSeq);
+
 }
