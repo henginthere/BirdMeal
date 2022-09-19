@@ -13,6 +13,25 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SellerOrderResponseDto {
-    private OrderDto orderDto;
-    private List<SellerOrderDetailReaponseDto> sellerOrderDetailReaponseDtoList;
+    private long orderSeq;
+    private long userSeq;
+    private int orderPrice;
+    private long orderDetailSeq;
+    private long productSeq;
+    private long sellerSeq;
+    private String orderDate;
+    private int orderQuantity;
+    private String orderTHash;
+    private boolean orderToState; //상품 인수 여부
+    private String orderDeliveryNumber;
+    private String orderDeliveryCompany;
+    private String categoryName;
+    private String productName;
+    private int productPrice;
+    private String productCa;
+    private String productThumbnailImg;
+    private String productDescriptionImg;
+    private boolean productIsDeleted;
+    private String productCreateDate;
+    private String productUpdateDate;
 }

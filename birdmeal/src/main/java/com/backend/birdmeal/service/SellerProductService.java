@@ -53,7 +53,7 @@ public class SellerProductService {
         ProductEntity productEntity = sellerProductRepository.findByProductSeq(productUpdateDto.getProductSeq());
         
         // 상품이 없으면 false
-        if(productEntity == null) return false;
+        if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
         // 수정하기
         productEntity.setProductPrice(productUpdateDto.getProductPrice());
