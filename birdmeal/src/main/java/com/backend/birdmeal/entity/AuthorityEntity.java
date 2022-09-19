@@ -2,10 +2,7 @@ package com.backend.birdmeal.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "authority")
@@ -16,6 +13,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class AuthorityEntity {
     @Id
-    @Column(name = "authority_name", length = 50)
+    @Column(name = "authority_seq")
+    private int authoritySeq;
+
+    @Basic
+    @Column(name = "authority_name",length = 30)
     private String authorityName;
 }
