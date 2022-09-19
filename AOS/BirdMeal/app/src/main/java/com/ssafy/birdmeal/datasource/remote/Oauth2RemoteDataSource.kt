@@ -13,15 +13,15 @@ import javax.inject.Singleton
 class Oauth2RemoteDataSource @Inject constructor(
     private val oauth2Api: Oauth2Api
 ) {
-    fun googleLogin(code: String): Flow<BaseResponse<OauthResponse>> = flow {
-        emit(oauth2Api.googleLogin(code))
+    fun googleLogin(map: Map<String, String>): Flow<BaseResponse<OauthResponse>> = flow {
+        emit(oauth2Api.googleLogin(map))
     }
 
     fun join(request: JoinRequest): Flow<BaseResponse<OauthResponse>> = flow {
         emit(oauth2Api.join(request))
     }
 
-    fun checkCard(cardNumber: String): Flow<BaseResponse<Boolean>> = flow {
-        emit(oauth2Api.checkCard(cardNumber))
+    fun checkCard(map: Map<String, String>): Flow<BaseResponse<Boolean>> = flow {
+        emit(oauth2Api.checkCard(map))
     }
 }

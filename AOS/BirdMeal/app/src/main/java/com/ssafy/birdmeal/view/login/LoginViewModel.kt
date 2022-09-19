@@ -48,54 +48,41 @@ class LoginViewModel @Inject constructor(
 
     fun googleLogin(code: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            /*
-            테스트용 코드
-             */
-            _email.value = email
-            _loginMsgEvent.postValue("로그인 완료")
-            sharedPreferences.edit().putInt(USER_SEQ, 1)
-                .apply()
-            sharedPreferences.edit().putString(JWT, "").apply()
 
-//            oauth2Repository.googleLogin(code).collectLatest {
-//                Log.d(TAG, "googleLogin response: $it")
-//                if (it is Result.Success) {
-//                    Log.d(TAG, "googleLogin data: ${it.data}")
-//
-//                    // 등록 되지 않은 사용자면 회원가입으로
-//                    if (!it.data.success) {
-//                        _email.value = email
-//                        _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
-//                    }
-//                    // 등록된 사용자면 홈 화면으로
-//                    else {
-//                        sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
-//                            .apply()
-//                        // 이미 등록된 사용자라서 토큰 바로 저장
-//                        sharedPreferences.edit().putString(JWT, it.data.data?.token).apply()
-//                        _loginMsgEvent.postValue("로그인 완료")
-//                    }
-//                } else if (it is Result.Error) {
-//                    _errMsgEvent.postValue("서버 에러 발생")
-//                }
-//            }
+            val map = HashMap<String, String>();
+            map.put("googleAccessToken", code)
+
+            oauth2Repository.googleLogin(map).collectLatest {
+                Log.d(TAG, "googleLogin response: $it")
+                if (it is Result.Success) {
+                    Log.d(TAG, "googleLogin data: ${it.data}")
+
+                    // 등록 되지 않은 사용자면 회원가입으로
+                    if (!it.data.success) {
+                        _email.value = email
+                        _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
+                    }
+                    // 등록된 사용자면 홈 화면으로
+                    else {
+                        sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
+                            .apply()
+                        // 이미 등록된 사용자라서 토큰 바로 저장
+                        sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
+                            .apply()
+                        _loginMsgEvent.postValue("로그인 완료")
+                    }
+                } else if (it is Result.Error) {
+                    _errMsgEvent.postValue("서버 에러 발생")
+                }
+            }
         }
     }
 
     // 회원가입 요청
-    fun join(userRole: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun join(userRole: Boolean) = viewModelScope.launch(Dispatchers.IO) {
         val nickname = email.value.split("@")[0]
         val request = JoinRequest(email.value, nickname, userRole)
 
-        /*
-        테스트용 코드
-         */
-        _joinSuccessMsgEvent.postValue("회원 가입 성공")
-        sharedPreferences.edit().putInt(USER_SEQ, 1)
-            .apply()
-        sharedPreferences.edit().putString(JWT, "").apply()
-
-        /*
         oauth2Repository.join(request).collectLatest {
             Log.d(TAG, "join response: $it")
             if (it is Result.Success) {
@@ -105,15 +92,14 @@ class LoginViewModel @Inject constructor(
                 if (it.data.success) {
                     sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
                         .apply()
-                    sharedPreferences.edit().putString(JWT, it.data.data?.token).apply()
+                    sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
+                        .apply()
                     _joinSuccessMsgEvent.postValue("회원 가입 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
-        */
-
     }
 
     // 결식카드 맞는지 확인
@@ -126,13 +112,11 @@ class LoginViewModel @Inject constructor(
             return@launch
         }
 
-        /*
-        테스트용 코드
-         */
-        _childSuccessMsgEvent.postValue("결식 아동 인증 성공")
+        val map = HashMap<String, String>()
+        map.put("childCardNum", cardNumber.value!!)
+        map.put("userEmail", _email.value)
 
-        /*
-        oauth2Repository.checkCard(cardNumber.value!!).collectLatest {
+        oauth2Repository.checkCard(map).collectLatest {
             Log.d(TAG, "join response: $it")
             if (it is Result.Success) {
                 Log.d(TAG, "join data: ${it.data}")
@@ -149,6 +133,5 @@ class LoginViewModel @Inject constructor(
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
-         */
     }
 }
