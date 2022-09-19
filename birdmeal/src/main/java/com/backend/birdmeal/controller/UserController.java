@@ -3,6 +3,7 @@ package com.backend.birdmeal.controller;
 import com.backend.birdmeal.dto.RegistUserDto;
 import com.backend.birdmeal.dto.ResponseLoginDto;
 import com.backend.birdmeal.dto.UpdateUserDto;
+import com.backend.birdmeal.dto.UserDto;
 import com.backend.birdmeal.repository.UserRepository;
 import com.backend.birdmeal.service.UserService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -105,14 +106,38 @@ public class UserController {
     }
 
     /**
+     * 회원 정보 조회
+     *
+     * @param userSeq
+     * @return Object
+     */
+    @ApiOperation(value="회원 정보 조회",response = Object.class)
+    @GetMapping("/{user-seq}/info")
+    public ResponseEntity<?> getUserInfo(@PathVariable("user-seq") Long userSeq){
+
+        UserDto userDto = userService.getUserInfo(userSeq);
+        ResponseFrame<?> res;
+
+        if(userDto!=null){
+            res = ResponseFrame.of(userDto,"회원 정보 조회를 성공했습니다.");
+        }
+        else{
+            res = ResponseFrame.of(false,"회원 정보 조회를 실패했습니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
+    }
+
+    /**
      * 회원 정보 수정
      *
      * @param updateUserDto
      * @return Object
      */
     @ApiOperation(value="회원 정보 수정",response = Object.class)
-    @PutMapping("/{userSeq}")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable Long userSeq){
+    @PutMapping("/{user-seq}")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable("user-seq") Long userSeq){
         boolean success = userService.updateUser(userSeq, updateUserDto);
         ResponseFrame<?> res;
 
@@ -134,8 +159,8 @@ public class UserController {
      * @return Object
      */
     @ApiOperation(value="결식 아동 확인",response = Object.class)
-    @PostMapping("/{userSeq}/check-child")
-    public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable Long userSeq){
+    @PostMapping("/{user-seq}/check-child")
+    public ResponseEntity<?> checkChild(@RequestBody String cardNum, @PathVariable("user-seq") Long userSeq){
         boolean success = userService.checkChild(userSeq, cardNum);
         ResponseFrame<?> res;
 
@@ -157,8 +182,8 @@ public class UserController {
      * @return Object
      */
     @ApiOperation(value="지갑 eoa 저장",response = Object.class)
-    @PutMapping("/{userSeq}/wallet")
-    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable Long userSeq){
+    @PutMapping("/{user-seq}/wallet")
+    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable("user-seq") Long userSeq){
         boolean success = userService.saveWallet(userSeq, userEoa);
         ResponseFrame<?> res;
 
