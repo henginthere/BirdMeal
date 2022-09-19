@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DonationHistoryDto {
-    private Long donationHistorySeq;
+public class DonationDto {
+    private Long donationSeq;
     private Long userSeq;
     private int donationPrice;
     private String donationDate;
