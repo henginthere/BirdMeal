@@ -16,7 +16,7 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "category_seq")
-    private Long categorySeq;
+    private long categorySeq;
 
     @Basic
     @Column(name = "category_name", length = 20)

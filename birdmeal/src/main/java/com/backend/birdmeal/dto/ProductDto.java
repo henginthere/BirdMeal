@@ -1,18 +1,17 @@
 package com.backend.birdmeal.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDto {
-    private Long productSeq;
-    private Long categorySeq;
-    private Long sellerSeq;
+    private long productSeq;
+    private long categorySeq;
+    private long sellerSeq;
     private String productName;
     private int productPrice;
     private String productCa;

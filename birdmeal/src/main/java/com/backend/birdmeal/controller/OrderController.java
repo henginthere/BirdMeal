@@ -1,10 +1,6 @@
 package com.backend.birdmeal.controller;
 
-import com.backend.birdmeal.dto.MyOrderDetailResponseDto;
-import com.backend.birdmeal.dto.MyOrderResponseDto;
-import com.backend.birdmeal.dto.OrderRequestDto;
-import com.backend.birdmeal.dto.OrderStateRequestDto;
-import com.backend.birdmeal.entity.OrderEntity;
+import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.entity.UserEntity;
 import com.backend.birdmeal.repository.OrderRepository;
 import com.backend.birdmeal.repository.UserRepository;
@@ -123,6 +119,28 @@ public class OrderController {
             res = ResponseFrame.of(success, "상품 인수 상태 변경을 성공했습니다.");
         }else{
             res = ResponseFrame.of(success, "주문이 없어 상품 인수 상태 변경을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
+    /**
+     * 아이들 주문 상세 내역 불러오기
+     *
+     * @param
+     * @return Object
+     */
+
+    @ApiOperation(value="아이들 주문 상세 내역 불러오기",response = Object.class)
+    @GetMapping("/child/list")
+    public ResponseEntity<?> getChildOrderInfo(){
+        List<OrderChildResponseDto> list = orderService.getChildOrderInfo();
+        ResponseFrame<?> res;
+
+        if(list.size()==0) {
+                res = ResponseFrame.of(false, "아이들 주문 리스트가 없어 아이들 주문 상세 내역 불러오기을 실패했습니다.");
+        }else{
+                res = ResponseFrame.of(list, "아이들 주문 상세 내역 불러오기을 성공했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

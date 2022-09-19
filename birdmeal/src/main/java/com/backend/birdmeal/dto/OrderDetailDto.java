@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDetailDto {
 
-    private Long orderDetailSeq;
-    private Long orderSeq;
-    private Long productSeq;
-    private Long sellerSeq;
+    private long orderDetailSeq;
+    private long orderSeq;
+    private long productSeq;
+    private long sellerSeq;
     private int orderQuantity;
     private String orderTHash;
     private boolean orderToState; //상품 인수 여부

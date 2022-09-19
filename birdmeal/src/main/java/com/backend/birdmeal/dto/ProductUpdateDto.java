@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductUpdateDto {
-    private Long productSeq;
+    private long productSeq;
     private int productPrice;
     private String productThumbnailImg;
     private String productDescriptionImg;

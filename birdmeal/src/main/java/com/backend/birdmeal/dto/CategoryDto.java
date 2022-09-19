@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryDto {
 
-    private Long categorySeq;
+    private long categorySeq;
     private String categoryName;
     private String categoryIcon;
 

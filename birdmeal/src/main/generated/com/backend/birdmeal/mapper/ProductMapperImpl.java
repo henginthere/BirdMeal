@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-19T13:19:33+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
+    date = "2022-09-19T23:15:27+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class ProductMapperImpl implements ProductMapper {
 
     @Override
-    public List<ProductDto> toDtoList(List<ProductEntity> entityList) {
-        if ( entityList == null ) {
+    public List<ProductDto> toDtoList(List<ProductEntity> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<ProductDto> list = new ArrayList<ProductDto>( entityList.size() );
-        for ( ProductEntity productEntity : entityList ) {
+        List<ProductDto> list = new ArrayList<ProductDto>( arg0.size() );
+        for ( ProductEntity productEntity : arg0 ) {
             list.add( toDto( productEntity ) );
         }
 
@@ -30,13 +30,13 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public List<ProductEntity> toEntityList(List<ProductDto> dtoList) {
-        if ( dtoList == null ) {
+    public List<ProductEntity> toEntityList(List<ProductDto> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<ProductEntity> list = new ArrayList<ProductEntity>( dtoList.size() );
-        for ( ProductDto productDto : dtoList ) {
+        List<ProductEntity> list = new ArrayList<ProductEntity>( arg0.size() );
+        for ( ProductDto productDto : arg0 ) {
             list.add( toEntity( productDto ) );
         }
 

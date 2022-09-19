@@ -1,21 +1,15 @@
 package com.backend.birdmeal.service;
 
-import com.backend.birdmeal.dto.MyOrderDetailResponseDto;
-import com.backend.birdmeal.dto.MyOrderResponseDto;
-import com.backend.birdmeal.dto.OrderRequestDto;
-import com.backend.birdmeal.dto.OrderStateRequestDto;
-import com.backend.birdmeal.entity.OrderDetailEntity;
-import com.backend.birdmeal.entity.OrderEntity;
-import com.backend.birdmeal.entity.ProductEntity;
-import com.backend.birdmeal.repository.OrderDetailRepository;
-import com.backend.birdmeal.repository.OrderRepository;
-import com.backend.birdmeal.repository.ProductRepository;
+import com.backend.birdmeal.dto.*;
+import com.backend.birdmeal.entity.*;
+import com.backend.birdmeal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +19,22 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final OrderChildRepository orderChildRepository;
+    private final UserRepository userRepository;
+
 
 
 
     // 주문 내역 저장
     public boolean setOrderInfo(List<OrderRequestDto> orderRequestList) {
+        // 아이인지 아닌지 확인
+        Optional<UserEntity> userEntity = userRepository.findByUserSeq(orderRequestList.get(0).getUserSeq());
+
+        boolean isChild = false;
+
+        if(userEntity.get().getUserRole()) isChild = true;
+
+        System.out.println("아이인지 아닌지 " + isChild);
 
         // 리스트가 없으면 주문 실패
         if(orderRequestList.size()==0) return false;
@@ -40,9 +45,12 @@ public class OrderService {
         // 주문 Seq
         long orderSeq = 0;
 
+        // 만약 상품이 없다면 false ( 처음 것 체크 )
+        if(productRepository.findByProductSeq(orderRequestList.get(0).getProductSeq()) == null) return false;
+
         // 주문 Table에 컬럼 생성하기 - 1개
         OrderEntity orderEntity = OrderEntity.builder()
-                    .orderSeq(0L)
+                    .orderSeq(0)
                     .userSeq(orderRequestList.get(0).getUserSeq())
                     .build();
 
@@ -75,6 +83,23 @@ public class OrderService {
 
             // 저장하기
             orderDetailRepository.save(orderDetailEntity);
+
+            // 만약 아이가 주문한 것이라면 아이들 주문 Table에 저장하기
+            if(isChild){
+                OrderChildEntity orderChildEntity = OrderChildEntity.builder()
+                        .orderChildDetailSeq(0)
+                        .userSeq(userEntity.get().getUserSeq())
+                        .userNickname(userEntity.get().getUserNickname())
+                        .orderQuantity(orderRequestDto.getOrderQuantity())
+                        .productName(productEntity.getProductName())
+                        .productPrice(productEntity.getProductPrice())
+                        .productThumbnailImg(productEntity.getProductThumbnailImg())
+                        .build();
+
+                // 저장하기
+                orderChildRepository.save(orderChildEntity);
+            }
+
         }
 
         // 총 가격 넣고 한 번 더 저장
@@ -195,5 +220,32 @@ public class OrderService {
             myOrderDetailResponseDtoList.add(myOrderDetailResponseDto);
         }
         return myOrderDetailResponseDtoList;
+    }
+
+    // 아이들 주문 상세 내역 불러오기
+    public List<OrderChildResponseDto> getChildOrderInfo() {
+        // 리턴 List ( 최신날짜 순 )
+        List<OrderChildEntity> orderChildEntityList = orderChildRepository.findAllByOrderByOrderDateDesc();
+        List<OrderChildResponseDto> orderChildResponseDtoList = new ArrayList<>();
+
+        // 아이들 거래 횟수
+        int size = orderChildEntityList.size();
+
+        // Entity -> Dto
+        for(int i=0; i<size; i++){
+            OrderChildEntity orderChildEntity = orderChildEntityList.get(i);
+
+            OrderChildResponseDto orderChildResponseDto = OrderChildResponseDto.builder()
+                    .productName(orderChildEntity.getProductName())
+                    .productPrice(orderChildEntity.getProductPrice())
+                    .productThumbnailImg(orderChildEntity.getProductThumbnailImg())
+                    .orderQuantity(orderChildEntity.getOrderQuantity())
+                    .orderDate(orderChildEntity.getOrderDate())
+                    .build();
+
+            orderChildResponseDtoList.add(orderChildResponseDto);
+        }
+
+        return orderChildResponseDtoList;
     }
 }

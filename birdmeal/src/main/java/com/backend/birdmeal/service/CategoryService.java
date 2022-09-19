@@ -2,7 +2,6 @@ package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.CategoryDto;
 import com.backend.birdmeal.dto.ProductDto;
-import com.backend.birdmeal.entity.CategoryEntity;
 import com.backend.birdmeal.mapper.CategoryMapper;
 import com.backend.birdmeal.mapper.ProductMapper;
 import com.backend.birdmeal.repository.CategoryRepository;

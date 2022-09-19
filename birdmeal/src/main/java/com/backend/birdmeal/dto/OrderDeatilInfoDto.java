@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDeatilInfoDto {
-    private Long orderDetailSeq;
+    private long orderDetailSeq;
     private String orderDeliveryNumber;
     private String orderDeliveryCompany;
 }

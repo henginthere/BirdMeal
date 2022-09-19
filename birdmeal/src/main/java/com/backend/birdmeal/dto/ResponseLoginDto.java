@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ResponseLoginDto {
 
-    private Long userSeq;
+    private long userSeq;
     private TokenDto tokenDto;
 
 }

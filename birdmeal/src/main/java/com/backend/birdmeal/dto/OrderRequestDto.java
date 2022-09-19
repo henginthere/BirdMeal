@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequestDto {
-    private Long userSeq;
+    private long userSeq;
     private int orderQuantity;
     private String orderTHash;
-    private Long productSeq;
+    private long productSeq;
 }
