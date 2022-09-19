@@ -1,11 +1,10 @@
 package com.backend.birdmeal.service;
 
-import com.backend.birdmeal.dto.RegistSellerDto;
-import com.backend.birdmeal.dto.SellerDto;
-import com.backend.birdmeal.dto.SellerUpdateDto;
+import com.backend.birdmeal.dto.*;
 import com.backend.birdmeal.entity.AuthorityEntity;
 import com.backend.birdmeal.entity.SellerEntity;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.jwt.TokenProvider;
 import com.backend.birdmeal.mapper.SellerMapper;
 import com.backend.birdmeal.repository.AuthorityRepository;
 import com.backend.birdmeal.repository.SellerInfoRepository;
@@ -23,6 +22,8 @@ public class SellerInfoService {
     private final SellerInfoRepository sellerInfoRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final TokenProvider tokenProvider;
 
     // 판매자 회원가입
     public boolean signup(RegistSellerDto registSellerDto) {
@@ -48,6 +49,19 @@ public class SellerInfoService {
     }
 
 
+    // 판매자 로그인
+    public ResponseSellerLoginDto login(String sellerEmail) {
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerEmail(sellerEmail);
+
+        if(sellerEntity == null){
+            return null;
+        }
+
+        long seq = sellerEntity.getSellerSeq();
+        TokenDto tokenDto = tokenProvider.createUserToken(sellerEntity.getSellerEmail(), "ROLE_SELLER");
+
+        return new ResponseSellerLoginDto(seq,tokenDto);
+    }
 
     // 판매자 정보 요청
     public SellerDto getSellerInfo(long sellerSeq) {
