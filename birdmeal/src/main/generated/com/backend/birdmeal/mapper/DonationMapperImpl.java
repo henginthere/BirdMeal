@@ -4,16 +4,14 @@ import com.backend.birdmeal.dto.DonationDto;
 import com.backend.birdmeal.dto.DonationDto.DonationDtoBuilder;
 import com.backend.birdmeal.entity.DonationEntity;
 import com.backend.birdmeal.entity.DonationEntity.DonationEntityBuilder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-19T22:56:28+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
+    date = "2022-09-19T23:44:46+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class DonationMapperImpl implements DonationMapper {
 
@@ -25,16 +23,10 @@ public class DonationMapperImpl implements DonationMapper {
 
         DonationEntityBuilder donationEntity = DonationEntity.builder();
 
-        if ( donationDto.getDonationSeq() != null ) {
-            donationEntity.donationSeq( donationDto.getDonationSeq() );
-        }
-        if ( donationDto.getUserSeq() != null ) {
-            donationEntity.userSeq( donationDto.getUserSeq() );
-        }
+        donationEntity.donationSeq( donationDto.getDonationSeq() );
+        donationEntity.userSeq( donationDto.getUserSeq() );
         donationEntity.donationPrice( donationDto.getDonationPrice() );
-        if ( donationDto.getDonationDate() != null ) {
-            donationEntity.donationDate( LocalDateTime.parse( donationDto.getDonationDate() ) );
-        }
+        donationEntity.donationDate( donationDto.getDonationDate() );
         donationEntity.donationType( donationDto.isDonationType() );
 
         return donationEntity.build();
@@ -51,9 +43,7 @@ public class DonationMapperImpl implements DonationMapper {
         donationDto.donationSeq( donationEntity.getDonationSeq() );
         donationDto.userSeq( donationEntity.getUserSeq() );
         donationDto.donationPrice( donationEntity.getDonationPrice() );
-        if ( donationEntity.getDonationDate() != null ) {
-            donationDto.donationDate( DateTimeFormatter.ISO_LOCAL_DATE_TIME.format( donationEntity.getDonationDate() ) );
-        }
+        donationDto.donationDate( donationEntity.getDonationDate() );
         donationDto.donationType( donationEntity.isDonationType() );
 
         return donationDto.build();

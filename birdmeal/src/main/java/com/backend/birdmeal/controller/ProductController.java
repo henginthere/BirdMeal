@@ -53,7 +53,7 @@ public class ProductController {
 
         @ApiOperation(value="카테고리별 상품 목록 보기",response = List.class)
         @GetMapping("/{category-seq}/list")
-        public ResponseEntity<?> getCategoryProducts(@PathVariable("category-seq") Long categorySeq){
+        public ResponseEntity<?> getCategoryProducts(@PathVariable("category-seq") long categorySeq){
             List<ProductDto> productList = categoryService.getProductList(categorySeq);
 
             ResponseFrame<List<ProductDto>> res = ResponseFrame.of(productList,"카테고리별 상품 목록 요청을 성공했습니다.");
@@ -70,7 +70,7 @@ public class ProductController {
 
     @ApiOperation(value="상품 상세 정보 불러오기",response = Object.class)
     @GetMapping("/{product-seq}")
-    public ResponseEntity<?> getProductDetail(@PathVariable("product-seq") Long productSeq){
+    public ResponseEntity<?> getProductDetail(@PathVariable("product-seq") long productSeq){
         ProductDto productDto = productService.getProductDetail(productSeq);
         ResponseFrame<?> res;
         if(productDto!=null){

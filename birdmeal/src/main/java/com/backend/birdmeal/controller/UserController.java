@@ -112,7 +112,7 @@ public class UserController {
      */
     @ApiOperation(value="회원 정보 조회",response = Object.class)
     @GetMapping("/{user-seq}/info")
-    public ResponseEntity<?> getUserInfo(@PathVariable("user-seq") Long userSeq){
+    public ResponseEntity<?> getUserInfo(@PathVariable("user-seq") long userSeq){
 
         UserDto userDto = userService.getUserInfo(userSeq);
         ResponseFrame<?> res;
@@ -136,7 +136,7 @@ public class UserController {
      */
     @ApiOperation(value="회원 정보 수정",response = Object.class)
     @PutMapping("/{user-seq}")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable("user-seq") Long userSeq){
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable("user-seq") long userSeq){
         boolean success = userService.updateUser(userSeq, updateUserDto);
         ResponseFrame<?> res;
 
@@ -182,7 +182,7 @@ public class UserController {
      */
     @ApiOperation(value="지갑 eoa 저장",response = Object.class)
     @PutMapping("/{user-seq}/wallet")
-    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable("user-seq") Long userSeq){
+    public ResponseEntity<?> saveWallet(@RequestBody String userEoa, @PathVariable("user-seq") long userSeq){
         boolean success = userService.saveWallet(userSeq, userEoa);
         ResponseFrame<?> res;
 

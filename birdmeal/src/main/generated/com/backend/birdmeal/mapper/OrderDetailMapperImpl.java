@@ -10,8 +10,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-19T22:56:28+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
+    date = "2022-09-19T23:44:46+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class OrderDetailMapperImpl implements OrderDetailMapper {
 
@@ -37,18 +37,10 @@ public class OrderDetailMapperImpl implements OrderDetailMapper {
 
         OrderDetailEntityBuilder orderDetailEntity = OrderDetailEntity.builder();
 
-        if ( orderDetailDto.getOrderDetailSeq() != null ) {
-            orderDetailEntity.orderDetailSeq( orderDetailDto.getOrderDetailSeq() );
-        }
-        if ( orderDetailDto.getOrderSeq() != null ) {
-            orderDetailEntity.orderSeq( orderDetailDto.getOrderSeq() );
-        }
-        if ( orderDetailDto.getProductSeq() != null ) {
-            orderDetailEntity.productSeq( orderDetailDto.getProductSeq() );
-        }
-        if ( orderDetailDto.getSellerSeq() != null ) {
-            orderDetailEntity.sellerSeq( orderDetailDto.getSellerSeq() );
-        }
+        orderDetailEntity.orderDetailSeq( orderDetailDto.getOrderDetailSeq() );
+        orderDetailEntity.orderSeq( orderDetailDto.getOrderSeq() );
+        orderDetailEntity.productSeq( orderDetailDto.getProductSeq() );
+        orderDetailEntity.sellerSeq( orderDetailDto.getSellerSeq() );
         orderDetailEntity.orderQuantity( orderDetailDto.getOrderQuantity() );
         orderDetailEntity.orderTHash( orderDetailDto.getOrderTHash() );
         orderDetailEntity.orderToState( orderDetailDto.isOrderToState() );

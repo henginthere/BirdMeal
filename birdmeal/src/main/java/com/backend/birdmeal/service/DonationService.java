@@ -43,5 +43,13 @@ public class DonationService {
         return donationList;
     }
 
+    public List<DonationDto> getMyDonation(long userSeq){
+        if(donationRepository.findByUserSeq(userSeq).isPresent()){
+            List<DonationDto> donationList = DonationMapper.MAPPER.toDtoList(donationRepository.findByUserSeq(userSeq).get());
+            return donationList;
+        }
+        return null;
+    }
+
 
 }
