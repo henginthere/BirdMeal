@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_productListFragment"
             app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
     <fragment
         android:id="@+id/productListFragment"
@@ -75,12 +78,24 @@
         <action
             android:id="@+id/action_productDetailFragment_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <argument
+            android:name="productSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/sellerDetailFragment"
         android:name="com.ssafy.birdmeal.view.market.product.detail.SellerDetailFragment"
         android:label="fragment_seller_detail"
-        tools:layout="@layout/fragment_seller_detail" />
+        tools:layout="@layout/fragment_seller_detail" >
+        <argument
+            android:name="sellerSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_sellerDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.ssafy.birdmeal.view.market.shopping.cart.ShoppingCartFragment"
