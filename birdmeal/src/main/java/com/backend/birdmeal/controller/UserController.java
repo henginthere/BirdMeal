@@ -42,11 +42,11 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> signup(@RequestBody RegistUserDto registUserDto){
 
-        boolean success = userService.signup(registUserDto);
+        ResponseLoginDto responseLoginDto = userService.signup(registUserDto);
         ResponseFrame<?> res;
 
-        if(success){
-            res = ResponseFrame.of(true,"회원가입을 성공했습니다.");
+        if(responseLoginDto!=null){
+            res = ResponseFrame.of(responseLoginDto,"회원가입을 성공했습니다.");
         }
         else{
             res = ResponseFrame.of(false,"이미 가입된 이메일입니다.");

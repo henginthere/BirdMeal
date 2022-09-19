@@ -30,12 +30,12 @@ public class UserService {
     final StarvingChildRepository starvingChildRepository;
     private final AuthService authService;
     private final PasswordEncoder passwordEncoder;
-    public boolean signup(RegistUserDto registUserDto){
+    public ResponseLoginDto signup(RegistUserDto registUserDto){
 
 
         //이메일 주소가 중복이면 false
         if (userRepository.findByUserEmail(registUserDto.getUserEmail()).isPresent()) {
-            return false;
+            return null;
         }
         boolean role;
         String pass = registUserDto.getUserEmail().split("@")[0];
@@ -73,7 +73,10 @@ public class UserService {
 
         userRepository.save(userEntity);
 
-        return true;
+        //회원가입 후 로그인까지 처리
+        ResponseLoginDto responseLoginDto = login(registUserDto.getUserEmail());
+
+        return responseLoginDto;
     }
 
     public ResponseLoginDto login(String userEmail){
