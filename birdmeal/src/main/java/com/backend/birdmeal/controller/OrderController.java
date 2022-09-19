@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @Api("OrderController")
@@ -62,12 +63,12 @@ public class OrderController {
         ResponseFrame<?> res;
 
         // 회원정보 확인
-        UserEntity userEntity = userRepository.findByUserSeq(userSeq);
+        Optional<UserEntity> userEntity = userRepository.findByUserSeq(userSeq);
         
-        if(userEntity == null) {
-            res = ResponseFrame.of(false, "사용자가 없어 내 주문 불러오기을 실패했습니다.");
-        }else{
+        if(userEntity.isPresent()) {
             res = ResponseFrame.of(list, "내 주문 불러오기을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(false, "사용자가 없어 내 주문 불러오기을 실패했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
