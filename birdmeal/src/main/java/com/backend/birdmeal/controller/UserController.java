@@ -85,8 +85,7 @@ public class UserController {
         }
 
         //t_user에 email 존재 여부 확인
-        if(userRepository.findByUserEmail(userEmail)!=null){
-
+        if(userRepository.findByUserEmail(userEmail).isPresent()){
             ResponseLoginDto responseLoginDto = userService.login(userEmail);
             if(responseLoginDto!=null){
                 res = ResponseFrame.of(responseLoginDto,"로그인에 성공하였습니다.");
@@ -98,9 +97,11 @@ public class UserController {
             }
 
         }
+        else {
+            res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }
 
-        res = ResponseFrame.of(false,"로그인에 실패하였습니다.");
-        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
     /**
