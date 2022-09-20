@@ -167,11 +167,11 @@ public class OrderService {
     // 상품 인수 상태 변경
     public boolean updateProductState(OrderStateRequestDto orderStateRequestDto) {
         // 주문이 없으면 false
-        OrderEntity orderEntity = orderRepository.findByOrderSeq(orderStateRequestDto.getOrderSeq());
-        if(orderEntity == null) return false;
+        OrderDetailEntity orderDetailEntity = orderDetailRepository.findByOrderDetailSeq(orderStateRequestDto.getOrderDetailSeq());
+        if(orderDetailEntity == null) return false;
 
         // 주문 상세 리스트 받아오기
-        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderStateRequestDto.getOrderSeq());
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderStateRequestDto.getOrderDetailSeq());
         for(int i=0; i<orderDetailEntityList.size(); i++){
             // 상태 바꿔주기
             orderDetailEntityList.get(i).setOrderToState(orderStateRequestDto.isOrderToState());
