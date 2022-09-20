@@ -176,12 +176,20 @@ public class SellerInfoController {
     @ApiOperation(value="판매자 정보 유무 확인",response = Object.class)
     @GetMapping("/info/{seller-seq}")
     public ResponseEntity<?> checkSellerInfo(@PathVariable("seller-seq") long sellerSeq){
-        boolean success = sellerInfoService.checkSellerInfo(sellerSeq);
         ResponseFrame<?> res;
-        if(success) {
-            res = ResponseFrame.of(success, "판매자 정보가 있습니다.");
-        }else{
-            res = ResponseFrame.of(success, "판매자 정보가 없습니다.");
+
+        // 만약 판매자가 존재하지 않으면
+        if(sellerInfoRepository.findBySellerSeq(sellerSeq) == null){
+            boolean f = false;
+            res = ResponseFrame.of(f, "판매자가 존재하지 않습니다.");
+        }
+        else {
+            boolean success = sellerInfoService.checkSellerInfo(sellerSeq);
+            if (success) {
+                res = ResponseFrame.of(success, "판매자 정보가 있습니다.");
+            } else {
+                res = ResponseFrame.of(success, "판매자 정보가 없습니다.");
+            }
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }

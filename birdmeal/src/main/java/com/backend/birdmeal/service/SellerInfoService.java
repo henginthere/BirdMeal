@@ -83,11 +83,13 @@ public class SellerInfoService {
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerDto.getSellerSeq());
         if (sellerEntity == null) return false;
 
-        // Dto -> Entity
-        SellerEntity sellerEntitySave = SellerMapper.MAPPER.toEntity(sellerDto);
+        sellerEntity.setSellerInfo(sellerDto.getSellerInfo());
+        sellerEntity.setSellerEoa(sellerDto.getSellerEoa());
+        sellerEntity.setSellerTel(sellerDto.getSellerTel());
+        sellerEntity.setSellerAddress(sellerDto.getSellerAddress());
 
         // 저장하기
-        sellerInfoRepository.save(sellerEntitySave);
+        sellerInfoRepository.save(sellerEntity);
 
         return true;
     }
@@ -121,8 +123,9 @@ public class SellerInfoService {
 
         // 판매자 정보가 있으면 true, 없으면 false
         String sellerInfo = sellerEntity.getSellerInfo();
-        
-            return true;
+        if(sellerInfo==null) return false;
+
+        return true;
     }
 
 }

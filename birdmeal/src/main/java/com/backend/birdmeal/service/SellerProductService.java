@@ -108,6 +108,7 @@ public class SellerProductService {
         return true;
     }
 
+    // 등록 상품 목록 보기
     public List<ProductDto> getSellerProduct(long sellerSeq) {
         // 판매자 번호로 물품 찾기
         List<ProductEntity> productEntityList = sellerProductRepository.findAllBySellerSeqOrderByProductCreateDateDesc(sellerSeq);
