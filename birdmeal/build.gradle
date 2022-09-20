@@ -48,6 +48,9 @@ dependencies {
 	// LocalDateTime 포맷처리
 	compileOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+	// aws s3
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
+
 
 }
 
