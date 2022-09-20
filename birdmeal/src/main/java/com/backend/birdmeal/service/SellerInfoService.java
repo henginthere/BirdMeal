@@ -84,7 +84,6 @@ public class SellerInfoService {
         if (sellerEntity == null) return false;
 
         sellerEntity.setSellerInfo(sellerDto.getSellerInfo());
-        sellerEntity.setSellerEoa(sellerDto.getSellerEoa());
         sellerEntity.setSellerTel(sellerDto.getSellerTel());
         sellerEntity.setSellerAddress(sellerDto.getSellerAddress());
 

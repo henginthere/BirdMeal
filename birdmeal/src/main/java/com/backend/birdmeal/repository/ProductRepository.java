@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     ProductEntity findByProductSeq(long productSeq);
-
     List<ProductEntity> findByCategorySeq(long categorySeq);
 }
