@@ -77,17 +77,7 @@ class CreateWalletDialog : DialogFragment() {
                     // generating the etherium wallet
                     val walletName = WalletUtils.generateLightNewWalletFile(password, walletFile)
 
-                    userViewModel.setWalletName(walletName)
-                    userViewModel.createCredentials(password)
-
-                    val privateKey =
-                        userViewModel.credentials.value?.ecKeyPair?.privateKey?.toString(16) ?: ""
-                    val eoa = userViewModel.credentials.value?.address.toString()
-                    completedWallet(privateKey, eoa)
-
-                    showToast("지갑 생성이 완료되었습니다")
-
-                    hideKeyboard()
+                    setWalletInfo(walletName, password)
 
                 } catch (e: java.lang.Exception) {
                     Log.e(TAG, "createWallet: $e")
