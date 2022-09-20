@@ -57,18 +57,11 @@ export var approve = async () => {
   return res;
 }
 
-export var createTrade = async () => {
+export var createTrade = async (name, price) => {
   const res = await TradeManagerContract.methods
-  .createTrade("소주", 1000).send({from:Account[0]});
-  console.log(res.events.TradeCreated)
-  console.log(res.events.TradeCreated.returnValues.tradeAddress)
-  // res.watch(function(err, result) {
-  //   if (!err){
-  //     console.log(result);
-  //   }
-  // })
+  .createTrade(name, price).send({from:Account[0]});
   
-  return res;
+  return res
 }
 
 
