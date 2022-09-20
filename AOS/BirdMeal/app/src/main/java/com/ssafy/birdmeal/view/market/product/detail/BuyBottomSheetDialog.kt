@@ -11,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.DialogBuyBottomSheetBinding
 import com.ssafy.birdmeal.model.dto.ProductDto
+import com.ssafy.birdmeal.model.entity.CartEntity
 
 class BuyBottomSheetDialog(context: Context, private val product: ProductDto, private val listener : BuyDialogListener)
     : BottomSheetDialog(context) {
@@ -47,7 +48,16 @@ class BuyBottomSheetDialog(context: Context, private val product: ProductDto, pr
                 tvBuyCnt.text = cnt.toString()
             }
             btnBuy.setOnClickListener { // 장바구니에 담기
-                listener.onItemClick(product.productSeq)
+                val cart = CartEntity(
+                    product.productSeq,
+                    product.productName,
+                    product.productPrice,
+                    product.productCa,
+                    product.productThumbnailImg,
+                    product.productDescriptionImg,
+                    cnt
+                )
+                listener.onItemClick(cart)
                 dismiss()
             }
         }

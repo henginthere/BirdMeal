@@ -30,7 +30,8 @@
             <TextView
                 android:id="@+id/tv_toolbar"
                 style="@style/toolbar_text"
-                android:text="판매자 이름" />
+                android:text="@{seller.sellerNickname}"
+                tools:text="판매자 이름" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_shopping_cart"
@@ -46,7 +47,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textSize="30dp"
-            android:text="@{seller.sellerNickname}"/>
+            android:text="@{seller.sellerNickname}"
+            tools:text="판매자 이름이 떠요"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

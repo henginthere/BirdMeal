@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/toolbar_margin"
             android:layout_marginEnd="@dimen/toolbar_margin"
             android:background="@color/white"
-            app:navigationIcon="@drawable/donate_24"
+            app:navigationIcon="@drawable/logo_24"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" >

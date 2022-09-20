@@ -9,7 +9,7 @@ import com.ssafy.birdmeal.model.entity.CartEntity
    version = 엔티티 구조 변경 시 구분해주는 역할 -> 엔티티 수정 시 그대로두면 에러남
    exportSchema = 스키마 내보내기 설정
 */
-@Database(entities = [CartEntity::class], version = 1)
+@Database(entities = [CartEntity::class], version = 2)
 abstract class CartDataBase: RoomDatabase() {
     abstract fun cartDao(): CartDao
 }

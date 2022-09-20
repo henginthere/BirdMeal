@@ -23,6 +23,9 @@ class ShoppingViewModel @Inject constructor(
         = MutableStateFlow(listOf())
     val productList get() = _productList.asStateFlow()
 
+    private val _successMsgEvent = SingleLiveEvent<String>()
+    val successMsgEvent get() = _successMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -53,6 +56,7 @@ class ShoppingViewModel @Inject constructor(
             cartRepository.getCartList().collectLatest {
                 if(it is Result.Success){
                     _productList.value = it.data
+                    _successMsgEvent.postValue("목록 조회 성공")
                 }
                 else if(it is Result.Error){
                     _errMsgEvent.postValue("장바구니 목록 조회에 실패했습니다.")

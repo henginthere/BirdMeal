@@ -1,8 +1,11 @@
 package com.ssafy.birdmeal.model.entity
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity(tableName = "t_cart")
 data class CartEntity(
     @PrimaryKey val productSeq: Int,
@@ -12,4 +15,4 @@ data class CartEntity(
     val productThumbnailImg: String,
     val productDescriptionImg: String,
     val productCount: Int
-)
+) : Parcelable

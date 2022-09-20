@@ -6,6 +6,7 @@ import androidx.navigation.fragment.navArgs
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentProductDetailBinding
+import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.view.market.MarketViewModel
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail) {
@@ -53,10 +54,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
     }
 
     private val listener = object : BuyDialogListener { // 장바구니에 담기
-        override fun onItemClick(productSeq: Int) {
+        override fun onItemClick(cart: CartEntity) {
             // RoomDB에 담는 로직
-
-            findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment) // 장바구니 이동
+            val action = ProductDetailFragmentDirections.actionProductDetailFragmentToShoppingCartFragment(cart)
+            findNavController().navigate(action) // 장바구니 이동
         }
     }
 
