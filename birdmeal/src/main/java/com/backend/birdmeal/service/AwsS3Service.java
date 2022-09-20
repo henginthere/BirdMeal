@@ -23,16 +23,18 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+    public String upload(MultipartFile multipartFile, String sellerName, String productName) throws IOException {
+        System.out.println("파일 : " + multipartFile);
+        System.out.println("멀티파트파일 : " + multipartFile.getOriginalFilename());
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-        return upload(uploadFile, dirName);
+        return upload(uploadFile, sellerName, productName);
     }
 
-    private String upload(File uploadFile, String dirName) {
+    private String upload(File uploadFile, String sellerName, String productName) {
         String subFileName = buildFileName("image", uploadFile.getName());
-        String fileName = dirName + "/" + subFileName;
+        String fileName = sellerName + "/" + productName + "_" + subFileName;
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
         return uploadImageUrl;
@@ -52,6 +54,7 @@ public class AwsS3Service {
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
+        System.out.println("파일이름확인 : " + file.getOriginalFilename());
         File convertFile = new File(file.getOriginalFilename());
 //        System.out.println(file.getOriginalFilename());
 

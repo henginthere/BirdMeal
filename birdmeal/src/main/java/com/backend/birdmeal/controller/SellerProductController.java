@@ -1,7 +1,8 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.ProductDto;
-import com.backend.birdmeal.dto.ProductUpdateDto;
+import com.backend.birdmeal.dto.SellerProductDto;
+import com.backend.birdmeal.dto.SellerProductUpdateDto;
 import com.backend.birdmeal.dto.SellerDto;
 import com.backend.birdmeal.service.SellerInfoService;
 import com.backend.birdmeal.service.SellerProductService;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,14 +29,17 @@ public class SellerProductController {
     /**
      * 상품 판매 등록
      *
-     * @param productDto
+     * @param sellerProductDto
      * @return Object
      */
 
     @ApiOperation(value="상품 판매 등록",response = Object.class)
     @PostMapping("")
-    public ResponseEntity<?> setSellerProduct(@RequestBody ProductDto productDto){
-        boolean success = sellerProductService.setSellerProduct(productDto);
+    public ResponseEntity<?> setSellerProduct(@ModelAttribute SellerProductDto sellerProductDto) throws IOException {
+        System.out.println("받은 이름 :  " +sellerProductDto.getProductName());
+        System.out.println(sellerProductDto.getProductDescriptionImg());
+//        System.out.println("받은 파일 정보 : " + sellerProductDto.getProductThumbnailImg());
+        boolean success = sellerProductService.setSellerProduct(sellerProductDto);
         ResponseFrame<?> res;
 
         if(success) {
@@ -48,14 +53,14 @@ public class SellerProductController {
     /**
      * 상품 정보 수정
      *
-     * @param productUpdateDto
+     * @param sellerProductUpdateDto
      * @return Object
      */
 
     @ApiOperation(value="상품 정보 수정",response = Object.class)
     @PutMapping("")
-    public ResponseEntity<?> updateSellerProduct(@RequestBody ProductUpdateDto productUpdateDto){
-        boolean success = sellerProductService.updateSellerProduct(productUpdateDto);
+    public ResponseEntity<?> updateSellerProduct(@RequestBody SellerProductUpdateDto sellerProductUpdateDto){
+        boolean success = sellerProductService.updateSellerProduct(sellerProductUpdateDto);
         ResponseFrame<?> res;
 
         if(success){

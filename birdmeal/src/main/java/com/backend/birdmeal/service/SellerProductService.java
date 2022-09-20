@@ -1,10 +1,12 @@
 package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.ProductDto;
-import com.backend.birdmeal.dto.ProductUpdateDto;
+import com.backend.birdmeal.dto.SellerProductDto;
+import com.backend.birdmeal.dto.SellerProductUpdateDto;
 import com.backend.birdmeal.entity.CategoryEntity;
 import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.entity.SellerEntity;
+import com.backend.birdmeal.mapper.ProductMapper;
 import com.backend.birdmeal.mapper.SellerProductMapper;
 import com.backend.birdmeal.repository.CategoryRepository;
 import com.backend.birdmeal.repository.SellerInfoRepository;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,23 +26,43 @@ public class SellerProductService {
     private final SellerInfoRepository sellerInfoRepository;
     private final SellerProductRepository sellerProductRepository;
     private final CategoryRepository categoryRepository;
+    private final AwsS3Service awsS3Service;
 
     // 상품 판매 등록
-    public boolean setSellerProduct(ProductDto productDto) {
-        if (productDto == null) return false;
+    public boolean setSellerProduct(SellerProductDto sellerProductDto) throws IOException {
+        if (sellerProductDto == null) return false;
 
         // 카테고리 정보가 있는지 확인
         // 없으면 false
-        CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(productDto.getCategorySeq());
+        CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(sellerProductDto.getCategorySeq());
         if(categoryEntity == null) return false;
 
         // 판매자 정보가 있는지 확인
         // 없으면 false
-        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(productDto.getSellerSeq());
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerProductDto.getSellerSeq());
         if(sellerEntity == null) return false;
 
+        System.out.println("사진파일정보 : " + sellerProductDto.getProductThumbnailImg());
+
+        // 사진 파일 처리
+        String thumbnailImgUrl = awsS3Service.upload(sellerProductDto.getProductThumbnailImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
+        System.out.println("사진 파일 정보 : " + thumbnailImgUrl);
+        String descriptionImgUrl = awsS3Service.upload(sellerProductDto.getProductDescriptionImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
+
+        ProductDto productDto = ProductDto.builder()
+                .productSeq(0)
+                .categorySeq(sellerProductDto.getCategorySeq())
+                .sellerSeq(sellerProductDto.getSellerSeq())
+                .productName(sellerProductDto.getProductName())
+                .productPrice(sellerProductDto.getProductPrice())
+                .productCa(sellerProductDto.getProductCa())
+                .productThumbnailImg(thumbnailImgUrl)
+                .productDescriptionImg(descriptionImgUrl)
+                .productIsDeleted(false)
+                .build();
+
         // Dto -> Entity
-        ProductEntity productEntity = SellerProductMapper.MAPPER.toEntity(productDto);
+        ProductEntity productEntity = ProductMapper.MAPPER.toEntity(productDto);
 
         // 상품 등록 하기
         sellerProductRepository.save(productEntity);
@@ -48,17 +71,17 @@ public class SellerProductService {
     }
 
     // 상품 정보 수정
-    public boolean updateSellerProduct(ProductUpdateDto productUpdateDto){
+    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto){
         // 상품 불러오기
-        ProductEntity productEntity = sellerProductRepository.findByProductSeq(productUpdateDto.getProductSeq());
+        ProductEntity productEntity = sellerProductRepository.findByProductSeq(sellerProductUpdateDto.getProductSeq());
         
         // 상품이 없으면 false
         if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
         // 수정하기
-        productEntity.setProductPrice(productUpdateDto.getProductPrice());
-        productEntity.setProductThumbnailImg(productUpdateDto.getProductThumbnailImg());
-        productEntity.setProductDescriptionImg(productUpdateDto.getProductDescriptionImg());
+        productEntity.setProductPrice(sellerProductUpdateDto.getProductPrice());
+        productEntity.setProductThumbnailImg(sellerProductUpdateDto.getProductThumbnailImg());
+        productEntity.setProductDescriptionImg(sellerProductUpdateDto.getProductDescriptionImg());
 
         // 저장
         sellerProductRepository.save(productEntity);

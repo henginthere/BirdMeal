@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductUpdateDto {
+public class SellerProductUpdateDto {
     private long productSeq;
     private int productPrice;
     private String productThumbnailImg;
