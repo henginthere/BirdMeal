@@ -29,7 +29,7 @@ class CardFragment : BaseFragment<FragmentCardBinding>(R.layout.fragment_card) {
         childSuccessMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 회원 가입 로직 호출
-            loginViewModel.join("child")
+            loginViewModel.join(true)
         }
 
         // 카드 인식 실패

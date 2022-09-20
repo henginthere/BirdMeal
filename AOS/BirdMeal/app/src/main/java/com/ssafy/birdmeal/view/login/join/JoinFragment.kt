@@ -26,7 +26,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         // 일반 회원가입
         layoutGeneral.setOnClickListener {
             // 회원가입 api 호출
-            loginViewModel.join("buyer")
+            loginViewModel.join(false)
         }
 
         // 아동 회원가입입

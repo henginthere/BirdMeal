@@ -10,26 +10,38 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment_category) {
 
-    private val categoryViewModel by activityViewModels<MarketViewModel>()
+    private val marketViewModel by activityViewModels<MarketViewModel>()
 
     override fun init() {
+        marketViewModel.getCategoryList()
         val adapter = CategoryGridAdapter(listener)
-        adapter.submitList(categoryViewModel.categoryList)
-        binding.rvCategoryGrid.adapter = adapter
+
+        binding.apply {
+            marketVM = marketViewModel
+            rvCategoryGrid.adapter = adapter
+        }
 
         initViewModelCallBack()
+
+        initClickListener()
     }
 
     private fun initViewModelCallBack() {
-        categoryViewModel.errorMsgEvent.observe(this){
+        marketViewModel.errorMsgEvent.observe(this){
             showToast(it)
+        }
+    }
+
+    private fun initClickListener() {
+        binding.ivShoppingCart.setOnClickListener {
+            findNavController().navigate(R.id.action_categoryFragment_to_shoppingCartFragment)
         }
     }
 
     private val listener = object : CategoryListener{
         override fun onItemClick(categorySeq: Int) {
-            // val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(categorySeq)
-            findNavController().navigate(R.id.action_categoryFragment_to_productListFragment)
+            val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(categorySeq)
+            findNavController().navigate(action)
         }
     }
 

@@ -9,8 +9,8 @@ import retrofit2.http.*
 interface Oauth2Api {
 
     // 로그인 요청
-    @GET("user/login")
-    suspend fun googleLogin(@Query("code") code: String): BaseResponse<OauthResponse>
+    @POST("user/login")
+    suspend fun googleLogin(@Body map: Map<String, String>): BaseResponse<OauthResponse>
 
     // 회원가입 요청
     @POST("user/register")
@@ -18,5 +18,5 @@ interface Oauth2Api {
 
     // 결식카드 인증 요청
     @POST("user/check-child")
-    suspend fun checkCard(@Body cardNumber: String): BaseResponse<Boolean>
+    suspend fun checkCard(@Body map: Map<String, String>): BaseResponse<Boolean>
 }

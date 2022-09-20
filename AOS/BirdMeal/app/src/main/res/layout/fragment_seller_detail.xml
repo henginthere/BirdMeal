@@ -12,6 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/toolbar_margin"
+            android:layout_marginTop="@dimen/toolbar_margin"
+            android:layout_marginEnd="@dimen/toolbar_margin"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/arrow_back_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <TextView
+                android:id="@+id/tv_toolbar"
+                style="@style/toolbar_text"
+                android:text="판매자 이름" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_shopping_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/toolbar_margin"
+                android:src="@drawable/shopping_bag_24" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
