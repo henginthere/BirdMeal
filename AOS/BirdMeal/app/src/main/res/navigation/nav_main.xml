@@ -107,6 +107,11 @@
         <action
             android:id="@+id/action_shoppingCartFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <argument
+            android:name="cart"
+            app:argType="com.ssafy.birdmeal.model.entity.CartEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
