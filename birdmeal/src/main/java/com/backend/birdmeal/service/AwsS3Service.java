@@ -24,8 +24,6 @@ public class AwsS3Service {
     private String bucket;
 
     public String upload(MultipartFile multipartFile, String sellerName, String productName) throws IOException {
-        System.out.println("파일 : " + multipartFile);
-        System.out.println("멀티파트파일 : " + multipartFile.getOriginalFilename());
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
@@ -54,7 +52,6 @@ public class AwsS3Service {
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
-        System.out.println("파일이름확인 : " + file.getOriginalFilename());
         File convertFile = new File(file.getOriginalFilename());
 //        System.out.println(file.getOriginalFilename());
 

@@ -42,11 +42,9 @@ public class SellerProductService {
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerProductDto.getSellerSeq());
         if(sellerEntity == null) return false;
 
-        System.out.println("사진파일정보 : " + sellerProductDto.getProductThumbnailImg());
 
         // 사진 파일 처리
         String thumbnailImgUrl = awsS3Service.upload(sellerProductDto.getProductThumbnailImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
-        System.out.println("사진 파일 정보 : " + thumbnailImgUrl);
         String descriptionImgUrl = awsS3Service.upload(sellerProductDto.getProductDescriptionImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
 
         ProductDto productDto = ProductDto.builder()
@@ -71,17 +69,21 @@ public class SellerProductService {
     }
 
     // 상품 정보 수정
-    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto){
+    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto) throws IOException {
         // 상품 불러오기
         ProductEntity productEntity = sellerProductRepository.findByProductSeq(sellerProductUpdateDto.getProductSeq());
         
         // 상품이 없으면 false
         if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
+        // 사진 파일 처리
+        String thumbnailImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductThumbnailImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
+        String descriptionImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductDescriptionImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
+
         // 수정하기
         productEntity.setProductPrice(sellerProductUpdateDto.getProductPrice());
-        productEntity.setProductThumbnailImg(sellerProductUpdateDto.getProductThumbnailImg());
-        productEntity.setProductDescriptionImg(sellerProductUpdateDto.getProductDescriptionImg());
+        productEntity.setProductThumbnailImg(thumbnailImgUrl);
+        productEntity.setProductDescriptionImg(descriptionImgUrl);
 
         // 저장
         sellerProductRepository.save(productEntity);
