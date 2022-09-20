@@ -187,6 +187,46 @@
             app:layout_constraintTop_toBottomOf="@id/layout_create_wallet"
             tools:visibility="visible">
 
+            <EditText
+                android:id="@+id/et_private_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="개인키 입력"
+                app:layout_constraintEnd_toStartOf="@id/btn_paste_private"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_paste_private"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_baseline_content_paste_24"
+                app:layout_constraintBottom_toBottomOf="@id/et_private_key"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/et_private_key" />
+
+            <EditText
+                android:id="@+id/et_password_private"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="비밀번호 입력"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_private_key" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_create_private"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="개인키 등록"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_password_private" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
