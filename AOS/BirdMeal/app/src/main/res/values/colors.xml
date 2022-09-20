@@ -14,4 +14,10 @@
 
     <color name="light_grey">#99E9ECEF</color>
 
+    <color name="back_beige">#F2EEE2</color>
+    <color name="second_orange">#CF603F</color>
+    <color name="primary_orange">#E26749</color>
+    <color name="back_orange">#F4BB7D</color>
+    <color name="green">#658179</color>
+
 </resources>
