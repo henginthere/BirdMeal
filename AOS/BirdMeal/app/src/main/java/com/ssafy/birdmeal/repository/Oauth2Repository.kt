@@ -16,24 +16,30 @@ import javax.inject.Singleton
 class Oauth2Repository @Inject constructor(
     private val oauth2RemoteDataSource: Oauth2RemoteDataSource
 ) {
-    fun googleLogin(code: String): Flow<Result<BaseResponse<OauthResponse>>> = flow {
+    fun googleLogin(map: Map<String, String>): Flow<Result<BaseResponse<OauthResponse>>> = flow {
         emit(Result.Loading)
-        oauth2RemoteDataSource.googleLogin(code).collect {
+        oauth2RemoteDataSource.googleLogin(map).collect {
             emit(Result.Success(it))
         }
     }.catch { e ->
         emit(Result.Error(e))
     }
 
-    fun join(request: JoinRequest): Flow<Result<BaseResponse<Boolean>>> = flow {
+    fun join(request: JoinRequest): Flow<Result<BaseResponse<OauthResponse>>> = flow {
+        emit(Result.Loading)
         oauth2RemoteDataSource.join(request).collect {
             emit(Result.Success(it))
         }
+    }.catch { e ->
+        emit(Result.Error(e))
     }
 
-    fun checkCard(cardNumber: String): Flow<Result<BaseResponse<Boolean>>> = flow {
-        oauth2RemoteDataSource.checkCard(cardNumber).collect {
+    fun checkCard(map: Map<String, String>): Flow<Result<BaseResponse<Boolean>>> = flow {
+        emit(Result.Loading)
+        oauth2RemoteDataSource.checkCard(map).collect {
             emit(Result.Success(it))
         }
+    }.catch { e ->
+        emit(Result.Error(e))
     }
 }

@@ -41,3 +41,6 @@ fun ImageView.imageFormatter(imageSeq: Int){
         //.placeholder(R.drawable.img)
         .into(this)
 }
+
+// 지갑 path 가져오기
+fun Context.getWalletPath() = run { "$filesDir/wallet" }
