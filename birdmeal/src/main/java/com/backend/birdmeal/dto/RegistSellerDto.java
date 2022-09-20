@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class RegistSellerDto {
     private String sellerEmail;
     private String sellerNickname;
-    private String sellerAuthority;
 }
