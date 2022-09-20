@@ -5,7 +5,6 @@
 </template>
 
 <script>
-  import axios from "axios"
   import drf from "@/api/drf.js"
   export default {
     data() {
@@ -13,11 +12,9 @@
         products:null,
       }
     },
-    mounted() {
+    methods() {
       callProducts() {
-        axios({
-          url: drf.HOST+`/products/${seller-seq}`
-        })
+        drf.get(`/products/${this.user-seq}`)
       }
     }
     
