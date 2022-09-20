@@ -171,7 +171,7 @@ public class OrderService {
         if(orderDetailEntity == null) return false;
 
         // 주문 상세 리스트 받아오기
-        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderStateRequestDto.getOrderDetailSeq());
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderDetailSeq(orderStateRequestDto.getOrderDetailSeq());
         for(int i=0; i<orderDetailEntityList.size(); i++){
             // 상태 바꿔주기
             orderDetailEntityList.get(i).setOrderToState(orderStateRequestDto.isOrderToState());
@@ -185,6 +185,10 @@ public class OrderService {
 
     // 내 주문 상세 내역 불러오기
     public List<MyOrderDetailResponseDto> getMyOrderDetailInfo(long userSeq, long orderSeq) {
+        // 만약 주문이 내가 한 것이 아니라면 null
+        OrderEntity orderEntityCheck = orderRepository.findByOrderSeq(orderSeq);
+        if(orderEntityCheck.getUserSeq() != userSeq) return null;
+
         List<MyOrderDetailResponseDto> myOrderDetailResponseDtoList = new ArrayList<>();
 
         // 사용자 번호와 주문 번호로 List 개수 구하기
@@ -235,6 +239,7 @@ public class OrderService {
             OrderChildEntity orderChildEntity = orderChildEntityList.get(i);
 
             OrderChildResponseDto orderChildResponseDto = OrderChildResponseDto.builder()
+                    .userNickname(orderChildEntity.getUserNickname())
                     .productName(orderChildEntity.getProductName())
                     .productPrice(orderChildEntity.getProductPrice())
                     .productThumbnailImg(orderChildEntity.getProductThumbnailImg())

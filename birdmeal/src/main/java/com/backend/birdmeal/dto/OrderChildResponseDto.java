@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderChildResponseDto {
+    private String userNickname;
     private String productName;
     private int productPrice;
     private String productThumbnailImg;
