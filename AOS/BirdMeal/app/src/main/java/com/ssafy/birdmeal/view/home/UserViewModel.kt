@@ -1,19 +1,26 @@
 package com.ssafy.birdmeal.view.home
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.repository.UserRepository
-import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.USER_SEQ
+import com.ssafy.birdmeal.utils.getWalletPath
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.web3j.crypto.Credentials
+import org.web3j.crypto.WalletUtils
+import java.io.File
+import java.security.Provider
+import java.security.Security
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,8 +35,65 @@ class UserViewModel @Inject constructor(
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
-    private val _successMsgEvent = SingleLiveEvent<String>()
-    val successMsgEvent get() = _successMsgEvent
+    private val _walletMsgEvent = SingleLiveEvent<Boolean>()
+    val walletMsgEvent get() = _walletMsgEvent
+
+    private val _credentials = SingleLiveEvent<Credentials>()
+    val credentials get() = _credentials
+
+    private val _walletName = SingleLiveEvent<String>()
+    val walletName get() = _walletName
+
+//    private val _successMsgEvent = SingleLiveEvent<String>()
+//    val successMsgEvent get() = _successMsgEvent
+
+    // 지갑이 이미 있는지 확인
+    fun checkPrivateKey(context: Context) {
+        val path = context.getWalletPath()
+        val walletFile = File(path)
+        Log.d(TAG, "checkPrivateKey path: $path")
+
+        if (!walletFile.exists()) {
+            walletFile.mkdirs()
+        }
+
+        val files = walletFile.listFiles()
+
+        // 지갑이 없는 경우
+        if (files.isNullOrEmpty()) {
+            setupBouncyCastle()
+            _walletMsgEvent.postValue(false)
+        }
+        // 지갑이 이미 있는 경우
+        else {
+            val walletPath = files[0]
+            val walletName = walletPath.toString().split("$path/")[1]
+
+            setWalletName(walletName)
+
+            _walletMsgEvent.postValue(true)
+        }
+    }
+
+    // keystore 파일 이름 저장
+    fun setWalletName(walletName: String) {
+        Log.d(TAG, "setWalletName walletName: $walletName")
+
+        _walletName.value = walletName
+    }
+
+    // keystore를 이용해서 인증성 가져오기
+    fun createCredentials(password: String) {
+        val path = context.getWalletPath()
+
+        try {
+            val credentials = WalletUtils.loadCredentials(password, "$path/${walletName.value}")
+            _credentials.value = credentials
+        } catch (e: java.lang.Exception) {
+            Log.e(TAG, "createCredentials: $e")
+            _errMsgEvent.postValue("인증서 가져오기 실패")
+        }
+    }
 
     // 유저 정보 요청
     fun getUserInfo() = viewModelScope.launch(Dispatchers.IO) {
@@ -38,8 +102,8 @@ class UserViewModel @Inject constructor(
         /*
         테스트용 코드
          */
-        _successMsgEvent.postValue("유저 정보 가져오기 성공")
-        _user.postValue(UserDto(1, "", "", null, "", "", true, ""))
+//        _successMsgEvent.postValue("유저 정보 가져오기 성공")
+//        _user.postValue(UserDto(1, "", "", null, "", "", true, ""))
 
 //        userRepository.getUserInfo(userSeq).collectLatest {
 //            Log.d(TAG, "getUserInfo response: $it")
@@ -57,5 +121,19 @@ class UserViewModel @Inject constructor(
 //            }
 //        }
 
+    }
+
+    // 지갑 알고리즘 적용
+    private fun setupBouncyCastle() {
+        val provider: Provider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
+            ?: // Web3j will set up a provider  when it's used for the first time.
+            return
+        if (provider.javaClass == BouncyCastleProvider::class.java) {
+            return
+        }
+        //There is a possibility  the bouncy castle registered by android may not have all ciphers
+        //so we  substitute with the one bundled in the app.
+        Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
+        Security.insertProviderAt(BouncyCastleProvider(), 1)
     }
 }
