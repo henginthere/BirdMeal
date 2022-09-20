@@ -16,5 +16,4 @@ public class SellerUpdateDto {
     private String sellerTel;
     private String sellerAddress;
     private String sellerInfo;
-
 }

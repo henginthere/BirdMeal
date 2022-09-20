@@ -33,10 +33,6 @@ public class SellerEntity {
     private String sellerNickname;
 
     @Basic
-    @Column(name="seller_eoa",length = 1024)
-    private String sellerEoa;
-
-    @Basic
     @Column(name="seller_tel",length = 20)
     private String sellerTel;
 

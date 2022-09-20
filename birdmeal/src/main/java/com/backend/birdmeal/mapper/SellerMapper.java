@@ -15,5 +15,4 @@ public interface SellerMapper extends StructMapper<SellerDto, SellerEntity> {
     @Override
     SellerDto toDto(final SellerEntity sellerEntity);
 
-
 }
