@@ -7,13 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.birdmeal.model.dto.UserDto
+import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.USER_SEQ
-import com.ssafy.birdmeal.utils.getWalletPath
+import com.ssafy.birdmeal.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.web3j.crypto.Credentials
@@ -44,8 +43,11 @@ class UserViewModel @Inject constructor(
     private val _walletName = SingleLiveEvent<String>()
     val walletName get() = _walletName
 
-//    private val _successMsgEvent = SingleLiveEvent<String>()
-//    val successMsgEvent get() = _successMsgEvent
+    private val _walletAddress = SingleLiveEvent<String>()
+    val walletAddress get() = _walletAddress
+
+    private val _userInfoMsgEvent = SingleLiveEvent<String>()
+    val userInfoMsgEvent get() = _userInfoMsgEvent
 
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
@@ -89,9 +91,33 @@ class UserViewModel @Inject constructor(
         try {
             val credentials = WalletUtils.loadCredentials(password, "$path/${walletName.value}")
             _credentials.value = credentials
+
+            updateUserEOA(credentials.address)
+
         } catch (e: java.lang.Exception) {
             Log.e(TAG, "createCredentials: $e")
             _errMsgEvent.postValue("인증서 가져오기 실패")
+        }
+    }
+
+    // 유저 EOA 갱신
+    fun updateUserEOA(eoa: String) = viewModelScope.launch(Dispatchers.IO) {
+
+        val request = EOARequest(user.value!!.userSeq, eoa)
+
+        userRepository.updateUserEOA(request).collectLatest {
+            Log.d(TAG, "updateUserEOA response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "updateUserEOA data: ${it.data}")
+
+                // 회원가입 성공한 경우
+                if (it.data.success) {
+                    _userInfoMsgEvent.postValue("EOA 업데이트 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
         }
     }
 
@@ -99,28 +125,23 @@ class UserViewModel @Inject constructor(
     fun getUserInfo() = viewModelScope.launch(Dispatchers.IO) {
 
         val userSeq = sharedPreferences.getInt(USER_SEQ, -1)
-        /*
-        테스트용 코드
-         */
-//        _successMsgEvent.postValue("유저 정보 가져오기 성공")
-//        _user.postValue(UserDto(1, "", "", null, "", "", true, ""))
+        Log.d(TAG, "getUserInfo userSeq: $userSeq")
 
-//        userRepository.getUserInfo(userSeq).collectLatest {
-//            Log.d(TAG, "getUserInfo response: $it")
-//
-//            if (it is Result.Success) {
-//                Log.d(TAG, "getUserInfo data: ${it.data}")
-//
-//                // 회원가입 성공한 경우
-//                if (it.data.success) {
-//                    _user.postValue(it.data.data)
-//                    _successMsgEvent.postValue("유저 정보 가져오기 성공")
-//                }
-//            } else if (it is Result.Error) {
-//                _errMsgEvent.postValue("서버 에러 발생")
-//            }
-//        }
+        userRepository.getUserInfo(userSeq).collectLatest {
+            Log.d(TAG, "getUserInfo response: $it")
 
+            if (it is Result.Success) {
+                Log.d(TAG, "getUserInfo data: ${it.data}")
+
+                // 회원가입 성공한 경우
+                if (it.data.success) {
+                    _user.postValue(it.data.data)
+                    _userInfoMsgEvent.postValue("유저 정보 가져오기 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
     }
 
     // 지갑 알고리즘 적용

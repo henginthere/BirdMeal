@@ -13,6 +13,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        userViewModel.getUserInfo()
+
         checkWallet()
 
         initViewModelCallBack()
@@ -26,6 +28,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun initViewModelCallBack() = with(userViewModel) {
         errMsgEvent.observe(viewLifecycleOwner) {
+            showToast(it)
+        }
+
+        userInfoMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
         }
 
