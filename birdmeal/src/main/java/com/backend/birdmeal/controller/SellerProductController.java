@@ -60,6 +60,7 @@ public class SellerProductController {
     @ApiOperation(value="상품 정보 수정",response = Object.class)
     @PutMapping("")
     public ResponseEntity<?> updateSellerProduct(@ModelAttribute SellerProductUpdateDto sellerProductUpdateDto) throws IOException {
+
         boolean success = sellerProductService.updateSellerProduct(sellerProductUpdateDto);
         ResponseFrame<?> res;
 
