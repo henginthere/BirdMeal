@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('@/views/MyPageView.vue')
     },
     {
+      path: '/mypage/update',
+      name: 'mypageUpdate',
+      component: () => import('@/views/MyPageUpdateView.vue')
+    },
+    {
       path: '/products',
       name: 'products',
       component: () => import('@/views/ProductsView.vue')
