@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -22,14 +23,19 @@ import com.gun0912.tedpermission.provider.TedPermissionProvider
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.DialogCreateWalletBinding
 import com.ssafy.birdmeal.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.math.BigInteger
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CreateWalletDialog : DialogFragment() {
 
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     lateinit var binding: DialogCreateWalletBinding
     private val userViewModel by activityViewModels<UserViewModel>()
 
@@ -151,6 +157,10 @@ class CreateWalletDialog : DialogFragment() {
         val privateKey =
             userViewModel.credentials.value?.ecKeyPair?.privateKey?.toString(16) ?: ""
         val eoa = userViewModel.credentials.value?.address.toString()
+
+        sharedPreferences.edit().putString(WALLET_PASSWORD, password).apply()
+        userViewModel.updateUserEOA(eoa)
+
         completedWallet(privateKey, eoa)
 
         showToast("지갑 생성이 완료되었습니다")

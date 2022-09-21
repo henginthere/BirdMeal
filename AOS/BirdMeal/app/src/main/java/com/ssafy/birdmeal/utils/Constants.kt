@@ -9,6 +9,9 @@ const val JWT = "JWT-AUTHENTICATION"
 // 유저 정보
 const val USER_SEQ = "user_seq"
 
+// 지갑 private_key 비밀번호
+const val WALLET_PASSWORD = "wallet_password"
+
 // TAG
 const val TAG = "TAG"
 

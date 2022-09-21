@@ -73,6 +73,9 @@ class UserViewModel @Inject constructor(
 
             setWalletName(walletName)
 
+            val password = sharedPreferences.getString(WALLET_PASSWORD, "") ?: ""
+            createCredentials(password)
+
             _walletMsgEvent.postValue(true)
         }
     }
@@ -91,8 +94,7 @@ class UserViewModel @Inject constructor(
         try {
             val credentials = WalletUtils.loadCredentials(password, "$path/${walletName.value}")
             _credentials.value = credentials
-
-            updateUserEOA(credentials.address)
+            _walletAddress.postValue(credentials.address)
 
         } catch (e: java.lang.Exception) {
             Log.e(TAG, "createCredentials: $e")
