@@ -46,11 +46,3 @@ fun ImageView.imageFormatter(imageSeq: Int){
 
 // 지갑 path 가져오기
 fun Context.getWalletPath() = run { "$filesDir/wallet" }
-
-// 숫자 천단위 표시
-object DecimalConverter {
-    fun BigDecimal.priceConvert(): String{
-        val myFormat = DecimalFormat("###,###")
-        return myFormat.format(this)
-    }
-}

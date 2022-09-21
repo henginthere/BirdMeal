@@ -14,7 +14,6 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
     private val donationViewModel by activityViewModels<DonationViewModel>()
 
     override fun init() {
-        donationViewModel.getDonationAmount(userViewModel.credentials.value!!)
 
         initViewModelCallBack()
 

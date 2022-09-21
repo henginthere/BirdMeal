@@ -5,12 +5,15 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentHomeBinding
+import com.ssafy.birdmeal.di.ApplicationClass
+import com.ssafy.birdmeal.view.donation.DonationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
+    private val donationViewModel by activityViewModels<DonationViewModel>()
 
     override fun init() {
         userViewModel.getUserInfo()
@@ -45,6 +48,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 val createWalletDialog = CreateWalletDialog()
                 createWalletDialog.show(parentFragmentManager, "createWalletDialog")
             }
+        }
+
+        // 인증서 준비된 경우
+        userViewModel.credentials.observe(viewLifecycleOwner) {
+            (requireActivity().application as ApplicationClass).initConract(it)
+
+            donationViewModel.getDonationAmount()
+            showToast("인증서 준비 완료")
         }
     }
 
