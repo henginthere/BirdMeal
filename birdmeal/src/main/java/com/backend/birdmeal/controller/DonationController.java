@@ -1,6 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.DonationDto;
+import com.backend.birdmeal.dto.ResponseDonationDto;
 import com.backend.birdmeal.dto.SaveDonationDto;
 import com.backend.birdmeal.service.DonationService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -52,8 +53,8 @@ public class DonationController {
     @ApiOperation(value = "전체 기부 내역 불러오기", response = List.class)
     @GetMapping
     public ResponseEntity<?> getAllDonation() {
-        List<DonationDto> donationList = donationService.getAllDonation();
-        ResponseFrame<List<DonationDto>> res;
+        List<ResponseDonationDto> donationList = donationService.getAllDonation();
+        ResponseFrame<List<ResponseDonationDto>> res;
         if (donationList != null) {
             if(donationList.size()==0){
                 res = ResponseFrame.of(donationList, "전체 기부 내역이 없습니다.");
