@@ -34,4 +34,13 @@ class UserRepository @Inject constructor(
     }.catch { e ->
         emit(Result.Error(e))
     }
+
+    fun updateUserProfile(userSeq: Int, map: Map<String, String>): Flow<Result<BaseResponse<String>>> = flow {
+        emit(Result.Loading)
+        userRemoteDataSource.updateUserProfile(userSeq,map).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
 }

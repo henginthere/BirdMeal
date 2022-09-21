@@ -21,4 +21,8 @@ class UserRemoteDataSource @Inject constructor(
     fun updateUserEOA(request: EOARequest): Flow<BaseResponse<String>> = flow {
         emit(userApi.updateUserEOA(request))
     }
+
+    fun updateUserProfile(userSeq: Int, map: Map<String, String>): Flow<BaseResponse<String>> = flow {
+        emit(userApi.updateUserProfile(userSeq, map))
+    }
 }
