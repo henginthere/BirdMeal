@@ -5,8 +5,8 @@
     class="mx-auto"
   >
     <v-row>
-        <v-col-4>판매자 이메일</v-col-4>
-        <v-col-8>us12345@naver.com</v-col-8>
+        <v-col cols="4">판매자 이메일</v-col>
+        <v-col cols="8">us12345@naver.com</v-col>
     </v-row>
   </v-card>
 </div>
