@@ -19,7 +19,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
     private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
     private val args by navArgs<ShoppingCartFragmentArgs>()
     private lateinit var cart : CartEntity
-    private var adapter = ShoppingCartAdapter()
+    private lateinit var adapter : ShoppingCartAdapter
 
     override fun init() {
         if(args.cart != null){ // 구매하기로 진입한 경우
@@ -29,6 +29,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
 
         }
         shoppingViewModel.getCartList()
+        adapter = ShoppingCartAdapter(listener)
         binding.rvCartList.adapter = adapter
 
         initViewModelCallBack()
@@ -59,4 +60,10 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
         }
     }
 
+    private val listener = object : ShoppingCartListener{
+        override fun onDeleteClick(cart: CartEntity) {
+            shoppingViewModel.delete(cart)
+            showToast("장바구니에서 물품을 삭제했습니다.")
+        }
+    }
 }

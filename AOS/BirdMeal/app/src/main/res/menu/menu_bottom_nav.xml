@@ -3,16 +3,16 @@
 
     <item android:id="@+id/donationFragment"
         android:icon="@drawable/donate_24"
-        android:title=""
+        android:title="기부"
         android:enabled="true"/>
 
     <item android:id="@+id/categoryFragment"
         android:icon="@drawable/market_24"
-        android:title=""
+        android:title="마켓"
         android:enabled="true"/>
 
     <item android:id="@+id/myPageFragment"
         android:icon="@drawable/my_page_24"
-        android:title=""
+        android:title="내 정보"
         android:enabled="true"/>
 </menu>
