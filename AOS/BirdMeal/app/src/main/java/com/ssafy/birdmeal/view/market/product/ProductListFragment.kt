@@ -19,8 +19,9 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     override fun init() {
         this.categorySeq = args.categorySeq
         this.categoryName = args.categoryName
+
         if(categorySeq > 0){ // 파라미터가 잘 전달된 경우
-            marketViewModel.getProductList(1)
+            marketViewModel.getProductList(categorySeq)
         } else { // 파라미터가 전달되지 않은 경우
             showToast("상품 카테고리Seq 전달 받지 못했습니다.")
         }
@@ -63,7 +64,8 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
 
     private val categoryListener = object : CategoryListener {
         override fun onItemClick(categorySeq: Int, categoryName: String) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
-            showToast("재호출 합니다.")
+            marketViewModel.getProductList(categorySeq)
+            binding.tvToolbar.text = categoryName
         }
     }
 
