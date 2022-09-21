@@ -8,10 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.databinding.ItemCartListBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
 
-class ShoppingCartAdapter
+class ShoppingCartAdapter(private val listener: ShoppingCartListener)
     : ListAdapter<CartEntity, ShoppingCartAdapter.ViewHolder>(diffUtil){
 
     inner class ViewHolder(private val binding : ItemCartListBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.ivDelete.setOnClickListener {
+                listener.onDeleteClick(getItem(adapterPosition))
+            }
+        }
 
         fun bind(item : CartEntity){
             binding.cart = item
