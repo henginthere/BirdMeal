@@ -7,6 +7,8 @@ import android.os.Build
 import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 // 다이얼로그 사이즈 조절
 fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){
@@ -44,3 +46,11 @@ fun ImageView.imageFormatter(imageSeq: Int){
 
 // 지갑 path 가져오기
 fun Context.getWalletPath() = run { "$filesDir/wallet" }
+
+// 숫자 천단위 표시
+object DecimalConverter {
+    fun BigDecimal.priceConvert(): String{
+        val myFormat = DecimalFormat("###,###")
+        return myFormat.format(this)
+    }
+}
