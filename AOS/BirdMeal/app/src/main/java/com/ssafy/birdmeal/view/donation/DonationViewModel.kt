@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
-import com.ssafy.birdmeal.repository.DonationRepository
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import com.ssafy.birdmeal.utils.SingleLiveEvent
@@ -17,7 +16,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DonationViewModel @Inject constructor(
-    private val donationRepository: DonationRepository,
     private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
