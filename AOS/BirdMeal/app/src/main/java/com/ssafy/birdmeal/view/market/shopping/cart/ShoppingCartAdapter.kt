@@ -14,8 +14,13 @@ class ShoppingCartAdapter(private val listener: ShoppingCartListener)
     inner class ViewHolder(private val binding : ItemCartListBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.ivDelete.setOnClickListener {
-                listener.onDeleteClick(getItem(adapterPosition))
+            binding.apply {
+                ivDelete.setOnClickListener { // 삭제버튼 클릭
+                    listener.onDeleteClick(getItem(adapterPosition))
+                }
+                btnCnt.setOnClickListener { // 수량버튼 클릭
+                    listener.onCntClick(getItem(adapterPosition))
+                }
             }
         }
 
@@ -37,7 +42,7 @@ class ShoppingCartAdapter(private val listener: ShoppingCartListener)
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<CartEntity>(){
             override fun areItemsTheSame(oldItem: CartEntity, newItem: CartEntity): Boolean {
-                return oldItem.productSeq == newItem.productSeq
+                return oldItem.hashCode() == newItem.hashCode()
             }
 
             override fun areContentsTheSame(oldItem: CartEntity, newItem: CartEntity): Boolean {

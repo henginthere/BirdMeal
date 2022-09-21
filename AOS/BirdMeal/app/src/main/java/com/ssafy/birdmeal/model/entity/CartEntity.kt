@@ -14,5 +14,5 @@ data class CartEntity(
     val productCa: String? = null,
     val productThumbnailImg: String,
     val productDescriptionImg: String,
-    val productCount: Int
+    var productCount: Int
 ) : Parcelable

@@ -5,7 +5,9 @@
     tools:context=".view.market.shopping.cart.ShoppingCartFragment">
 
     <data>
-
+        <variable
+            name="shoppingVM"
+            type="com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +59,7 @@
             android:id="@+id/tv_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            productPrice="@{shoppingVM.totalPrice}"
             tools:text="25,000원"
             android:textColor="@color/primary_orange"
             app:layout_constraintEnd_toEndOf="@id/rv_cart_list"
@@ -67,10 +69,9 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_buy"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="구매하기"
+            android:layout_height="60dp"
             android:textColor="@color/white"
-            android:background="@drawable/btn_round_main_color"
+            android:background="@drawable/btn_button"
             android:layout_marginBottom="20dp"
             app:layout_constraintStart_toStartOf="@id/tv_total"
             app:layout_constraintEnd_toEndOf="@id/tv_total_price"

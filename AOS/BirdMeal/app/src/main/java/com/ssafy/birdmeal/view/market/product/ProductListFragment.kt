@@ -20,14 +20,6 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         this.categorySeq = args.categorySeq
         this.categoryName = args.categoryName
 
-        if(categorySeq > 0){ // 파라미터가 잘 전달된 경우
-            marketViewModel.getProductList(categorySeq)
-        } else { // 파라미터가 전달되지 않은 경우
-            showToast("상품 카테고리Seq 전달 받지 못했습니다.")
-        }
-        binding.marketVM = marketViewModel
-        binding.tvToolbar.text = categoryName
-
         initRecyclerView()
 
         initClickListener()
@@ -63,7 +55,9 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     }
 
     private val categoryListener = object : CategoryListener {
-        override fun onItemClick(categorySeq: Int, categoryName: String) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
+        override fun onItemClick(seq: Int, name: String) { // 상품 카테고리 seq에 따른 상품 목록 조회 api 재호출
+            categorySeq = seq
+            categoryName = name
             marketViewModel.getProductList(categorySeq)
             binding.tvToolbar.text = categoryName
         }
@@ -73,6 +67,20 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         override fun onItemClick(productSeq: Int) {  // 상품 상세정보로 이동
             val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(productSeq)
             findNavController().navigate(action)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if(categorySeq > 0){ // 파라미터가 잘 전달된 경우
+            marketViewModel.getProductList(categorySeq)
+        } else { // 파라미터가 전달되지 않은 경우
+            showToast("상품 카테고리Seq 전달 받지 못했습니다.")
+        }
+        binding.apply {
+            marketVM = marketViewModel
+            tvToolbar.text = categoryName
         }
     }
 

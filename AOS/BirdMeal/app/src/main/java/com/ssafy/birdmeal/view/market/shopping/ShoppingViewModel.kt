@@ -1,15 +1,18 @@
 package com.ssafy.birdmeal.view.market.shopping
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.repository.CartRepository
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
+import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +25,9 @@ class ShoppingViewModel @Inject constructor(
     private val _productList: MutableStateFlow<List<CartEntity>>
         = MutableStateFlow(listOf())
     val productList get() = _productList.asStateFlow()
+
+    private val _totalPrice = MutableStateFlow(0)
+    val totalPrice get() = _totalPrice.asStateFlow()
 
     private val _successMsgEvent = SingleLiveEvent<String>()
     val successMsgEvent get() = _successMsgEvent
@@ -40,6 +46,7 @@ class ShoppingViewModel @Inject constructor(
     fun update(cart: CartEntity){
         viewModelScope.launch(Dispatchers.IO) {
             cartRepository.updateCart(cart)
+            _successMsgEvent.postValue("업데이트 완료")
         }
     }
 
@@ -53,10 +60,16 @@ class ShoppingViewModel @Inject constructor(
     // 장바구니 목록 조회
     fun getCartList(){
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.getCartList().collectLatest {
+            cartRepository.getCartList().collect {
                 if(it is Result.Success){
                     _productList.value = it.data
-                    _successMsgEvent.postValue("목록 조회 성공")
+                    // 항목의 전체 금액 더해주기
+                    var price = 0
+                    _productList.value.map { p ->
+                        var total = p.productPrice * p.productCount
+                        price += total
+                    }
+                    _totalPrice.value = price
                 }
                 else if(it is Result.Error){
                     _errMsgEvent.postValue("장바구니 목록 조회에 실패했습니다.")

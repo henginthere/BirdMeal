@@ -4,4 +4,5 @@ import com.ssafy.birdmeal.model.entity.CartEntity
 
 interface ShoppingCartListener {
     fun onDeleteClick(cart: CartEntity)
+    fun onCntClick(cart: CartEntity)
 }
