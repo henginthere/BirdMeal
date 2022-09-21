@@ -32,8 +32,14 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
                 showToast(it)
             }
 
+            // 불러온 전체 기부액 표시
             donationMsgEvent.observe(viewLifecycleOwner) {
                 tvBalance.text = it
+            }
+
+            // 기부 완료
+            donateMsgEvent.observe(viewLifecycleOwner) {
+                showToast(it)
             }
         }
     }
