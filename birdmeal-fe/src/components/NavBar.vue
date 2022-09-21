@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app>
+  <v-navigation-drawer v-model="drawer" floating permanent>
     <v-sheet color="grey lighten-4" class="pa-4">
       <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
 
@@ -8,18 +8,21 @@
 
     <v-divider></v-divider>
 
-    <v-list>
-      <v-list-item
-        v-for="[text, path] in links"
-        :key="path"
-        link
-        v-on:click="movePages(path)"
-      >
+    <v-list color="transparent">
+      <v-list-item v-for="[text, path] in links" :key="path" link v-on:click="movePages(path)">
         <v-list-item-content>
           <v-list-item-title>{{ text }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <template v-slot:append>
+      <div class="pa-2">
+        <v-btn block>
+          로그아웃
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -46,4 +49,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+</style>
