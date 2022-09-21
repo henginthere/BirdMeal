@@ -7,13 +7,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import drf from '@/api/drf.js'
+import http from '@/api/http.js'
 import { authState } from '@/stores/auth.js'
 const auth = authState();
 const orderList = ref({})
 
 function getList() {
-  drf.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
+  http.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
     orderList.value = res.data.data
     console.log(orderList.value[0])
   })
