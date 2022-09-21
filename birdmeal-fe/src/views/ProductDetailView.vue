@@ -6,10 +6,35 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+
   export default {
-    props: {
-      product: Object,
+
+    data() {
+      return {
+        product: null,
+      }
     },
+
+    methods: {
+      getProductDetail(productSeq){
+        axios({
+        url: `https://j7d101.p.ssafy.io/api/product/${productSeq}`,
+        method: 'get',
+        headers: {"Content-type": "application/json"},
+        data:{},
+      }).then(res=> this.product = res.data.data)
+      }
+    },
+
+
+    created(){
+      const payload = this.$route.params.productSeq
+      console.log(payload)
+      this.getProductDetail(payload)
+    }
+
   }
 </script>
 
