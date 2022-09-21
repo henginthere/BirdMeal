@@ -7,6 +7,7 @@
     상품명: {{product.productName}}
     <br/>
     가격 : {{product.productPrice}}ELN
+    <br/>
     <v-divider></v-divider>
 
 
@@ -25,7 +26,7 @@
     },
     methods: {
       goDetail() {
-        this.$router.push({name:"product-detail", params:{product:this.product} })
+        this.$router.push({name:"product-detail", params:{productSeq:this.product.productSeq} })
       }
     }
 

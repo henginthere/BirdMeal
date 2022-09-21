@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import drf from "@/api/drf.js"
+  import http from '@/api/http.js'
   import ProductListItem from "@/components/ProductListItem.vue"
   export default {
     data() {
@@ -24,7 +24,7 @@
     },
     methods: {
       callProducts() {
-        drf.get(`/product/${1}`).then(res=> this.products = res.data.data)
+        http.get(`/product/${1}`).then(res=> this.products = res.data.data)
       },
       goRegist(){
           this.$router.push('/product/regist');
