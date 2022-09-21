@@ -23,12 +23,14 @@ export const authState = defineStore('authState', {
       console.log('signup', response.data.success);
     },
     async login(credential) {
-
+      let userData = decodeCredential(credential);
+      let email = userData.email;
       const response = await http.post('/login', {
         googleAccessToken: credential,
       });
 
       const user = {
+        sellerEmail: email,
         sellerSeq: response.data.data.sellerSeq,
         accessToken: response.data.data.tokenDto.accessToken,
         refreshToken: response.data.data.tokenDto.refreshToken,
