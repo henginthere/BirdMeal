@@ -77,11 +77,11 @@ public class SellerProductService {
         if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
         // 사진 파일이 없으면 사진 안바꾸기
-        if(!sellerProductUpdateDto.getProductThumbnailImg().isEmpty()){
+        if(sellerProductUpdateDto.getProductThumbnailImg()!=null){
             String thumbnailImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductThumbnailImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
             productEntity.setProductThumbnailImg(thumbnailImgUrl);
         }
-        if(!sellerProductUpdateDto.getProductDescriptionImg().isEmpty()) {
+        if(sellerProductUpdateDto.getProductDescriptionImg()!=null) {
             String descriptionImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductDescriptionImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
             productEntity.setProductDescriptionImg(descriptionImgUrl);
         }
