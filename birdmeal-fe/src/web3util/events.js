@@ -1,6 +1,7 @@
 import {ElenaTokenContract, TradeManagerContract} from "./web3Config";
 import {FundingContractAddress} from "./CA"
 import web3 from "web3";
+import router from "@/router/index.js"
 
 var Account;
 
@@ -10,7 +11,7 @@ var Account;
 
 export function MetaMaskLogin() {
     //메타마스크 설치확인
-    if (typeof web3 !== 'undefined') {
+    if (typeof window.ethereum !== 'undefined') {
         console.log('Ethereum successfully detected!')
         
         //계정연결
@@ -24,7 +25,7 @@ export function MetaMaskLogin() {
     //설치가 안되었다면 에러 발생
       } else {
         // if the provider is not detected, detectEthereumProvider resolves to null
-        console.error('Please install MetaMask!');
+        router.push("/guide")
       }
 
 }
