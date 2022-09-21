@@ -13,6 +13,7 @@
             v-model="name"
           ></v-text-field>
         </v-col>
+        <v-divider />
         <v-col
           cols="12"
           sm="6"
@@ -23,7 +24,23 @@
             v-model="price"
           ></v-text-field>
         </v-col>
+        <v-divider />
+        <v-select
+          :items="categorys"
+          v-model = "selectCategory"
+          item-text="state"
+          item-value="abbr"
+          label="Select"
+          persistent-hint
+          return-object
+          single-line
+        ></v-select>
+        
         <hr/>
+        <form>
+          <input type="file" name="productThumbnailImg" id="productThumbnailImg" />
+          <input type="file" name="productDescriptionImg" id="productDescriptionImg" />
+        </form>
         <!-- <v-btn
           v-on:click="createTrade(name, Number(price))"
         > -->
@@ -40,22 +57,40 @@
  
 <script>
   import { createTrade } from "@/web3util/events";
+  import axios from "axios";
   export default {
     data() {
       return {
         name: '',
-        price: 0,
-        ca:''
+        price: null,
+        ca:'',
+        selectCategory:"",
+        category:{"육류":1, '채소':2, "과일":3, "과자":4, "빵":5, "음료":6},
+        categorys:["육류", '채소', "과일", "과자", "빵", "음료"]
+
       }
     },
     methods: {
       registProduct(){
+        let form = new FormData()
+        var productThumbnailImg = document.getElementById("productThumbnailImg");
+        var productDescriptionImg = document.getElementById("productDescriptionImg");
+        form.append("productName", this.name)
+        form.append('productPrice', this.price)
+        form.append('sellerSeq', 1)
+        form.append('categorySeq',this.category[this.selectCategory])
+        form.append('productThumbnailImg', productThumbnailImg.files[0])
+        form.append('productDescriptionImg', productDescriptionImg.files[0])
+        console.log(productDescriptionImg)
         createTrade(this.name, this.price).then(res=>this.ca = res.events.TradeCreated.returnValues.tradeAddress)
+        .then(() => form.append("productCa", this.ca))
+        .then(() => axios.post("https://j7d101.p.ssafy.io/api/seller/product", form,{
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })).then(()=>this.$router.push('/products'))
       },
       createTrade,
-      // check() {
-      //   console.log(this.name,this.price)
-      // }
     }
   }
 </script>
