@@ -5,10 +5,9 @@
   </template>
   
   <script>
-import MyPageSellerInfoUpdateVue from "../components/MyPageSellerInfoUpdate.vue"
+    import MyPageSellerInfoUpdate from "../components/MyPageSellerInfoUpdate.vue"
     export default {
-        components: { MyPageSellerInfoUpdateVue }
-      
+        components: { MyPageSellerInfoUpdate }
     }
 
   </script>
