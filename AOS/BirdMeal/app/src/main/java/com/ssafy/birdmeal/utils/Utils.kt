@@ -7,6 +7,7 @@ import android.os.Build
 import android.view.WindowManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.ssafy.birdmeal.R
 
 // 다이얼로그 사이즈 조절
 fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){
@@ -36,9 +37,9 @@ fun Context.dialogResize(dialog: Dialog, width: Float, height: Float){
 }
 
 // 서버에서 이미지 받아오는 포맷
-fun ImageView.imageFormatter(imageSeq: Int){
-    Glide.with(this.context).load("${BASE_URL}images/${imageSeq}")
-        //.placeholder(R.drawable.img)
+fun ImageView.imageFormatter(url: String){
+    Glide.with(this.context).load("$url")
+        .placeholder(R.drawable.meal)
         .into(this)
 }
 
