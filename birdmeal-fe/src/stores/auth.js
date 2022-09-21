@@ -1,4 +1,4 @@
-import drf from '@/api/drf.js';
+import http from '@/api/http.js';
 import { defineStore } from 'pinia';
 import router from '@/router/index.js';
 import { decodeCredential } from 'vue3-google-login';
@@ -15,7 +15,7 @@ export const authState = defineStore('authState', {
       let email = userData.email;
       let nickname = email.split('@')[0];
 
-      const response = await drf.post('/register', {
+      const response = await http.post('/register', {
         sellerEmail: email,
         sellerNickname: nickname,
       });
@@ -24,7 +24,7 @@ export const authState = defineStore('authState', {
     },
     async login(credential) {
 
-      const response = await drf.post('/login', {
+      const response = await http.post('/login', {
         googleAccessToken: credential,
       });
 
