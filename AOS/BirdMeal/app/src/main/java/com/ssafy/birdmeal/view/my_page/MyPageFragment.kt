@@ -23,8 +23,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun initClickListener() = with(binding) {
+
+        // 회원정보 수정
         btnModifyUser.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_editProfileFragment)
+        }
+
+        // 내 기부내역 보기
+        btnDonationHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_myPageFragment_to_myDonationHistoryFragment)
         }
     }
 

@@ -50,5 +50,10 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         btnHistoryDoantion.setOnClickListener {
             findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
         }
+
+        // 아이들 기부금 사용내역
+        btnHistoryChild.setOnClickListener {
+            findNavController().navigate(R.id.action_donationFragment_to_childHistoryFragment)
+        }
     }
 }

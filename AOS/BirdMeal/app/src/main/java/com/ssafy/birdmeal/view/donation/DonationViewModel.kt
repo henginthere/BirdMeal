@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
+import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
@@ -47,6 +48,11 @@ class DonationViewModel @Inject constructor(
             MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
         MutableStateFlow(Result.Uninitialized)
     val donationMyHistoryList get() = _donationMyHistoryList.asStateFlow()
+
+    private val _orderChildHistoryList:
+            MutableStateFlow<Result<BaseResponse<List<ChildHistoryResponse>>>> =
+        MutableStateFlow(Result.Uninitialized)
+    val orderChildHistoryList get() = _orderChildHistoryList.asStateFlow()
 
     // 총 기부액 불러오기 (컨트랙트)
     fun getDonationAmount() = viewModelScope.launch(IO) {
@@ -101,6 +107,7 @@ class DonationViewModel @Inject constructor(
                 // 불러오기 성공한 경우
                 if (it.data.success) {
                     _donationMyHistoryList.value = it
+                    _donateMsgEvent.postValue("나의 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
@@ -136,4 +143,23 @@ class DonationViewModel @Inject constructor(
                 }
             }
         }
+
+    // 아이들 기부금 사용 내역 불러오기
+    fun getChildOrderHistory() = viewModelScope.launch(IO) {
+        donationRepository.getChildOrderHistory().collectLatest {
+            Log.d(TAG, "getChildOrderHistory response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "getChildOrderHistory data: ${it.data}")
+
+                // 불러오기 성공한 경우
+                if (it.data.success) {
+                    _orderChildHistoryList.value = it
+                    _donateMsgEvent.postValue("아이들 기부금 사용 내역 불러오기 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+    }
 }
