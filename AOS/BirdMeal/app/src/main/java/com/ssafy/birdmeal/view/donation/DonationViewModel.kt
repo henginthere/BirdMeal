@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.repository.DonationRepository
@@ -15,6 +16,8 @@ import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.USER_SEQ
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.math.BigInteger
@@ -35,11 +38,15 @@ class DonationViewModel @Inject constructor(
     private val _donateMsgEvent = SingleLiveEvent<String>()
     val donateMsgEvent get() = _donateMsgEvent
 
-    private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
-    val donationAllHistoryList get() = _donationAllHistoryList
+    private val _donationAllHistoryList:
+            MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
+        MutableStateFlow(Result.Uninitialized)
+    val donationAllHistoryList get() = _donationAllHistoryList.asStateFlow()
 
-    private val _donationMyHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
-    val donationMyHistoryList get() = _donationMyHistoryList
+    private val _donationMyHistoryList:
+            MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
+        MutableStateFlow(Result.Uninitialized)
+    val donationMyHistoryList get() = _donationMyHistoryList.asStateFlow()
 
     // 총 기부액 불러오기 (컨트랙트)
     fun getDonationAmount() = viewModelScope.launch(IO) {
@@ -70,7 +77,8 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationAllHistoryList.postValue(it.data.data)
+                    _donationAllHistoryList.value = it
+                    _donateMsgEvent.postValue("전체 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
@@ -92,7 +100,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationMyHistoryList.postValue(it.data.data)
+                    _donationMyHistoryList.value = it
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
