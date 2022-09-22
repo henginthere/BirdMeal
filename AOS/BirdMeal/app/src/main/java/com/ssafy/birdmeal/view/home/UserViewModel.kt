@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.exchangeContract
 import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
@@ -203,7 +204,15 @@ class UserViewModel @Inject constructor(
     fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO){
         val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
         val text = result.fromWeiToEther().priceConvert() + " ELN"
-        Log.d(TAG, "getUserTokenValue: $text")
+
         _userELN.postValue(text)
+    }
+
+    // 유저 토큰 충전하기
+    fun fillUpToken(requestMoney: Int) = viewModelScope.launch(Dispatchers.IO){
+        val result = exchangeContract.changeMoney(requestMoney.toBigInteger()).sendAsync().get()
+        Log.d(TAG, "fillUpToken: $result")
+        // 유저 보유 토큰 재조회
+        getUserTokenValue()
     }
 }

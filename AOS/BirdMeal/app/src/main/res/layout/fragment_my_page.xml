@@ -61,6 +61,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_wallet_address" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_my_eln_value"
                 android:layout_width="wrap_content"
@@ -68,11 +69,19 @@
                 android:text="@{userVM.userELN}"
                 tools:text="12,000 ELN"
                 android:textSize="40dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_wallet_address_value" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_fill_up_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="충전하기"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_my_eln_value" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

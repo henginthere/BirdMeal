@@ -21,7 +21,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun initViewModelCallBack() {
-
+        binding.apply {
+            btnFillUpMoney.setOnClickListener {
+                userViewModel.fillUpToken(10000)
+            }
+        }
     }
 
     private fun initClickListener() = with(binding) {
