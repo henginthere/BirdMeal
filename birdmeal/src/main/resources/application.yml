@@ -22,9 +22,7 @@ spring:
   thymeleaf:
     cache: false
     enabled: true
-    prefix:
-      classpath: /templates/
-    suffix: .html
+    suffix : .html
 
   # jpa 설정
   jpa:
