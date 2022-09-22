@@ -1,23 +1,18 @@
 package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.*;
-import com.backend.birdmeal.entity.CategoryEntity;
-import com.backend.birdmeal.entity.OrderDetailEntity;
-import com.backend.birdmeal.entity.OrderEntity;
-import com.backend.birdmeal.entity.ProductEntity;
+import com.backend.birdmeal.entity.*;
 import com.backend.birdmeal.mapper.OrderDetailMapper;
 import com.backend.birdmeal.mapper.OrderMapper;
 import com.backend.birdmeal.mapper.ProductMapper;
-import com.backend.birdmeal.repository.CategoryRepository;
-import com.backend.birdmeal.repository.OrderDetailRepository;
-import com.backend.birdmeal.repository.OrderRepository;
-import com.backend.birdmeal.repository.ProductRepository;
+import com.backend.birdmeal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +24,7 @@ public class SellerOrderService {
     private final OrderDetailRepository orderDetailRepository;
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-
+    private final UserRepository userRepository;
     // 구매 내역 목록 보기
     public List<SellerOrderResponseDto> getSellerOrderProduct(long sellerSeq) {
         // 리턴할 List
@@ -54,10 +49,14 @@ public class SellerOrderService {
             // category 가져오기
             CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(productEntity.getCategorySeq());
 
+            // user 가져오기
+            Optional<UserEntity> userEntity = userRepository.findByUserSeq(orderEntity.getUserSeq());
+
             // 반환값 만들기
             SellerOrderResponseDto sellerOrderResponseDto = SellerOrderResponseDto.builder()
                     .orderSeq(orderEntity.getOrderSeq())
                     .userSeq(orderEntity.getUserSeq())
+                    .userAdd(userEntity.get().getUserAdd())
                     .orderPrice(orderEntity.getOrderPrice())
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                     .productSeq(productEntity.getProductSeq())
