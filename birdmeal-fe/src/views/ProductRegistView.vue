@@ -30,20 +30,28 @@
           v-model = "selectCategory"
           item-text="state"
           item-value="abbr"
-          label="Select"
+          label="카테고리"
           persistent-hint
           return-object
           single-line
+          
         ></v-select>
         
-        <hr/>
-        <form>
-          <input type="file" name="productThumbnailImg" id="productThumbnailImg" />
-          <input type="file" name="productDescriptionImg" id="productDescriptionImg" />
-        </form>
-        <!-- <v-btn
-          v-on:click="createTrade(name, Number(price))"
-        > -->
+        <v-divider />
+
+
+          <form>
+            <!-- <v-file-input truncate-length="50" id="productThumbnailImg"></v-file-input> -->
+            <input type="file" name="productThumbnailImg" id="productThumbnailImg" placeholder="썸네일" />
+            <v-btn v-on:click="imgUpload1">파일 업로드</v-btn>
+          </form>
+        <v-divider />
+          <form>
+          <!-- <v-file-input truncate-length="1000" id="productDescriptionImg"></v-file-input> -->
+            <input type="file" name="productDescriptionImg" id="productDescriptionImg" />
+            <v-btn v-on:click="imgUpload2">파일 업로드</v-btn>
+          </form>
+        <v-divider />
         <v-btn
           v-on:click="registProduct"
         >
@@ -59,6 +67,7 @@
   import axios from "axios";
   import { mapState } from 'pinia';
   import {authState} from '@/stores/auth'
+  import http from "@/api/http";
   export default {
     data() {
       return {
@@ -66,6 +75,8 @@
         price: null,
         ca:'',
         selectCategory:"",
+        productThumbnailImgURL:'',
+        productDescriptionImgURL:'',
         category:{"육류":1, '채소':2, "과일":3, "과자":4, "빵":5, "음료":6},
         categorys:["육류", '채소', "과일", "과자", "빵", "음료"]
 
@@ -75,26 +86,62 @@
     ...mapState(authState, ['user',])
   },
     methods: {
-      registProduct(){
+      createTrade,
+      // 썸네일 업로드용
+      imgUpload1(){
         let form = new FormData()
-        var productThumbnailImg = document.getElementById("productThumbnailImg");
-        var productDescriptionImg = document.getElementById("productDescriptionImg");
-        form.append("productName", this.name)
-        form.append('productPrice', this.price)
-        form.append('sellerSeq', this.user.sellerSeq)
-        form.append('categorySeq',this.category[this.selectCategory])
-        form.append('productThumbnailImg', productThumbnailImg.files[0])
-        form.append('productDescriptionImg', productDescriptionImg.files[0])
-        console.log(productDescriptionImg)
-        createTrade(this.name, this.price).then(res=>this.ca = res.events.TradeCreated.returnValues.tradeAddress)
-        .then(() => form.append("productCa", this.ca))
-        .then(() => axios.post("https://j7d101.p.ssafy.io/api/seller/product", form,{
+        const productThumbnailImg = document.getElementById("productThumbnailImg").files[0];
+        form.append("file", productThumbnailImg)
+        axios.post("https://j7d101.p.ssafy.io/api/file", form, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        })).then(()=>this.$router.push('/products'))
+        }).then(res => this.productThumbnailImgURL = res.data.data)
       },
-      createTrade,
+
+      imgUpload2(){
+        let form = new FormData()
+        const productDescriptionImg = document.getElementById("productDescriptionImg").files[0];
+        form.append("file", productDescriptionImg)
+        axios.post("https://j7d101.p.ssafy.io/api/file", form, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(res => this.productDescriptionImgURL = res.data.data)
+      },
+
+      registProduct(){
+        createTrade(this.name, this.price).then(res=>this.ca = res.events.TradeCreated.returnValues.tradeAddress)
+        .then(()=> axios.post('https://j7d101.p.ssafy.io/api/seller/product', {
+            categorySeq: this.category[this.selectCategory],
+            sellerSeq: this.user.sellerSeq,
+            productName:this.name,
+            productPrice: this.price,
+            productCa: this.ca,
+            productThumbnailImg: this.productThumbnailImgURL,
+            productDescriptionImg: this.productDescriptionImgURL
+        },{headers:  {"Content-type": "application/json"}}
+        )).then(()=>this.$router.push('/products'))
+      }
+
+      // registProduct(){
+      //   let form = new FormData()
+      //   var productThumbnailImg = document.getElementById("productThumbnailImg");
+      //   var productDescriptionImg = document.getElementById("productDescriptionImg");
+      //   form.append("productName", this.name)
+      //   form.append('productPrice', this.price)
+      //   form.append('sellerSeq', this.user.sellerSeq)
+      //   form.append('categorySeq',this.category[this.selectCategory])
+      //   form.append('productThumbnailImg', productThumbnailImg.files[0])
+      //   form.append('productDescriptionImg', productDescriptionImg.files[0])
+      //   createTrade(this.name, this.price).then(res=>this.ca = res.events.TradeCreated.returnValues.tradeAddress)
+      //   .then(() => form.append("productCa", this.ca))
+      //   .then(() => axios.post("https://j7d101.p.ssafy.io/api/seller/product", form,{
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data'
+      //     }
+      //   })).then(()=>this.$router.push('/products'))
+      // },
     }
   }
 </script>
