@@ -4,6 +4,7 @@
       <v-table fixed-header height="100%">
         <thead>
           <tr>
+            <th class="text-center"></th>
             <th class="text-center">주문번호</th>
             <th class="text-center">상품정보</th>
             <th class="text-center">수량</th>
@@ -14,8 +15,16 @@
         </thead>
         <tbody>
           <tr v-for="item in pageData" :key="item.id">
+            <td class="text-center">
+              <div
+                v-if="!item.orderDeliveryNumber || !item.orderDeliveryCompany"
+              >
+                <v-icon color="red"> mdi-alert-circle </v-icon>
+                <p class="text-error">배송정보</p>
+              </div>
+            </td>
             <td class="text-center">{{ item.orderSeq }}</td>
-            <td class="text-center">{{ item.productName }} </td>
+            <td class="text-center">{{ item.productName }}</td>
             <td class="text-center">{{ item.orderQuantity }}</td>
             <td class="text-center">
               {{ item.orderPrice.toLocaleString() }} ELN
