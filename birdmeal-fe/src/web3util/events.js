@@ -1,4 +1,4 @@
-import {ElenaTokenContract, TradeManagerContract} from "./web3Config";
+import {ElenaTokenContract, TradeManagerContract, TradeContract} from "./web3Config";
 import {FundingContractAddress} from "./CA"
 
 import router from "@/router/index.js"
@@ -18,8 +18,8 @@ export function MetaMaskLogin() {
         window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then(accounts => {
-          console.log("연결된 계정", accounts);
-          Account = accounts
+          console.log("연결된 계정", accounts[0]);
+          Account = accounts[0]
         });
       
     //설치가 안되었다면 에러 발생
@@ -40,9 +40,9 @@ export var totalSupply = async () => {
 // 로그인한 사람의 계정 잔액
 export var balanceOf = async () => {
     if(Account !== null){
-      console.log(Account[0])
+      console.log(Account)
       const res = await ElenaTokenContract.methods
-      .balanceOf(Account[0]).call();
+      .balanceOf(Account).call();
       console.log(res)
       return res;
     }else{
@@ -53,16 +53,27 @@ export var balanceOf = async () => {
 
 export var approve = async () => {
   const res = await ElenaTokenContract.methods
-  .approve(FundingContractAddress, 1000*10*18).send({from:Account[0]}).then(console.log);
+  .approve(FundingContractAddress, 1000*10*18).send({from:Account}).then(console.log);
   console.log(res)
   return res;
 }
 
 export var createTrade = async (name, price) => {
   const res = await TradeManagerContract.methods
-  .createTrade(name, price).send({from:Account[0]});
+  .createTrade(name, price).send({from:Account});
   
   return res
 }
 
 
+export const updateName = async (name, ca) => {
+  const res = await TradeContract(ca).methods
+  .setName(name).send({from:Account});
+  return res
+  };
+
+export const updatePrice = async (price, ca) => {
+  const res = await TradeContract(ca).methods
+  .setPrice(price).send({from:Account});
+  return res
+  };

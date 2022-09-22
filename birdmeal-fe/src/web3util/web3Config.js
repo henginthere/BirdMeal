@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import {ElenaTokenAbi, FundingAbi, ExchangeAbi, TradeManagerAbi} from "./ABI.js"
+import {ElenaTokenAbi, FundingAbi, ExchangeAbi, TradeManagerAbi, TradeAbi} from "./ABI.js"
 import {ElenaTokenContractAddress, FundingContractAddress,ExchangeContractAddress, TradeManagerContractAddress} from "./CA"
 
 //web3 연결
@@ -25,3 +25,15 @@ export const TradeManagerContract = new web3.eth.Contract(
     TradeManagerAbi,
     TradeManagerContractAddress
 );
+
+
+
+export const TradeContract = function(productCa) {
+    const res = new web3.eth.Contract(
+        TradeAbi,
+        productCa
+        );
+    return res
+}
+
+
