@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.api
 
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
+import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -20,4 +21,8 @@ interface DonationApi {
     // 내 기부 내역 불러오기기
     @GET("donation/{user-seq}")
     suspend fun getMyDonationHistory(@Path("user-seq") userSeq: Int): BaseResponse<List<DonationHistoryDto>>
+
+    // 아이들 주문 내역 불러오기
+    @GET("order/child/list")
+    suspend fun getChildOrderHistory(): BaseResponse<List<ChildHistoryResponse>>
 }

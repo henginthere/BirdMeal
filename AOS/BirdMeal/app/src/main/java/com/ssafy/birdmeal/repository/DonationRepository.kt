@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.repository
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.datasource.remote.DonationRemoteDataSource
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
+import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -38,6 +39,15 @@ class DonationRepository @Inject constructor(
     fun getMyDonationHistory(userSeq: Int): Flow<Result<BaseResponse<List<DonationHistoryDto>>>> = flow {
         emit(Result.Loading)
         donationRemoteDataSource.getMyDonationHistory(userSeq).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
+    fun getChildOrderHistory(): Flow<Result<BaseResponse<List<ChildHistoryResponse>>>> = flow {
+        emit(Result.Loading)
+        donationRemoteDataSource.getChildOrderHistory().collect {
             emit(Result.Success(it))
         }
     }.catch { e ->

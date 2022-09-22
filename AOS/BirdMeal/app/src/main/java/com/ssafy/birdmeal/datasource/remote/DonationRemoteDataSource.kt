@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.datasource.remote
 import com.ssafy.birdmeal.api.DonationApi
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
+import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -24,5 +25,9 @@ class DonationRemoteDataSource @Inject constructor(
 
     fun getMyDonationHistory(userSeq: Int): Flow<BaseResponse<List<DonationHistoryDto>>> = flow {
         emit(donationApi.getMyDonationHistory(userSeq))
+    }
+
+    fun getChildOrderHistory(): Flow<BaseResponse<List<ChildHistoryResponse>>> = flow {
+        emit(donationApi.getChildOrderHistory())
     }
 }

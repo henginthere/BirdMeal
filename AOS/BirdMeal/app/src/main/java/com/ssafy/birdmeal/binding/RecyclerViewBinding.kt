@@ -8,8 +8,10 @@ import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.CategoryDto
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
+import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.view.donation.history.ChildHistoryListAdapter
 import com.ssafy.birdmeal.view.donation.history.DonationHistoryListAdapter
 import com.ssafy.birdmeal.view.market.CategoryGridAdapter
 import com.ssafy.birdmeal.view.market.product.CategoryHorizonAdapter
@@ -36,6 +38,9 @@ object RecyclerViewBinding {
                     }
                     is DonationHistoryListAdapter -> {
                         (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<DonationHistoryDto>)
+                    }
+                    is ChildHistoryListAdapter -> {
+                        (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<ChildHistoryResponse>)
                     }
                 }
                 // 같은 형태로 추가하면 됨
