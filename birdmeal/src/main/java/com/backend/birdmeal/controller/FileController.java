@@ -41,7 +41,4 @@ public class FileController {
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
-
-
-
 }
