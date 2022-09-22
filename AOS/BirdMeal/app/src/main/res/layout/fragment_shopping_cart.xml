@@ -33,6 +33,15 @@
                 android:text="장바구니" />
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:text="장바구니가 비어 있습니다."
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_cart_list"
             android:layout_width="0dp"
@@ -40,6 +49,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             tools:listitem="@layout/item_cart_list"
+            submitListLocal="@{shoppingVM.productList}"
             android:layout_marginVertical="20dp"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintStart_toStartOf="parent"
