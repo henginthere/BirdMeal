@@ -18,7 +18,7 @@ export default createVuetify(
             secondary_orange: '#CF603F',
             primary_orange: '#E26749',
             dark_orange: '#F4BB7D',
-            green: '#658179',
+            green: '#65B179',
           },
         },
       },
