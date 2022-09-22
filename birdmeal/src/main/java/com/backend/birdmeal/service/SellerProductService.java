@@ -28,18 +28,18 @@ public class SellerProductService {
     private final CategoryRepository categoryRepository;
 
     // 상품 판매 등록
-    public boolean setSellerProduct(SellerProductDto sellerProductDto){
+    public boolean setSellerProduct(SellerProductDto sellerProductDto) {
         if (sellerProductDto == null) return false;
 
         // 카테고리 정보가 있는지 확인
         // 없으면 false
         CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(sellerProductDto.getCategorySeq());
-        if(categoryEntity == null) return false;
+        if (categoryEntity == null) return false;
 
         // 판매자 정보가 있는지 확인
         // 없으면 false
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerProductDto.getSellerSeq());
-        if(sellerEntity == null) return false;
+        if (sellerEntity == null) return false;
 
         ProductDto productDto = ProductDto.builder()
                 .productSeq(0)
@@ -63,20 +63,31 @@ public class SellerProductService {
     }
 
     // 상품 정보 수정
-    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto){
+    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto, int num) {
         // 상품 불러오기
         ProductEntity productEntity = sellerProductRepository.findByProductSeq(sellerProductUpdateDto.getProductSeq());
-        
-        // 상품이 없으면 false
-        if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
+        // 상품이 없으면, 번호가 이상하면 false
+        if (productEntity == null || productEntity.isProductIsDeleted() || num > 4 || num < 1) return false;
 
-        // 수정하기
-        productEntity.setProductThumbnailImg(sellerProductUpdateDto.getProductThumbnailImg());
-        productEntity.setProductDescriptionImg(sellerProductUpdateDto.getProductDescriptionImg());
-        productEntity.setProductPrice(sellerProductUpdateDto.getProductPrice());
-        productEntity.setProductName(sellerProductUpdateDto.getProductName());
+        // 이름 바꾸는 것
+        if (num == 1) {
+            productEntity.setProductName(sellerProductUpdateDto.getProductName());
+        }
+        // 가격 바꾸는 것
+        else if (num == 2) {
+            productEntity.setProductPrice(sellerProductUpdateDto.getProductPrice());
+        }
 
+        // 썸네일 바꾸는 것
+        else if (num == 3) {
+            productEntity.setProductThumbnailImg(sellerProductUpdateDto.getProductThumbnailImg());
+        }
+
+        // 설명 바꾸는 것
+        else if (num == 4) {
+            productEntity.setProductDescriptionImg(sellerProductUpdateDto.getProductDescriptionImg());
+        }
 
         // 저장
         sellerProductRepository.save(productEntity);
@@ -85,12 +96,12 @@ public class SellerProductService {
     }
 
     // 상품 삭제
-    public boolean deleteSellerProduct(long productSeq){
+    public boolean deleteSellerProduct(long productSeq) {
         // 상품 불러오기
         ProductEntity productEntity = sellerProductRepository.findByProductSeq(productSeq);
 
         // 상품이 없으면 false
-        if(productEntity == null) return false;
+        if (productEntity == null) return false;
 
         // 삭제하기 ( soft delete )
         productEntity.setProductIsDeleted(true);

@@ -48,17 +48,17 @@ public class SellerProductController {
     }
 
     /**
-     * 상품 정보 수정
+     * 상품 정보 수정 - 상품 명
      *
-     * @param sellerProductUpdateDto
+     * @param sellerProductUpdateDto, option-num
      * @return Object
      */
 
-    @ApiOperation(value="상품 정보 수정",response = Object.class)
-    @PutMapping("")
-    public ResponseEntity<?> updateSellerProduct(@RequestBody SellerProductUpdateDto sellerProductUpdateDto){
+    @ApiOperation(value="상품 정보 수정 - 상품 명",response = Object.class)
+    @PutMapping("/update/{option-num}")
+    public ResponseEntity<?> updateSellerProduct(@RequestBody SellerProductUpdateDto sellerProductUpdateDto, @PathVariable("option-num") int num){
 
-        boolean success = sellerProductService.updateSellerProduct(sellerProductUpdateDto);
+        boolean success = sellerProductService.updateSellerProduct(sellerProductUpdateDto, num);
         ResponseFrame<?> res;
 
         if(success){
