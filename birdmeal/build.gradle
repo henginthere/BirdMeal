@@ -53,7 +53,7 @@ dependencies {
 
 	// thymeleaf
 	implementation 'org.springframwork.boot:spring-boot-starter-thymeleaf'
-	implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 }
 
