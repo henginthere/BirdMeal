@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer v-model="drawer" floating permanent>
-    <v-sheet color="grey lighten-4" class="pa-4">
+  <v-navigation-drawer v-model="drawer" floating permanent class="elevation-1">
+    <v-sheet color="back_beige lighten-4" class="pa-4">
       <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
 
       <div>john@vuetifyjs.com</div>
@@ -8,8 +8,8 @@
 
     <v-divider></v-divider>
 
-    <v-list color="transparent">
-      <v-list-item v-for="[text, path] in links" :key="path" link v-on:click="movePages(path)">
+    <v-list color="back_beige">
+      <v-list-item v-for="[text, path] in links" :key="links.id" link v-on:click="movePages(path)">
         <v-list-item-content>
           <v-list-item-title>{{ text }}</v-list-item-title>
         </v-list-item-content>
