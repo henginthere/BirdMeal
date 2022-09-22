@@ -25,7 +25,9 @@
     <style name="header_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/toolbar_title</item>
+        <item name="android:layout_marginTop">@dimen/header_margin</item>
+        <item name="android:layout_marginLeft">@dimen/header_margin</item>
+        <item name="android:textSize">@dimen/header_title</item>
         <item name="android:textColor">@color/black_high_emphasis</item>
         <item name="android:fontFamily">@font/gong_gothic_medium</item>
         <item name="android:includeFontPadding">false</item>

@@ -2,11 +2,11 @@
 <resources>
     <dimen name="bottom_navi_size">50dp</dimen>
 
-    <dimen name="header_margin">16dp</dimen>
+    <dimen name="header_margin">24dp</dimen>
     <dimen name="header_title">18sp</dimen>
 
     <dimen name="toolbar_margin">8dp</dimen>
-    <dimen name="toolbar_title">18sp</dimen>
+    <dimen name="toolbar_title">16sp</dimen>
 
     <dimen name="categoryImg">80dp</dimen>
 </resources>
