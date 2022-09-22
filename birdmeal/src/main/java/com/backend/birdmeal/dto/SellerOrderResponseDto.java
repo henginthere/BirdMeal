@@ -15,6 +15,7 @@ import java.util.List;
 public class SellerOrderResponseDto {
     private long orderSeq;
     private long userSeq;
+    private String userAdd;
     private int orderPrice;
     private long orderDetailSeq;
     private long productSeq;
