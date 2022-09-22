@@ -101,6 +101,7 @@ class DonationViewModel @Inject constructor(
                 // 불러오기 성공한 경우
                 if (it.data.success) {
                     _donationMyHistoryList.value = it
+                    _donateMsgEvent.postValue("나의 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
