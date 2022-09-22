@@ -50,6 +50,7 @@ public class DonationService {
         while (i < donationList.size()) {
             UserEntity userEntity = userRepository.findByUserSeq(donationList.get(i).getUserSeq()).get();
             ResponseDonationDto responseDonationDto = ResponseDonationDto.builder()
+                    .donationSeq(donationDtoList.get(i).getDonationSeq())
                     .donationDate(donationList.get(i).getDonationDate())
                     .donationPrice(donationList.get(i).getDonationPrice())
                     .userNickname(userEntity.getUserNickname())

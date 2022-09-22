@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseDonationDto {
-
+    private int donationSeq;
     private String userNickname;
     private int donationPrice;
     private String donationDate;
