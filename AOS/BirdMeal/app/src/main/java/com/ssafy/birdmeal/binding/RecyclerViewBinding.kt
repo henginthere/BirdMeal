@@ -9,6 +9,7 @@ import com.ssafy.birdmeal.model.dto.CategoryDto
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
+import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.donation.history.ChildHistoryListAdapter
@@ -50,5 +51,15 @@ object RecyclerViewBinding {
             (view.adapter as ListAdapter<Any, *>).submitList(emptyList())
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("submitListLocal")
+    fun submitListLocal(view: RecyclerView, result: List<CartEntity>){
+        Log.d(TAG, "submitListLocal: submitListLocal : $result")
+        if(result.isNotEmpty()){
+            (view.adapter as ListAdapter<Any, *>).submitList(result)
+        }
+    }
+
 
 }
