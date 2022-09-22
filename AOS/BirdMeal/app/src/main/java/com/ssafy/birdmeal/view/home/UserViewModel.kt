@@ -38,6 +38,9 @@ class UserViewModel @Inject constructor(
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
+    private val _successMsgEvent = SingleLiveEvent<String>()
+    val successMsgEvent get() = _successMsgEvent
+
     private val _walletMsgEvent = SingleLiveEvent<Boolean>()
     val walletMsgEvent get() = _walletMsgEvent
 
@@ -206,6 +209,7 @@ class UserViewModel @Inject constructor(
         val text = result.fromWeiToEther().priceConvert() + " ELN"
 
         _userELN.postValue(text)
+        _successMsgEvent.postValue("충전이 완료되었습니다.")
     }
 
     // 유저 토큰 충전하기

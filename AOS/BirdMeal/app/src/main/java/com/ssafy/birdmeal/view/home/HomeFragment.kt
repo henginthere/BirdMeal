@@ -52,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         // 인증서 준비된 경우
         userViewModel.credentials.observe(viewLifecycleOwner) {
-            (requireActivity().application as ApplicationClass).initConract(it)
+            (requireActivity().application as ApplicationClass).initContract(it)
 
             donationViewModel.getDonationAmount()
             showToast("인증서 준비 완료")

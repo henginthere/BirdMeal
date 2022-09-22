@@ -43,7 +43,7 @@ class ApplicationClass : Application() {
         appContext = this
     }
 
-    fun initConract(credentials: Credentials) {
+    fun initContract(credentials: Credentials) {
         val manager = FastRawTransactionManager(
             web3j, credentials, BOLCKCHAIN_NETWORK_CHAINID,
             pollingProcessor

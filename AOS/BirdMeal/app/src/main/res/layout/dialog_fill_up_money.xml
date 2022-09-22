@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_round">
+
+        <EditText
+            android:id="@+id/et_amount"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textSize="18sp"
+            android:background="@drawable/et_round_main_color"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_ELN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ELN"
+            android:textSize="18sp"
+            android:textColor="@color/black_high_emphasis"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@id/et_amount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_amount"
+            app:layout_constraintBottom_toBottomOf="@id/et_amount" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_charge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="충전"
+            android:textColor="@color/primary_orange"
+            android:textSize="24sp"
+            android:layout_marginVertical="18dp"
+            app:layout_constraintTop_toBottomOf="@id/et_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

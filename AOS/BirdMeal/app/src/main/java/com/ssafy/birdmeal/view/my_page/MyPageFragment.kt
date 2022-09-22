@@ -21,9 +21,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun initViewModelCallBack() {
-        binding.apply {
-            btnFillUpMoney.setOnClickListener {
-                userViewModel.fillUpToken(10000)
+        userViewModel.apply {
+            successMsgEvent.observe(viewLifecycleOwner){
+                showToast(it)
             }
         }
     }
@@ -37,6 +37,19 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         // 내 기부내역 보기
         btnDonationHistory.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_myDonationHistoryFragment)
+        }
+
+        // 충전하기 버튼 클릭
+        btnFillUpMoney.setOnClickListener {
+            val dialog = FillUpMoneyDialog(requireContext(), listener)
+            dialog.show()
+        }
+    }
+
+    // 토큰 충전 다이얼로그 리스너
+    private val listener = object : FillUpMoneyListener{
+        override fun onItemClick(requestMoney: Int) {
+            userViewModel.fillUpToken(requestMoney)
         }
     }
 
