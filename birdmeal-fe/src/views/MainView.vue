@@ -1,13 +1,17 @@
 <template>
   <v-app>
-    오더 디테일 뷰
+    
   </v-app>
 </template>
 
 <script>
-  export default {
+export default {
+  setup () {
     
+
+    return {}
   }
+}
 </script>
 
 <style lang="scss" scoped>

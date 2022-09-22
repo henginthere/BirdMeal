@@ -27,18 +27,18 @@ export default {
 </script>
 
 <style>
-.v-application {
+div {
   font-family: 'GongGothic', sans-serif !important;
 }
 @font-face {
-  font-family:'GongGothic';
-  src: url('./assets/fonts/GongGothicMedium.ttf') format('truetype');
+  font-family: 'GongGothic';
+  src: url('@/assets/fonts/GongGothicMedium.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family:'GongGothic';
-  src: url('./assets/fonts/GongGothicLight.ttf') format('truetype');
+  font-family: 'GongGothic';
+  src: url('@/assets/fonts/GongGothicLight.ttf') format('truetype');
   font-weight: 300;
 }
 </style>
