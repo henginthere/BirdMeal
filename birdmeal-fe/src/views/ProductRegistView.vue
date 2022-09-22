@@ -49,7 +49,6 @@
         >
           등록하기
         </v-btn>
-        {{ca}}
       </v-row>
     </v-container>
   </v-app>
@@ -58,6 +57,8 @@
 <script>
   import { createTrade } from "@/web3util/events";
   import axios from "axios";
+  import { mapState } from 'pinia';
+  import {authState} from '@/stores/auth'
   export default {
     data() {
       return {
@@ -70,6 +71,9 @@
 
       }
     },
+    computed: {
+    ...mapState(authState, ['user',])
+  },
     methods: {
       registProduct(){
         let form = new FormData()
@@ -77,7 +81,7 @@
         var productDescriptionImg = document.getElementById("productDescriptionImg");
         form.append("productName", this.name)
         form.append('productPrice', this.price)
-        form.append('sellerSeq', 1)
+        form.append('sellerSeq', this.user.sellerSeq)
         form.append('categorySeq',this.category[this.selectCategory])
         form.append('productThumbnailImg', productThumbnailImg.files[0])
         form.append('productDescriptionImg', productDescriptionImg.files[0])
