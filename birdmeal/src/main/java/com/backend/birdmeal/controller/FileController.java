@@ -42,17 +42,6 @@ public class FileController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
-    /**
-     * HTMl 페이지 반환
-     *
-     * @param
-     * @return Object
-     */
 
-    @ApiOperation(value="HTMl 페이지 반환",response = Object.class)
-    @GetMapping("/html")
-    public String htmlFile(){
-        return "address";
-    }
 
 }
