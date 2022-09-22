@@ -1,6 +1,8 @@
 package com.backend.birdmeal.entity;
 
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "product_is_deleted=false")
 @Table(name = "t_product", schema = "birdmeal", catalog = "")
 public class ProductEntity {
 
