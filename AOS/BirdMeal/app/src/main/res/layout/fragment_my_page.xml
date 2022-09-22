@@ -43,14 +43,35 @@
             app:layout_constraintTop_toBottomOf="@id/layout_user">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_wallet_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="지갑 담을 ConstraintLayout 입니다"
+                android:text="지갑 주소"
+                android:textSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_wallet_address_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userVM.user.userEoa}"
+                tools:text="abcdedfdgasdgasdfaewfd"
+                android:textSize="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_wallet_address" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_my_eln_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userVM.userELN}"
+                tools:text="12,000 ELN"
                 android:textSize="40dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tv_wallet_address_value" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

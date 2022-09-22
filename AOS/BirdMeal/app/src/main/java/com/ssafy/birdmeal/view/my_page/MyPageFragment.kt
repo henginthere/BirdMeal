@@ -12,6 +12,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        userViewModel.getUserTokenValue()
         binding.userVM = userViewModel
 
         initViewModelCallBack()
@@ -20,10 +21,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun initViewModelCallBack() {
+
     }
 
     private fun initClickListener() = with(binding) {
-
         // 회원정보 수정
         btnModifyUser.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_editProfileFragment)

@@ -6,10 +6,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
 import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.DecimalConverter.fromWeiToEther
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -51,6 +54,9 @@ class UserViewModel @Inject constructor(
 
     private val _userUpdateMsgEvent = SingleLiveEvent<String>()
     val userUpdateMsgEvent get() = _userUpdateMsgEvent
+
+    private val _userELN = SingleLiveEvent<String>()
+    val userELN get() = _userELN
 
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
@@ -191,5 +197,13 @@ class UserViewModel @Inject constructor(
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
+    }
+
+    // 유저 보유 토큰 값 조회
+    fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO){
+        val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
+        val text = result.fromWeiToEther().priceConvert() + " ELN"
+        Log.d(TAG, "getUserTokenValue: $text")
+        _userELN.postValue(text)
     }
 }
