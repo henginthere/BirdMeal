@@ -56,6 +56,8 @@ public class SellerOrderService {
             SellerOrderResponseDto sellerOrderResponseDto = SellerOrderResponseDto.builder()
                     .orderSeq(orderEntity.getOrderSeq())
                     .userSeq(orderEntity.getUserSeq())
+                    .userNickname(userEntity.get().getUserNickname())
+                    .userTel(userEntity.get().getUserTel())
                     .userAdd(userEntity.get().getUserAdd())
                     .orderPrice(orderEntity.getOrderPrice())
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
