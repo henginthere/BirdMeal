@@ -1,6 +1,6 @@
 import {ElenaTokenContract, TradeManagerContract} from "./web3Config";
 import {FundingContractAddress} from "./CA"
-import web3 from "web3";
+
 import router from "@/router/index.js"
 
 var Account;
