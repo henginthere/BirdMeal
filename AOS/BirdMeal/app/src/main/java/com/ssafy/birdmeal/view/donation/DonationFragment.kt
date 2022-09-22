@@ -1,6 +1,7 @@
 package com.ssafy.birdmeal.view.donation
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonationBinding
@@ -32,12 +33,22 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
                 showToast(it)
             }
 
+            // 불러온 전체 기부액 표시
             donationMsgEvent.observe(viewLifecycleOwner) {
                 tvBalance.text = it
+            }
+
+            // 기부 완료
+            donateMsgEvent.observe(viewLifecycleOwner) {
+                showToast(it)
             }
         }
     }
 
-    private fun initClickListener() {
+    private fun initClickListener() = with(binding) {
+        // 전체 기부내역 불러오기
+        btnHistoryDoantion.setOnClickListener {
+            findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
+        }
     }
 }
