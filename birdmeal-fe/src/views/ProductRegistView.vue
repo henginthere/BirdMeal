@@ -34,12 +34,8 @@
           persistent-hint
           return-object
           single-line
-          
         ></v-select>
-        
         <v-divider />
-
-
           <form>
             <!-- <v-file-input truncate-length="50" id="productThumbnailImg"></v-file-input> -->
             <input type="file" name="productThumbnailImg" id="productThumbnailImg" placeholder="썸네일" />

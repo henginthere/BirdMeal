@@ -1,7 +1,5 @@
 <template>
   <v-app>
-    <!-- 상품 디테일 뷰
-    {{product}} -->
 
     <v-container>
       <v-row>
@@ -33,12 +31,14 @@
         <v-img :src="product !== null ? product.productThumbnailImg: null" max-height="150" max-width="250"/>
         <form>
           <input type="file" name="productThumbnailImg" id="productThumbnailImg" />
-          <v-btn v-on:click="imgUpload1">파일 업로드</v-btn>
+          <v-btn v-on:click="imgUpload1">섬네일파일 업로드</v-btn>
         </form>
+        <v-divider />
+        <hr/>
         <v-img :src="product !== null ? product.productDescriptionImg: null" max-height="150" max-width="250"/>
         <form>
           <input type="file" name="productDescriptionImg" id="productDescriptionImg" />
-          <v-btn v-on:click="imgUpload2">파일 업로드</v-btn>
+          <v-btn v-on:click="imgUpload2">상세설명파일 업로드</v-btn>
         </form>
         <!-- <v-btn
           v-on:click="createTrade(name, Number(price))"
@@ -49,7 +49,12 @@
         >
           등록하기
         </v-btn>
-        {{ca}}
+        <v-btn
+          v-on:click="deleteProduct"
+        >
+          상품 삭제하기
+        </v-btn>
+
       </v-row>
     </v-container>
 
@@ -60,6 +65,7 @@
 import axios from 'axios'
 import { mapState } from 'pinia';
 import {authState} from '@/stores/auth'
+import http from '../api/http';
 
   export default {
 
@@ -119,6 +125,9 @@ import {authState} from '@/stores/auth'
             productDescriptionImg: this.productDescriptionImgURL,
         },{headers:  {"Content-type": "application/json"}}
         ).then(() => this.$router.push('/products'))
+      },
+      deleteProduct(){
+        http.put(`/product/${this.product.productSeq}`).then(res => console.log(res))
       }
 
     },
