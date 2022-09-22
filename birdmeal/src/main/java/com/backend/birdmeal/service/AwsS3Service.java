@@ -23,16 +23,16 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String sellerName, String productName) throws IOException {
+    public String upload(MultipartFile multipartFile) throws IOException {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-        return upload(uploadFile, sellerName, productName);
+        return upload(uploadFile);
     }
 
-    private String upload(File uploadFile, String sellerName, String productName) {
+    private String upload(File uploadFile) {
         String subFileName = buildFileName("image", uploadFile.getName());
-        String fileName = sellerName + "/" + productName + "_" + subFileName;
+        String fileName = "imgFile/" + subFileName;
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
         return uploadImageUrl;

@@ -15,6 +15,6 @@ public class SellerProductUpdateDto {
     private String sellerEmail;
     private String productName;
     private int productPrice;
-    private MultipartFile productThumbnailImg;
-    private MultipartFile productDescriptionImg;
+    private String productThumbnailImg;
+    private String productDescriptionImg;
 }

@@ -26,10 +26,9 @@ public class SellerProductService {
     private final SellerInfoRepository sellerInfoRepository;
     private final SellerProductRepository sellerProductRepository;
     private final CategoryRepository categoryRepository;
-    private final AwsS3Service awsS3Service;
 
     // 상품 판매 등록
-    public boolean setSellerProduct(SellerProductDto sellerProductDto) throws IOException {
+    public boolean setSellerProduct(SellerProductDto sellerProductDto){
         if (sellerProductDto == null) return false;
 
         // 카테고리 정보가 있는지 확인
@@ -42,11 +41,6 @@ public class SellerProductService {
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerProductDto.getSellerSeq());
         if(sellerEntity == null) return false;
 
-
-        // 사진 파일 처리
-        String thumbnailImgUrl = awsS3Service.upload(sellerProductDto.getProductThumbnailImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
-        String descriptionImgUrl = awsS3Service.upload(sellerProductDto.getProductDescriptionImg(), sellerEntity.getSellerEmail(), sellerProductDto.getProductName());
-
         ProductDto productDto = ProductDto.builder()
                 .productSeq(0)
                 .categorySeq(sellerProductDto.getCategorySeq())
@@ -54,8 +48,8 @@ public class SellerProductService {
                 .productName(sellerProductDto.getProductName())
                 .productPrice(sellerProductDto.getProductPrice())
                 .productCa(sellerProductDto.getProductCa())
-                .productThumbnailImg(thumbnailImgUrl)
-                .productDescriptionImg(descriptionImgUrl)
+                .productThumbnailImg(sellerProductDto.getProductThumbnailImg())
+                .productDescriptionImg(sellerProductDto.getProductDescriptionImg())
                 .productIsDeleted(false)
                 .build();
 
@@ -69,25 +63,17 @@ public class SellerProductService {
     }
 
     // 상품 정보 수정
-    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto) throws IOException {
+    public boolean updateSellerProduct(SellerProductUpdateDto sellerProductUpdateDto){
         // 상품 불러오기
         ProductEntity productEntity = sellerProductRepository.findByProductSeq(sellerProductUpdateDto.getProductSeq());
         
         // 상품이 없으면 false
         if(productEntity == null || productEntity.isProductIsDeleted()) return false;
 
-        // 사진 파일이 없으면 사진 안바꾸기
-        if(sellerProductUpdateDto.getProductThumbnailImg()!=null){
-            String thumbnailImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductThumbnailImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
-            productEntity.setProductThumbnailImg(thumbnailImgUrl);
-        }
-        if(sellerProductUpdateDto.getProductDescriptionImg()!=null) {
-            String descriptionImgUrl = awsS3Service.upload(sellerProductUpdateDto.getProductDescriptionImg(), sellerProductUpdateDto.getSellerEmail(), sellerProductUpdateDto.getProductName());
-            productEntity.setProductDescriptionImg(descriptionImgUrl);
-        }
-
 
         // 수정하기
+        productEntity.setProductThumbnailImg(sellerProductUpdateDto.getProductThumbnailImg());
+        productEntity.setProductDescriptionImg(sellerProductUpdateDto.getProductDescriptionImg());
         productEntity.setProductPrice(sellerProductUpdateDto.getProductPrice());
         productEntity.setProductName(sellerProductUpdateDto.getProductName());
 

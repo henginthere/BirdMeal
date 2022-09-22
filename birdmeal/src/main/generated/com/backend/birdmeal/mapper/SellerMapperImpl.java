@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-21T14:29:43+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
+    date = "2022-09-22T10:31:21+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class SellerMapperImpl implements SellerMapper {
 
     @Override
-    public List<SellerDto> toDtoList(List<SellerEntity> arg0) {
-        if ( arg0 == null ) {
+    public List<SellerDto> toDtoList(List<SellerEntity> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<SellerDto> list = new ArrayList<SellerDto>( arg0.size() );
-        for ( SellerEntity sellerEntity : arg0 ) {
+        List<SellerDto> list = new ArrayList<SellerDto>( entityList.size() );
+        for ( SellerEntity sellerEntity : entityList ) {
             list.add( toDto( sellerEntity ) );
         }
 
@@ -30,13 +30,13 @@ public class SellerMapperImpl implements SellerMapper {
     }
 
     @Override
-    public List<SellerEntity> toEntityList(List<SellerDto> arg0) {
-        if ( arg0 == null ) {
+    public List<SellerEntity> toEntityList(List<SellerDto> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<SellerEntity> list = new ArrayList<SellerEntity>( arg0.size() );
-        for ( SellerDto sellerDto : arg0 ) {
+        List<SellerEntity> list = new ArrayList<SellerEntity>( dtoList.size() );
+        for ( SellerDto sellerDto : dtoList ) {
             list.add( toEntity( sellerDto ) );
         }
 
