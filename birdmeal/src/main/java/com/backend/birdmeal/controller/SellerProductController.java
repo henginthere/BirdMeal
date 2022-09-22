@@ -35,10 +35,7 @@ public class SellerProductController {
 
     @ApiOperation(value="상품 판매 등록",response = Object.class)
     @PostMapping("")
-    public ResponseEntity<?> setSellerProduct(@ModelAttribute SellerProductDto sellerProductDto) throws IOException {
-        System.out.println("받은 이름 :  " +sellerProductDto.getProductName());
-        System.out.println(sellerProductDto.getProductDescriptionImg());
-//        System.out.println("받은 파일 정보 : " + sellerProductDto.getProductThumbnailImg());
+    public ResponseEntity<?> setSellerProduct(@RequestBody SellerProductDto sellerProductDto){
         boolean success = sellerProductService.setSellerProduct(sellerProductDto);
         ResponseFrame<?> res;
 
@@ -59,7 +56,7 @@ public class SellerProductController {
 
     @ApiOperation(value="상품 정보 수정",response = Object.class)
     @PutMapping("")
-    public ResponseEntity<?> updateSellerProduct(@ModelAttribute SellerProductUpdateDto sellerProductUpdateDto) throws IOException {
+    public ResponseEntity<?> updateSellerProduct(@RequestBody SellerProductUpdateDto sellerProductUpdateDto){
 
         boolean success = sellerProductService.updateSellerProduct(sellerProductUpdateDto);
         ResponseFrame<?> res;

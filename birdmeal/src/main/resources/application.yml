@@ -19,6 +19,13 @@ spring:
       max-file-size: 20MB
       max-request-size: 20MB
 
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix:
+      classpath: /templates/
+    suffix: .html
+
   # jpa 설정
   jpa:
     database: mysql
@@ -46,5 +53,4 @@ cloud:
       static: us-west-2
     stack:
       auto: false
-
 
