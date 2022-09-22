@@ -245,6 +245,7 @@ public class OrderService {
                     .productThumbnailImg(orderChildEntity.getProductThumbnailImg())
                     .orderQuantity(orderChildEntity.getOrderQuantity())
                     .orderDate(orderChildEntity.getOrderDate())
+                    .orderChildDetailSeq(orderChildEntity.getOrderChildDetailSeq())
                     .build();
 
             orderChildResponseDtoList.add(orderChildResponseDto);
