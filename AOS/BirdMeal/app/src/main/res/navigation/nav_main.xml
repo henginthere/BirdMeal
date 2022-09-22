@@ -160,10 +160,19 @@
         android:id="@+id/editProfileFragment"
         android:name="com.ssafy.birdmeal.view.my_page.edit.EditProfileFragment"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myOrderDetailFragment"
         android:name="com.ssafy.birdmeal.view.my_page.history.order.detail.MyOrderDetailFragment"
         android:label="fragment_my_order_detail"
         tools:layout="@layout/fragment_my_order_detail" />
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.edit.SearchAddressFragment"
+        android:label="SearchAddressFragment"
+        tools:layout="@layout/fragment_search_address" />
 </navigation>

@@ -7,8 +7,8 @@ data class UserDto(
     @SerializedName("userEmail") val userEmail: String,
     @SerializedName("userNickname") val userNickname: String,
     @SerializedName("userEoa") val userEoa: String?,
-    @SerializedName("userTel") val userTel: String?,
-    @SerializedName("userAdd") val userAdd: String?,
+    @SerializedName("userTel") var userTel: String?,
+    @SerializedName("userAdd") var userAdd: String?,
     @SerializedName("userChargeState") val userChargeState: Boolean,
     @SerializedName("userRole") val userRole: Boolean
 )

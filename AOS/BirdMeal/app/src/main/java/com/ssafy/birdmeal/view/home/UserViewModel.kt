@@ -49,6 +49,9 @@ class UserViewModel @Inject constructor(
     private val _userInfoMsgEvent = SingleLiveEvent<String>()
     val userInfoMsgEvent get() = _userInfoMsgEvent
 
+    private val _userUpdateMsgEvent = SingleLiveEvent<String>()
+    val userUpdateMsgEvent get() = _userUpdateMsgEvent
+
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
         val path = context.getWalletPath()
@@ -158,5 +161,35 @@ class UserViewModel @Inject constructor(
         //so we  substitute with the one bundled in the app.
         Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
         Security.insertProviderAt(BouncyCastleProvider(), 1)
+    }
+
+    // 웹뷰에서 받아온 주소로 업데이트
+    fun setAddress(data: String) {
+        _user.value?.userAdd = data
+    }
+
+    // 회원정보 수정
+    fun updateUserProfile() = viewModelScope.launch(Dispatchers.IO) {
+
+        val userSeq = user.value?.userSeq ?: -1
+        val map = HashMap<String, String>()
+        map.put("userTel", user.value?.userTel ?: "")
+        map.put("userAdd", user.value?.userAdd ?: "")
+
+        userRepository.updateUserProfile(userSeq, map).collectLatest {
+            Log.d(TAG, "updateUserProfile response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "updateUserProfile data: ${it.data}")
+
+                // 회원정보 수정 성공한 경우
+                if (it.data.success) {
+                    getUserInfo()
+                    _userUpdateMsgEvent.postValue("회원정보 수정 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
     }
 }
