@@ -1,19 +1,16 @@
 package com.ssafy.birdmeal.view.market.shopping
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.repository.CartRepository
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,6 +31,9 @@ class ShoppingViewModel @Inject constructor(
 
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
+
+    private val _productCnt = SingleLiveEvent<Int>()
+    val productCnt get() = _productCnt
 
     // 장바구니 품목 추가
     fun insert(cart: CartEntity){
@@ -63,13 +63,14 @@ class ShoppingViewModel @Inject constructor(
             cartRepository.getCartList().collect {
                 if(it is Result.Success){
                     _productList.value = it.data
-                    // 항목의 전체 금액 더해주기
+                    // 장바구니 물품의 전체 금액 더해주기
                     var price = 0
                     _productList.value.map { p ->
                         var total = p.productPrice * p.productCount
                         price += total
                     }
                     _totalPrice.value = price
+                    _productCnt.postValue(_productList.value.size)
                 }
                 else if(it is Result.Error){
                     _errMsgEvent.postValue("장바구니 목록 조회에 실패했습니다.")
