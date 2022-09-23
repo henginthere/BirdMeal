@@ -1,7 +1,9 @@
 package com.backend.birdmeal.jwt;
 
 import com.backend.birdmeal.dto.TokenDto;
+import com.backend.birdmeal.entity.SellerEntity;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.repository.SellerInfoRepository;
 import com.backend.birdmeal.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -28,19 +30,21 @@ public class TokenProvider implements InitializingBean {
 
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
     private final UserRepository userRepository;
+    private final SellerInfoRepository sellerInfoRepository;
     private static final String AUTHORITIES_KEY = "auth";
 
     private final String secret;
-    private final long accessTokenValidityInMilliseconds ;
+    private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
 
     private Key key;
 
 
-    public TokenProvider(UserRepository userRepository, @Value("${jwt.secret}") String secret,
+    public TokenProvider(UserRepository userRepository, SellerInfoRepository sellerInfoRepository, @Value("${jwt.secret}") String secret,
                          @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds,
                          @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInSeconds) {
         this.userRepository = userRepository;
+        this.sellerInfoRepository = sellerInfoRepository;
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds * 1000;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInSeconds * 1000;
@@ -53,31 +57,56 @@ public class TokenProvider implements InitializingBean {
     }
 
     public TokenDto createUserToken(String email,
-                                       String authorities) {
+                                    String authorities) {
         long now = (new Date()).getTime();
 
+        String accessToken;
+        String refreshToken;
+
+        if (authorities.equals("ROLE_SELLER")) {
+            SellerEntity seller = sellerInfoRepository.findBySellerEmail(email);
+
+//claim에 managerSeq정보 추가
+            accessToken = Jwts.builder()
+                    .claim("userSeq", seller.getSellerSeq())
+                    .claim(AUTHORITIES_KEY, authorities)
+                    .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
+                    .signWith(key, SignatureAlgorithm.HS512)
+                    .compact();
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            // jwt를 response header에 넣어줌
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
+
+            refreshToken = Jwts.builder()
+                    .claim(AUTHORITIES_KEY, authorities)
+                    .claim("userSeq", seller.getSellerEmail())
+                    .setExpiration(new Date(now + refreshTokenValidityInMilliseconds))
+                    .signWith(key, SignatureAlgorithm.HS512)
+                    .compact();
+        } else {
 //        Manager manager = managerRepository.findBymanagerId(id).orElseThrow(()->new ManagerNotFoundException("가입되지 않은 정보입니다."));
-        UserEntity user = userRepository.findByUserEmail(email).get();
+            UserEntity user = userRepository.findByUserEmail(email).get();
 
-        //claim에 managerSeq정보 추가
-        String accessToken = Jwts.builder()
-                .claim("userSeq", user.getUserSeq())
-                .claim(AUTHORITIES_KEY, authorities)
-                .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
+            //claim에 managerSeq정보 추가
+            accessToken = Jwts.builder()
+                    .claim("userSeq", user.getUserSeq())
+                    .claim(AUTHORITIES_KEY, authorities)
+                    .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
+                    .signWith(key, SignatureAlgorithm.HS512)
+                    .compact();
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        // jwt를 response header에 넣어줌
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            // jwt를 response header에 넣어줌
+            httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
 
-        String refreshToken = Jwts.builder()
-                .claim(AUTHORITIES_KEY, authorities)
-                .claim("userSeq", user.getUserEmail())
-                .setExpiration(new Date(now + refreshTokenValidityInMilliseconds))
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
-
+            refreshToken = Jwts.builder()
+                    .claim(AUTHORITIES_KEY, authorities)
+                    .claim("userSeq", user.getUserEmail())
+                    .setExpiration(new Date(now + refreshTokenValidityInMilliseconds))
+                    .signWith(key, SignatureAlgorithm.HS512)
+                    .compact();
+        }
         return new TokenDto(accessToken, refreshToken);
     }
 
@@ -109,6 +138,7 @@ public class TokenProvider implements InitializingBean {
 //        }
 
     }
+
     /*
      * 토큰 유효성 검사하는 메서드
      */
