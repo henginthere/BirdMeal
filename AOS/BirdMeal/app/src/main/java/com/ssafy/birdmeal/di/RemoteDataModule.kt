@@ -79,4 +79,11 @@ object RemoteDataModule {
     fun provideDonationApi(retrofit: Retrofit) : DonationApi {
         return retrofit.create(DonationApi::class.java)
     }
+
+    // OrderApi DI
+    @Provides
+    @Singleton
+    fun provideOrderApi(retrofit: Retrofit) : OrderApi {
+        return retrofit.create(OrderApi::class.java)
+    }
 }
