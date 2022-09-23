@@ -1,29 +1,23 @@
 <template>
-  <v-app>
-    <nav-bar></nav-bar>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <main-view v-if="auth.user"></main-view>
+  <signin-view v-else></signin-view>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import { MetaMaskLogin } from '@/web3util/events';
-import NavBar from '@/components/NavBar.vue';
+import MainView from '@/views/MainView.vue';
+import SigninView from '@/views/SigninView.vue';
+import { authState } from '@/stores/auth.js';
 
-export default {
-  name: 'App',
+/** Variable */
+const sellerInfo = ref(null);
 
-  data: () => ({
-    //
-  }),
-  components: {
-    NavBar,
-  },
-  created() {
-    MetaMaskLogin();
-  },
-};
+/** Store */
+const auth = authState();
+
+/** function */
+MetaMaskLogin();
 </script>
 
 <style>
