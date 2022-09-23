@@ -52,18 +52,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         ivGoogle.setOnClickListener {
             googleSignIn()
         }
-
-        /*
-        로그아웃 테스트 코드
-         */
-        btnLogout.setOnClickListener {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .build()
-            val client = GoogleSignIn.getClient(requireActivity(), gso)
-            client.signOut().addOnCompleteListener {
-                showToast("로그아웃 완료")
-            }
-        }
     }
 
     private fun initViewModelCallBack() {
