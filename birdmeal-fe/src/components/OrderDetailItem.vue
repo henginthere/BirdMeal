@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent>
     <template v-slot:activator="{ props }">
-      <v-btn color="secondary_orange" v-bind="props" @click="getOrderDetail">
+      <v-btn color="primary_orange" variant="outlined" v-bind="props" @click="getOrderDetail">
         상세보기
       </v-btn>
     </template>

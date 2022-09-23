@@ -4,7 +4,7 @@
     <v-app-bar
       color="primary_orange"
       density="compact"
-      class="elevation-0 d-flex align-center"
+      class="elevation-1 d-flex align-center"
     >
       <v-app-bar-nav-icon
         variant="text"
@@ -45,7 +45,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block color="primary_orange"> 로그아웃 </v-btn>
+          <v-btn block color="green"> 로그아웃 </v-btn>
         </div>
       </template>
     </v-navigation-drawer>

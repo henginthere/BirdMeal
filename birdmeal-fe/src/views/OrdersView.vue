@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <v-card elevation="0" class="mx-3 mt-6">
+    <v-container class="text-h4">
+      <v-row>
+        <v-col class="ml-8 mt-4 mb-0">주문 목록</v-col>
+      </v-row>
+    </v-container>
+    <v-card elevation="0" class="mx-3">
       <v-table fixed-header height="100%">
         <thead>
           <tr>
@@ -56,7 +61,7 @@ const auth = authState();
 let orderList = [];
 
 const currentPage = ref(1);
-const itemsPerPage = 10;
+const itemsPerPage = 15;
 const pageLength = ref(0);
 
 const pageData = ref([]);
