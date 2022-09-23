@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createWalletFragment"
+            app:destination="@id/createWalletFragment" />
     </fragment>
     <fragment
         android:id="@+id/donationFragment"
@@ -175,4 +178,9 @@
         android:name="com.ssafy.birdmeal.view.my_page.edit.SearchAddressFragment"
         android:label="SearchAddressFragment"
         tools:layout="@layout/fragment_search_address" />
+    <fragment
+        android:id="@+id/createWalletFragment"
+        android:name="com.ssafy.birdmeal.view.home.CreateWalletFragment"
+        android:label="CreateWalletFragment"
+        tools:layout="@layout/fragment_create_wallet"/>
 </navigation>
