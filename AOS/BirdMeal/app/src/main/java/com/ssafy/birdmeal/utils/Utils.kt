@@ -4,7 +4,9 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
 import android.os.Build
+import android.text.TextUtils
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import java.math.BigDecimal
@@ -47,3 +49,6 @@ fun ImageView.imageFormatter(url: String){
 
 // 지갑 path 가져오기
 fun Context.getWalletPath() = run { "$filesDir/wallet" }
+
+// EditText 유효성 검사
+fun validity(et: EditText) = !TextUtils.isEmpty(et.text)
