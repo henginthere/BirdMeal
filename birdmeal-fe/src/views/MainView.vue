@@ -70,7 +70,6 @@ const auth = authState();
 const drawer = ref(true);
 const links = ref([
   ['홈', '/'],
-  ['로그인', '/signin'],
   ['마이페이지', '/mypage'],
   ['상품목록', '/products'],
   ['주문목록', '/orders'],
