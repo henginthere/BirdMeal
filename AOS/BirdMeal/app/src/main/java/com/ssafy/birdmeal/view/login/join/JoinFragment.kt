@@ -26,11 +26,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
         initViewModelCallBack()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        changeStatusBarColor(requireActivity(), WHITE)
-    }
-
     private fun initClickListener() = with(binding) {
 
         // 일반 회원가입

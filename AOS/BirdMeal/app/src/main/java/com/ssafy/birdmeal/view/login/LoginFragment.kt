@@ -19,7 +19,10 @@ import com.ssafy.birdmeal.MainActivity
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentLoginBinding
+import com.ssafy.birdmeal.utils.BEIGE
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.WHITE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +32,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), WHITE)
+
         initGso()
 
         initClickListener()
