@@ -13,7 +13,6 @@ import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
 import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
-import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -59,11 +58,8 @@ class UserViewModel @Inject constructor(
     private val _userUpdateMsgEvent = SingleLiveEvent<String>()
     val userUpdateMsgEvent get() = _userUpdateMsgEvent
 
-    private val _userELN = SingleLiveEvent<String>()
+    private val _userELN = SingleLiveEvent<Int>()
     val userELN get() = _userELN
-
-    private val _userBalance = SingleLiveEvent<Long>()
-    val userBalance get() = _userBalance
 
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
@@ -209,12 +205,9 @@ class UserViewModel @Inject constructor(
     // 유저 보유 토큰 값 조회
     fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO){
         val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
-        val text = result.fromWeiToEther().priceConvert() + " ELN"
+        val value = result.fromWeiToEther().toInt()
 
-        _userBalance.postValue(result.fromWeiToEther().toLong())
-        _userELN.postValue(text)
-
-        Log.d(TAG, "getUserTokenValue: $text")
+        _userELN.postValue(value)
         _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
     }
 
@@ -224,5 +217,6 @@ class UserViewModel @Inject constructor(
         Log.d(TAG, "fillUpToken: $result")
         // 유저 보유 토큰 재조회
         getUserTokenValue()
+        _successMsgEvent.postValue("충전이 완료되었습니다.")
     }
 }

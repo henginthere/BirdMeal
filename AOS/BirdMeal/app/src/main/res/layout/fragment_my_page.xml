@@ -66,7 +66,7 @@
                 android:id="@+id/tv_my_eln_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{userVM.userELN}"
+                android:text="@{userVM.userELN.toString()}"
                 tools:text="12,000 ELN"
                 android:textSize="40dp"
                 app:layout_constraintEnd_toEndOf="parent"

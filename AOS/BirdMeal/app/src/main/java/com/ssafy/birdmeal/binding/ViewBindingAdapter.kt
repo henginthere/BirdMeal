@@ -1,7 +1,5 @@
 package com.ssafy.birdmeal.binding
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -38,6 +36,13 @@ object ViewBindingAdapter {
                 .placeholder(R.drawable.meal)
                 .into(this)
         }
+    }
+
+    @BindingAdapter("totalAmount", "userELN")
+    @JvmStatic
+    fun TextView.setRemainAmount(totalAmount: Int, userELN: Int){
+        var value = (userELN - totalAmount)
+        this.text = String.format("%,2d", value) + " ELN"
     }
 
 }

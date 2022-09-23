@@ -1,15 +1,20 @@
 package com.ssafy.birdmeal.view.market.shopping.cart
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentShoppingCartBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.fragment_shopping_cart) {
@@ -37,26 +42,26 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
         initClickListener()
     }
 
-    private fun initViewModelCallBack(){
-        shoppingViewModel.errMsgEvent.observe(viewLifecycleOwner){
+    private fun initViewModelCallBack() = with(shoppingViewModel){
+        lifecycleScope.launch {
+            productList.collectLatest {
+                Log.d(TAG, "initViewModelCallBack: $it")
+                adapter.submitList(it)
+            }
+
+            productCnt.collectLatest{ // 장바구니가 비었으면 텍스트 화면에 표시해주기
+                if(it > 0){
+                    binding.tvEmpty.visibility = View.GONE
+                }
+                else {
+                    binding.tvEmpty.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        errMsgEvent.observe(viewLifecycleOwner){
             showToast(it)
         }
-
-        shoppingViewModel.productCnt.observe(viewLifecycleOwner){ // 장바구니가 비었으면 텍스트 화면에 표시해주기
-            if(it > 0){
-                binding.tvEmpty.visibility = View.GONE
-            }
-            else {
-                binding.tvEmpty.visibility = View.VISIBLE
-            }
-        }
-
-//        lifecycleScope.launch {
-//            shoppingViewModel.productList.collect {
-//                Log.d(TAG, "initViewModelCallBack: $it")
-//                adapter.submitList(it)
-//            }
-//        }
     }
 
     private fun initClickListener(){
