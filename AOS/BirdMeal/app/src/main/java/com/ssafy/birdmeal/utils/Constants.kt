@@ -33,3 +33,7 @@ const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전
 
 // 주소 검색 띄울 주소
 const val ADDRESS_API_URL = ""
+
+// 상태바 색 변경 이름
+const val WHITE = "white"
+const val BEIGE = "beige"
