@@ -7,6 +7,7 @@ export const authState = defineStore('authState', {
   state: () => {
     return {
       user: JSON.parse(localStorage.getItem('user')),
+      userBalance:0,
     };
   },
   actions: {
@@ -46,5 +47,9 @@ export const authState = defineStore('authState', {
       localStorage.removeItem('user');
       router.push('/login');
     },
+
+    setBalance(balance){
+      this.userBalance = balance / (10**18);
+    }
   },
 });

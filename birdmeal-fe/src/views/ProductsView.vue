@@ -57,6 +57,7 @@
   import ProductListItem from "@/components/ProductListItem.vue"
   import { mapState } from 'pinia';
   import {authState} from '@/stores/auth'
+
   export default {
     data() {
       return {
@@ -76,10 +77,11 @@
       },
       goDetail(productSeq) {
         this.$router.push({name:"product-detail", params:{productSeq:productSeq} })
-      }
+      },
     },
     mounted() {
       this.callProducts()
+
     },
     computed: {
     ...mapState(authState, ['user',])

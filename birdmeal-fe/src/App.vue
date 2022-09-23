@@ -5,7 +5,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { MetaMaskLogin } from '@/web3util/events';
+import { MetaMaskLogin, balanceOf } from '@/web3util/events';
 import MainView from '@/views/MainView.vue';
 import SigninView from '@/views/SigninView.vue';
 import { authState } from '@/stores/auth.js';
@@ -17,7 +17,7 @@ const sellerInfo = ref(null);
 const auth = authState();
 
 /** function */
-MetaMaskLogin();
+MetaMaskLogin().then(balanceOf).then(r=> {console.log(r); auth.setBalance(r)});
 </script>
 
 <style>
