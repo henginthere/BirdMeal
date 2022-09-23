@@ -66,6 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.btnShowMarket.setOnClickListener { // 마켓화면으로 이동
             findNavController().navigate(R.id.action_homeFragment_to_categoryFragment)
         }
+
     }
 
 }

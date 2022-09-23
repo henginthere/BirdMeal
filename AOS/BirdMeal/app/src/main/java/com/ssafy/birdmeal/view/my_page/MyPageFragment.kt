@@ -39,6 +39,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             findNavController().navigate(R.id.action_myPageFragment_to_myDonationHistoryFragment)
         }
 
+        // 내 주문내역 보기
+        btnOrderHistory.setOnClickListener{
+            findNavController().navigate(R.id.action_myPageFragment_to_myOrderHistoryFragment)
+        }
+
         // 충전하기 버튼 클릭
         btnFillUpMoney.setOnClickListener {
             val dialog = FillUpMoneyDialog(requireContext(), listener)
