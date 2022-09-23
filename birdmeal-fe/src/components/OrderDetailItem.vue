@@ -111,7 +111,9 @@
           <v-col cols="1" />
           <v-col cols="2">상품인수</v-col>
           <v-col v-if="order.orderToState">고객이 상품을 인수했습니다.</v-col>
-          <v-col v-else class="text-primary">고객이 상품을 기다리는 중입니다.</v-col>
+          <v-col v-else class="text-primary"
+            >고객이 상품을 기다리는 중입니다.</v-col
+          >
         </v-row>
 
         <v-row v-if="!company || !number">
@@ -128,16 +130,8 @@
 
         <v-row>
           <v-col class="d-flex justify-center">
-            <v-btn
-              class="mr-3"
-              color="green"
-              variant="flat"
-              @click="save"
-              >저장</v-btn
-            >
-            <v-btn color="back_beige" variant="flat" @click="dialog = false"
-              >취소</v-btn
-            >
+            <v-btn class="mr-3" color="green" @click="save">저장</v-btn>
+            <v-btn @click="dialog = false">취소</v-btn>
           </v-col>
         </v-row>
       </v-container>
