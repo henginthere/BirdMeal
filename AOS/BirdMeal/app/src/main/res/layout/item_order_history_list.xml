@@ -12,6 +12,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
@@ -29,7 +30,7 @@
             android:id="@+id/tv_product_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{orderHistory.orderFirstName+`  외  `+String.valueOf(orderHistory.orderCnt+1)+`건`}"
+            android:text="@{orderHistory.orderFirstName+`  외  `+String.valueOf(orderHistory.orderCnt)+`건`}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_product"
             android:layout_marginTop="15dp"
