@@ -1,11 +1,18 @@
 package com.ssafy.birdmeal.view.market.shopping
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dttmm.web3test.wrapper.Trade
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.repository.CartRepository
+import com.ssafy.birdmeal.utils.CA_FUNDING
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
+import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +29,9 @@ class ShoppingViewModel @Inject constructor(
     private val _productList: MutableStateFlow<List<CartEntity>>
         = MutableStateFlow(listOf())
     val productList get() = _productList
+
+    private val _txList: MutableList<String> = mutableListOf()
+    val txList get() = _txList
 
     private val _productCnt = MutableStateFlow(0)
     val productCnt get() = _productCnt
@@ -94,6 +104,33 @@ class ShoppingViewModel @Inject constructor(
 
         var total = _totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
+    }
+
+    // 장바구니 결제하기
+    fun buyingList(tradeContract : MutableList<Trade>){
+        // 상품 컨트랙트 마다 거래 처리하기
+        productList.value.mapIndexed { idx, p ->
+            // 상품 컨트랙트에 대한 엘레나 거래 승인
+            Log.d(TAG, "buyingList: ${p.productName}, ${p.productCount}")
+            var amount = (p.productPrice * p.productCount).toLong().fromEtherToWei()
+            elenaContract.approve(p.productCa, amount.toBigInteger()).sendAsync().get()
+
+            // 승인 이후 컨트랙트에 buying 함수 호출
+            var result = tradeContract[idx].buying(p.productCount.toBigInteger()).sendAsync().get()
+            tradeContract[idx].addOrderSheet(result.transactionHash, p.productCount.toBigInteger()).sendAsync().get()
+
+            _txList.add(result.transactionHash)
+        }
+
+        // 기부 컨트랙트 엘레나 승인 및 3% 기부
+        Log.d(TAG, "buyingList: 상품 컨트랙트 승인 - buying - addOrderSheet 완료")
+        elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
+        fundingContract.funding(donationAmount.value.toBigInteger()).sendAsync().get()
+
+        Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
+        // 서버에 주문내역 전송하기
+
+        _successMsgEvent.postValue("주문이 완료되었습니다.")
     }
 
 }
