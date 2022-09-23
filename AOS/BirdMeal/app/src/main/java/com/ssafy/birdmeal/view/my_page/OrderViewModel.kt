@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.repository.OrderRepository
 import com.ssafy.birdmeal.utils.Result
@@ -28,6 +29,9 @@ class OrderViewModel @Inject constructor(
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
+    private val _successMsgEvent = SingleLiveEvent<String>()
+    val successMsgEvent get() = _successMsgEvent
+
     private val _orderMsgEvent = SingleLiveEvent<String>()
     val orderMsgEvent get() = _orderMsgEvent
 
@@ -35,6 +39,11 @@ class OrderViewModel @Inject constructor(
             MutableStateFlow<Result<BaseResponse<List<OrderResponse>>>> =
         MutableStateFlow(Result.Uninitialized)
     val orderHistoryList get() = _orderHistoryList.asStateFlow()
+
+    private val _orderDetailList:
+            MutableStateFlow<Result<BaseResponse<List<OrderDetailResponse>>>> =
+        MutableStateFlow(Result.Uninitialized)
+    val orderDetailList get() = _orderDetailList.asStateFlow()
 
     // 내 주문내역 불러오기
     fun getMyOrderHistory() = viewModelScope.launch(Dispatchers.IO) {
@@ -50,6 +59,26 @@ class OrderViewModel @Inject constructor(
                 if (it.data.success) {
                     _orderHistoryList.value = it
                     _orderMsgEvent.postValue("내 주문내역 불러오기 성공")
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+    }
+
+    // 주문 상세 내역 불러오기
+    fun getOrderDetail(orderSeq:Int) = viewModelScope.launch(Dispatchers.IO) {
+        val userSeq = sharedPreferences.getInt(USER_SEQ, -1)
+        orderRepository.getOrderDetail(userSeq,orderSeq).collectLatest {
+            Log.d(TAG, "getOrderDetail response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "getOrderDetail data: ${it.data}")
+
+                // 불러오기 성공한 경우
+                if (it.data.success) {
+                    _orderDetailList.value = it
+                    _orderMsgEvent.postValue("주문 상세 내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
