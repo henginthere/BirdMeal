@@ -7,23 +7,18 @@
   </v-app>
 </template>
 
-<script>
-import { MetaMaskLogin } from '@/web3util/events';
+<script setup>
+import { MetaMaskLogin, balanceOf } from '@/web3util/events';
+import {authState} from '@/stores/auth.js'
 import NavBar from '@/components/NavBar.vue';
 
-export default {
-  name: 'App',
 
-  data: () => ({
-    //
-  }),
-  components: {
-    NavBar,
-  },
-  created() {
-    MetaMaskLogin();
-  },
-};
+const auth = authState();
+
+MetaMaskLogin().then(balanceOf).then(r=> {console.log(r); auth.setBalance(r)});
+
+
+
 </script>
 
 <style>
