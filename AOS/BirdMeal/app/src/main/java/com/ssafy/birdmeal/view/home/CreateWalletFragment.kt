@@ -35,7 +35,10 @@ class CreateWalletFragment :
     private fun initClickListener() = with(binding) {
         // 지갑 생성하기
         btnCreate.setOnClickListener {
-            tvTitle.text = "지갑 비밀번호를 입력해주세요"
+            tvToolbar.text = "새 지갑 생성"
+            tvTitle.text = "지갑 생성을 위한\n비밀번호를 입력해주세요"
+            ivTitle.setImageResource(R.drawable.ic_wallet)
+
             state = WALLET_CREATE
         }
 
