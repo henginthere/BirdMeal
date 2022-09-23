@@ -124,27 +124,6 @@ public class SellerInfoController {
     }
 
 
-    /**
-     * 판매자 정보 등록
-     *
-     * @param sellerDto
-     * @return Object
-     */
-
-    @ApiOperation(value="판매자 정보 등록",response = Object.class)
-    @PostMapping("")
-    public ResponseEntity<?> setSellerInfo(@RequestBody SellerDto sellerDto){
-        boolean success = sellerInfoService.setSellerInfo(sellerDto);
-        ResponseFrame<?> res;
-
-        if(success) {
-           res = ResponseFrame.of(success, "판매자 정보 등록을 성공했습니다.");
-        }else{
-            res = ResponseFrame.of(success, "판매자 정보가 없어서 판매자 정보 등록을 실패했습니다.");
-        }
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
-
 
     /**
      * 판매자 정보 수정

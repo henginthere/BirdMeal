@@ -45,12 +45,18 @@ public class SellerEntity {
     private String sellerInfo;
 
     @Basic
+    @Column(name="seller_img",length = 1024)
+    private String sellerImg;
+
+    @Basic
     @Column(name="seller_create_date", length = 30)
     private String sellerCreateDate;
 
     @Basic
     @Column(name="seller_update_date", length = 30)
     private String sellerUpdateDate;
+
+
 
     @Basic
     @JsonIgnore

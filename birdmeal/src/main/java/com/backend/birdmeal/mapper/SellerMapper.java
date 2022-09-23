@@ -7,6 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface SellerMapper extends StructMapper<SellerDto, SellerEntity> {
+
     SellerMapper MAPPER = Mappers.getMapper(SellerMapper.class);
 
     @Override
@@ -14,5 +15,4 @@ public interface SellerMapper extends StructMapper<SellerDto, SellerEntity> {
 
     @Override
     SellerDto toDto(final SellerEntity sellerEntity);
-
 }
