@@ -2,45 +2,41 @@
   <v-app>
     <div>
       <v-row
-        style="height: 250px"
+        style="height: 150px"
         align="center"
-        class="text-h2 ml-16 font-weight-bold"
+        class="text-h2 ml-16 mt-8 font-weight-bold"
       >
         <v-col>판매자 정보</v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 170px" align="center">
         <v-col cols="2" offset-md="1">판매자 사진</v-col>
         <v-col cols="7" offset-md="1">
-          <v-img width="100px" :src="sellerInfo.productThumbnailImg"></v-img></v-col>
+          <v-img width="130px" :src="sellerInfo.sellerImg"></v-img></v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 80px" align="center">
         <v-col cols="2" offset-md="1">판매자 닉네임</v-col>
         <v-col cols="7" offset-md="1">{{ sellerInfo.sellerNickname }}</v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 80px" align="center">
         <v-col cols="2" offset-md="1">판매자 이메일</v-col>
         <v-col cols="7" offset-md="1">{{ sellerInfo.sellerEmail }}</v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 80px" align="center">
         <v-col cols="2" offset-md="1">판매자 전화번호</v-col>
         <v-col cols="7" offset-md="1">{{ sellerInfo.sellerTel }}</v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 80px" align="center">
         <v-col cols="2" offset-md="1">판매자 주소</v-col>
         <v-col cols="7" offset-md="1">{{ sellerInfo.sellerAddress }}</v-col>
       </v-row>
-      <v-row style="height: 100px" align="center">
+      <v-row style="height: 80px" align="center">
         <v-col cols="2" offset-md="1">판매자 정보</v-col>
         <v-col cols="7" offset-md="1">{{ sellerInfo.sellerInfo }}</v-col>
       </v-row>
       <v-row style="height: 150px" align="center">
-        <v-col cols="2" offset-md="1"><v-btn
-        outlined
-        onclick="goUpdate()"
-        style="height: 40px"
-        color="secondary_orange"
-        >수정하기</v-btn
-      ></v-col>
+        <v-col cols="2" offset-md="1">
+          <seller-update :item="sellerInfo"></seller-update>
+          </v-col>
       </v-row>
       
     </div>
@@ -52,6 +48,8 @@ import { ref } from 'vue';
 import http from "@/api/http.js";
 import { authState } from "@/stores/auth";
 
+import SellerUpdate from "../components/SellerUpdate.vue";
+
 
 const auth = authState();
 
@@ -61,6 +59,10 @@ function callSellerInfo() {
       http
         .get(`/${auth.user.sellerSeq}`)
         .then((res) => sellerInfo.value = res.data.data)
+};
+
+function goUpdate() {
+  this.$router.push('/product/update');
 };
 
 callSellerInfo()
