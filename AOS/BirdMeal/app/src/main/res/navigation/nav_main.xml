@@ -155,6 +155,10 @@
         <action
             android:id="@+id/action_myOrderHistoryFragment_to_myOrderDetailFragment"
             app:destination="@id/myOrderDetailFragment" />
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -169,7 +173,12 @@
         android:id="@+id/myOrderDetailFragment"
         android:name="com.ssafy.birdmeal.view.my_page.history.order.detail.MyOrderDetailFragment"
         android:label="fragment_my_order_detail"
-        tools:layout="@layout/fragment_my_order_detail" />
+        tools:layout="@layout/fragment_my_order_detail">
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/searchAddressFragment"
         android:name="com.ssafy.birdmeal.view.my_page.edit.SearchAddressFragment"

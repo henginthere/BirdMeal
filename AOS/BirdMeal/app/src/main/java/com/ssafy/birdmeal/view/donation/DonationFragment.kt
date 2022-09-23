@@ -64,10 +64,10 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
             findNavController().navigate(R.id.action_donationFragment_to_childHistoryFragment)
         }
 
-        // 기부하기
-        btnDonte.setOnClickListener {
-            val userBalance = userViewModel.userBalance.value ?: 0
-            donationViewModel.doDonate(userBalance, true)
-        }
+//        // 기부하기
+//        btnDonte.setOnClickListener {
+//            val userBalance = userViewModel.userBalance.value ?: 0
+//            donationViewModel.doDonate(userBalance, true)
+//        }
     }
 }
