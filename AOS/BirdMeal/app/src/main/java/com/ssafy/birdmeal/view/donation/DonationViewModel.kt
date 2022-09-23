@@ -9,7 +9,7 @@ import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
-import com.ssafy.birdmeal.utils.Converter.DecimalConverter.DecimalConverter.fromWeiToEther
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent

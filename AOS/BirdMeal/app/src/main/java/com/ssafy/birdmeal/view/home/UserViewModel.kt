@@ -12,7 +12,7 @@ import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
 import com.ssafy.birdmeal.utils.*
-import com.ssafy.birdmeal.utils.Converter.DecimalConverter.DecimalConverter.fromWeiToEther
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -210,6 +210,7 @@ class UserViewModel @Inject constructor(
 
         _userELN.postValue(text)
         _successMsgEvent.postValue("충전이 완료되었습니다.")
+        _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
     }
 
     // 유저 토큰 충전하기

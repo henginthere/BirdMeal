@@ -15,10 +15,8 @@ class Converter {
         }
 
         // Wei -> Ether 단위 변환
-        object DecimalConverter {
-            fun BigInteger.fromWeiToEther(): BigDecimal {
-                return Convert.fromWei(toBigDecimal(), Convert.Unit.ETHER)
-            }
+        fun BigInteger.fromWeiToEther(): BigDecimal {
+            return Convert.fromWei(toBigDecimal(), Convert.Unit.ETHER)
         }
     }
 }
