@@ -35,7 +35,6 @@
 </template>
 
 <script setup>
-import { watchEffect } from 'vue';
 import { googleOneTap } from 'vue3-google-login';
 import { authState } from '@/stores/auth.js';
 import { useRouter } from 'vue-router';
@@ -47,18 +46,14 @@ const router = useRouter();
 /** Variable */
 
 /** Hooking */
-watchEffect(() => {
-  if (auth.user) {
-    router.push('/home');
-  }
-});
 
 /** Function */
 function login() {
   googleOneTap()
-    .then((res) => {
-      auth.signup(res.credential);
-      auth.login(res.credential);
+    .then(async (res) => {
+      await auth.signup(res.credential);
+      await auth.login(res.credential);
+      router.push('/home');
     })
     .catch((error) => {
       console.log('Handle the error', error);
@@ -71,9 +66,8 @@ function login() {
   height: 15em;
   padding: 1.5em;
   will-change: filter;
-  filter: drop-shadow(0 0 2em #f4bb7daa);
 }
 .logo:hover {
-  filter: none;
+  filter: drop-shadow(0 0 2em #f4bb7daa);
 }
 </style>

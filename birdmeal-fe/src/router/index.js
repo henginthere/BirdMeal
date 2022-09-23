@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
 import { authState } from '@/stores/auth';
 
 const router = createRouter({
@@ -7,17 +6,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/signin',
+      redirect: '/home',
     },
     {
-      path: '/home',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/TestView.vue'),
+      path: '/guide',
+      name: 'guide',
+      component: () => import('@/views/GuideView.vue'),
     },
     {
       path: '/signin',
@@ -25,34 +19,47 @@ const router = createRouter({
       component: () => import('@/views/SigninView.vue'),
     },
     {
-      path: '/mypage',
-      name: 'mypage',
-      component: () => import('@/views/MyPageView.vue'),
-    },
-    {
-      path: '/products',
-      name: 'products',
-      component: () => import('@/views/ProductsView.vue'),
-    },
-    {
-      path: '/products/detail/:productSeq',
-      name: 'product-detail',
-      component: () => import('@/views/ProductDetailView.vue'),
-    },
-    {
-      path: '/product/regist',
-      name: 'product-regist',
-      component: () => import('@/views/ProductRegistView.vue'),
-    },
-    {
-      path: '/orders',
-      name: 'orders',
-      component: () => import('@/views/OrdersView.vue'),
-    },
-    {
-      path: '/guide',
-      name: 'guide',
-      component: () => import('@/views/GuideView.vue'),
+      path: '/main',
+      name: 'main',
+      component: () => import('@/views/MainView.vue'),
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: () => import('@/views/HomeView.vue'),
+        },
+        {
+          path: '/test',
+          name: 'test',
+          component: () => import('@/views/TestView.vue'),
+        },
+
+        {
+          path: '/mypage',
+          name: 'mypage',
+          component: () => import('@/views/MyPageView.vue'),
+        },
+        {
+          path: '/products',
+          name: 'products',
+          component: () => import('@/views/ProductsView.vue'),
+        },
+        {
+          path: '/products/detail/:productSeq',
+          name: 'product-detail',
+          component: () => import('@/views/ProductDetailView.vue'),
+        },
+        {
+          path: '/product/regist',
+          name: 'product-regist',
+          component: () => import('@/views/ProductRegistView.vue'),
+        },
+        {
+          path: '/orders',
+          name: 'orders',
+          component: () => import('@/views/OrdersView.vue'),
+        },
+      ],
     },
   ],
 });
@@ -65,7 +72,6 @@ router.beforeEach((to, from, next) => {
     if (to.name == 'signin' || to.name == 'guide') {
       next();
     } else {
-      alert('로그인 해주세요');
       next('/signin');
     }
   }

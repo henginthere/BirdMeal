@@ -24,7 +24,7 @@
     >
       <v-sheet color="back_beige lighten-4" class="pa-4">
         <v-avatar class="mb-4" color="grey darken-1" size="64">
-          <v-img src="src/assets/birdmeal_logo.png"></v-img>
+          <img src="../assets/birdmeal_logo.png" height="60" />
         </v-avatar>
 
         <div class="">{{ userEmail }}</div>
@@ -45,7 +45,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block color="green"> 로그아웃 </v-btn>
+          <v-btn block color="green" @click="logout"> 로그아웃 </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -69,7 +69,7 @@ const auth = authState();
 /** Variable */
 const drawer = ref(true);
 const links = ref([
-  ['홈', '/'],
+  ['홈', '/home'],
   ['마이페이지', '/mypage'],
   ['상품목록', '/products'],
   ['주문목록', '/orders'],
@@ -83,6 +83,10 @@ const userEmail = computed(() => {
 /** Function */
 function movePages(path) {
   router.push(path);
+}
+
+function logout() {
+  auth.logout();
 }
 </script>
 

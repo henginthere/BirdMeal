@@ -7,7 +7,7 @@ export const authState = defineStore('authState', {
   state: () => {
     return {
       user: JSON.parse(localStorage.getItem('user')),
-      userBalance:0,
+      userBalance: 0,
     };
   },
   actions: {
@@ -20,8 +20,6 @@ export const authState = defineStore('authState', {
         sellerEmail: email,
         sellerNickname: nickname,
       });
-      
-      console.log('signup', response.data.success);
     },
     async login(credential) {
       let userData = decodeCredential(credential);
@@ -39,17 +37,16 @@ export const authState = defineStore('authState', {
 
       this.user = user;
       localStorage.setItem('user', JSON.stringify(user));
-      console.log('login', response.data.success);
-      // router.push('/');
     },
     logout() {
       this.user = null;
       localStorage.removeItem('user');
-      router.push('/login');
+      router.push('/signin');
+      alert('로그아웃 되었습니다.');
     },
 
-    setBalance(balance){
-      this.userBalance = balance / (10**18);
-    }
+    setBalance(balance) {
+      this.userBalance = balance / 10 ** 18;
+    },
   },
 });

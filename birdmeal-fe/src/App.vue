@@ -1,11 +1,9 @@
 <template>
-  <main-view v-if="auth.user"></main-view>
-  <router-view v-else></router-view>
+  <router-view></router-view>
 </template>
 
 <script setup>
 import { MetaMaskLogin, balanceOf } from '@/web3util/events';
-import MainView from '@/views/MainView.vue';
 import { authState } from '@/stores/auth.js';
 
 /** Variable */
@@ -17,7 +15,6 @@ const auth = authState();
 MetaMaskLogin()
   .then(balanceOf)
   .then((r) => {
-    console.log(r);
     auth.setBalance(r);
   });
 </script>
