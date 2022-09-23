@@ -15,6 +15,9 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
     private val donationViewModel by activityViewModels<DonationViewModel>()
 
     override fun init() {
+        binding.donationVM = donationViewModel
+        donationViewModel.getDonationAmount()
+        userViewModel.getUserTokenValue()
 
         initViewModelCallBack()
 
@@ -41,6 +44,11 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
             // 기부 완료
             donateMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
+                // 전체 기부금 다시 불러옴
+                donationViewModel.getDonationAmount()
+
+                // 나의 잔액 다시 불러옴
+                userViewModel.getUserTokenValue()
             }
         }
     }
@@ -54,6 +62,12 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         // 아이들 기부금 사용내역
         btnHistoryChild.setOnClickListener {
             findNavController().navigate(R.id.action_donationFragment_to_childHistoryFragment)
+        }
+
+        // 기부하기
+        btnDonte.setOnClickListener {
+            val userBalance = userViewModel.userBalance.value ?: 0
+            donationViewModel.doDonate(userBalance, true)
         }
     }
 }

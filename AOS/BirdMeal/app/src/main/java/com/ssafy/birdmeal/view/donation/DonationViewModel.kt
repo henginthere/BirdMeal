@@ -5,16 +5,15 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
+import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
-import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.USER_SEQ
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,6 +37,9 @@ class DonationViewModel @Inject constructor(
 
     private val _donateMsgEvent = SingleLiveEvent<String>()
     val donateMsgEvent get() = _donateMsgEvent
+
+    private val _donationPrice = SingleLiveEvent<String>()
+    val donationPrice get() = _donationPrice
 
     private val _donationAllHistoryList:
             MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
@@ -65,12 +67,28 @@ class DonationViewModel @Inject constructor(
     }
 
     // 기부하기 (컨트랙트)
-    fun doDonate(donationPrice: Long, donationType: Boolean) = viewModelScope.launch(IO) {
+    fun doDonate(userBalance: Long, donationType: Boolean) = viewModelScope.launch(IO) {
 
-        val result = fundingContract.funding(BigInteger.valueOf(donationPrice)).sendAsync().get()
+        Log.d(TAG, "목표 기부액: ${donationPrice.value}")
+        Log.d(TAG, "나의 잔액: $userBalance")
+
+        if (donationPrice.value.isNullOrBlank()) {
+            _errMsgEvent.postValue("기부 금액을 입력해주세요")
+            return@launch
+        }
+
+        val amount = donationPrice.value?.toLong()!!
+
+        if (amount > userBalance) {
+            _errMsgEvent.postValue("기부 금액이 보유 잔액보다 많습니다")
+            return@launch
+        }
+
+        elenaContract.approve(CA_FUNDING, amount.fromEtherToWei().toBigInteger()).sendAsync().get()
+        val result = fundingContract.funding(BigInteger.valueOf(amount)).sendAsync().get()
         Log.d(TAG, "fundingContract.funding: $result")
 
-        insertDonationHistory(donationPrice, true)
+        insertDonationHistory(amount, donationType)
     }
 
     // 전체 기부내역 불러오기

@@ -5,7 +5,9 @@
     tools:context=".view.login.guide.DonationFragment">
 
     <data>
-
+<variable
+    name="donationVM"
+    type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,11 +88,21 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.8" />
 
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="number"
+            android:text="@={donationVM.donationPrice}"
+            app:layout_constraintBottom_toTopOf="@id/btn_donte"/>
+
         <TextView
+            android:id="@+id/btn_donte"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="땡길 이미지"
+            android:text="기부하기"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@id/gl_hori_80"
             app:layout_constraintEnd_toEndOf="parent"

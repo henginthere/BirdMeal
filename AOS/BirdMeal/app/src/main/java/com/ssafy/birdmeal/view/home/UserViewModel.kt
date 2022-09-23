@@ -62,6 +62,9 @@ class UserViewModel @Inject constructor(
     private val _userELN = SingleLiveEvent<String>()
     val userELN get() = _userELN
 
+    private val _userBalance = SingleLiveEvent<Long>()
+    val userBalance get() = _userBalance
+
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
         val path = context.getWalletPath()
@@ -208,8 +211,10 @@ class UserViewModel @Inject constructor(
         val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
         val text = result.fromWeiToEther().priceConvert() + " ELN"
 
+        _userBalance.postValue(result.fromWeiToEther().toLong())
         _userELN.postValue(text)
-        _successMsgEvent.postValue("충전이 완료되었습니다.")
+
+        Log.d(TAG, "getUserTokenValue: $text")
         _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
     }
 
