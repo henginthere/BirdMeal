@@ -16,7 +16,7 @@
             <v-card width="120">
               <v-img
                 class="bg-white"
-                width="120"
+                width="220"
                 :aspect-ratio="1"
                 :src="product.productThumbnailImg"
                 cover
@@ -24,31 +24,11 @@
             </v-card>
           </td>
           <td class="text-center">{{ product.productName }}</td>
-          <td class="text-center">{{ product.productPrice }}ELN</td>
+          <td class="text-center">{{ product.productPrice.toLocaleString() }}ELN</td>
           <td class="text-center">{{ category[product.categorySeq] }}</td>
         </tr>
       </tbody>
     </v-table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <h1>상품목록</h1>
-    <v-btn v-on:click="goRegist"> 상품등록하러가기</v-btn>
-    <product-list-item
-          v-for="(product, idx) in products"
-          :key="idx"
-          :product="product"
-          ></product-list-item> -->
   </v-app>
 </template>
 
@@ -62,7 +42,7 @@
     data() {
       return {
         products:null,
-        category:{1:"육류", 2:'채소', 3:"과일", 4:"과자", 5:"빵", 6:"음료"}
+        category:{ 1:"육류", 2:"채소/과일", 3:"밀키트/간편식",4: "냉동식품", 5:"과자류", 6:"음료", 7:"베이커리", 8:"쌀/반찬", 9:"양념/오일" }
       }
     },
     components: {

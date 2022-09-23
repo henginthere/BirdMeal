@@ -1,19 +1,18 @@
 <template>
   <v-app>
-    <h1>상품등록페이지</h1>
+    <h1 class="d-flex justify-center">상품등록페이지</h1>
     <v-container>
-      <v-row>
+      <v-row class="d-flex justify-center">
         <v-col md="3">
           <v-text-field label="상품명" v-model="name"></v-text-field>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row class="d-flex justify-center">
         <v-col md="3">
           <v-text-field label="가격" v-model="price"></v-text-field>
         </v-col>
       </v-row>
-
-      <v-row>
+      <v-row class="d-flex justify-center">
         <v-col md="3">
           <v-select
             :items="categorys"
@@ -24,9 +23,8 @@
           ></v-select>
         </v-col>
       </v-row>
-
-      <v-row>
-        <v-col md="3">
+      <v-row class="d-flex justify-center">
+        <v-col md="3" class="pe-0">
           <v-file-input
             label="썸네일 이미지 파일"
             id="productThumbnailImg"
@@ -34,17 +32,18 @@
             prepend-icon="mdi-camera"
           ></v-file-input>
         </v-col>
-        <v-col md="1">
+      </v-row>
+      <v-row class="d-flex justify-center">
+        <v-col md="3">
           <v-img
             :src="productThumbnailImgURL !== '' ? productThumbnailImgURL : null"
-            max-height="70"
+            max-height="200"
             min-width="250"
           />
         </v-col>
       </v-row>
-
-      <v-row>
-        <v-col md="3">
+      <v-row class="d-flex justify-center">
+        <v-col md="3" class="pe-0">
           <v-file-input
             label="상세설명 이미지 파일"
             id="productDescriptionImg"
@@ -52,16 +51,22 @@
             prepend-icon="mdi-camera"
           ></v-file-input>
         </v-col>
-        <v-col md="1">
+      </v-row>
+      <v-row class="d-flex justify-center">
+        <v-col md="3">
           <v-img
-            :src="productDescriptionImgURL !== '' ? productDescriptionImgURL : null"
-            max-height="70"
+            :src="
+              productDescriptionImgURL !== '' ? productDescriptionImgURL : null
+            "
+            max-height="1000"
             min-width="250"
           />
         </v-col>
       </v-row>
-
-      <v-btn v-on:click="registProduct"> 등록하기 </v-btn>
+      <v-row class="d-flex justify-center">
+        <v-btn color="primary_orange" v-model="sticky" v-on:click="registProduct"> 등록하기 </v-btn>
+      </v-row>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </v-container>
   </v-app>
 </template>
@@ -80,8 +85,8 @@ export default {
       selectCategory: "",
       productThumbnailImgURL: "",
       productDescriptionImgURL: "",
-      category: { 육류: 1, 채소: 2, 과일: 3, 과자: 4, 빵: 5, 음료: 6 },
-      categorys: ["육류", "채소", "과일", "과자", "빵", "음료"],
+      category: { "육류": 1, "채소/과일": 2, "밀키트/간편식": 3, "냉동식품": 4, "과자류": 5, "음료": 6, "베이커리":7, "쌀/반찬":8, "양념/오일":9 },
+      categorys: ["육류", "채소/과일", "밀키트/간편식", "냉동식품", "과자류", "음료","베이커리", "쌀/반찬", "양념/오일"],
     };
   },
   computed: {
@@ -156,6 +161,15 @@ export default {
           .then(() => this.$router.push("/products"));
       }
     },
+    // test(){
+    //     console.log(this.name)
+    //     console.log(this.category[this.selectCategory])
+    //     console.log(this.price)
+    //     console.log(this.ca)
+    //     console.log(this.user.sellerSeq)
+    //     console.log(this.productThumbnailImgURL)
+    //     console.log(this.productDescriptionImgURL)
+    // }
   },
 };
 </script>

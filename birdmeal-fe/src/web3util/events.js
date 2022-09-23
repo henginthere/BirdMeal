@@ -10,7 +10,6 @@ var Account;
 //const web3 = new Web3(window.ethereum);
 
 export async function MetaMaskLogin() {
-    let res = null; 
     //메타마스크 설치확인
     if (typeof window.ethereum !== 'undefined') {
         console.log('Ethereum successfully detected!')
