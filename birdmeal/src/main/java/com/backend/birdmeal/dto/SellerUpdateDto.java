@@ -13,6 +13,7 @@ public class SellerUpdateDto {
 
     private long sellerSeq;
     private String sellerNickname;
+    private String sellerImg;
     private String sellerTel;
     private String sellerAddress;
     private String sellerInfo;
