@@ -39,4 +39,7 @@
         <item name="android:textColorPrimary">@color/second_orange</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorPrimary">@color/black</item>
+    </style>
 </resources>
