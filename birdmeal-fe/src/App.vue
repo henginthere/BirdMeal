@@ -1,24 +1,23 @@
 <template>
-  <v-app>
-    <nav-bar></nav-bar>
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-app>
+  <main-view v-if="auth.user"></main-view>
+  <signin-view v-else></signin-view>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { MetaMaskLogin, balanceOf } from '@/web3util/events';
-import {authState} from '@/stores/auth.js'
-import NavBar from '@/components/NavBar.vue';
+import MainView from '@/views/MainView.vue';
+import SigninView from '@/views/SigninView.vue';
+import { authState } from '@/stores/auth.js';
 
+/** Variable */
+const sellerInfo = ref(null);
 
+/** Store */
 const auth = authState();
 
+/** function */
 MetaMaskLogin().then(balanceOf).then(r=> {console.log(r); auth.setBalance(r)});
-
-
-
 </script>
 
 <style>
