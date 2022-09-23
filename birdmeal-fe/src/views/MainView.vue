@@ -1,7 +1,11 @@
 <template>
   <v-app>
     <!-- app bar -->
-    <v-app-bar color="back_beige" density="compact" class="elevation-0">
+    <v-app-bar
+      color="primary_orange"
+      density="compact"
+      class="elevation-0 d-flex align-center"
+    >
       <v-app-bar-nav-icon
         variant="text"
         @click.stop="drawer = !drawer"
@@ -23,7 +27,7 @@
           <v-img src="src/assets/birdmeal_logo.png"></v-img>
         </v-avatar>
 
-        <div>{{ userEmail }}</div>
+        <div class="">{{ userEmail }}</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -41,7 +45,7 @@
 
       <template v-slot:append>
         <div class="pa-2">
-          <v-btn block color="green"> 로그아웃 </v-btn>
+          <v-btn block color="primary_orange"> 로그아웃 </v-btn>
         </div>
       </template>
     </v-navigation-drawer>
@@ -66,7 +70,6 @@ const auth = authState();
 const drawer = ref(true);
 const links = ref([
   ['홈', '/'],
-  ['로그인', '/signin'],
   ['마이페이지', '/mypage'],
   ['상품목록', '/products'],
   ['주문목록', '/orders'],

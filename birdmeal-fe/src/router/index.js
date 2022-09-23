@@ -6,8 +6,8 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path:'/',
-      redirect: '/signin'
+      path: '/',
+      redirect: '/signin',
     },
     {
       path: '/home',
@@ -67,10 +67,11 @@ router.beforeEach((to, from, next) => {
   const auth = authState();
   if (auth.user) next();
   else {
-    if (to.name === 'signin' || to.name === 'guide') next();
-    else {
-      alert('로그인 해주세요')
-      next('/signin')
+    if (to.name == 'signin' || to.name == 'guide') {
+      next();
+    } else {
+      alert('로그인 해주세요');
+      next('/signin');
     }
   }
 });
