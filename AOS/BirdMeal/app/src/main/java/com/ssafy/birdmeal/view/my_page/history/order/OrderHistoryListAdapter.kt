@@ -8,15 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.databinding.ItemOrderHistoryListBinding
 import com.ssafy.birdmeal.model.response.OrderResponse
 
-class OrderHistoryListAdapter():
+class OrderHistoryListAdapter(private val listener: OrderListener):
     ListAdapter<OrderResponse, OrderHistoryListAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding: ItemOrderHistoryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.root.setOnClickListener {
+                listener.onItemClick(getItem(adapterPosition).orderSeq)
+            }
+        }
+
         fun bind(data: OrderResponse) = with(binding) {
             orderHistory = data
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
