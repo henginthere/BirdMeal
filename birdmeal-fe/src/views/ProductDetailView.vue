@@ -142,6 +142,14 @@ export default {
         .then(() => alert("파일이 업로드 되었습니다."));
     },
 
+
+    /*
+      상품명 수정로직
+      먼저 web3를 통해 컨트랙트에 상품명을 수정하고
+      이후에 DB의 데이터를 수정한다.
+
+    */
+
     setName() {
       updateName(this.name, this.product.productCa)
         .then(() =>
@@ -203,6 +211,12 @@ export default {
         .then(() => this.$router.push("/products"));
     },
   },
+
+  /*
+    payload에 지금 페이지url에 상품seq를 저장
+    이후 렌더링 시 해당 상품의 정보를 받아오기 위해
+    api호출
+  */
   created() {
     const payload = this.$route.params.productSeq;
     this.getProductDetail(payload);

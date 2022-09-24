@@ -6,45 +6,42 @@ import router from "@/router/index.js"
 var Account;
 
 
-//메타마스크 로그인
-//const web3 = new Web3(window.ethereum);
+// 메타마스크 로그인
 
 export async function MetaMaskLogin() {
     //메타마스크 설치확인
+    // 주입된 프로바이더가 없다는건 메타마스크가 설치되지 않았다는 소리
     if (typeof window.ethereum !== 'undefined') {
         console.log('Ethereum successfully detected!')
         //계정연결
         const accounts = await window.ethereum
         .request({ method: "eth_requestAccounts" })
+        // 계정 여러개 연결 가능한데 나는 계정 1개만 쓸거 임
         Account = accounts[0]
 
         return Account
     //설치가 안되었다면 가이드 페이지로 보냄
       } else {
-        // if the provider is not detected, detectEthereumProvider resolves to null
         router.push("/guide")
       }
 
 }
 
-export var totalSupply = async () => {
-    const res = await ElenaTokenContract.methods
-    .totalSupply().call();
-    return res;
-}
 
-// 로그인한 사람의 계정 잔액
+/* 
+  로그인한 사람의 계정 잔액
+  web3Config에서 작성해둔 컨트랙트를 불러온 후 
+  컨트랙트의 함수를 호출해서 사용
+  ether넷과 통신해야해서 client에서 export해서 사용하려면
+  promise객체를 반환해야 함으로 async로 작성
+  아래 모든 함수 모든 로직 동일 
+*/
 export var balanceOf = async () => {
     const res = await ElenaTokenContract.methods
     .balanceOf(Account).call();
     return res;
 }
 
-// export var balanceOf = function(){
-//   const res = ElenaTokenContract.methods
-//   .balanceOf(Account).call().then(r=>console.log(r))
-//   return res
-// }
 
 
 export var approve = async () => {

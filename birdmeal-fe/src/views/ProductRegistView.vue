@@ -94,7 +94,15 @@ export default {
   },
   methods: {
     createTrade,
-    // 썸네일 업로드용
+    /*
+      썸네일 업로드용 함수
+      파일을 보내야함으로 formData를 보내는 형식으로 작성
+      위의 id로 연결해둔 input:file에서 파일을 받고 거기서 .file[0]해야 보낼 수 있음
+      그걸 formdata에 담고 그걸 다시 백엔드로 보냄
+      이후 받아온 url을 저장
+      이로직은 약간의 시간이 걸리므로 alert창을 통해 완료되었음을 명시적으로 사용자에게
+      보여주기위해 마지막에 코드를 추가함
+    */
     imgUpload1() {
       let form = new FormData();
       const productThumbnailImg = document.getElementById("productThumbnailImg")
@@ -126,6 +134,15 @@ export default {
         .then(() => alert("파일이 업로드 되었습니다."));
     },
 
+
+    /*
+      상품등록함수
+      일단 if문으로 데이터 입력없이 요청보내는거 막음
+      이후 모두 되었으면 먼저 web3를 통해 컨트랙트 생성
+      컨트랙트가 생성되었으면 받아온 Ca를 저장
+      그 이후에 json객체 만들어서 백엔드로 전송
+      상품등록이 다되면 상품목록 페이지로 이동시킴
+    */
     registProduct() {
       if (this.name === "") {
         alert("상품명을 입력해주십시오");
