@@ -11,7 +11,12 @@ import { authState } from '@/stores/auth.js';
 /** Store */
 const auth = authState();
 
-/** function */
+/** function
+ * 페이지 진입 시 메타마스크 로그인을 시키고 이후
+ * 로그인에 성공해서 계정정보를 받아오게 되면 계좌잔액을
+ * 전역 state에 등록하기위해 다음과 같이 작성
+ * 
+ */
 MetaMaskLogin()
   .then(balanceOf)
   .then((r) => {
