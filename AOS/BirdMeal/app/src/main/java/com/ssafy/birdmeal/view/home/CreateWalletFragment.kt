@@ -44,7 +44,10 @@ class CreateWalletFragment :
 
         // 개인키 등록하기
         btnRegister.setOnClickListener {
-            tvTitle.text = "개인키를 입력해주세요"
+            tvToolbar.text = "개인키 등록"
+            tvTitle.text = "지갑 생성을 위해\n개인키와 비밀번호를 입력해주세요"
+            ivTitle.setImageResource(R.drawable.ic_wallet)
+
             state = WALLET_PRIVATE
         }
 
@@ -176,9 +179,10 @@ class CreateWalletFragment :
             pasteData = item?.text.toString()
 
             binding.etPrivateKey.setText(pasteData)
+
+            Log.d(TAG, "setClipBoard: $pasteData")
+            showToast("붙여넣기가 완료되었습니다")
         }
-        Log.d(TAG, "setClipBoard: $pasteData")
-        showToast("붙여넣기가 완료되었습니다")
     }
 
     // 키보드 내리기

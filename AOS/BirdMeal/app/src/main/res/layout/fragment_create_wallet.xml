@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_header"
@@ -210,7 +210,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_hori_40"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_layout_create_wallet_hori_50"
@@ -254,7 +254,7 @@
                 android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_round_50_main_color"
-                android:text="생성 하기"
+                android:text="생성하기"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -267,52 +267,101 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:background="@color/white"
             android:visibility="@{state == ConstantsKt.WALLET_PRIVATE ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_hori_40"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
-            <EditText
-                android:id="@+id/et_private_key"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_layout_private_wallet_hori_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_private_key"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="개인키 입력"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="@color/second_orange"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="28dp"
+                app:boxCornerRadiusBottomStart="28dp"
+                app:boxCornerRadiusTopEnd="28dp"
+                app:boxCornerRadiusTopStart="28dp"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeWidth="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/gl_layout_private_wallet_hori_50"
                 app:layout_constraintEnd_toStartOf="@id/btn_paste_private"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_private_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="개인키"
+                    android:textSize="12sp"
+                    tools:text="1111" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_paste_private"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_baseline_content_paste_24"
-                app:layout_constraintBottom_toBottomOf="@id/et_private_key"
+                app:layout_constraintBottom_toBottomOf="@id/til_private_key"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/et_private_key" />
+                app:layout_constraintTop_toTopOf="@id/til_private_key" />
 
-            <EditText
-                android:id="@+id/et_password_private"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_password_private"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="비밀번호 입력"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:textColorHint="@color/second_orange"
+                android:theme="@style/TextInputLayoutStyle"
+                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="28dp"
+                app:boxCornerRadiusBottomStart="28dp"
+                app:boxCornerRadiusTopEnd="28dp"
+                app:boxCornerRadiusTopStart="28dp"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeWidth="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_private_key" />
+                app:layout_constraintTop_toTopOf="@id/gl_layout_private_wallet_hori_50">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password_private"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="지갑 비밀번호"
+                    android:textSize="12sp"
+                    tools:text="1111" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_create_private"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="개인키 등록"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginHorizontal="100dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:text="등록하기"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_password_private" />
+                app:layout_constraintTop_toBottomOf="@id/til_password_private" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
