@@ -1,5 +1,7 @@
 package com.ssafy.birdmeal.view.market.shopping.order
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.wrapper.Trade
@@ -15,6 +17,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
     private val userViewModel by activityViewModels<UserViewModel>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun init() {
         userViewModel.getUserTokenValue()
 
@@ -38,6 +41,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initClickListener() = with(binding){
         // 뒤로가기 버튼 클릭
         toolbar.setNavigationOnClickListener {

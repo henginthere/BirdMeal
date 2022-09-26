@@ -129,7 +129,11 @@
         android:id="@+id/orderCompletedFragment"
         android:name="com.ssafy.birdmeal.view.market.shopping.order.OrderCompletedFragment"
         android:label="fragment_order_completed"
-        tools:layout="@layout/fragment_order_completed" />
+        tools:layout="@layout/fragment_order_completed" >
+        <action
+            android:id="@+id/action_orderCompletedFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.ssafy.birdmeal.view.my_page.MyPageFragment"
