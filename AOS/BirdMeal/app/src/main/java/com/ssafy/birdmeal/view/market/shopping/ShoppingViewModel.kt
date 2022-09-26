@@ -1,11 +1,14 @@
 package com.ssafy.birdmeal.view.market.shopping
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dttmm.web3test.wrapper.Trade
+import com.ssafy.birdmeal.wrapper.Trade
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
+import com.ssafy.birdmeal.model.dto.OrderCompleteDto
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.model.request.OrderRequestDto
 import com.ssafy.birdmeal.repository.CartRepository
@@ -20,6 +23,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlin.math.floor
 
@@ -37,8 +42,11 @@ class ShoppingViewModel @Inject constructor(
 
     private val _orderList: MutableList<OrderRequestDto> = mutableListOf()
 
-    private val _productCnt = MutableStateFlow(0)
+    private val _productCnt = SingleLiveEvent<Int>()
     val productCnt get() = _productCnt
+
+    private val _orderCompleteDto = SingleLiveEvent<OrderCompleteDto>()
+    val orderCompleteDto get() = _orderCompleteDto
 
     private val _totalPrice = MutableStateFlow(0)
     val totalPrice get() = _totalPrice
@@ -91,7 +99,7 @@ class ShoppingViewModel @Inject constructor(
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
                 _productList.value = it.data
-                _productCnt.value = it.data.size
+                _productCnt.postValue(it.data.size)
                 getTotalPrice()
 
                 _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
@@ -123,6 +131,7 @@ class ShoppingViewModel @Inject constructor(
     }
 
     // 장바구니 결제하기
+    @RequiresApi(Build.VERSION_CODES.O)
     fun buyingList(tradeContract : MutableList<Trade>, userSeq : Int){
         // 상품 컨트랙트 마다 거래 처리하기
         productList.value.mapIndexed { idx, p ->
@@ -151,6 +160,17 @@ class ShoppingViewModel @Inject constructor(
         }
 
         createOrderList(_orderList)
+        // 주문 완료 객체 만들기
+        createOrderComplete()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createOrderComplete(){
+        var date : String = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        _orderCompleteDto.postValue(
+            OrderCompleteDto(productList.value[0].productName, productList.value.size,
+                null, date, totalAmount.value, _donationAmount.value)
+        )
     }
 
     // 주문 내역 저장하기

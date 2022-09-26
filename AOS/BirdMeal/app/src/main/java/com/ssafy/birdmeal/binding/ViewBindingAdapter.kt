@@ -45,4 +45,14 @@ object ViewBindingAdapter {
         this.text = String.format("%,2d", value) + " ELN"
     }
 
+    @BindingAdapter("orderName", "orderSize")
+    @JvmStatic
+    fun TextView.setOrderName(name: String, size: Int){
+        var text = "$name"
+        if(size > 1){
+            text += " 외 ${size-1}건"
+        }
+        this.text = text
+    }
+
 }
