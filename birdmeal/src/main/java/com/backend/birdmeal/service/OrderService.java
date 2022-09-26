@@ -218,6 +218,7 @@ public class OrderService {
                     .orderDeliveryNumber(orderDetailEntity.getOrderDeliveryNumber())
                     .orderDeliveryCompany(orderDetailEntity.getOrderDeliveryCompany())
                     .productThumbnailImg(productEntity.getProductThumbnailImg())
+                    .orderTHash(orderDetailEntity.getOrderTHash())
                     .build();
 
             myOrderDetailResponseDtoList.add(myOrderDetailResponseDto);
