@@ -32,4 +32,8 @@ const val CA_TRADE_MANAGER = "0xE2eC84CDfFCBde58b0B4ab71af6802214e43247e" // 거
 const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전소 컨트랙트
 
 // 주소 검색 띄울 주소
-const val ADDRESS_API_URL = ""
+const val ADDRESS_API_URL = "html"
+
+// 상태바 색 변경 이름
+const val WHITE = "white"
+const val BEIGE = "beige"
