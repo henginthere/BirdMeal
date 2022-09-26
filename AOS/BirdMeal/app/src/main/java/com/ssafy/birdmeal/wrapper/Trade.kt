@@ -1,4 +1,4 @@
-package com.dttmm.web3test.wrapper
+package com.ssafy.birdmeal.wrapper
 
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
@@ -15,7 +15,6 @@ import org.web3j.tx.TransactionManager
 import org.web3j.tx.gas.ContractGasProvider
 import java.math.BigInteger
 import java.util.*
-
 
 /**
  *
@@ -141,18 +140,13 @@ class Trade : Contract {
         return executeRemoteCallSingleValueReturn(function, String::class.java)
     }
 
-    fun setName(_name: String?): RemoteFunctionCall<TransactionReceipt> {
+    fun setProduct(_name: String?, _price: BigInteger?): RemoteFunctionCall<TransactionReceipt> {
         val function = Function(
-            FUNC_SETNAME,
-            Arrays.asList<Type<*>>(Utf8String(_name)), emptyList()
-        )
-        return executeRemoteCallTransaction(function)
-    }
-
-    fun setPrice(_price: BigInteger?): RemoteFunctionCall<TransactionReceipt> {
-        val function = Function(
-            FUNC_SETPRICE,
-            Arrays.asList<Type<*>>(Uint256(_price)), emptyList()
+            FUNC_SETPRODUCT,
+            Arrays.asList<Type<*>>(
+                Utf8String(_name),
+                Uint256(_price)
+            ), emptyList()
         )
         return executeRemoteCallTransaction(function)
     }
@@ -166,9 +160,7 @@ class Trade : Contract {
         const val FUNC_PAYING = "paying"
         const val FUNC_PRICE = "price"
         const val FUNC_SELLER = "seller"
-        const val FUNC_SETNAME = "setName"
-        const val FUNC_SETPRICE = "setPrice"
-
+        const val FUNC_SETPRODUCT = "setProduct"
         @Deprecated("")
         fun load(
             contractAddress: String?,
