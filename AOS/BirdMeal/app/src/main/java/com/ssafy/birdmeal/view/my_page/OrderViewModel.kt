@@ -5,13 +5,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.di.ApplicationClass
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.tradeContract
+import com.ssafy.birdmeal.model.request.JoinRequest
+import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.repository.OrderRepository
-import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.USER_SEQ
+import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +27,7 @@ import javax.inject.Inject
 class OrderViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val orderRepository: OrderRepository
+
 ): ViewModel(){
 
     private val _errMsgEvent = SingleLiveEvent<String>()
@@ -85,4 +89,30 @@ class OrderViewModel @Inject constructor(
             }
         }
     }
+
+    //구매 확정
+    fun updateOrderState(orderStateRequest: OrderStateRequest){
+        viewModelScope.launch(Dispatchers.IO){
+            orderRepository.updateOrderState(orderStateRequest).collectLatest {
+                if(it is Result.Success) {
+                    if(it.data.success){
+//                        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
+//                        Log.d(TAG, "buyingList: 주문 컨트랙트 승인 - paying 완료")
+//                        orderStateRequest.orderDetailSeq
+//                        elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
+//                        tradeContract.paying(donationAmount.value.toBigInteger()).sendAsync().get()
+                        _orderMsgEvent.postValue(it.data.msg)
+                    }
+                    else{
+                        _orderMsgEvent.postValue(it.data.msg)
+                    }
+                }
+                else if(it is Result.Error){
+                    _errMsgEvent.postValue("서버 에러 발생")
+                }
+            }
+        }
+
+    }
+
 }

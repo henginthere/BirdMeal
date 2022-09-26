@@ -5,20 +5,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.ItemOrderDetailListBinding
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 
 
-
-class OrderDetailListAdapter()
+class OrderDetailListAdapter(private val listener: OrderDetailListener)
     : ListAdapter<OrderDetailResponse, OrderDetailListAdapter.ViewHolder>(diffUtil) {
 
     inner class ViewHolder(private val binding : ItemOrderDetailListBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        var src = "@drawable/btn_order_state_false"
+        init {
+            binding.ivOrderState.setOnClickListener{
+                listener.onStateClick(getItem(absoluteAdapterPosition).orderDetailSeq)
+                src="@drawable/btn_order_state_true"
+                binding.invalidateAll()
+            }
+        }
         fun bind(item : OrderDetailResponse){
             binding.orderDetail = item
             binding.executePendingBindings()
-        }
+
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
