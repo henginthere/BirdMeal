@@ -21,6 +21,7 @@ MetaMaskLogin()
   .then(balanceOf)
   .then((r) => {
     auth.setBalance(r);
+    console.log(window.ethereum);
   });
 </script>
 

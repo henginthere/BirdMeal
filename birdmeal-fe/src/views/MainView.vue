@@ -74,6 +74,7 @@ const links = ref([
   ['상품목록', '/products'],
   ['주문목록', '/orders'],
   ['테스트', '/test'],
+  ['지갑', '/wallet'],
 ]);
 
 const userEmail = computed(() => {
