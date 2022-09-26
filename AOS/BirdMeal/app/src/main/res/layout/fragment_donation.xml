@@ -2,84 +2,78 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.login.guide.DonationFragment">
+    tools:context=".view.donation.DonationFragment">
 
     <data>
-<variable
-    name="donationVM"
-    type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
+
+        <variable
+            name="donationVM"
+            type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hori_50"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/toolbar_margin"
-            android:layout_marginTop="@dimen/toolbar_margin"
-            android:layout_marginEnd="@dimen/toolbar_margin"
-            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_header"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/back_beige"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="40dp"
+            app:layout_constraintBottom_toBottomOf="@id/gl_hori_50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_explain"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/toolbar_margin"
-                android:src="@drawable/ic_question" />
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_hori_20"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/gl_hori_20">
+                android:src="@drawable/logo" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="총 기부액"
+                android:text="BirdMeal"
+                android:textColor="@color/black"
                 android:textSize="24sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_balance"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:textSize="32sp"
-                tools:text="1000원" />
+                android:text="Donation"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="당신의 따뜻한 손길"
+                android:textColor="#8A8A8A"
+                android:textSize="12sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="돈 이미지 넣을 곳"
-            android:textSize="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hori_35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.35" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_hori_80"
@@ -88,43 +82,196 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.8" />
 
-        <EditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:background="@drawable/background_white_round"
+            android:elevation="4dp"
+            android:translationZ="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/gl_hori_80"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="number"
-            android:text="@={donationVM.donationPrice}"
-            app:layout_constraintBottom_toTopOf="@id/btn_donte"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/gl_hori_35">
 
-        <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="누적 기부금"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_balance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@id/btn_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_balance"
+                tools:text="1000원" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btn_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_balance">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자세히보기" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_donte"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginHorizontal="80dp"
+            android:background="@drawable/btn_round_50_main_color"
+            android:elevation="8dp"
             android:text="기부하기"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@id/gl_hori_80"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:translationZ="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_hori_80" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_history_doantion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="전체 기부내역 보기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        <!--        <com.google.android.material.appbar.MaterialToolbar-->
+        <!--            android:id="@+id/toolbar"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="@dimen/toolbar_margin"-->
+        <!--            android:layout_marginTop="@dimen/toolbar_margin"-->
+        <!--            android:layout_marginEnd="@dimen/toolbar_margin"-->
+        <!--            android:background="@color/white"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_history_child"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="아이들 기부금 사용내역 보기"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+        <!--            <androidx.appcompat.widget.AppCompatImageView-->
+        <!--                android:id="@+id/btn_explain"-->
+        <!--                android:layout_width="48dp"-->
+        <!--                android:layout_height="48dp"-->
+        <!--                android:layout_gravity="right"-->
+        <!--                android:layout_marginRight="@dimen/toolbar_margin"-->
+        <!--                android:src="@drawable/ic_question" />-->
+        <!--        </com.google.android.material.appbar.MaterialToolbar>-->
+
+        <!--        <androidx.constraintlayout.widget.Guideline-->
+        <!--            android:id="@+id/gl_hori_20"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layout_constraintGuide_percent="0.2" />-->
+
+        <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="vertical"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/gl_hori_20">-->
+
+        <!--            <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="총 기부액"-->
+        <!--                android:textSize="24sp" />-->
+
+        <!--            <androidx.appcompat.widget.AppCompatTextView-->
+        <!--                android:id="@+id/tv_balance"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginTop="20dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="32sp"-->
+        <!--                tools:text="1000원" />-->
+        <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+
+        <!--        <TextView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="돈 이미지 넣을 곳"-->
+        <!--            android:textSize="30dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintVertical_bias="1.0" />-->
+
+        <!--        <androidx.constraintlayout.widget.Guideline-->
+        <!--            android:id="@+id/gl_hori_80"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layout_constraintGuide_percent="0.8" />-->
+
+        <!--        <EditText-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            android:inputType="number"-->
+        <!--            android:text="@={donationVM.donationPrice}"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/btn_donte"/>-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/btn_donte"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:text="기부하기"-->
+        <!--            android:textSize="24sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/gl_hori_80"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/btn_history_doantion"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="20dp"-->
+        <!--            android:text="전체 기부내역 보기"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+        <!--        <androidx.appcompat.widget.AppCompatButton-->
+        <!--            android:id="@+id/btn_history_child"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_margin="20dp"-->
+        <!--            android:text="아이들 기부금 사용내역 보기"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
