@@ -1,4 +1,4 @@
-package com.dttmm.web3test.wrapper
+package com.ssafy.birdmeal.wrapper
 
 import io.reactivex.Flowable
 import io.reactivex.functions.Function
@@ -24,7 +24,6 @@ import org.web3j.tx.gas.ContractGasProvider
 import java.math.BigInteger
 import java.util.*
 import java.util.concurrent.Callable
-
 
 /**
  *
@@ -97,7 +96,7 @@ class TradeManager : Contract {
     }
 
     fun tradeCreatedEventFlowable(filter: EthFilter?): Flowable<TradeCreatedEventResponse> {
-        return web3j.ethLogFlowable(filter).map(object : Function<Log?, TradeCreatedEventResponse> {
+        return web3j.ethLogFlowable(filter).map(object : Function<Log, TradeCreatedEventResponse> {
             override fun apply(log: Log): TradeCreatedEventResponse {
                 val eventValues = extractEventParametersWithLog(TRADECREATED_EVENT, log)
                 val typedResponse = TradeCreatedEventResponse()
@@ -157,8 +156,7 @@ class TradeManager : Contract {
         const val BINARY = "Bin file was not provided"
         const val FUNC_CREATETRADE = "createTrade"
         const val FUNC_PRODUCTS = "products"
-        val TRADECREATED_EVENT = Event(
-            "TradeCreated",
+        val TRADECREATED_EVENT = Event("TradeCreated",
             Arrays.asList<TypeReference<*>>(object : TypeReference<Address?>(true) {})
         )
 
