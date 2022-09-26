@@ -13,5 +13,6 @@ class CartLocalDataSource @Inject constructor(
     fun insertCart(cart: CartEntity) = cartDao.insert(cart)
     fun updateCart(cart: CartEntity) = cartDao.update(cart)
     fun deleteCart(cart: CartEntity) = cartDao.delete(cart)
+    fun clearCart() = cartDao.clear()
     fun getCartList(): Flow<List<CartEntity>> = cartDao.getCartList()
 }

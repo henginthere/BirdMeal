@@ -18,6 +18,7 @@ class CartRepository @Inject constructor(
     fun insertCart(cart: CartEntity) = cartLocalDataSource.insertCart(cart)
     fun updateCart(cart: CartEntity) = cartLocalDataSource.updateCart(cart)
     fun deleteCart(cart: CartEntity) = cartLocalDataSource.deleteCart(cart)
+    fun clearCart() = cartLocalDataSource.clearCart()
 
     fun getCartList(): Flow<Result<List<CartEntity>>> = flow {
         emit(Result.Loading)

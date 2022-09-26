@@ -16,6 +16,9 @@ interface CartDao {
     @Delete
     fun delete(cart: CartEntity)
 
+    @Query("DELETE FROM t_cart")
+    fun clear()
+
     @Query("SELECT * FROM t_cart")
     fun getCartList() : Flow<List<CartEntity>>
 
