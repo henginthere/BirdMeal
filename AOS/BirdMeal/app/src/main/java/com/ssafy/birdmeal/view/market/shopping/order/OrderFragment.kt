@@ -50,7 +50,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                     .getTradeContract(shoppingViewModel.productList.value)
 
             // 상품 컨트랙트 주문 넣기
-            shoppingViewModel.buyingList(contractList)
+            shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
         }
     }
 

@@ -52,15 +52,15 @@ class OrderViewModel @Inject constructor(
         orderRepository.getMyOrderHistory(userSeq).collectLatest {
             Log.d(TAG, "getMyOrderHistory response: $it")
 
-            if (it is Result.Success) {
+            if (it is Result.Success) {  // 불러오기 성공한 경우
                 Log.d(TAG, "getMyOrderHistory data: ${it.data}")
-
-                // 불러오기 성공한 경우
-                if (it.data.success) {
-                    _orderHistoryList.value = it
-                    _orderMsgEvent.postValue("내 주문내역 불러오기 성공")
-                }
-            } else if (it is Result.Error) {
+                _orderHistoryList.value = it
+                _orderMsgEvent.postValue("내 주문내역 불러오기 성공")
+            }
+            else if(it is Result.Fail){
+                _errMsgEvent.postValue(it.data.msg)
+            }
+            else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
@@ -72,15 +72,15 @@ class OrderViewModel @Inject constructor(
         orderRepository.getOrderDetail(userSeq,orderSeq).collectLatest {
             Log.d(TAG, "getOrderDetail response: $it")
 
-            if (it is Result.Success) {
+            if(it is Result.Success) {   // 불러오기 성공한 경우
                 Log.d(TAG, "getOrderDetail data: ${it.data}")
-
-                // 불러오기 성공한 경우
-                if (it.data.success) {
-                    _orderDetailList.value = it
-                    _orderMsgEvent.postValue("주문 상세 내역 불러오기 성공")
-                }
-            } else if (it is Result.Error) {
+                _orderDetailList.value = it
+                _orderMsgEvent.postValue("주문 상세 내역 불러오기 성공")
+            }
+            else if(it is Result.Fail){
+                _errMsgEvent.postValue(it.data.msg)
+            }
+            else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
