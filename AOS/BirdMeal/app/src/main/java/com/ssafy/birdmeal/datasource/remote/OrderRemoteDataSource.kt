@@ -2,8 +2,8 @@ package com.ssafy.birdmeal.datasource.remote
 
 import com.ssafy.birdmeal.api.OrderApi
 import com.ssafy.birdmeal.base.BaseResponse
-import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.request.OrderRequestDto
+import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +25,10 @@ class OrderRemoteDataSource @Inject constructor(
     // 주문 상세내역 불러오기
     fun getOrderDetail(userSeq: Int,orderSeq: Int): Flow<BaseResponse<List<OrderDetailResponse>>> = flow {
         emit(orderApi.getOrderDetail(userSeq,orderSeq))
+    }
+
+    fun updateOrderState(request: OrderStateRequest):Flow<BaseResponse<String>> = flow{
+        emit(orderApi.updateOrderState(request))
     }
 
 }

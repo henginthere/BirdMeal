@@ -1,14 +1,12 @@
 package com.ssafy.birdmeal.api
 
 import com.ssafy.birdmeal.base.BaseResponse
-import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.request.OrderRequestDto
+
+import retrofit2.http.*
+import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface OrderApi {
 
@@ -26,4 +24,7 @@ interface OrderApi {
     @GET("order/list/{user-seq}/{order-seq}")
     suspend fun getOrderDetail(@Path("user-seq") userSeq: Int, @Path("order-seq") orderSeq: Int): BaseResponse<List<OrderDetailResponse>>
 
+    //구매 확정하기
+    @PUT("order")
+    suspend fun updateOrderState(@Body request: OrderStateRequest): BaseResponse<String>
 }
