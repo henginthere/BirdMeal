@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.market.shopping.cart
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.databinding.ItemCartListBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
+import com.ssafy.birdmeal.utils.TAG
 
 class ShoppingCartAdapter(private val listener: ShoppingCartListener)
     : ListAdapter<CartEntity, ShoppingCartAdapter.ViewHolder>(diffUtil){
@@ -25,6 +27,7 @@ class ShoppingCartAdapter(private val listener: ShoppingCartListener)
         }
 
         fun bind(item : CartEntity){
+            Log.d(TAG, "bind: ${item.productCount}")
             binding.cart = item
             binding.executePendingBindings()
         }
