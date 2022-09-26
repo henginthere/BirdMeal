@@ -174,24 +174,5 @@ public class SellerInfoController {
     }
 
 
-    /**
-     * 판매자 지갑 저장
-     *
-     * @param sellerWalletDto
-     * @return Object
-     */
-
-    @ApiOperation(value="판매자 지갑 저장",response = Object.class)
-    @PutMapping("/wallet")
-    public ResponseEntity<?> setSellerWallet(@RequestBody SellerWalletDto sellerWalletDto){
-        boolean success = sellerInfoService.setSellerWallet(sellerWalletDto);
-        ResponseFrame<?> res;
-        if(success) {
-            res = ResponseFrame.of(success, "판매자 지갑 등록을 성공했습니다.");
-        }else{
-            res = ResponseFrame.of(success, "판매자가 존재하지 않아 판매자 지갑 등록을 실패했습니다.");
-        }
-        return new ResponseEntity<>(res, HttpStatus.OK);
-    }
 
 }
