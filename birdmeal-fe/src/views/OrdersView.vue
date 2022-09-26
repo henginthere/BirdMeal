@@ -2,10 +2,10 @@
   <v-app>
     <v-container class="text-h4">
       <v-row>
-        <v-col class="ml-8 mt-4 mb-0">주문 목록</v-col>
+        <v-col class="ml-4 mt-4 mb-0">주문목록</v-col>
       </v-row>
     </v-container>
-    <v-card elevation="0" class="mx-3">
+    <v-card elevation="0" class="mx-4">
       <v-table fixed-header height="100%">
         <thead>
           <tr>
