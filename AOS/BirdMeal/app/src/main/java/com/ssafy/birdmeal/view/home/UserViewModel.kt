@@ -61,6 +61,9 @@ class UserViewModel @Inject constructor(
     private val _userELN = SingleLiveEvent<Int>()
     val userELN get() = _userELN
 
+    private val _userBalance = SingleLiveEvent<Long>()
+    val userBalance get() = _userBalance
+
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
         val path = context.getWalletPath()
@@ -208,6 +211,7 @@ class UserViewModel @Inject constructor(
         val value = result.fromWeiToEther().toInt()
 
         _userELN.postValue(value)
+        _userBalance.postValue(result.fromWeiToEther().toLong())
         _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
     }
 
