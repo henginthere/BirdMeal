@@ -70,10 +70,10 @@ const auth = authState();
 const drawer = ref(true);
 const links = ref([
   ['홈', '/home'],
+  ['내상품보기', '/products'],
+  ['상품등록', '/product/regist'],
+  ['주문목록보기', '/orders'],
   ['마이페이지', '/mypage'],
-  ['상품목록', '/products'],
-  ['주문목록', '/orders'],
-  ['테스트', '/test'],
 ]);
 
 const userEmail = computed(() => {

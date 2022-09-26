@@ -1,96 +1,169 @@
 <template>
   <v-app>
-    <h1 class="d-flex justify-center">상품등록페이지</h1>
+    <v-container class="text-h4">
+      <v-row>
+        <v-col class="ml-4 mt-4">상품등록</v-col>
+      </v-row>
+    </v-container>
     <v-container>
-      <v-row class="d-flex justify-center">
-        <v-col md="3">
-          <v-text-field label="상품명" v-model="name"></v-text-field>
+      <v-row>
+        <v-col>
+          <v-card width="800px">
+            <v-card-title>상품명</v-card-title>
+            <v-card-text class="mt-3">
+              <v-text-field
+                variant="underlined"
+                placeholder="예) 삼겹살(10kg)"
+                color="primary_orange"
+                v-model="name"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col md="3">
-          <v-text-field label="가격" v-model="price"></v-text-field>
+      <v-row>
+        <v-col>
+          <v-card width="800px">
+            <v-card-title>상품가격</v-card-title>
+            <v-card-text class="mt-3">
+              <v-text-field
+                variant="underlined"
+                placeholder="예) 10000"
+                color="primary_orange"
+                v-model="price"
+                suffix="ELN"
+              />
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col md="3">
-          <v-select
-            :items="categorys"
-            v-model="selectCategory"
-            label="카테고리"
-            dense
-            outlined
-          ></v-select>
+      <v-row>
+        <v-col>
+          <v-card width="800px">
+            <v-card-title>카테고리</v-card-title>
+            <v-card-text class="mt-3">
+              <v-select
+                :items="categorys"
+                v-model="selectCategory"
+                label="카테고리"
+                dense
+                color="primary_orange"
+                variant="outlined"
+              ></v-select>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col md="3" class="pe-0">
-          <v-file-input
-            label="썸네일 이미지 파일"
-            id="productThumbnailImg"
-            v-on:change="imgUpload1"
-            prepend-icon="mdi-camera"
-          ></v-file-input>
+      <v-row>
+        <v-col class="pe-0">
+          <v-card width="800px">
+            <v-card-title>상품 이미지</v-card-title>
+            <v-card class="mx-4 my-2">
+              <v-card-title>대표 이미지</v-card-title>
+              <v-card-text class="mt-2">
+                <v-file-input
+                  label="썸네일 이미지 파일"
+                  id="productThumbnailImg"
+                  v-on:change="imgUpload1"
+                  prepend-icon="mdi-camera"
+                  variant="outlined"
+                />
+                <v-img
+                  :src="
+                    productThumbnailImgURL !== ''
+                      ? productThumbnailImgURL
+                      : null
+                  "
+                  max-height="200"
+                  min-width="250"
+                />
+              </v-card-text>
+            </v-card>
+            <v-card class="mx-4 my-2">
+              <v-card-title>상세설명 이미지</v-card-title>
+              <v-card-text class="mt-2">
+                <v-file-input
+                  label="상세설명 이미지 파일"
+                  hint="상품 상세설명은 하나의 이미지로 업로드 해주세요"
+                  id="productDescriptionImg"
+                  v-on:change="imgUpload2"
+                  prepend-icon="mdi-camera"
+                  variant="outlined"
+                ></v-file-input>
+                <v-img
+                  :src="
+                    productDescriptionImgURL !== ''
+                      ? productDescriptionImgURL
+                      : null
+                  "
+                  max-height="1000"
+                  min-width="250"
+                />
+              </v-card-text>
+            </v-card>
+          </v-card>
         </v-col>
       </v-row>
+
       <v-row class="d-flex justify-center">
-        <v-col md="3">
-          <v-img
-            :src="productThumbnailImgURL !== '' ? productThumbnailImgURL : null"
-            max-height="200"
-            min-width="250"
-          />
+        <v-col> </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-sheet width="800px" class="d-flex justify-center">
+            <v-btn
+              color="primary_orange"
+              v-model="sticky"
+              v-on:click="registProduct"
+              >등록하기</v-btn
+            >
+          </v-sheet>
         </v-col>
       </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col md="3" class="pe-0">
-          <v-file-input
-            label="상세설명 이미지 파일"
-            id="productDescriptionImg"
-            v-on:change="imgUpload2"
-            prepend-icon="mdi-camera"
-          ></v-file-input>
-        </v-col>
-      </v-row>
-      <v-row class="d-flex justify-center">
-        <v-col md="3">
-          <v-img
-            :src="
-              productDescriptionImgURL !== '' ? productDescriptionImgURL : null
-            "
-            max-height="1000"
-            min-width="250"
-          />
-        </v-col>
-      </v-row>
-      <v-row class="d-flex justify-center">
-        <v-btn color="primary_orange" v-model="sticky" v-on:click="registProduct"> 등록하기 </v-btn>
-      </v-row>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </v-container>
   </v-app>
 </template>
 
 <script>
-import { createTrade } from "@/web3util/events";
-import axios from "axios";
-import { mapState } from "pinia";
-import { authState } from "@/stores/auth";
+import { createTrade } from '@/web3util/events';
+import axios from 'axios';
+import { mapState } from 'pinia';
+import { authState } from '@/stores/auth';
 export default {
   data() {
     return {
-      name: "",
+      name: '',
       price: null,
-      ca: "",
-      selectCategory: "",
-      productThumbnailImgURL: "",
-      productDescriptionImgURL: "",
-      category: { "육류": 1, "채소/과일": 2, "밀키트/간편식": 3, "냉동식품": 4, "과자류": 5, "음료": 6, "베이커리":7, "쌀/반찬":8, "양념/오일":9 },
-      categorys: ["육류", "채소/과일", "밀키트/간편식", "냉동식품", "과자류", "음료","베이커리", "쌀/반찬", "양념/오일"],
+      ca: '',
+      selectCategory: '',
+      productThumbnailImgURL: '',
+      productDescriptionImgURL: '',
+      category: {
+        육류: 1,
+        '채소/과일': 2,
+        '밀키트/간편식': 3,
+        냉동식품: 4,
+        과자류: 5,
+        음료: 6,
+        베이커리: 7,
+        '쌀/반찬': 8,
+        '양념/오일': 9,
+      },
+      categorys: [
+        '육류',
+        '채소/과일',
+        '밀키트/간편식',
+        '냉동식품',
+        '과자류',
+        '음료',
+        '베이커리',
+        '쌀/반찬',
+        '양념/오일',
+      ],
     };
   },
   computed: {
-    ...mapState(authState, ["user"]),
+    ...mapState(authState, ['user']),
   },
   methods: {
     createTrade,
@@ -105,35 +178,34 @@ export default {
     */
     imgUpload1() {
       let form = new FormData();
-      const productThumbnailImg = document.getElementById("productThumbnailImg")
+      const productThumbnailImg = document.getElementById('productThumbnailImg')
         .files[0];
-      form.append("file", productThumbnailImg);
+      form.append('file', productThumbnailImg);
       axios
-        .post("https://j7d101.p.ssafy.io/api/file", form, {
+        .post('https://j7d101.p.ssafy.io/api/file', form, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => (this.productThumbnailImgURL = res.data.data))
-        .then(() => alert("파일이 업로드 되었습니다."));
+        .then(() => alert('파일이 업로드 되었습니다.'));
     },
 
     imgUpload2() {
       let form = new FormData();
       const productDescriptionImg = document.getElementById(
-        "productDescriptionImg"
+        'productDescriptionImg'
       ).files[0];
-      form.append("file", productDescriptionImg);
+      form.append('file', productDescriptionImg);
       axios
-        .post("https://j7d101.p.ssafy.io/api/file", form, {
+        .post('https://j7d101.p.ssafy.io/api/file', form, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => (this.productDescriptionImgURL = res.data.data))
-        .then(() => alert("파일이 업로드 되었습니다."));
+        .then(() => alert('파일이 업로드 되었습니다.'));
     },
-
 
     /*
       상품등록함수
@@ -144,16 +216,16 @@ export default {
       상품등록이 다되면 상품목록 페이지로 이동시킴
     */
     registProduct() {
-      if (this.name === "") {
-        alert("상품명을 입력해주십시오");
+      if (this.name === '') {
+        alert('상품명을 입력해주십시오');
       } else if (this.price === null) {
-        alert("가격을 입력해주십시오");
-      } else if (this.selectCategory === "") {
-        alert("카테고리를 선택해주십시오");
-      } else if (this.productThumbnailImgURL === "") {
-        alert("썸네일을 선택해주십시오");
-      } else if (this.productDescriptionImgURL === "") {
-        alert("상세설명 파일을 선택해주십시오");
+        alert('가격을 입력해주십시오');
+      } else if (this.selectCategory === '') {
+        alert('카테고리를 선택해주십시오');
+      } else if (this.productThumbnailImgURL === '') {
+        alert('썸네일을 선택해주십시오');
+      } else if (this.productDescriptionImgURL === '') {
+        alert('상세설명 파일을 선택해주십시오');
       } else {
         createTrade(this.name, this.price)
           .then(
@@ -162,7 +234,7 @@ export default {
           )
           .then(() =>
             axios.post(
-              "https://j7d101.p.ssafy.io/api/seller/product",
+              'https://j7d101.p.ssafy.io/api/seller/product',
               {
                 categorySeq: this.category[this.selectCategory],
                 sellerSeq: this.user.sellerSeq,
@@ -172,10 +244,10 @@ export default {
                 productThumbnailImg: this.productThumbnailImgURL,
                 productDescriptionImg: this.productDescriptionImgURL,
               },
-              { headers: { "Content-type": "application/json" } }
+              { headers: { 'Content-type': 'application/json' } }
             )
           )
-          .then(() => this.$router.push("/products"));
+          .then(() => this.$router.push('/products'));
       }
     },
     // test(){

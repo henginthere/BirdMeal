@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-btn v-on:click="goRegist"> 상품등록하러가기</v-btn>
+    <v-container class="text-h4">
+      <v-row>
+        <v-col class="ml-4 mt-4 mb-0">판매중인 상품</v-col>
+      </v-row>
+    </v-container>
     <v-table fixed-header height="100%">
       <thead>
         <tr>
