@@ -11,11 +11,25 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/card_order_detail"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_product"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:padding="20dp">
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_product"
@@ -44,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
-            android:text="@{`수량 : `+orderDetail.productName+` 개`}"
+            android:text="@{`수량 : `+orderDetail.orderQuantity+` 개`}"
             app:layout_constraintStart_toEndOf="@+id/iv_product"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
             tools:text="수량 : 2 개" />
@@ -53,7 +67,7 @@
             android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(orderDetail.productPrice)}"
+            android:text="@{String.valueOf(orderDetail.productPrice*orderDetail.orderQuantity)+` ELN`}"
             app:layout_constraintBottom_toBottomOf="@id/iv_product"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="10,000 ELN" />
@@ -71,7 +85,7 @@
             android:id="@+id/tv_delivery_company"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="20dp"
             android:text="@{`택배사 : `+orderDetail.orderDeliveryCompany}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,9 +110,11 @@
             android:src="@drawable/btn_order_state_false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_number"
+            android:layout_marginTop="5dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
 
 </layout>

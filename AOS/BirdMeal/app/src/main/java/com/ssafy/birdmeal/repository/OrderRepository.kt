@@ -1,11 +1,14 @@
 package com.ssafy.birdmeal.repository
 
+import android.util.Log
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.datasource.remote.OrderRemoteDataSource
 import com.ssafy.birdmeal.model.request.OrderRequestDto
+import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.utils.Result
+import com.ssafy.birdmeal.utils.TAG
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -59,4 +62,14 @@ class OrderRepository @Inject constructor(
     }.catch { e ->
         emit(Result.Error(e))
     }
+
+    fun updateOrderState(request: OrderStateRequest): Flow<Result<BaseResponse<String>>> = flow {
+        emit(Result.Loading)
+        orderRemoteDataSource.updateOrderState(request).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
 }
