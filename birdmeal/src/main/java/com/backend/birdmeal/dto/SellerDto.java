@@ -18,6 +18,7 @@ public class SellerDto {
     private String sellerAddress;
     private String sellerInfo;
     private String sellerImg;
+    private String sellerWallet;
     private String sellerCreateDate;
     private String sellerUpdateDate;
 

@@ -112,4 +112,17 @@ public class SellerInfoService {
         return true;
     }
 
+    // 판매자 지갑 등록
+    public boolean setSellerWallet(SellerWalletDto sellerWalletDto) {
+        SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(sellerWalletDto.getSellerSeq());
+
+        // 판매자 정보가 없으면 false
+        if(sellerEntity == null) return false;
+
+        sellerEntity.setSellerWallet(sellerWalletDto.getSellerWallet());
+
+        sellerInfoRepository.save(sellerEntity);
+
+        return true;
+    }
 }
