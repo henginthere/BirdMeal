@@ -19,7 +19,12 @@ class Oauth2Repository @Inject constructor(
     fun googleLogin(map: Map<String, String>): Flow<Result<BaseResponse<OauthResponse>>> = flow {
         emit(Result.Loading)
         oauth2RemoteDataSource.googleLogin(map).collect {
-            emit(Result.Success(it))
+            if(it.success){
+                emit(Result.Success(it))
+            }
+            else if(!it.success){
+                emit(Result.Fail(it))
+            }
         }
     }.catch { e ->
         emit(Result.Error(e))
@@ -28,7 +33,12 @@ class Oauth2Repository @Inject constructor(
     fun join(request: JoinRequest): Flow<Result<BaseResponse<OauthResponse>>> = flow {
         emit(Result.Loading)
         oauth2RemoteDataSource.join(request).collect {
-            emit(Result.Success(it))
+            if(it.success){
+                emit(Result.Success(it))
+            }
+            else if(!it.success){
+                emit(Result.Fail(it))
+            }
         }
     }.catch { e ->
         emit(Result.Error(e))

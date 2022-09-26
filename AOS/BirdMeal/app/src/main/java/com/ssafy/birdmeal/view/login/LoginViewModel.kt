@@ -56,23 +56,20 @@ class LoginViewModel @Inject constructor(
                 Log.d(TAG, "googleLogin response: $it")
                 if (it is Result.Success) {
                     Log.d(TAG, "googleLogin data: ${it.data}")
-
-                    // 등록 되지 않은 사용자면 회원가입으로
-                    if (!it.data.success) {
-                        _email.value = email
-                        _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
-                    }
                     // 등록된 사용자면 홈 화면으로
-                    else {
-                        sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
-                            .apply()
-                        // 이미 등록된 사용자라서 토큰 바로 저장
-                        sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
-                            .apply()
-                        _loginMsgEvent.postValue("로그인 완료")
-                    }
+                    sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
+                        .apply()
+                    // 이미 등록된 사용자라서 토큰 바로 저장
+                    sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
+                        .apply()
+                    _loginMsgEvent.postValue("로그인 완료")
                 } else if (it is Result.Error) {
                     _errMsgEvent.postValue("서버 에러 발생")
+                }
+                // 등록 되지 않은 사용자면 회원가입으로
+                else if(it is Result.Fail){
+                    _email.value = email
+                    _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
                 }
             }
         }
@@ -89,15 +86,17 @@ class LoginViewModel @Inject constructor(
                 Log.d(TAG, "join data: ${it.data}")
 
                 // 회원가입 성공한 경우
-                if (it.data.success) {
-                    sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
-                        .apply()
-                    sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
-                        .apply()
-                    _joinSuccessMsgEvent.postValue("회원 가입 성공")
-                }
+                sharedPreferences.edit().putInt(USER_SEQ, it.data.data?.userSeq)
+                    .apply()
+                sharedPreferences.edit().putString(JWT, it.data.data?.tokenDto.accessToken)
+                    .apply()
+                _joinSuccessMsgEvent.postValue("회원 가입 성공")
+
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
+            }
+            else if(it is Result.Fail){
+                _errMsgEvent.postValue(it.data.msg)
             }
         }
     }
