@@ -7,7 +7,9 @@ import com.dttmm.web3test.wrapper.Trade
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.entity.CartEntity
+import com.ssafy.birdmeal.model.request.OrderRequestDto
 import com.ssafy.birdmeal.repository.CartRepository
+import com.ssafy.birdmeal.repository.OrderRepository
 import com.ssafy.birdmeal.utils.CA_FUNDING
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import com.ssafy.birdmeal.utils.Result
@@ -23,7 +25,8 @@ import kotlin.math.floor
 
 @HiltViewModel
 class ShoppingViewModel @Inject constructor(
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository
 ): ViewModel() {
 
     private val _productList: MutableStateFlow<List<CartEntity>>
@@ -31,7 +34,8 @@ class ShoppingViewModel @Inject constructor(
     val productList get() = _productList
 
     private val _txList: MutableList<String> = mutableListOf()
-    val txList get() = _txList
+
+    private val _orderList: MutableList<OrderRequestDto> = mutableListOf()
 
     private val _productCnt = MutableStateFlow(0)
     val productCnt get() = _productCnt
@@ -112,7 +116,7 @@ class ShoppingViewModel @Inject constructor(
     }
 
     // 장바구니 결제하기
-    fun buyingList(tradeContract : MutableList<Trade>){
+    fun buyingList(tradeContract : MutableList<Trade>, userSeq : Int){
         // 상품 컨트랙트 마다 거래 처리하기
         productList.value.mapIndexed { idx, p ->
             // 상품 컨트랙트에 대한 엘레나 거래 승인
@@ -126,16 +130,38 @@ class ShoppingViewModel @Inject constructor(
 
             _txList.add(result.transactionHash)
         }
-
         // 기부 컨트랙트 엘레나 승인 및 3% 기부
         Log.d(TAG, "buyingList: 상품 컨트랙트 승인 - buying - addOrderSheet 완료")
         elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
         fundingContract.funding(donationAmount.value.toBigInteger()).sendAsync().get()
 
         Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
-        // 서버에 주문내역 전송하기
 
-        _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
+        // 서버에 주문내역 전송하기
+        productList.value.mapIndexed { idx, p ->
+            var order = OrderRequestDto(userSeq, p.productCount, _txList[idx], p.productSeq)
+            _orderList.add(order);
+        }
+
+        createOrderList(_orderList)
     }
+
+    // 주문 내역 저장하기
+    private fun createOrderList(orderRequestDtoList: List<OrderRequestDto>) =
+        viewModelScope.launch(Dispatchers.IO){
+            orderRepository.createOrderList(orderRequestDtoList).collectLatest {
+                if(it is Result.Success){
+                    _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
+                }
+                if(it is Result.Fail){
+                    _errMsgEvent.postValue(it.data.msg)
+                }
+                if(it is Result.Error){
+                    _errMsgEvent.postValue("서버 통신에 실패했습니다.")
+                }
+            }
+    }
+
+
 
 }
