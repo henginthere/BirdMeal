@@ -40,14 +40,16 @@ contract TradeManager {
         _currencyAddress = currencyAddress;
         _currencyContract = IERC20(_currencyAddress);
     }
+
+    event TradeCreated(address indexed tradeAddress);
     
-    function createTrade(string memory _name ,uint _price) public returns(address)
+    function createTrade(string memory _name ,uint _price) public 
     {
         //거래 객체 생성
         Trade newTrade = new Trade(_name, _price, _currencyAddress, msg.sender);
         // product[msg.sender][_name] = address(newTrade);
         products[msg.sender].push(product(_name, address(newTrade)));
-        return  address(newTrade);
+        emit TradeCreated(address(newTrade));
    
     }
 }

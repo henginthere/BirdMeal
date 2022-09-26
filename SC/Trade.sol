@@ -46,15 +46,12 @@ contract Trade {
     }
 
 
-    function setName(string memory _name) public {
-        require(msg.sender == seller, "only seller change name");
+    function setProduct(string memory _name, uint _price) public {
+        require(msg.sender == seller, "only seller change product info");
         name = _name;
-    }
-
-    function setPrice(uint _price) public {
-        require(msg.sender == seller, "only seller change price");
         price = _price;
     }
+
 
 
 }
