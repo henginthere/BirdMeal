@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.view.market.shopping.cart
 
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -44,11 +45,6 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
 
     private fun initViewModelCallBack() = with(shoppingViewModel){
         lifecycleScope.launch {
-            productList.collectLatest {
-                Log.d(TAG, "initViewModelCallBack: $it")
-                adapter.submitList(it)
-            }
-
             productCnt.collectLatest{ // 장바구니가 비었으면 텍스트 화면에 표시해주기
                 if(it > 0){
                     binding.tvEmpty.visibility = View.GONE
@@ -59,19 +55,22 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
             }
         }
 
+        updateSuccessMsgEvent.observe(viewLifecycleOwner){
+            Log.d(TAG, "initViewModelCallBack: ${productList.value}")
+            adapter.submitList(productList.value)
+        }
+
         errMsgEvent.observe(viewLifecycleOwner){
             showToast(it)
         }
     }
 
-    private fun initClickListener(){
-        binding.apply {
-            toolbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
-            btnBuy.setOnClickListener {
-                findNavController().navigate(R.id.action_shoppingCartFragment_to_orderFragment)
-            }
+    private fun initClickListener() = with(binding){
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+        btnBuy.setOnClickListener {
+            findNavController().navigate(R.id.action_shoppingCartFragment_to_orderFragment)
         }
     }
 
