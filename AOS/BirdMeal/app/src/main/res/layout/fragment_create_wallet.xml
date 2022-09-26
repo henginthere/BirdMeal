@@ -89,45 +89,70 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <!--지갑 정보 보여주는 화면-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_account_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:background="@color/white"
             android:visibility="@{state == ConstantsKt.WALLET_COMPLETE ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_hori_40"
-            tools:visibility="gone">
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_layout_account_info_hori_50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_info_private_key"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toTopOf="@id/layout_info_eoa"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3"
+                app:layout_constraintVertical_chainStyle="packed">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/header_private_key"
+                    android:id="@+id/header_warnning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="개인키"
-                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:text="⚠ 개인키는 외부에 노출되지 않도록 ⚠\n개인이 잘 보관해주세요!!"
+                    android:textColor="@color/primary_orange"
+                    android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/header_private_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="개인키"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header_warnning" />
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_private_key"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@id/btn_copy_private_key"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/header_private_key"
@@ -137,6 +162,7 @@
                     android:id="@+id/btn_copy_private_key"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_baseline_content_copy_24"
                     app:layout_constraintBottom_toBottomOf="@id/tv_private_key"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -148,10 +174,12 @@
                 android:id="@+id/layout_info_eoa"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_info_private_key">
+                app:layout_constraintTop_toBottomOf="@id/layout_info_private_key"
+                app:layout_goneMarginTop="20dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/header_eoa"
@@ -167,9 +195,10 @@
                     android:id="@+id/tv_eoa"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toStartOf="@id/btn_copy_eoa"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/header_eoa"
@@ -179,6 +208,7 @@
                     android:id="@+id/btn_copy_eoa"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_baseline_content_copy_24"
                     app:layout_constraintBottom_toBottomOf="@id/tv_eoa"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -190,15 +220,17 @@
                 android:id="@+id/btn_close"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="닫기"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:text="돌아가기"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layout_info_eoa" />
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--지갑 등록 화면-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_create_wallet"
             android:layout_width="0dp"
@@ -253,15 +285,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/btn_round_50_main_color"
                 android:text="생성하기"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/gl_layout_create_wallet_hori_50" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!--개인키 등록 화면-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_private_wallet"
             android:layout_width="0dp"
@@ -273,7 +307,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/gl_hori_40"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_layout_private_wallet_hori_50"
@@ -298,7 +332,7 @@
                 app:boxCornerRadiusTopStart="28dp"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeWidth="2dp"
-                app:layout_constraintBottom_toBottomOf="@id/gl_layout_private_wallet_hori_50"
+                app:layout_constraintBottom_toTopOf="@id/til_password_private"
                 app:layout_constraintEnd_toStartOf="@id/btn_paste_private"
                 app:layout_constraintStart_toStartOf="parent">
 
@@ -337,9 +371,9 @@
                 app:boxCornerRadiusTopStart="28dp"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeWidth="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/gl_layout_private_wallet_hori_50"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/gl_layout_private_wallet_hori_50">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_private"
@@ -356,16 +390,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="100dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/btn_round_50_main_color"
                 android:text="등록하기"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_password_private" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <!--지갑 or 개인키 등록 선택 화면-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_button"
             android:layout_width="0dp"
