@@ -95,8 +95,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         if (it.resultCode == Activity.RESULT_OK) {
             handleSignInResult(task)
         } else {
+            showToast("구글 서버에 등록되지 않은 서비스 입니다.")
             Log.d(TAG, "GoogleSignInAccount error: ${it}")
-
         }
     }
 
