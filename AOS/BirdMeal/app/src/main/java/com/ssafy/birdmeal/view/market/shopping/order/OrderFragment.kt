@@ -31,7 +31,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     private fun initViewModelCallBack(){
         shoppingViewModel.apply {
             // 주문 완료된 경우 주문완료 페이지로 이동
-            successMsgEvent.observe(viewLifecycleOwner){
+            orderSuccessMsgEvent.observe(viewLifecycleOwner){
                 showToast(it)
                 findNavController().navigate(R.id.action_orderFragment_to_orderCompletedFragment)
             }
@@ -46,8 +46,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
             // 상품 컨트랙트 목록 불러오기
-            val contractList : MutableList<Trade>
-                = (requireActivity().application as ApplicationClass)
+            val contractList : MutableList<Trade> = (requireActivity().application as ApplicationClass)
                     .getTradeContract(shoppingViewModel.productList.value)
 
             // 상품 컨트랙트 주문 넣기

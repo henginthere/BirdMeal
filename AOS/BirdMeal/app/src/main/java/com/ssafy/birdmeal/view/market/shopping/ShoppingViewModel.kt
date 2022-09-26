@@ -45,8 +45,11 @@ class ShoppingViewModel @Inject constructor(
     private val _totalAmount = MutableStateFlow(0)
     val totalAmount get() = _totalAmount
 
-    private val _successMsgEvent = SingleLiveEvent<String>()
-    val successMsgEvent get() = _successMsgEvent
+    private val _updateSuccessMsgEvent = SingleLiveEvent<String>()
+    val updateSuccessMsgEvent get() = _updateSuccessMsgEvent
+
+    private val _orderSuccessMsgEvent = SingleLiveEvent<String>()
+    val orderSuccessMsgEvent get() = _orderSuccessMsgEvent
 
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
@@ -79,6 +82,8 @@ class ShoppingViewModel @Inject constructor(
                 _productList.value = it.data
                 _productCnt.value = it.data.size
                 getTotalPrice()
+
+                _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
             }
             else if(it is Result.Error){
                 _errMsgEvent.postValue("장바구니 목록 조회에 실패했습니다.")
@@ -130,7 +135,7 @@ class ShoppingViewModel @Inject constructor(
         Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
         // 서버에 주문내역 전송하기
 
-        _successMsgEvent.postValue("주문이 완료되었습니다.")
+        _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
     }
 
 }
