@@ -57,6 +57,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
 
         updateSuccessMsgEvent.observe(viewLifecycleOwner){
             Log.d(TAG, "initViewModelCallBack: ${productList.value}")
+            adapter.submitList(null)
             adapter.submitList(productList.value)
         }
 
