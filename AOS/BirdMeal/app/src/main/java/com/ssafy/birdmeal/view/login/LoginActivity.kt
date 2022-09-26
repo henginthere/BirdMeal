@@ -20,13 +20,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 //        autoLogin()
     }
 
-    private fun autoLogin(){ // 자동 로그인
+    private fun autoLogin() { // 자동 로그인
         val jwt = sharedPref.getString(JWT, "")
 
-        if(jwt != ""){
+        if (jwt != "") {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
-
 }
+

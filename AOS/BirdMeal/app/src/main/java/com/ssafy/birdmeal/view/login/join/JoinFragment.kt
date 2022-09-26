@@ -7,6 +7,9 @@ import com.ssafy.birdmeal.MainActivity
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentJoinBinding
+import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.WHITE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,6 +19,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(R.layout.fragment_join) {
     private val loginViewModel by activityViewModels<LoginViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), BEIGE)
+
         initClickListener()
 
         initViewModelCallBack()

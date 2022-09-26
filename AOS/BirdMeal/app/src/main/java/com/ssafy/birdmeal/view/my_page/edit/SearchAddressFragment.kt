@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.my_page.edit
 
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -9,6 +10,8 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentSearchAddressBinding
 import com.ssafy.birdmeal.utils.ADDRESS_API_URL
+import com.ssafy.birdmeal.utils.BASE_URL
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.home.UserViewModel
 
 class SearchAddressFragment :
@@ -21,6 +24,7 @@ class SearchAddressFragment :
     }
 
     private fun initWebView() = with(binding) {
+        Log.d(TAG, "initWebView: ")
         webView.apply {
             settings.javaScriptEnabled = true
             addJavascriptInterface(BridgeInterface(), "Android")
@@ -32,7 +36,7 @@ class SearchAddressFragment :
             }
         }
 
-        webView.loadUrl(ADDRESS_API_URL)
+        webView.loadUrl(BASE_URL + ADDRESS_API_URL)
     }
 
     inner class BridgeInterface() {
