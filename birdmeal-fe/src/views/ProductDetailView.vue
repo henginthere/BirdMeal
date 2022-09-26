@@ -94,6 +94,36 @@ export default {
   },
 
   methods: {
+
+    /*
+      버튼 하나만으로 수정하기 가능하게 하자
+      1. 상품명이나 상품가격이 변경되었다면 web3의 setProduct를 호출 후 axios요청을 보내야함
+      2. 그게아니고 이미지만 바뀌었으면 axios요청만 보내도됨 
+    */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     getProductDetail(productSeq) {
       axios({
         url: `https://j7d101.p.ssafy.io/api/product/${productSeq}`,

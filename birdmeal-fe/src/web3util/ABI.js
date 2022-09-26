@@ -639,22 +639,14 @@ export const TradeAbi = [
 				"internalType": "string",
 				"name": "_name",
 				"type": "string"
-			}
-		],
-		"name": "setName",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+			},
 			{
 				"internalType": "uint256",
 				"name": "_price",
 				"type": "uint256"
 			}
 		],
-		"name": "setPrice",
+		"name": "setProduct",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

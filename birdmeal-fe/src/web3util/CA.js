@@ -5,4 +5,4 @@ export const FundingContractAddress = "0x1272AD925859Dd4e485b6d36AD941A5163e380D
 
 export const ExchangeContractAddress = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc";
 
-export const TradeManagerContractAddress = "0xE2eC84CDfFCBde58b0B4ab71af6802214e43247e";
+export const TradeManagerContractAddress = "0xA22F0dF64e4Ec81942662117A5A558E686b9f265";
