@@ -1,6 +1,7 @@
 package com.ssafy.birdmeal.view.market.shopping.order
 
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderCompletedBinding
@@ -26,8 +27,8 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
     }
 
     private fun initClickListener() = with(binding){
-        btnBack.setOnClickListener {
-
+        btnBack.setOnClickListener { // 마켓 카테고리 화면으로 이동
+            findNavController().navigate(R.id.action_orderCompletedFragment_to_categoryFragment)
         }
     }
 
