@@ -50,15 +50,16 @@ public class SellerOrderService {
             CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(productEntity.getCategorySeq());
 
             // user 가져오기
-            Optional<UserEntity> userEntity = userRepository.findByUserSeq(orderEntity.getUserSeq());
+            Optional<UserEntity> userOptional = userRepository.findByUserSeq(orderEntity.getUserSeq());
+            UserEntity userEntity = userOptional.get();
 
             // 반환값 만들기
             SellerOrderResponseDto sellerOrderResponseDto = SellerOrderResponseDto.builder()
                     .orderSeq(orderEntity.getOrderSeq())
                     .userSeq(orderEntity.getUserSeq())
-                    .userNickname(userEntity.get().getUserNickname())
-                    .userTel(userEntity.get().getUserTel())
-                    .userAdd(userEntity.get().getUserAdd())
+                    .userNickname(userEntity.getUserNickname())
+                    .userTel(userEntity.getUserTel())
+                    .userAdd(userEntity.getUserAdd())
                     .orderPrice(orderEntity.getOrderPrice())
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                     .productSeq(productEntity.getProductSeq())

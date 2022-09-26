@@ -197,5 +197,26 @@ public class UserController {
 
     }
 
+    /**
+     * 결식 아동 충전 상태 변경
+     *
+     * @param userSeq
+     * @return Object
+     */
+    @ApiOperation(value="결식 아동 충전 상태 변경",response = Object.class)
+    @PutMapping("/check-child/{user-seq}")
+    public ResponseEntity<?> updateChildState(@PathVariable("user-seq") long userSeq){
+        boolean success = userService.updateChildState(userSeq);
+        ResponseFrame<?> res;
 
+        if(success){
+            res = ResponseFrame.of(true,"결식 아동 충전 상태를 변경했습니다.");
+        }
+        else{
+            res = ResponseFrame.of(false,"회원이 없어 결식 아동 충전 상태 변경을 못했습니다.");
+        }
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+
+    }
 }

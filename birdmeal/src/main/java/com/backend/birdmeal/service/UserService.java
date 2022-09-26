@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.Optional;
@@ -136,5 +135,23 @@ public class UserService {
         }
 
         return false;
+    }
+
+    // 결식 아동 상태 변경
+    public boolean updateChildState(long userSeq) {
+        // 회원정보
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
+
+        UserEntity userEntity = userOptional.get();
+
+        // 결식아동이 아닌 경우 false
+        if(!userEntity.getUserRole()) return false;
+
+        boolean check = !userEntity.isUserChargeState();
+        userEntity.setUserChargeState(check);
+
+        userRepository.save(userEntity);
+
+        return true;
     }
 }
