@@ -18,6 +18,7 @@ public class MyOrderDetailResponseDto {
     private int orderQuantity;
     private String orderDate;
     private boolean orderToState;
+    private String orderTHash;
     private String orderDeliveryNumber;
     private String orderDeliveryCompany;
     private String productThumbnailImg;
