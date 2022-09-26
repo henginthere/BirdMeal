@@ -79,6 +79,13 @@ class ShoppingViewModel @Inject constructor(
         }
     }
 
+    // 장바구니 품목 삭제
+    private fun clear(){
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.clearCart()
+        }
+    }
+
     // 장바구니 목록 조회
     fun getCartList() = viewModelScope.launch(Dispatchers.IO){
         cartRepository.getCartList().collectLatest {
@@ -152,6 +159,7 @@ class ShoppingViewModel @Inject constructor(
             orderRepository.createOrderList(orderRequestDtoList).collectLatest {
                 if(it is Result.Success){
                     _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
+                    clear() // 장바구니 초기화
                 }
                 if(it is Result.Fail){
                     _errMsgEvent.postValue(it.data.msg)
