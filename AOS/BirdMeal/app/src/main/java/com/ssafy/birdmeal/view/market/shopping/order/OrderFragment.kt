@@ -2,7 +2,7 @@ package com.ssafy.birdmeal.view.market.shopping.order
 
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.dttmm.web3test.wrapper.Trade
+import com.ssafy.birdmeal.wrapper.Trade
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderBinding
