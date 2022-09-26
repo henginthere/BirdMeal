@@ -70,3 +70,10 @@ export const updatePrice = async (price, ca) => {
   .setPrice(price).send({from:Account});
   return res
   };
+
+
+  export const updateProduct = async (name, price, ca) => {
+    const res = await TradeContract(ca).methods
+    .setProduct(name,price).send({from:Account});
+    return res
+    };

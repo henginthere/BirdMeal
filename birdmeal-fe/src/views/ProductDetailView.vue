@@ -78,11 +78,13 @@ import axios from "axios";
 import { mapState } from "pinia";
 import { authState } from "@/stores/auth";
 import http from "../api/http";
-import { updateName, updatePrice } from "@/web3util/events.js";
+import { updateName, updatePrice, updateProduct } from "@/web3util/events.js";
 export default {
   data() {
     return {
       product: null,
+      preName: null,
+      prePrice: null,
       name: null,
       price: null,
       productThumbnailImgURL: "",
@@ -100,9 +102,14 @@ export default {
       1. 상품명이나 상품가격이 변경되었다면 web3의 setProduct를 호출 후 axios요청을 보내야함
       2. 그게아니고 이미지만 바뀌었으면 axios요청만 보내도됨 
     */
+    
 
-
-
+    setProduct() {
+      if (this.preName !== this.name || this.prePrice !== this.price) {
+        updateName(this.name, this.price, this.product.productCa)
+        .then()
+      }
+    },
 
 
 
@@ -140,7 +147,9 @@ export default {
             (this.productDescriptionImgURL = this.product.productDescriptionImg)
         )
         .then(() => (this.name = this.product.productName))
-        .then(() => (this.price = this.product.productPrice));
+        .then(() => this.preName = this.product.productName)
+        .then(() => (this.price = this.product.productPrice))
+        .then(() => (this.preprice = this.product.productPrice));
     },
     imgUpload1() {
       let form = new FormData();
