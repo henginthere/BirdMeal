@@ -27,6 +27,8 @@ class CreateWalletFragment :
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), BEIGE)
+
         binding.state = WALLET_SELECT
 
         initClickListener()
