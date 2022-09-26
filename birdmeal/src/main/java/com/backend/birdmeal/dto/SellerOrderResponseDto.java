@@ -18,6 +18,7 @@ public class SellerOrderResponseDto {
     private String userNickname;
     private String userTel;
     private String userAdd;
+    private String sellerWallet;
     private int orderPrice;
     private long orderDetailSeq;
     private long productSeq;

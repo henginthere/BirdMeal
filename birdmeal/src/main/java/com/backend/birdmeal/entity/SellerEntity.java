@@ -49,6 +49,10 @@ public class SellerEntity {
     private String sellerImg;
 
     @Basic
+    @Column(name="seller_wallet",length = 512)
+    private String sellerWallet;
+
+    @Basic
     @Column(name="seller_create_date", length = 30)
     private String sellerCreateDate;
 
