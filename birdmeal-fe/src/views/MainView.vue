@@ -74,6 +74,8 @@ const links = ref([
   ['상품등록', '/product/regist'],
   ['주문목록보기', '/orders'],
   ['마이페이지', '/mypage'],
+  ['테스트', '/test'],
+  ['지갑', '/wallet'],
 ]);
 
 const userEmail = computed(() => {
