@@ -2,19 +2,24 @@ package com.ssafy.birdmeal.view.my_page
 
 import android.content.SharedPreferences
 import android.util.Log
+import android.util.LogPrinter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.appContext
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.tradeContract
+import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.model.request.JoinRequest
 import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
+import com.ssafy.birdmeal.model.response.OrderTHashResponse
 import com.ssafy.birdmeal.repository.OrderRepository
 import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
+import com.ssafy.birdmeal.wrapper.Trade
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +34,10 @@ class OrderViewModel @Inject constructor(
     private val orderRepository: OrderRepository
 
 ): ViewModel(){
+
+    private val _orderDetailHash : MutableStateFlow<OrderTHashResponse>
+            = MutableStateFlow(OrderTHashResponse(-1, "", -1, -1, ""))
+    val orderDetailHash get() = _orderDetailHash
 
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
@@ -92,15 +101,16 @@ class OrderViewModel @Inject constructor(
 
     //구매 확정
     fun updateOrderState(orderStateRequest: OrderStateRequest){
+
         viewModelScope.launch(Dispatchers.IO){
             orderRepository.updateOrderState(orderStateRequest).collectLatest {
                 if(it is Result.Success) {
                     if(it.data.success){
-//                        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
-//                        Log.d(TAG, "buyingList: 주문 컨트랙트 승인 - paying 완료")
-//                        orderStateRequest.orderDetailSeq
-//                        elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
-//                        tradeContract.paying(donationAmount.value.toBigInteger()).sendAsync().get()
+
+                        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
+                        Log.d(TAG, "buyingList: 주문 컨트랙트 승인 - paying 완료")
+                        elenaContract.approve(orderDetailHash.value.productCa, (orderDetailHash.value.productPrice*orderDetailHash.value.orderQuantity).toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
+                        tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
                         _orderMsgEvent.postValue(it.data.msg)
                     }
                     else{
@@ -113,6 +123,19 @@ class OrderViewModel @Inject constructor(
             }
         }
 
+    }
+
+    //해시 및 주문 상세 정보 조회
+    fun getOrderTHash(orderDetailSeq: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            orderRepository.getOrderTHash(orderDetailSeq).collectLatest {
+                if(it is Result.Success){
+                    _orderDetailHash.value = it.data.data
+                    _successMsgEvent.postValue(it.data.msg)
+                    Log.d(TAG, "getOrderTHash: ${_orderDetailHash.value}")
+                }
+            }
+        }
     }
 
 }
