@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.donation
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
@@ -19,9 +20,9 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
     override fun init() {
         changeStatusBarColor(requireActivity(), BEIGE)
 
+        binding.userVM = userViewModel
         binding.donationVM = donationViewModel
         donationViewModel.getDonationAmount()
-//        userViewModel.getUserTokenValue()
 
         initViewModelCallBack()
 
@@ -53,6 +54,12 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         btnDonte.setOnClickListener {
             findNavController().navigate(R.id.action_donationFragment_to_donateFragment)
         }
+
+        // 자세히 보기 버튼튼
+       btnDetail.setOnClickListener {
+           Log.d("TAG", "initClickListener: ")
+           findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
+       }
 //        // 전체 기부내역 불러오기
 //        btnHistoryDoantion.setOnClickListener {
 //            findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
