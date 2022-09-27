@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class OrderDetailResponseDto {
     private long orderDetailSeq;
     private String orderTHash;
+    private int orderQuantity;
+    private int productPrice;
 }
