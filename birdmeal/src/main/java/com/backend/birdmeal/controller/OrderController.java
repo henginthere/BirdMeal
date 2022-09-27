@@ -156,16 +156,10 @@ public class OrderController {
 
     @ApiOperation(value="주문 해쉬 불러오기",response = Object.class)
     @GetMapping("/detail/{order-detail-seq}")
-    public ResponseEntity<?> getOrderHash(@PathVariable("order-detail-seq") long orderDetailSeq){
+    public OrderDetailResponseDto getOrderHash(@PathVariable("order-detail-seq") long orderDetailSeq){
         OrderDetailResponseDto orderDetailResponseDto = orderService.getOrderHash(orderDetailSeq);
-        ResponseFrame<?> res;
 
-        if(orderDetailResponseDto == null) {
-            res = ResponseFrame.of(false, "주문이 없어 주문 해쉬 불러오기를 실패했습니다.");
-        }else{
-            res = ResponseFrame.of(orderDetailResponseDto, "주문 해쉬 불러오기를 성공했습니다.");
-        }
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return orderDetailResponseDto;
     }
 
 
