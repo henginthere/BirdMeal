@@ -11,10 +11,10 @@ object ViewBindingAdapter {
 
     @BindingAdapter("categoryImg")
     @JvmStatic
-    fun AppCompatImageView.setCategoryImg(imgUrl: String){
+    fun AppCompatImageView.setCategoryImg(imgUrl: String) {
         Glide.with(this.context)
             .load(R.drawable.meal)
-            .override(R.dimen.categoryImg*2, R.dimen.categoryImg*2)
+            .override(R.dimen.categoryImg * 2, R.dimen.categoryImg * 2)
             .placeholder(R.drawable.meal)
             .into(this)
         // this.clipToOutline = true 배경이 Drawable 파일이면 그걸 배경으로 인식
@@ -22,15 +22,15 @@ object ViewBindingAdapter {
 
     @BindingAdapter("productPrice")
     @JvmStatic
-    fun TextView.setProductPrice(price: Int){
+    fun TextView.setProductPrice(price: Int) {
         var t = String.format("%,2d", price)
         text = "$t ELN"
     }
 
     @BindingAdapter("productThumbnail")
     @JvmStatic
-    fun ImageView.setProductThumbnail(url : String?){
-        if(url != null){
+    fun ImageView.setProductThumbnail(url: String?) {
+        if (url != null) {
             Glide.with(this.context)
                 .load("$url")
                 .placeholder(R.drawable.meal)
@@ -40,9 +40,30 @@ object ViewBindingAdapter {
 
     @BindingAdapter("totalAmount", "userELN")
     @JvmStatic
-    fun TextView.setRemainAmount(totalAmount: Int, userELN: Int){
+    fun TextView.setRemainAmount(totalAmount: Int, userELN: Int) {
         var value = (userELN - totalAmount)
         this.text = String.format("%,2d", value) + " ELN"
     }
 
+    // 직접기부, 간접기부 이미지 분기
+    @BindingAdapter("donationImg")
+    @JvmStatic
+    fun ImageView.setDonationImg(donationType: Boolean?) {
+        if (donationType != null) {
+            when (donationType) {
+                true -> {
+                    Glide.with(this.context)
+                        .load(R.drawable.ic_donation1)
+                        .placeholder(R.drawable.meal)
+                        .into(this)
+                }
+                false -> {
+                    Glide.with(this.context)
+                        .load(R.drawable.ic_donation2)
+                        .placeholder(R.drawable.meal)
+                        .into(this)
+                }
+            }
+        }
+    }
 }
