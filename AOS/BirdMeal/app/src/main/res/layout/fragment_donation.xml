@@ -6,6 +6,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="userVM"
+            type="com.ssafy.birdmeal.view.home.UserViewModel" />
+
         <variable
             name="donationVM"
             type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
@@ -156,6 +162,24 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:translationZ="4dp"
+            android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_hori_80" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_make_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="80dp"
+            android:background="@drawable/btn_round_50_main_color"
+            android:elevation="8dp"
+            android:text="기부하기"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:translationZ="4dp"
+            android:visibility="@{userVM.user.userRole ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -45,8 +45,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     var waitTime = 0L
-    override fun onBackPressed() { // 홈 화면에서 뒤로가기 2번 클릭 시 앱 종료
-        if(navController.currentDestination?.id == R.id.homeFragment){
+    override fun onBackPressed() { // 기부 화면에서 뒤로가기 2번 클릭 시 앱 종료
+        if(navController.currentDestination?.id == R.id.donationFragment){
             if(System.currentTimeMillis() - waitTime >= 1500){
                 waitTime = System.currentTimeMillis()
                 showToast("뒤로가기 버튼을 누르면 종료됩니다.")
