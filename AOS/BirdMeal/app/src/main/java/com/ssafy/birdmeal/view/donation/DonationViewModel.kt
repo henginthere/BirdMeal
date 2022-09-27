@@ -41,10 +41,8 @@ class DonationViewModel @Inject constructor(
     private val _donationPrice = SingleLiveEvent<String>()
     val donationPrice get() = _donationPrice
 
-    private val _donationAllHistoryList:
-            MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
-        MutableStateFlow(Result.Uninitialized)
-    val donationAllHistoryList get() = _donationAllHistoryList.asStateFlow()
+    private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
+    val donationAllHistoryList get() = _donationAllHistoryList
 
     private val _donationMyHistoryList:
             MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
@@ -116,7 +114,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationAllHistoryList.value = it
+                    _donationAllHistoryList.postValue(it.data.data)
                     _donateMsgEvent.postValue("전체 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
