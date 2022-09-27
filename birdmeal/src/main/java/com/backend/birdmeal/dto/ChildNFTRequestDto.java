@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChildNFTResponseDto {
+public class ChildNFTRequestDto {
+    private long userSeq;
     private String nftImg;
-    private String nftCreateDate;
-    private int nftCnt;
 }

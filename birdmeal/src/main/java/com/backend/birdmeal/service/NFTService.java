@@ -1,6 +1,7 @@
 package com.backend.birdmeal.service;
 
 import com.backend.birdmeal.dto.ChildNFTDto;
+import com.backend.birdmeal.dto.ChildNFTRequestDto;
 import com.backend.birdmeal.dto.NFTImgResponseDto;
 import com.backend.birdmeal.entity.ChildNFTEntity;
 import com.backend.birdmeal.entity.UserEntity;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -22,17 +24,21 @@ public class NFTService {
     private final ChildNFTRepository childNFTRepository;
     
     // NFT ImgURI 저장
-    public boolean setNFTImg(ChildNFTDto childNFTDto) {
+    public boolean setNFTImg(ChildNFTRequestDto childNFTRequestDto) {
 
-        Optional<UserEntity> userOptional = userRepository.findByUserSeq(childNFTDto.getUserSeq());
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(childNFTRequestDto.getUserSeq());
 
         UserEntity userEntity = userOptional.get();
 
-        if(childNFTDto.getNftImg() == null) return false;
+        // 아이들이 아니면 false
+        if(!userEntity.getUserRole()) return false;
+
+        // 사진이 없으면 false
+        if(childNFTRequestDto.getNftImg() == null) return false;
 
         ChildNFTEntity childNFTEntity = ChildNFTEntity.builder()
-                .userSeq(childNFTDto.getUserSeq())
-                .nftImg(childNFTDto.getNftImg())
+                .userSeq(childNFTRequestDto.getUserSeq())
+                .nftImg(childNFTRequestDto.getNftImg())
                 .nftCnt(0)
                 .build();
 
@@ -71,5 +77,14 @@ public class NFTService {
                 .build();
 
         return nftImgResponseDto;
+    }
+
+    // 내가 만든 포토 카드 요청
+    public List getMyCardInfo(long userSeq) {
+
+        // 리스트 받기
+        List<ChildNFTEntity> childNFTEntityList = childNFTRepository.findAllByUserSeq(userSeq);
+
+        return childNFTEntityList;
     }
 }

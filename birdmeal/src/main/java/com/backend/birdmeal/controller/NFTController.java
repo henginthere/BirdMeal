@@ -1,6 +1,7 @@
 package com.backend.birdmeal.controller;
 
-import com.backend.birdmeal.dto.ChildNFTDto;
+import com.backend.birdmeal.dto.ChildNFTRequestDto;
+import com.backend.birdmeal.dto.ChildNFTResponseDto;
 import com.backend.birdmeal.dto.NFTImgResponseDto;
 import com.backend.birdmeal.service.NFTService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Api("NFTController")
@@ -22,14 +25,14 @@ public class NFTController {
     /**
      * NFT ImgURI 저장
      *
-     * @param childNFTDto
+     * @param childNFTRequestDto
      * @return Object
      */
 
     @ApiOperation(value="NFT ImgURI 저장",response = Object.class)
     @PostMapping("/image")
-    public ResponseEntity<?> setNFTImg(@RequestBody ChildNFTDto childNFTDto){
-        boolean success = nftService.setNFTImg(childNFTDto);
+    public ResponseEntity<?> setNFTImg(@RequestBody ChildNFTRequestDto childNFTRequestDto){
+        boolean success = nftService.setNFTImg(childNFTRequestDto);
 
         ResponseFrame<?> res;
         if(success) {
@@ -57,6 +60,28 @@ public class NFTController {
             res = ResponseFrame.of(false, "NFT imgURI가 없어서 가져오기를 실패했습니다.");
         }else{
             res = ResponseFrame.of(nftImgResponseDto, "NFT imgURI 가져오기를 성공했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+
+    /**
+     * 내가 만든 포토카드 요청 ( 아이들 )
+     *
+     * @param userSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="내가 만든 포토카드 요청 ( 아이들 )",response = Object.class)
+    @GetMapping("/user/child/{user-seq}")
+    public ResponseEntity<?> getMyCardInfo(@PathVariable("user-seq") long userSeq){
+        List<ChildNFTResponseDto> list = nftService.getMyCardInfo(userSeq);
+
+        ResponseFrame<?> res;
+        if(list.size()==0) {
+            res = ResponseFrame.of(false, "내가 만든 포토카드 요청 ( 아이들 ) 을 실패했습니다.");
+        }else{
+            res = ResponseFrame.of(list, "내가 만든 포토카드 요청 ( 아이들 ) 을 성공했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
