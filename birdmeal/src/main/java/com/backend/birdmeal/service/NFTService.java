@@ -87,4 +87,22 @@ public class NFTService {
 
         return childNFTEntityList;
     }
+
+    // 사용자 IsMint 상태 바꾸기
+    public boolean changeState(long userSeq) {
+
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
+
+        UserEntity userEntity = userOptional.get();
+
+        if(userEntity.getUserMonthMoney()<100000) return false;
+
+        // 민팅 가능 상태로 바꿔주기
+        userEntity.setUserIsMint(true);
+
+        // 저장
+        userRepository.save(userEntity);
+
+        return true;
+    }
 }

@@ -85,4 +85,25 @@ public class NFTController {
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
+
+    /**
+     * 사용자 IsMint 상태 바꾸기
+     *
+     * @param userSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="사용자 IsMint 상태 바꾸기",response = Object.class)
+    @PutMapping("/mint-state/{user-seq}")
+    public ResponseEntity<?> changeState(@PathVariable("user-seq") long userSeq){
+        boolean success = nftService.changeState(userSeq);
+
+        ResponseFrame<?> res;
+        if(success) {
+            res = ResponseFrame.of(success, "사용자 IsMint 상태 바꾸기를 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "10만원을 넘지 않아 사용자 IsMint 상태 바꾸기를 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 }
