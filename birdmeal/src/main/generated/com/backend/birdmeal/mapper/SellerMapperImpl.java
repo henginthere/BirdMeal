@@ -10,7 +10,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-22T15:01:19+0900",
+    date = "2022-09-27T17:28:07+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class SellerMapperImpl implements SellerMapper {
@@ -57,6 +57,7 @@ public class SellerMapperImpl implements SellerMapper {
         sellerEntity.sellerTel( sellerDto.getSellerTel() );
         sellerEntity.sellerAddress( sellerDto.getSellerAddress() );
         sellerEntity.sellerInfo( sellerDto.getSellerInfo() );
+        sellerEntity.sellerImg( sellerDto.getSellerImg() );
         sellerEntity.sellerCreateDate( sellerDto.getSellerCreateDate() );
         sellerEntity.sellerUpdateDate( sellerDto.getSellerUpdateDate() );
 
@@ -77,6 +78,7 @@ public class SellerMapperImpl implements SellerMapper {
         sellerDto.sellerTel( sellerEntity.getSellerTel() );
         sellerDto.sellerAddress( sellerEntity.getSellerAddress() );
         sellerDto.sellerInfo( sellerEntity.getSellerInfo() );
+        sellerDto.sellerImg( sellerEntity.getSellerImg() );
         sellerDto.sellerCreateDate( sellerEntity.getSellerCreateDate() );
         sellerDto.sellerUpdateDate( sellerEntity.getSellerUpdateDate() );
 

@@ -21,23 +21,23 @@ public class FileController {
     private final FileService fileService;
 
     /**
-     * 파일 업로드
+     * 파일 S3 서버에 업로드
      *
      * @param req
      * @return Object
      */
 
-    @ApiOperation(value="파일 업로드",response = Object.class)
+    @ApiOperation(value="파일 S3 서버에 업로드",response = Object.class)
     @PostMapping("")
-    public ResponseEntity<?> fileUpload(@RequestParam("file") MultipartFile req) throws IOException {
+    public ResponseEntity<?> fileChange(@RequestParam("file") MultipartFile req) throws IOException {
         String url = fileService.fileUpload(req);
         ResponseFrame<?> res;
 
 
         if(url.length() != 0) {
-            res = ResponseFrame.of(url, "파일 업로드를 성공했습니다.");
+            res = ResponseFrame.of(url, "파일 S3 서버에 업로드를 성공했습니다.");
         }else{
-            res = ResponseFrame.of(url, "파일 업로드에 실패했습니다.");
+            res = ResponseFrame.of(url, "파일 S3 서버에 업로드를 실패했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
