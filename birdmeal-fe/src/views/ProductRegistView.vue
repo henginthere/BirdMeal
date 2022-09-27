@@ -1,6 +1,19 @@
 <template>
   <v-app>
+
+    <v-overlay :model-value="overlay" class="align-center justify-center" height="500" width="500" persistent>
+      <loading />
+    </v-overlay>
+
+
+
+
+
+
+
     <v-container class="text-h4">
+
+
       <v-row>
         <v-col class="ml-4 mt-4">상품등록</v-col>
       </v-row>
@@ -129,6 +142,7 @@ import { createTrade } from '@/web3util/events';
 import axios from 'axios';
 import { mapState } from 'pinia';
 import { authState } from '@/stores/auth';
+import loading from '@/components/Loading.vue'
 export default {
   data() {
     return {
@@ -138,6 +152,7 @@ export default {
       selectCategory: '',
       productThumbnailImgURL: '',
       productDescriptionImgURL: '',
+      overlay: false,
       category: {
         육류: 1,
         '채소/과일': 2,
@@ -165,6 +180,15 @@ export default {
   computed: {
     ...mapState(authState, ['user']),
   },
+
+  components:{
+    loading
+  },
+
+
+
+
+
   methods: {
     createTrade,
     /*
@@ -227,6 +251,7 @@ export default {
       } else if (this.productDescriptionImgURL === '') {
         alert('상세설명 파일을 선택해주십시오');
       } else {
+        this.overlay = !this.overlay
         createTrade(this.name, this.price)
           .then(
             (res) =>
@@ -246,19 +271,10 @@ export default {
               },
               { headers: { 'Content-type': 'application/json' } }
             )
-          )
+          ).then(()=> this.overlay = !this.overlay)
           .then(() => this.$router.push('/products'));
       }
     },
-    // test(){
-    //     console.log(this.name)
-    //     console.log(this.category[this.selectCategory])
-    //     console.log(this.price)
-    //     console.log(this.ca)
-    //     console.log(this.user.sellerSeq)
-    //     console.log(this.productThumbnailImgURL)
-    //     console.log(this.productDescriptionImgURL)
-    // }
   },
 };
 </script>

@@ -1,5 +1,10 @@
 <template>
   <v-app>
+
+    <v-overlay :model-value="overlay" class="align-center justify-center" height="500" width="500" persistent>
+      <loading />
+    </v-overlay>
+
     <v-container>
       <v-row class="d-flex justify-center">
         <v-col md="3">
@@ -76,7 +81,8 @@ import axios from "axios";
 import { mapState } from "pinia";
 import { authState } from "@/stores/auth";
 import http from "../api/http";
-import { updateName, updatePrice, updateProduct } from "@/web3util/events.js";
+import { updateProduct } from "@/web3util/events.js";
+import loading from '@/components/Loading.vue'
 export default {
   data() {
     return {
@@ -87,11 +93,18 @@ export default {
       price: null,
       productThumbnailImgURL: "",
       productDescriptionImgURL: "",
+      overlay:false,
     };
   },
   computed: {
     ...mapState(authState, ["user"]),
   },
+
+  components:{
+    loading
+  },
+
+  
 
   methods: {
 
@@ -104,6 +117,7 @@ export default {
 
     setProduct() {
       if (this.preName === this.name || this.prePrice === this.price) {
+        this.overlay = !this.overlay
         axios.put(
             "https://j7d101.p.ssafy.io/api/seller/product/update",
             {
@@ -115,9 +129,11 @@ export default {
             },
             { headers: { "Content-type": "application/json" } }
           )
+          .then(() => this.overlay = !this.overlay)
           .then(() => this.$router.push("/products"))
       }
       else{
+        this.overlay = !this.overlay
         updateProduct(this.name, this.price, this.product.productCa)
         .then(()=> axios.put(
             "https://j7d101.p.ssafy.io/api/seller/product/update",
@@ -130,6 +146,7 @@ export default {
             },
             { headers: { "Content-type": "application/json" } }
           ))
+          .then(() => this.overlay = !this.overlay)
           .then(() => this.$router.push("/products"))
       }
     },

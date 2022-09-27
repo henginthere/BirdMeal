@@ -11,6 +11,9 @@
     {{userBalance}}
     <h1>파이니아 테스트</h1>
     {{user}}
+    <br/>
+    <loading />
+
 
   </v-app>
 </template>
@@ -19,13 +22,16 @@
 import { balanceOf, approve, createTrade, } from "@/web3util/events";
 import { mapState } from 'pinia';
 import {authState} from '@/stores/auth'
-
+import loading from '@/components/Loading.vue'
 export default {
   name: "TestView",
   data: () => {
     return {
       addd:0
     }
+  },
+  components:{
+    loading
   },
   methods: {
     balanceOf,
