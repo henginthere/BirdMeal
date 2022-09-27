@@ -269,6 +269,7 @@ public class OrderService {
                 .productPrice(productEntity.getProductPrice())
                 .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                 .orderTHash(orderDetailEntity.getOrderTHash())
+                .productCa(productEntity.getProductCa())
                 .build();
 
         return orderDetailResponseDto;
