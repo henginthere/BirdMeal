@@ -22,8 +22,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         userViewModel.getUserInfo()
 
-        checkWallet()
-
         initViewModelCallBack()
 
         initClickListener()
@@ -42,6 +40,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             showToast(it)
         }
 
+        user.observe(viewLifecycleOwner) {
+            checkWallet()
+        }
+
         walletMsgEvent.observe(viewLifecycleOwner) {
             // 지갑이 이미 있는 경우
             if (it) {
@@ -57,6 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         userViewModel.credentials.observe(viewLifecycleOwner) {
             (requireActivity().application as ApplicationClass).initContract(it)
 
+            userViewModel.updateUserEOA()
             donationViewModel.getDonationAmount()
             showToast("인증서 준비 완료")
         }
