@@ -34,7 +34,8 @@ class ApplicationClass : Application() {
         var appContext: Context? = null
 
         lateinit var manager: FastRawTransactionManager
-        private var contractList : MutableList<Trade> = mutableListOf()
+        private var contractList: MutableList<Trade> = mutableListOf()
+
         // 컨트랙트 객체들
         lateinit var fundingContract: Funding
         lateinit var elenaContract: Elena
@@ -55,6 +56,10 @@ class ApplicationClass : Application() {
             contractList.add(tradeContract)
         }
         return contractList
+    }
+
+    fun getTradeContract(CA: String) {
+        tradeContract = Trade.load(CA, web3j, manager, gasProvider)
     }
 
     fun initContract(credentials: Credentials) {
