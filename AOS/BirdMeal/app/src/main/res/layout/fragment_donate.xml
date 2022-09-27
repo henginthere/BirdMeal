@@ -4,6 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="donationVM"
+            type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
+
+        <variable
+            name="userVM"
+            type="com.ssafy.birdmeal.view.home.UserViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -152,6 +163,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{userVM.userBalance.toString()+` ELN`}"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -204,10 +216,12 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_card"
+                        android:id="@+id/et_amount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="기부 금액"
+                        android:inputType="number"
+                        android:text="@={donationVM.donationPrice}"
                         android:textSize="12sp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -234,10 +248,10 @@
                 app:layout_constraintTop_toBottomOf="@id/layout_amount">
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{()->donationVM.plusDonationPrice(1)}"
                     android:text="10,000"
                     android:textSize="12dp"
                     app:chipMinTouchTargetSize="20dp"
@@ -245,10 +259,10 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{()->donationVM.plusDonationPrice(2)}"
                     android:text="30,000"
                     android:textSize="12dp"
                     app:chipMinTouchTargetSize="20dp"
@@ -256,10 +270,10 @@
                     app:chipStrokeWidth="1dp" />
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/chip3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
+                    android:onClick="@{()->donationVM.plusDonationPrice(3)}"
                     android:text="50,000"
                     android:textSize="12dp"
                     app:chipMinTouchTargetSize="20dp"

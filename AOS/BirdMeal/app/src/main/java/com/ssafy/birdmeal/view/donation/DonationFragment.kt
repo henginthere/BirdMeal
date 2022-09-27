@@ -6,7 +6,6 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonationBinding
 import com.ssafy.birdmeal.utils.BEIGE
-import com.ssafy.birdmeal.utils.WHITE
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +21,7 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 
         binding.donationVM = donationViewModel
         donationViewModel.getDonationAmount()
-        userViewModel.getUserTokenValue()
+//        userViewModel.getUserTokenValue()
 
         initViewModelCallBack()
 
@@ -45,16 +44,6 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
             donationMsgEvent.observe(viewLifecycleOwner) {
                 tvBalance.text = it
             }
-
-            // 기부 완료
-            donateMsgEvent.observe(viewLifecycleOwner) {
-                showToast(it)
-                // 전체 기부금 다시 불러옴
-                donationViewModel.getDonationAmount()
-
-                // 나의 잔액 다시 불러옴
-                userViewModel.getUserTokenValue()
-            }
         }
     }
 
@@ -74,10 +63,5 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 //            findNavController().navigate(R.id.action_donationFragment_to_childHistoryFragment)
 //        }
 //
-//        // 기부하기
-//        btnDonte.setOnClickListener {
-//            val userBalance = userViewModel.userBalance.value ?: 0
-//            donationViewModel.doDonate(userBalance, true)
-//        }
     }
 }
