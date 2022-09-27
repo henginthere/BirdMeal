@@ -1,11 +1,15 @@
 package com.ssafy.birdmeal.view.my_page
 
+import android.content.Intent
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentMyPageBinding
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.login.LoginActivity
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
@@ -48,6 +52,19 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         btnFillUpMoney.setOnClickListener {
             val dialog = FillUpMoneyDialog(requireContext(), listener)
             dialog.show()
+        }
+
+        // 로그아웃
+        btnLogout.setOnClickListener {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .build()
+            val client = GoogleSignIn.getClient(requireActivity(), gso)
+            client.signOut().addOnCompleteListener {
+                showToast("로그아웃 완료")
+            }
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                startActivity(this)
+            }
         }
     }
 
