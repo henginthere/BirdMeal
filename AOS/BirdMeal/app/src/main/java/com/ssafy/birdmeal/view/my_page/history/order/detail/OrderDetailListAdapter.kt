@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.ItemOrderDetailListBinding
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
+import com.ssafy.birdmeal.view.my_page.OrderViewModel
 
 
 class OrderDetailListAdapter(private val listener: OrderDetailListener)
@@ -15,17 +16,22 @@ class OrderDetailListAdapter(private val listener: OrderDetailListener)
 
     inner class ViewHolder(private val binding : ItemOrderDetailListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        var src = "@drawable/btn_order_state_false"
         init {
             binding.ivOrderState.setOnClickListener{
                 listener.onStateClick(getItem(absoluteAdapterPosition).orderDetailSeq)
-                src="@drawable/btn_order_state_true"
-                binding.invalidateAll()
             }
         }
+
         fun bind(item : OrderDetailResponse){
             binding.orderDetail = item
             binding.executePendingBindings()
+            if(item.orderToState){
+                binding.ivOrderState.setImageResource(R.drawable.btn_order_state_true)
+                binding.ivOrderState.setClickable(false)
+            }
+            else if(!item.orderToState){
+                binding.ivOrderState.setImageResource(R.drawable.btn_order_state_false)
+            }
 
             }
     }
