@@ -260,7 +260,13 @@ public class OrderService {
 
         if(orderDetailEntity == null) return null;
 
+        // 상품
+
+        ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
+
         OrderDetailResponseDto orderDetailResponseDto = OrderDetailResponseDto.builder()
+                .orderQuantity(orderDetailEntity.getOrderQuantity())
+                .productPrice(productEntity.getProductPrice())
                 .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                 .orderTHash(orderDetailEntity.getOrderTHash())
                 .build();
