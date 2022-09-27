@@ -3,6 +3,7 @@ package com.backend.birdmeal.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -59,7 +60,18 @@ public class UserEntity implements Serializable {
     private String userAdd;
 
     @Basic
-    @Column(name="user_charge_state", columnDefinition = "boolean default false")
+    @Column(name="user_is_mint")
+    @ColumnDefault("0")
+    private boolean userIsMint;
+
+    @Basic
+    @Column(name = "user_month_money")
+    @ColumnDefault("0")
+    private int userMonthMoney;
+
+    @Basic
+    @Column(name="user_charge_state")
+    @ColumnDefault("0")
     private boolean userChargeState;
 
     @Basic
