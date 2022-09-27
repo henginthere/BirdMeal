@@ -46,11 +46,11 @@ public class ProductEntity {
     private String productCa;
 
     @Basic
-    @Column(name = "product_thumbnail_img", length = 256)
+    @Column(name = "product_thumbnail_img", length = 1024)
     private String productThumbnailImg;
 
     @Basic
-    @Column(name = "product_description_img", length = 256)
+    @Column(name = "product_description_img", length = 1024)
     private String productDescriptionImg;
 
     @Basic
