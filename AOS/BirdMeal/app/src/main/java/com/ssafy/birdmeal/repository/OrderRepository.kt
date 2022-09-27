@@ -7,8 +7,10 @@ import com.ssafy.birdmeal.model.request.OrderRequestDto
 import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
+import com.ssafy.birdmeal.model.response.OrderTHashResponse
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.TAG
+import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -63,6 +65,7 @@ class OrderRepository @Inject constructor(
         emit(Result.Error(e))
     }
 
+    //상품 인수하기
     fun updateOrderState(request: OrderStateRequest): Flow<Result<BaseResponse<String>>> = flow {
         emit(Result.Loading)
         orderRemoteDataSource.updateOrderState(request).collect {
@@ -72,4 +75,13 @@ class OrderRepository @Inject constructor(
         emit(Result.Error(e))
     }
 
+    //주문 해시 불러오기
+    fun getOrderTHash(orderDetailSeq:Int) : Flow<Result<BaseResponse<OrderTHashResponse>>> = flow {
+        emit(Result.Loading)
+        orderRemoteDataSource.getOrderTHash(orderDetailSeq).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
 }
