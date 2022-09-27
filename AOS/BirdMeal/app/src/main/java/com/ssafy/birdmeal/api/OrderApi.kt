@@ -7,6 +7,8 @@ import retrofit2.http.*
 import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
+import com.ssafy.birdmeal.model.response.OrderTHashResponse
+import io.reactivex.Single
 
 interface OrderApi {
 
@@ -27,4 +29,8 @@ interface OrderApi {
     //구매 확정하기
     @PUT("order")
     suspend fun updateOrderState(@Body request: OrderStateRequest): BaseResponse<String>
+
+    //주문 상세 해시 불러오기
+    @GET("order/detail/{order-detail-seq}")
+    suspend fun getOrderTHash(@Path("order-detail-seq")orderDetailSeq: Int): BaseResponse<OrderTHashResponse>
 }

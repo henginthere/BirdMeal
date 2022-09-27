@@ -6,6 +6,8 @@ import com.ssafy.birdmeal.model.request.OrderRequestDto
 import com.ssafy.birdmeal.model.request.OrderStateRequest
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
+import com.ssafy.birdmeal.model.response.OrderTHashResponse
+import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -29,6 +31,10 @@ class OrderRemoteDataSource @Inject constructor(
 
     fun updateOrderState(request: OrderStateRequest):Flow<BaseResponse<String>> = flow{
         emit(orderApi.updateOrderState(request))
+    }
+
+    fun getOrderTHash(orderDetailSeq: Int): Flow<BaseResponse<OrderTHashResponse>> = flow{
+        emit(orderApi.getOrderTHash(orderDetailSeq))
     }
 
 }
