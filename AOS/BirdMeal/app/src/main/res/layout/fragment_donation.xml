@@ -175,7 +175,7 @@
             android:layout_marginHorizontal="80dp"
             android:background="@drawable/btn_round_50_main_color"
             android:elevation="8dp"
-            android:text="기부하기"
+            android:text="마음 전하기"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:translationZ="4dp"
