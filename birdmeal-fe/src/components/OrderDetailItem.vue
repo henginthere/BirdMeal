@@ -6,7 +6,7 @@
       </v-btn>
     </template>
 
-    <v-card width="800px">
+    <v-card width="900px">
       <v-toolbar color="back_beige">
         <v-toolbar-title>주문 상세보기</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -32,7 +32,7 @@
           <v-col cols="2">상품명</v-col>
           <v-col>{{ order.productName }}</v-col>
         </v-row>
-        <v-row>
+        <v-row class="my-2">
           <v-col><v-divider thickness="3"></v-divider></v-col>
         </v-row>
 
@@ -61,7 +61,7 @@
           <v-col cols="2">결제금액</v-col>
           <v-col>{{ order.orderPrice.toLocaleString() }} ELN</v-col>
         </v-row>
-        <v-row>
+        <v-row class="my-2">
           <v-col><v-divider thickness="3"></v-divider></v-col>
         </v-row>
 
@@ -84,7 +84,7 @@
           <v-col cols="2">주소</v-col>
           <v-col>{{ order.userAdd }}</v-col>
         </v-row>
-        <v-row>
+        <v-row class="my-2">
           <v-col><v-divider thickness="3"></v-divider></v-col>
         </v-row>
 
@@ -97,14 +97,14 @@
           <v-col cols="1" />
           <v-col cols="2">택배사</v-col>
           <v-col
-            ><v-text-field v-model="company" variant="solo" placeholder="ㅇㅇ통운"></v-text-field
+            ><v-text-field v-model="company" variant="outlined" placeholder="택배사 이름"></v-text-field
           ></v-col>
         </v-row>
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">운송장번호</v-col>
           <v-col
-            ><v-text-field v-model="number" variant="solo"></v-text-field
+            ><v-text-field v-model="number" variant="outlined" placeholder="운송장번호"></v-text-field
           ></v-col>
         </v-row>
         <v-row>
