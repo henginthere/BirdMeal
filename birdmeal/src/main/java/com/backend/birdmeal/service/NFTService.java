@@ -64,7 +64,7 @@ public class NFTService {
 
         if(size == 0) return null;
 
-        int num = (int)((Math.random()*(size)));
+        int num = (int)((Math.random()*(size+1)));
 
         if(num == 0) num++;
 
@@ -75,6 +75,13 @@ public class NFTService {
                 .nftSeq(childNFTEntity.getNftSeq())
                 .userSeq(childNFTEntity.getUserSeq())
                 .build();
+
+        // 카운팅해주기
+        int cnt = childNFTEntity.getNftCnt();
+        cnt++;
+        childNFTEntity.setNftCnt(cnt);
+
+        childNFTRepository.save(childNFTEntity);
 
         return nftImgResponseDto;
     }
