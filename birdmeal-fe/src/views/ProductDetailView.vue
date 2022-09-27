@@ -9,7 +9,7 @@
           ></v-text-field>
         </v-col>
         <v-col md="2">
-          <v-btn color="primary_orange" v-on:click="setName">상품명 수정하기</v-btn>
+          <v-btn color="primary_orange" v-on:click="setProduct">수정하기</v-btn>
         </v-col>
       </v-row>
 
@@ -21,7 +21,6 @@
           ></v-text-field>
         </v-col>
         <v-col md="2">
-          <v-btn color="primary_orange" v-on:click="setPrice">상품가격 수정하기</v-btn>
         </v-col>
       </v-row>
 
@@ -44,7 +43,6 @@
                 id="productThumbnailImg"
                 v-on:change="imgUpload1"
               />
-              <v-btn class="mt-16" v-on:click="updateproductThumbnailImg" color="primary_orange" >썸네일 수정확정</v-btn>
         </v-col>
       </v-row>
 
@@ -63,11 +61,11 @@
             id="productDescriptionImg"
             v-on:change="imgUpload2"
           />
-          <v-btn class="mt-16" v-on:click="updateProductDescriptionImg" color="primary_orange" >상세내용 수정확정</v-btn>
         </v-col>
       </v-row>
       <v-row class=" d-flex justify-center">
         <v-btn class=" mt-16 ms-5" v-on:click="deleteProduct" color="primary_orange" > 상품 삭제하기 </v-btn>
+
       </v-row>
     </v-container>
   </v-app>
@@ -105,25 +103,36 @@ export default {
     
 
     setProduct() {
-      if (this.preName !== this.name || this.prePrice !== this.price) {
-        updateName(this.name, this.price, this.product.productCa)
-        .then()
+      if (this.preName === this.name || this.prePrice === this.price) {
+        axios.put(
+            "https://j7d101.p.ssafy.io/api/seller/product/update",
+            {
+              productName: this.name,
+              productSeq: this.product.productSeq,
+              productPrice: this.price,
+              productThumbnailImg:this.productThumbnailImgURL,
+              productDescriptionImg: this.productDescriptionImgURL
+            },
+            { headers: { "Content-type": "application/json" } }
+          )
+          .then(() => this.$router.push("/products"))
+      }
+      else{
+        updateProduct(this.name, this.price, this.product.productCa)
+        .then(()=> axios.put(
+            "https://j7d101.p.ssafy.io/api/seller/product/update",
+            {
+              productName: this.name,
+              productSeq: this.product.productSeq,
+              productPrice: this.price,
+              productThumbnailImg:this.productThumbnailImgURL,
+              productDescriptionImg: this.productDescriptionImgURL
+            },
+            { headers: { "Content-type": "application/json" } }
+          ))
+          .then(() => this.$router.push("/products"))
       }
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -148,8 +157,8 @@ export default {
         )
         .then(() => (this.name = this.product.productName))
         .then(() => this.preName = this.product.productName)
+        .then(() => (this.preprice = this.product.productPrice))
         .then(() => (this.price = this.product.productPrice))
-        .then(() => (this.preprice = this.product.productPrice));
     },
     imgUpload1() {
       let form = new FormData();
@@ -182,68 +191,8 @@ export default {
     },
 
 
-    /*
-      상품명 수정로직
-      먼저 web3를 통해 컨트랙트에 상품명을 수정하고
-      이후에 DB의 데이터를 수정한다.
 
-    */
 
-    setName() {
-      updateName(this.name, this.product.productCa)
-        .then(() =>
-          axios.put(
-            "https://j7d101.p.ssafy.io/api/seller/product/update/1",
-            {
-              productName: this.name,
-              productSeq: this.product.productSeq,
-            },
-            { headers: { "Content-type": "application/json" } }
-          )
-        )
-        .then(() => this.$router.push("/products"));
-    },
-
-    setPrice() {
-      updatePrice(this.price, this.product.productCa)
-        .then(() =>
-          axios.put(
-            "https://j7d101.p.ssafy.io/api/seller/product/update/2",
-            {
-              productPrice: this.price,
-              productSeq: this.product.productSeq,
-            },
-            { headers: { "Content-type": "application/json" } }
-          )
-        )
-        .then(() => this.$router.push("/products"));
-    },
-
-    updateproductThumbnailImg() {
-      axios
-        .put(
-          "https://j7d101.p.ssafy.io/api/seller/product/update/3",
-          {
-            productSeq: this.product.productSeq,
-            productThumbnailImg: this.productThumbnailImgURL,
-          },
-          { headers: { "Content-type": "application/json" } }
-        )
-        .then(() => this.$router.push("/products"));
-    },
-
-    updateProductDescriptionImg() {
-      axios
-        .put(
-          "https://j7d101.p.ssafy.io/api/seller/product/update/4",
-          {
-            productSeq: this.product.productSeq,
-            productDescriptionImg: this.productDescriptionImgURL,
-          },
-          { headers: { "Content-type": "application/json" } }
-        )
-        .then(() => this.$router.push("/products"));
-    },
     deleteProduct() {
       http
         .put(`/product/${this.product.productSeq}`)
