@@ -109,7 +109,7 @@ class UserViewModel @Inject constructor(
         try {
             val credentials = WalletUtils.loadCredentials(password, "$path/${walletName.value}")
             _credentials.value = credentials
-            _walletAddress.postValue(credentials.address)
+            _walletAddress.value = credentials.address
 
         } catch (e: java.lang.Exception) {
             Log.e(TAG, "createCredentials: $e")
@@ -118,9 +118,9 @@ class UserViewModel @Inject constructor(
     }
 
     // 유저 EOA 갱신
-    fun updateUserEOA(eoa: String) = viewModelScope.launch(Dispatchers.IO) {
+    fun updateUserEOA() = viewModelScope.launch(Dispatchers.IO) {
 
-        val request = EOARequest(user.value!!.userSeq, eoa)
+        val request = EOARequest(user.value!!.userSeq, credentials.value?.address!!)
 
         userRepository.updateUserEOA(request).collectLatest {
             Log.d(TAG, "updateUserEOA response: $it")
@@ -128,8 +128,11 @@ class UserViewModel @Inject constructor(
             if (it is Result.Success) {
                 Log.d(TAG, "updateUserEOA data: ${it.data}")
 
-                // 회원가입 성공한 경우
+                // 유저 EOA 갱신 성공한 경우
                 if (it.data.success) {
+                    // 업데이트된 유저정보 받음
+                    getUserInfo()
+
                     _userInfoMsgEvent.postValue("EOA 업데이트 성공")
                 }
             } else if (it is Result.Error) {
@@ -206,7 +209,7 @@ class UserViewModel @Inject constructor(
     }
 
     // 유저 보유 토큰 값 조회
-    fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO){
+    fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO) {
         val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
         val value = result.fromWeiToEther().toInt()
 
@@ -216,7 +219,7 @@ class UserViewModel @Inject constructor(
     }
 
     // 유저 토큰 충전하기
-    fun fillUpToken(requestMoney: Int) = viewModelScope.launch(Dispatchers.IO){
+    fun fillUpToken(requestMoney: Int) = viewModelScope.launch(Dispatchers.IO) {
         val result = exchangeContract.changeMoney(requestMoney.toBigInteger()).sendAsync().get()
         Log.d(TAG, "fillUpToken: $result")
         // 유저 보유 토큰 재조회

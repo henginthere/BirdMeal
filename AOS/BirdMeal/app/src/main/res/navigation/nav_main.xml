@@ -26,22 +26,12 @@
         android:label="DonationFragment"
         tools:layout="@layout/fragment_donation">
         <action
-            android:id="@+id/action_donationFragment_to_donorHistoryFragment"
-            app:destination="@id/donorHistoryFragment" />
+            android:id="@+id/action_donationFragment_to_donateFragment"
+            app:destination="@id/donateFragment" />
         <action
-            android:id="@+id/action_donationFragment_to_childHistoryFragment"
-            app:destination="@id/childHistoryFragment" />
+            android:id="@+id/action_donationFragment_to_donationHistoryFragment"
+            app:destination="@id/donationHistoryFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/donorHistoryFragment"
-        android:name="com.ssafy.birdmeal.view.donation.history.DonorHistoryFragment"
-        android:label="fragment_donor_history"
-        tools:layout="@layout/fragment_donor_history" />
-    <fragment
-        android:id="@+id/childHistoryFragment"
-        android:name="com.ssafy.birdmeal.view.donation.history.ChildHistoryFragment"
-        android:label="fragment_child_history"
-        tools:layout="@layout/fragment_child_history" />
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.ssafy.birdmeal.view.market.CategoryFragment"
@@ -196,4 +186,14 @@
         android:name="com.ssafy.birdmeal.view.home.CreateWalletFragment"
         android:label="CreateWalletFragment"
         tools:layout="@layout/fragment_create_wallet"/>
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.ssafy.birdmeal.view.donation.DonateFragment"
+        android:label="DonateFragment"
+        tools:layout="@layout/fragment_donate"/>
+    <fragment
+        android:id="@+id/donationHistoryFragment"
+        android:name="com.ssafy.birdmeal.view.donation.history.DonationHistoryFragment"
+        android:label="DonationHistoryFragment"
+        tools:layout="@layout/fragment_donation_history" />
 </navigation>

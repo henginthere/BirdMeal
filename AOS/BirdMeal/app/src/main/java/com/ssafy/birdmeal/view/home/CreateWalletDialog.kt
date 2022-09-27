@@ -157,7 +157,7 @@ class CreateWalletDialog : DialogFragment() {
         val eoa = userViewModel.credentials.value?.address.toString()
 
         sharedPreferences.edit().putString(WALLET_PASSWORD, password).apply()
-        userViewModel.updateUserEOA(eoa)
+//        userViewModel.updateUserEOA(eoa)
 
         completedWallet(privateKey, eoa)
 

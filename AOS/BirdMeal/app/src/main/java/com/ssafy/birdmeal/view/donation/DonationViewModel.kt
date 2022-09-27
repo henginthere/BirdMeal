@@ -41,10 +41,8 @@ class DonationViewModel @Inject constructor(
     private val _donationPrice = SingleLiveEvent<String>()
     val donationPrice get() = _donationPrice
 
-    private val _donationAllHistoryList:
-            MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
-        MutableStateFlow(Result.Uninitialized)
-    val donationAllHistoryList get() = _donationAllHistoryList.asStateFlow()
+    private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
+    val donationAllHistoryList get() = _donationAllHistoryList
 
     private val _donationMyHistoryList:
             MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
@@ -77,7 +75,7 @@ class DonationViewModel @Inject constructor(
             return@launch
         }
 
-        val amount = donationPrice.value?.toLong()!!
+        val amount = donationPrice.value?.replace(",", "")?.toLong()!!
 
         if (amount > userBalance) {
             _errMsgEvent.postValue("기부 금액이 보유 잔액보다 많습니다")
@@ -91,6 +89,21 @@ class DonationViewModel @Inject constructor(
         insertDonationHistory(amount, donationType)
     }
 
+    // chip 선택시 기부 금액 증가
+    fun plusDonationPrice(num: Int) {
+        var current: Long? = null
+        if (!_donationPrice.value.isNullOrBlank()) {
+            current = _donationPrice.value?.replace(",", "")?.toLong()
+        }
+        val amount = (20000L * num - 10000L)
+        if (current == null) {
+            _donationPrice.postValue(amount.toString())
+        } else {
+            current = current?.plus(amount)
+            _donationPrice.postValue(current.toString())
+        }
+    }
+
     // 전체 기부내역 불러오기
     fun getAllDonationHistory() = viewModelScope.launch(IO) {
         donationRepository.getAllDonationHistory().collectLatest {
@@ -101,7 +114,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationAllHistoryList.value = it
+                    _donationAllHistoryList.postValue(it.data.data)
                     _donateMsgEvent.postValue("전체 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {

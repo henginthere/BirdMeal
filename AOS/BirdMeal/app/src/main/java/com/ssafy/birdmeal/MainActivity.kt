@@ -30,7 +30,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.homeFragment || destination.id == R.id.createWalletFragment){ // 홈, 지갑생성 화면에서 바텀 네비 미표시
+            if(destination.id == R.id.homeFragment || destination.id == R.id.createWalletFragment ||
+                destination.id == R.id.donateFragment){ // 홈, 지갑생성, 기부하기 화면에서 바텀 네비 미표시
                 if(binding.bottomNav.visibility == View.VISIBLE){
                     binding.bottomNav.visibility = View.GONE
                 }
@@ -44,8 +45,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     var waitTime = 0L
-    override fun onBackPressed() { // 홈 화면에서 뒤로가기 2번 클릭 시 앱 종료
-        if(navController.currentDestination?.id == R.id.homeFragment){
+    override fun onBackPressed() { // 기부 화면에서 뒤로가기 2번 클릭 시 앱 종료
+        if(navController.currentDestination?.id == R.id.donationFragment){
             if(System.currentTimeMillis() - waitTime >= 1500){
                 waitTime = System.currentTimeMillis()
                 showToast("뒤로가기 버튼을 누르면 종료됩니다.")
