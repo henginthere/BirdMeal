@@ -53,12 +53,8 @@ class MyOrderDetailFragment : BaseFragment<FragmentMyOrderDetailBinding>(R.layou
         override fun onStateClick(orderDetailSeq: Int) {
             orderViewModel.getOrderTHash(orderDetailSeq)
             initCheckDialog(orderDetailSeq)
-//            val productCa = orderViewModel.orderDetailHash.value.productCa
-//            Log.d(TAG, "onStateClick: $productCa")
-//
             (requireActivity().application as ApplicationClass)
                 .getTradeContract(orderViewModel.orderDetailHash.value.productCa)
-//
 
         }
     }
