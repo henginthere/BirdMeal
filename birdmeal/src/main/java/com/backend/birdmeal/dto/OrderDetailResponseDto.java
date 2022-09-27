@@ -14,4 +14,5 @@ public class OrderDetailResponseDto {
     private String orderTHash;
     private int orderQuantity;
     private int productPrice;
+    private String productCa;
 }
