@@ -16,7 +16,7 @@ public class ScheduleService {
     private final UserRepository userRepository;
 
     // 0 0 0 1 * *
-    @Scheduled(cron = "0 15 17 27 9 2")
+    @Scheduled(cron = "0 0 0 1 * *")
     public void run(){
         List<UserEntity> list = userRepository.findAll();
 
