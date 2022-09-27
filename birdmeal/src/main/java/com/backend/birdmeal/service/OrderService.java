@@ -254,4 +254,17 @@ public class OrderService {
 
         return orderChildResponseDtoList;
     }
+
+    public OrderDetailResponseDto getOrderHash(long orderDetailSeq) {
+        OrderDetailEntity orderDetailEntity = orderDetailRepository.findByOrderDetailSeq(orderDetailSeq);
+
+        if(orderDetailEntity == null) return null;
+
+        OrderDetailResponseDto orderDetailResponseDto = OrderDetailResponseDto.builder()
+                .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
+                .orderTHash(orderDetailEntity.getOrderTHash())
+                .build();
+
+        return orderDetailResponseDto;
+    }
 }
