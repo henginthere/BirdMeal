@@ -77,7 +77,7 @@ class DonationViewModel @Inject constructor(
             return@launch
         }
 
-        val amount = donationPrice.value?.toLong()!!
+        val amount = donationPrice.value?.replace(",", "")?.toLong()!!
 
         if (amount > userBalance) {
             _errMsgEvent.postValue("기부 금액이 보유 잔액보다 많습니다")
@@ -89,6 +89,21 @@ class DonationViewModel @Inject constructor(
         Log.d(TAG, "fundingContract.funding: $result")
 
         insertDonationHistory(amount, donationType)
+    }
+
+    // chip 선택시 기부 금액 증가
+    fun plusDonationPrice(num: Int) {
+        var current: Long? = null
+        if (!_donationPrice.value.isNullOrBlank()) {
+            current = _donationPrice.value?.replace(",", "")?.toLong()
+        }
+        val amount = (20000L * num - 10000L)
+        if (current == null) {
+            _donationPrice.postValue(amount.toString())
+        } else {
+            current = current?.plus(amount)
+            _donationPrice.postValue(current.toString())
+        }
     }
 
     // 전체 기부내역 불러오기
