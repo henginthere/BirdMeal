@@ -2,6 +2,8 @@ package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.CategoryDto;
 import com.backend.birdmeal.dto.ProductDto;
+import com.backend.birdmeal.dto.ProductResponseDto;
+import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.service.CategoryService;
 import com.backend.birdmeal.service.ProductService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -71,7 +73,7 @@ public class ProductController {
     @ApiOperation(value="상품 상세 정보 불러오기",response = Object.class)
     @GetMapping("/{product-seq}")
     public ResponseEntity<?> getProductDetail(@PathVariable("product-seq") long productSeq){
-        ProductDto productDto = productService.getProductDetail(productSeq);
+        ProductResponseDto productDto = productService.getProductDetail(productSeq);
         ResponseFrame<?> res;
         if(productDto!=null){
             res = ResponseFrame.of(productDto,"상품 상세 정보 불러오기를 성공했습니다.");
