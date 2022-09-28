@@ -56,9 +56,9 @@ public class ProductController {
         @ApiOperation(value="카테고리별 상품 목록 보기",response = List.class)
         @GetMapping("/{category-seq}/list")
         public ResponseEntity<?> getCategoryProducts(@PathVariable("category-seq") long categorySeq){
-            List<ProductDto> productList = categoryService.getProductList(categorySeq);
+            List<ProductResponseDto> productList = categoryService.getProductList(categorySeq);
 
-            ResponseFrame<List<ProductDto>> res = ResponseFrame.of(productList,"카테고리별 상품 목록 요청을 성공했습니다.");
+            ResponseFrame<List<ProductResponseDto>> res = ResponseFrame.of(productList,"카테고리별 상품 목록 요청을 성공했습니다.");
 
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
