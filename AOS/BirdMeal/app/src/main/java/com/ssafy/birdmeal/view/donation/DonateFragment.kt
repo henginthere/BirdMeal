@@ -42,8 +42,6 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
             // 기부 완료
             donateMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
-                // 전체 기부금 다시 불러옴
-                donationViewModel.getDonationAmount()
 
                 // 나의 잔액 다시 불러옴
                 userViewModel.getUserTokenValue()
