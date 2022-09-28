@@ -8,7 +8,5 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
     OrderEntity findByOrderSeq(Long orderSeq);
 
-    List<OrderEntity> findAllByUserSeqOrderByOrderDateDesc(long userSeq);
-
     List<OrderEntity> findAllByUserSeqOrderByOrderSeqDesc(long userSeq);
 }
