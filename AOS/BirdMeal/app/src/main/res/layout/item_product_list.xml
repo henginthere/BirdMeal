@@ -59,7 +59,7 @@
             android:layout_marginTop="8dp"
             android:textSize="12sp"
             tools:text="시령 물산"
-            android:text="@{product.sellerNickname}"
+            android:text="@{product.sellerName}"
             app:layout_constraintStart_toStartOf="@id/tv_product_name"
             app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
         <androidx.appcompat.widget.AppCompatTextView

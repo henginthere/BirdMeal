@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.view.market.product.detail
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -8,7 +7,6 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentProductDetailBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.market.MarketViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 
@@ -45,8 +43,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             ivShoppingCart.setOnClickListener {
                 findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
             }
-            tvSellerInfo.setOnClickListener { // 판매자 정보 - 상품
-                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(1)
+            layoutSellerInfo.setOnClickListener { // 판매자 정보 - 상품
+                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(binding.product!!.sellerSeq)
                 findNavController().navigate(action)
             }
             btnBuy.setOnClickListener { // 구매하기 버튼
