@@ -42,14 +42,13 @@ class ShoppingViewModel @Inject constructor(
 
     private val _orderList: MutableList<OrderRequestDto> = mutableListOf()
 
-    private val _productCnt = SingleLiveEvent<Int>()
-    val productCnt get() = _productCnt
-
     private val _orderCompleteDto = SingleLiveEvent<OrderCompleteDto>()
     val orderCompleteDto get() = _orderCompleteDto
 
-    private val _totalPrice = MutableStateFlow(0)
-    val totalPrice get() = _totalPrice
+    private val _productCnt = MutableStateFlow(0)
+    val productCnt get() = _productCnt
+
+    var totalPrice = MutableStateFlow(0)
 
     private val _donationAmount = MutableStateFlow(0)
     val donationAmount get() = _donationAmount
@@ -89,6 +88,7 @@ class ShoppingViewModel @Inject constructor(
 
     // 장바구니 품목 삭제
     private fun clear(){
+        _txList.clear() // 주문한 상품 해쉬 목록 삭제
         viewModelScope.launch(Dispatchers.IO) {
             cartRepository.clearCart()
         }
@@ -99,8 +99,10 @@ class ShoppingViewModel @Inject constructor(
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
                 _productList.value = it.data
-                _productCnt.postValue(it.data.size)
+                _productCnt.value = it.data.size
                 getTotalPrice()
+
+                Log.d(TAG, "getCartList: 목록 조회 함 ${productCnt.value}")
 
                 _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
             }
@@ -117,7 +119,7 @@ class ShoppingViewModel @Inject constructor(
             var total = p.productPrice * p.productCount
             price += total
         }
-        _totalPrice.value = price
+        totalPrice.value = price
         getTotalAmount()
     }
 
@@ -126,7 +128,7 @@ class ShoppingViewModel @Inject constructor(
         var amount = totalPrice.value!!.toDouble() * 0.03
         _donationAmount.value = floor(amount).toInt()
 
-        var total = _totalPrice.value!! + _donationAmount.value!!
+        var total = totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
     }
 

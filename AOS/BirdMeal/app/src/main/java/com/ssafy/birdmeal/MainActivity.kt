@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,6 +19,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
 
     override fun init() {
+        PACKAGE_NAME = application.packageName
+
         initNavigation()
     }
 

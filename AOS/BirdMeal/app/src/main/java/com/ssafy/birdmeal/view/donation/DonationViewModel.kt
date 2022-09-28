@@ -32,6 +32,9 @@ class DonationViewModel @Inject constructor(
     private val nftRepository: NftRepository
 ) : ViewModel() {
 
+    private val _loadingMsgEvent = SingleLiveEvent<Boolean>()
+    val loadingMsgEvent get() = _loadingMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -69,6 +72,7 @@ class DonationViewModel @Inject constructor(
 
     // 기부하기 (컨트랙트)
     fun doDonate(userBalance: Long, donationType: Boolean) = viewModelScope.launch(IO) {
+        _loadingMsgEvent.postValue(true)
 
         Log.d(TAG, "목표 기부액: ${donationPrice.value}")
         Log.d(TAG, "나의 잔액: $userBalance")
@@ -90,6 +94,8 @@ class DonationViewModel @Inject constructor(
         Log.d(TAG, "fundingContract.funding: $result")
 
         insertDonationHistory(amount, donationType)
+
+        _loadingMsgEvent.postValue(false)
     }
 
     // chip 선택시 기부 금액 증가
