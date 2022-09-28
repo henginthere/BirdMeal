@@ -83,19 +83,11 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
             findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
         }
 
+        // 마음 전하기 버튼
         btnMakeCard.setOnClickListener {
-            Log.d(TAG, "initClickListener: " + "my mind")
-            donationViewModel.insertPhotoCard();
+            findNavController().navigate(R.id.action_donationFragment_to_canvasFragment)
+//            Log.d(TAG, "initClickListener: " + "my mind")
+//            donationViewModel.insertPhotoCard();
         }
-//        // 전체 기부내역 불러오기
-//        btnHistoryDoantion.setOnClickListener {
-//            findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
-//        }
-//
-//        // 아이들 기부금 사용내역
-//        btnHistoryChild.setOnClickListener {
-//            findNavController().navigate(R.id.action_donationFragment_to_childHistoryFragment)
-//        }
-//
     }
 }

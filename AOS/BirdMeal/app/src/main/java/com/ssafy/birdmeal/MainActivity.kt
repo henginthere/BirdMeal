@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.homeFragment || destination.id == R.id.createWalletFragment ||
-                destination.id == R.id.donateFragment){ // 홈, 지갑생성, 기부하기 화면에서 바텀 네비 미표시
+                destination.id == R.id.donateFragment || destination.id == R.id.canvasFragment){ // 홈, 지갑생성, 기부하기, 포토카드 화면에서 바텀 네비 미표시
                 if(binding.bottomNav.visibility == View.VISIBLE){
                     binding.bottomNav.visibility = View.GONE
                 }
