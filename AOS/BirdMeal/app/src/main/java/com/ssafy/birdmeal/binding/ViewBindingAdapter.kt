@@ -1,11 +1,14 @@
 package com.ssafy.birdmeal.binding
 
+import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
+import com.ssafy.birdmeal.utils.TAG
 
 object ViewBindingAdapter {
 
@@ -74,6 +77,29 @@ object ViewBindingAdapter {
                         .into(this)
                 }
             }
+        }
+    }
+
+    // 장바구니 New 아이콘 표시 or 제거
+    @BindingAdapter("cartNewIcon")
+    @JvmStatic
+    fun ImageView.setNewIcon(productCnt: Int) {
+        Log.d(TAG, "setNewIcon: 들어왔나요 $productCnt")
+        if(productCnt > 0){
+            this.visibility = View.VISIBLE
+        } else {
+            this.visibility = View.INVISIBLE
+        }
+    }
+
+    // 장바구니 비었습니다 텍스트 표시
+    @BindingAdapter("textEmpty")
+    @JvmStatic
+    fun TextView.setTextEmpty(productCnt: Int) {
+        if(productCnt > 0){
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
         }
     }
 }

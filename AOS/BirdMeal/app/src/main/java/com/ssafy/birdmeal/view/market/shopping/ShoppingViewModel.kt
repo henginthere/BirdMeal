@@ -42,11 +42,11 @@ class ShoppingViewModel @Inject constructor(
 
     private val _orderList: MutableList<OrderRequestDto> = mutableListOf()
 
-    private val _productCnt = SingleLiveEvent<Int>()
-    val productCnt get() = _productCnt
-
     private val _orderCompleteDto = SingleLiveEvent<OrderCompleteDto>()
     val orderCompleteDto get() = _orderCompleteDto
+
+    private val _productCnt = MutableStateFlow(0)
+    val productCnt get() = _productCnt
 
     private val _totalPrice = MutableStateFlow(0)
     val totalPrice get() = _totalPrice
@@ -100,8 +100,10 @@ class ShoppingViewModel @Inject constructor(
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
                 _productList.value = it.data
-                _productCnt.postValue(it.data.size)
+                _productCnt.value = it.data.size
                 getTotalPrice()
+
+                Log.d(TAG, "getCartList: 목록 조회 함 ${productCnt.value}")
 
                 _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
             }
