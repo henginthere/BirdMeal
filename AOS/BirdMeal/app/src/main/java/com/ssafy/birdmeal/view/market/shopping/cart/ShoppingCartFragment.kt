@@ -40,11 +40,6 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
     }
 
     private fun initViewModelCallBack() = with(shoppingViewModel){
-        productCnt.observe(viewLifecycleOwner){
-            if(it > 0){ binding.tvEmpty.visibility = View.GONE }
-            else { binding.tvEmpty.visibility = View.VISIBLE }
-        }
-
         updateSuccessMsgEvent.observe(viewLifecycleOwner){
             Log.d(TAG, "initViewModelCallBack: ${productList.value}")
             adapter.submitList(null)

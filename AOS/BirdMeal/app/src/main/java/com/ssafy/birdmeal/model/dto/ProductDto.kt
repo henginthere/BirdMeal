@@ -6,6 +6,7 @@ data class ProductDto(
     @SerializedName("productSeq") val productSeq: Int,
     @SerializedName("categorySeq") val categorySeq: Int,
     @SerializedName("sellerSeq") val sellerSeq: Int,
+    @SerializedName("sellerName") val sellerName: String,
     @SerializedName("productName") val productName: String,
     @SerializedName("productPrice") val productPrice: Int,
     @SerializedName("productCa") val productCa: String? = null,

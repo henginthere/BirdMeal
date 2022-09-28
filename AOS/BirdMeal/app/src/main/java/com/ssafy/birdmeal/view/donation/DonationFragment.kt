@@ -1,6 +1,9 @@
 package com.ssafy.birdmeal.view.donation
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.util.Log
+import android.view.animation.AccelerateInterpolator
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
@@ -10,6 +13,8 @@ import com.ssafy.birdmeal.utils.BEIGE
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.yy.mobile.rollingtextview.CharOrder
+import com.yy.mobile.rollingtextview.strategy.Strategy
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,11 +28,27 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 
         binding.userVM = userViewModel
         binding.donationVM = donationViewModel
-        donationViewModel.getDonationAmount()
+        binding.tvBalance.apply {
+            animationDuration = 2000L
+            charStrategy = Strategy.NormalAnimation()
+            addCharOrder(CharOrder.Alphabet)
+            animationInterpolator = AccelerateInterpolator()
+            addAnimatorListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    Log.d(TAG, "onAnimationEnd: ")
+                }
+            })
+        }
 
         initViewModelCallBack()
 
         initClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        donationViewModel.getDonationAmount()
     }
 
     private fun initViewModelCallBack() = with(binding) {
@@ -44,7 +65,7 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 
             // 불러온 전체 기부액 표시
             donationMsgEvent.observe(viewLifecycleOwner) {
-                tvBalance.text = it
+                tvBalance.setText(it)
             }
         }
     }

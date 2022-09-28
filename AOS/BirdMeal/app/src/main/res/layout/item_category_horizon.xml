@@ -46,7 +46,7 @@
                     android:background="@drawable/img_round"
                     android:clipToOutline="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/meal"
+                    categoryImg="@{category.categoryIcon}"
                     tools:src="@drawable/meal" />
 
                 <androidx.appcompat.widget.AppCompatTextView

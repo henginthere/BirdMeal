@@ -8,10 +8,13 @@ import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentProductDetailBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.view.market.MarketViewModel
+import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layout.fragment_product_detail) {
 
     private val marketViewModel by activityViewModels<MarketViewModel>()
+    private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
+
     private val args by navArgs<ProductDetailFragmentArgs>()
     private var productSeq = -1
 
@@ -21,6 +24,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             marketViewModel.getProduct(productSeq)
         } else { // 파라미터가 전달되지 않은 경우
             showToast("상품 정보를 전달받지 못했습니다.")
+        }
+
+        binding.apply {
+            productCnt = shoppingViewModel.productCnt.value
         }
 
         initClickListener()
@@ -36,8 +43,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             ivShoppingCart.setOnClickListener {
                 findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
             }
-            tvSellerInfo.setOnClickListener { // 판매자 정보 - 상품
-                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(1)
+            layoutSellerInfo.setOnClickListener { // 판매자 정보 - 상품
+                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(binding.product!!.sellerSeq)
                 findNavController().navigate(action)
             }
             btnBuy.setOnClickListener { // 구매하기 버튼

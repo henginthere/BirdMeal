@@ -11,14 +11,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="16dp"
-        android:layout_marginHorizontal="20dp">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="12dp"
+        android:paddingHorizontal="4dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_product"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,29 +53,16 @@
             android:textSize="14sp"
             tools:text="삼겹살" />
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_product_seller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="12sp"
-            tools:text="시령 물산"
-            android:text="@{product.sellerName}"
-            app:layout_constraintStart_toStartOf="@id/tv_product_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/tv_product_seller"
-            app:layout_constraintTop_toBottomOf="@id/tv_product_seller"
+            app:layout_constraintStart_toStartOf="@id/tv_product_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_product_name"
             tools:text="15,000 ELN"
             android:textSize="16sp"
             android:textColor="@color/primary_orange"
             android:fontFamily="@font/gong_gothic_medium"
             productPrice="@{product.productPrice}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 </layout>

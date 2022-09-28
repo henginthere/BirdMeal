@@ -19,10 +19,10 @@ import com.ssafy.birdmeal.MainActivity
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentLoginBinding
-import com.ssafy.birdmeal.utils.BEIGE
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.WHITE
 import com.ssafy.birdmeal.utils.changeStatusBarColor
+import com.ssafy.birdmeal.view.home.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +30,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private val loginViewModel by activityViewModels<LoginViewModel>()
     private lateinit var googleSignInClient: GoogleSignInClient
+    private val loadingDialog by lazy { LoadingDialog("로그인중...") }
 
     override fun init() {
         changeStatusBarColor(requireActivity(), WHITE)
@@ -72,6 +73,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         loginViewModel.joinMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             // 회원가입 화면 이동
+            loadingDialog.dismiss()
             findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
         }
     }
@@ -100,6 +102,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             val email = account.email!!
             Log.d(TAG, "accessToken: $accessToken")
             Log.d(TAG, "email: $email")
+
+            loadingDialog.show(childFragmentManager, "loadingDialog")
             loginViewModel.googleLogin(accessToken, email)
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
