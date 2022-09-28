@@ -1,12 +1,18 @@
 package com.ssafy.birdmeal.view.donation
 
+import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonateBinding
 import com.ssafy.birdmeal.utils.CustomTextWatcher
+import com.ssafy.birdmeal.utils.SingleLiveEvent
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.home.UserViewModel
+import java.text.DecimalFormat
+import kotlin.math.log
 
 class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_donate) {
 
@@ -14,21 +20,26 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
     private val donationViewModel by activityViewModels<DonationViewModel>()
 
     override fun init() {
-        binding.userVM = userViewModel
-        binding.donationVM = donationViewModel
-        userViewModel.getUserTokenValue()
-
-        binding.etAmount.apply {
-            addTextChangedListener(CustomTextWatcher(this))
+        binding.apply {
+            userVM = userViewModel
+            donationVM = donationViewModel
+            etAmount.apply {
+                addTextChangedListener(CustomTextWatcher(this))
+            }
         }
 
         initViewModelCallBack()
-
+        userViewModel.getUserTokenValue()
+        Log.d(TAG, "init: ${userViewModel.userBalance.value}")
         initClickListener()
     }
 
     private fun initViewModelCallBack() {
         userViewModel.apply {
+            userBalance.observe(viewLifecycleOwner){
+                binding.tvBeforeDonate.text = getDecimalFormat(it)+"  ELN"
+            }
+
             errMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
@@ -66,6 +77,11 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
         toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    private fun getDecimalFormat(number: Long): String {
+        val decimalFormat = DecimalFormat("#,###")
+        return decimalFormat.format(number)
     }
 
 }
