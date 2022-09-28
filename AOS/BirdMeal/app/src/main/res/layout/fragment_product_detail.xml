@@ -8,6 +8,9 @@
         <variable
             name="product"
             type="com.ssafy.birdmeal.model.dto.ProductDto" />
+        <variable
+            name="productCnt"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,13 +36,31 @@
                 android:text="@{product.productName}"
                 tools:text="제주 한돈 삼겹살 300g"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_shopping_cart"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="@dimen/toolbar_margin"
-                android:src="@drawable/shopping_bag_24" />
+                android:layout_marginRight="@dimen/toolbar_margin">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_shopping_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/shopping_bag_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_cate_new"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/cart_n"
+                    cartNewIcon="@{productCnt}"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.core.widget.NestedScrollView

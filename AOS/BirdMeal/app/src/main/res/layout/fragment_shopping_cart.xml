@@ -8,6 +8,9 @@
         <variable
             name="shoppingVM"
             type="com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel" />
+        <variable
+            name="productCnt"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +43,7 @@
             android:gravity="center"
             android:textSize="30dp"
             android:text="장바구니가 비어 있습니다."
+            textEmpty="@{shoppingVM.productCnt}"
             android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -8,10 +8,13 @@ import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentProductListBinding
 import com.ssafy.birdmeal.view.market.CategoryListener
 import com.ssafy.birdmeal.view.market.MarketViewModel
+import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 
 class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fragment_product_list) {
 
     private val marketViewModel by activityViewModels<MarketViewModel>()
+    private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
+
     private val args by navArgs<ProductListFragmentArgs>()
     private var categorySeq = -1
     private var categoryName = ""
@@ -34,6 +37,7 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         binding.apply {
             rvCategoryHorizon.adapter = categoryAdapter
             rvProductList.adapter = productAdapter
+            productCnt = shoppingViewModel.productCnt.value
         }
     }
 
