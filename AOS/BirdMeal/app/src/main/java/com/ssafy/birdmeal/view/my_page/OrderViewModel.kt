@@ -48,6 +48,8 @@ class OrderViewModel @Inject constructor(
     private val _orderMsgEvent = SingleLiveEvent<String>()
     val orderMsgEvent get() = _orderMsgEvent
 
+    private val _orderSeq = SingleLiveEvent<Int>()
+
     private val _orderHistoryList:
             MutableStateFlow<Result<BaseResponse<List<OrderResponse>>>> =
         MutableStateFlow(Result.Uninitialized)
@@ -82,6 +84,8 @@ class OrderViewModel @Inject constructor(
     // 주문 상세 내역 불러오기
     fun getOrderDetail(orderSeq:Int) = viewModelScope.launch(Dispatchers.IO) {
         val userSeq = sharedPreferences.getInt(USER_SEQ, -1)
+        _orderSeq.postValue(orderSeq)
+
         orderRepository.getOrderDetail(userSeq,orderSeq).collectLatest {
             Log.d(TAG, "getOrderDetail response: $it")
 
@@ -112,6 +116,8 @@ class OrderViewModel @Inject constructor(
                         elenaContract.approve(orderDetailHash.value.productCa, (orderDetailHash.value.productPrice*orderDetailHash.value.orderQuantity).toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
                         tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
                         _orderMsgEvent.postValue(it.data.msg)
+
+                        getOrderDetail(_orderSeq.value!!)
                     }
                     else{
                         _orderMsgEvent.postValue(it.data.msg)
