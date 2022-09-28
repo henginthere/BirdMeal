@@ -117,7 +117,7 @@ public class OrderService {
         List<MyOrderResponseDto> responseList = new ArrayList<>();
 
         // 주문 개수 구하기
-        List<OrderEntity> orderEntityList = orderRepository.findAllByUserSeqOrderByOrderDateDesc(userSeq);
+        List<OrderEntity> orderEntityList = orderRepository.findAllByUserSeqOrderByOrderSeqDesc(userSeq);
 
         // 주문 개수
         int orderCnt = orderEntityList.size();
@@ -192,7 +192,7 @@ public class OrderService {
         List<MyOrderDetailResponseDto> myOrderDetailResponseDtoList = new ArrayList<>();
 
         // 사용자 번호와 주문 번호로 List 개수 구하기
-        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderSeq);
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeqOrderByOrderSeqDesc(orderSeq);
         int size = orderDetailEntityList.size();
 
         if(size==0) return null;
