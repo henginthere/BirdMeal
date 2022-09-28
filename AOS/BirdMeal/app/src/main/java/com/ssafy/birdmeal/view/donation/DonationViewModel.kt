@@ -10,6 +10,7 @@ import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
+import com.ssafy.birdmeal.repository.NftRepository
 import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
@@ -26,7 +27,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DonationViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
-    private val donationRepository: DonationRepository
+    private val donationRepository: DonationRepository,
+    private val nftRepository: NftRepository
 ) : ViewModel() {
 
     private val _errMsgEvent = SingleLiveEvent<String>()
