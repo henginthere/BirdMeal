@@ -32,7 +32,7 @@ class MarketViewModel @Inject constructor(
     val productList get() = _productList.asStateFlow()
 
     private val _product : MutableStateFlow<ProductDto>
-        = MutableStateFlow(ProductDto(-1, -1, -1, "", 0, "", "", "", false, "", ""))
+        = MutableStateFlow(ProductDto(-1, -1, -1, "", "",0, "", "", "", false, "", ""))
     val product get() = _product.asStateFlow()
 
     private val _errorMsgEvent = SingleLiveEvent<String>()
