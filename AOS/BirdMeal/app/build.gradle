@@ -111,4 +111,10 @@ dependencies {
 
     // rxanimation
     implementation 'com.mikhaellopez:rxanimation:2.1.0'
+
+    // canvaseditor
+    implementation 'com.outsbook.libs:canvaseditor:1.0.0'
+
+    // colorpickerview
+    implementation "com.github.skydoves:colorpickerview:2.2.4"
 }

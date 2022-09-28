@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_donationFragment_to_donationHistoryFragment"
             app:destination="@id/donationHistoryFragment" />
+        <action
+            android:id="@+id/action_donationFragment_to_canvasFragment"
+            app:destination="@id/canvasFragment" />
     </fragment>
     <fragment
         android:id="@+id/categoryFragment"
@@ -199,4 +202,9 @@
         android:name="com.ssafy.birdmeal.view.donation.history.DonationHistoryFragment"
         android:label="DonationHistoryFragment"
         tools:layout="@layout/fragment_donation_history" />
+    <fragment
+        android:id="@+id/canvasFragment"
+        android:name="com.ssafy.birdmeal.view.donation.nft.CanvasFragment"
+        android:label="CanvasFragment"
+        tools:layout="@layout/fragment_canvas" />
 </navigation>
