@@ -22,11 +22,15 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 
         binding.userVM = userViewModel
         binding.donationVM = donationViewModel
-        donationViewModel.getDonationAmount()
 
         initViewModelCallBack()
 
         initClickListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        donationViewModel.getDonationAmount()
     }
 
     private fun initViewModelCallBack() = with(binding) {
@@ -56,10 +60,10 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         }
 
         // 자세히 보기 버튼튼
-       btnDetail.setOnClickListener {
-           Log.d("TAG", "initClickListener: ")
-           findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
-       }
+        btnDetail.setOnClickListener {
+            Log.d("TAG", "initClickListener: ")
+            findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
+        }
 //        // 전체 기부내역 불러오기
 //        btnHistoryDoantion.setOnClickListener {
 //            findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
