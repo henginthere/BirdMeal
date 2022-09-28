@@ -89,6 +89,7 @@ class ShoppingViewModel @Inject constructor(
 
     // 장바구니 품목 삭제
     private fun clear(){
+        _txList.clear() // 주문한 상품 해쉬 목록 삭제
         viewModelScope.launch(Dispatchers.IO) {
             cartRepository.clearCart()
         }
