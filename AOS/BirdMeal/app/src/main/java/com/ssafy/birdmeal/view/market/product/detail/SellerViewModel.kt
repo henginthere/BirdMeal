@@ -3,6 +3,8 @@ package com.ssafy.birdmeal.view.market.product.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.birdmeal.base.BaseResponse
+import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.model.dto.SellerDto
 import com.ssafy.birdmeal.repository.SellerRepository
 import com.ssafy.birdmeal.utils.Result
@@ -22,12 +24,19 @@ class SellerViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _seller = MutableStateFlow(
-        SellerDto("","", "", "", null, "", 0, "", "")
+        SellerDto(0, "","", "", "", "", "", "", "", "", "")
     )
     val seller get() = _seller.asStateFlow()
 
-    private val _errMsgEvent = SingleLiveEvent<String>()
-    val errMsgEvent get() = _errMsgEvent
+    private val _productList : MutableStateFlow<Result<BaseResponse<List<ProductDto>>>>
+            = MutableStateFlow(Result.Uninitialized)
+    val productList get() = _productList.asStateFlow()
+
+    private val _errMsgSeller = SingleLiveEvent<String>()
+    val errMsgSeller get() = _errMsgSeller
+
+    private val _errMsgProduct = SingleLiveEvent<String>()
+    val errMsgProduct get() = _errMsgProduct
 
     private val _successMsgEvent = SingleLiveEvent<String>()
     val successMsgEvent get() = _successMsgEvent
@@ -37,16 +46,31 @@ class SellerViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             sellerRepository.getSellerInfo(sellerSeq).collectLatest {
                 if(it is Result.Success){
-                    Log.d(TAG, "getSellerInfo: ${it.data.data}")
                     _seller.value = it.data.data
                     _successMsgEvent.postValue(it.data.msg)
                 }
                 else if(it is Result.Fail){
-                    _errMsgEvent.postValue(it.data.msg)
+                    _errMsgSeller.postValue(it.data.msg)
                 }
                 else if(it is Result.Error){
-                    _errMsgEvent.postValue("판매자 정보 조회 중 통신에 실패했습니다.")
+                    _errMsgSeller.postValue("판매자 정보 조회 중 통신에 실패했습니다.")
                 }
+            }
+        }
+    }
+
+    // 판매자 등록 상품 목록 조회
+    fun getSellerProducts(sellerSeq: Int) = viewModelScope.launch(Dispatchers.IO) {
+        sellerRepository.getSellerProducts(sellerSeq).collectLatest {
+            if(it is Result.Success){
+                Log.d(TAG, "getSellerProducts: ${it.data.data}")
+                _productList.value = it
+            }
+            else if(it is Result.Fail){
+                _errMsgProduct.postValue(it.data.msg)
+            }
+            else if(it is Result.Error){
+                _errMsgProduct.postValue("판매자 등록 상품 목록 조회 중 통신에 실패했습니다.")
             }
         }
     }

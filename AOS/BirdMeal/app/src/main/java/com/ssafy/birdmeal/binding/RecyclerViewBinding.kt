@@ -19,6 +19,7 @@ import com.ssafy.birdmeal.view.donation.history.DonationHistoryListAdapter
 import com.ssafy.birdmeal.view.market.CategoryGridAdapter
 import com.ssafy.birdmeal.view.market.product.CategoryHorizonAdapter
 import com.ssafy.birdmeal.view.market.product.ProductListAdapter
+import com.ssafy.birdmeal.view.market.product.detail.SellerProductAdapter
 import com.ssafy.birdmeal.view.my_page.history.order.OrderHistoryListAdapter
 import com.ssafy.birdmeal.view.my_page.history.order.detail.OrderDetailListAdapter
 
@@ -53,6 +54,9 @@ object RecyclerViewBinding {
 
                     is OrderDetailListAdapter -> {
                         (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<OrderDetailResponse>)
+                    }
+                    is SellerProductAdapter -> {
+                        (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<ProductDto>)
                     }
                 }
                 // 같은 형태로 추가하면 됨
