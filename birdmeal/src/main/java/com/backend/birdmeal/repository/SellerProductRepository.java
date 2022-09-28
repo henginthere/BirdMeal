@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SellerProductRepository extends JpaRepository<ProductEntity,Long> {
     ProductEntity findByProductSeq(long productSeq);
-    List<ProductEntity> findAllBySellerSeqOrderByProductCreateDateDesc(long sellerSeq);
+    List<ProductEntity> findAllBySellerSeqOrderByProductSeqDesc(long sellerSeq);
 }
