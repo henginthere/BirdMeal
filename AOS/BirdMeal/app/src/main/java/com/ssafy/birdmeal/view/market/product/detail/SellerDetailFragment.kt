@@ -23,12 +23,15 @@ class SellerDetailFragment : BaseFragment<FragmentSellerDetailBinding>(R.layout.
         this.sellerSeq = args.sellerSeq
         if(sellerSeq > 0){
             sellerViewModel.getSellerInfo(sellerSeq)
+            sellerViewModel.getSellerProducts(sellerSeq)
         } else {
             showToast("sellerSeq 전달받지 못했습니다.")
         }
 
         binding.apply {
             productCnt = shoppingViewModel.productCnt.value
+            sellerVM = sellerViewModel
+            rvSellerProduct.adapter = SellerProductAdapter(listener)
         }
 
         initClickListener()
@@ -37,10 +40,10 @@ class SellerDetailFragment : BaseFragment<FragmentSellerDetailBinding>(R.layout.
     }
 
     private fun initViewModelCallBack(){
-        sellerViewModel.successMsgEvent.observe(viewLifecycleOwner){
-            binding.seller = sellerViewModel.seller.value
+        sellerViewModel.errMsgSeller.observe(viewLifecycleOwner){
+            showToast(it)
         }
-        sellerViewModel.errMsgEvent.observe(viewLifecycleOwner){
+        sellerViewModel.errMsgProduct.observe(viewLifecycleOwner){
             showToast(it)
         }
     }
@@ -53,6 +56,13 @@ class SellerDetailFragment : BaseFragment<FragmentSellerDetailBinding>(R.layout.
             ivShoppingCart.setOnClickListener {
                 findNavController().navigate(R.id.action_sellerDetailFragment_to_shoppingCartFragment)
             }
+        }
+    }
+
+    private val listener = object : SellerProductListener {
+        override fun onItemClick(productSeq: Int) {
+            val action = SellerDetailFragmentDirections.actionSellerDetailFragmentToProductDetailFragment(productSeq)
+            findNavController().navigate(action)
         }
     }
 
