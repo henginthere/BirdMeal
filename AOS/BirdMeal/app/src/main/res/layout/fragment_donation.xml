@@ -35,15 +35,15 @@
             android:background="@color/back_beige"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingTop="40dp"
+            android:paddingTop="50dp"
             app:layout_constraintBottom_toBottomOf="@id/gl_hori_50"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:src="@drawable/logo" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -53,7 +53,7 @@
                 android:gravity="center"
                 android:text="BirdMeal"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="28sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -61,17 +61,17 @@
                 android:gravity="center"
                 android:text="Donation"
                 android:textColor="@color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="30sp"
+                android:fontFamily="@font/gong_gothic_medium" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:text="당신의 따뜻한 손길"
                 android:textColor="#8A8A8A"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.constraintlayout.widget.Guideline
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.35" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_hori_80"
@@ -91,14 +91,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/background_white_round"
+            android:background="@drawable/background_total_donation"
             android:elevation="4dp"
             android:translationZ="2dp"
             app:layout_constraintBottom_toBottomOf="@id/gl_hori_80"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/gl_hori_35">
+            app:layout_constraintTop_toTopOf="@id/gl_hori_35"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" >
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/header_balance"
@@ -106,12 +107,13 @@
                 android:layout_height="wrap_content"
                 android:text="누적 기부금"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_balance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="130dp"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_balance"
@@ -120,6 +122,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="24sp"
+                android:fontFamily="@font/gong_gothic_medium"
                 app:layout_constraintBottom_toTopOf="@id/btn_detail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
