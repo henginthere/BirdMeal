@@ -102,4 +102,13 @@ dependencies {
 
     // web3j
     implementation ('org.web3j:core:4.8.7-android')
+
+    // RollingTextView
+    implementation "com.github.YvesCheung.RollingText:RollingText:1.2.11"
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // rxanimation
+    implementation 'com.mikhaellopez:rxanimation:2.1.0'
 }
