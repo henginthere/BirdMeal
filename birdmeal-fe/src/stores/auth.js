@@ -46,7 +46,7 @@ export const authState = defineStore('authState', {
     },
 
     setBalance(balance) {
-      this.userBalance = balance / 10 ** 18;
+      this.userBalance = Math.round(balance / 10 ** 18);
     },
   },
 });
