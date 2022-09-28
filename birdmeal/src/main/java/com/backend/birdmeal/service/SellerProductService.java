@@ -102,7 +102,7 @@ public class SellerProductService {
     // 등록 상품 목록 보기
     public List<ProductDto> getSellerProduct(long sellerSeq) {
         // 판매자 번호로 물품 찾기
-        List<ProductEntity> productEntityList = sellerProductRepository.findAllBySellerSeqOrderByProductCreateDateDesc(sellerSeq);
+        List<ProductEntity> productEntityList = sellerProductRepository.findAllBySellerSeqOrderByProductSeqDesc(sellerSeq);
 
         // Entity -> Dto
         List<ProductDto> productDtoList = SellerProductMapper.MAPPER.toDtoList(productEntityList);
