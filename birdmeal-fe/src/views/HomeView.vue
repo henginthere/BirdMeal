@@ -13,7 +13,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn variant="outlined" color="primary_orange" class="ml-2"
-                >판매자 정보 등록하기</v-btn
+                @click="router.push('/mypage')">판매자 정보 입력</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -29,7 +29,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn variant="outlined" color="primary_orange" class="ml-2"
-                >상품 판매하기</v-btn
+                @click="router.push('/products')">상품 판매하기</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -43,9 +43,11 @@
 import { ref, onMounted } from 'vue';
 import http from '@/api/http.js';
 import { authState } from '@/stores/auth';
+import { useRouter } from "vue-router";
 
-/** State */
+/** State, Router */
 const auth = authState();
+const router = useRouter();
 
 /** Variable */
 const seller = ref(false);

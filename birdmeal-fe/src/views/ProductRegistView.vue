@@ -67,6 +67,7 @@
           </v-card>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col class="pe-0">
           <v-card width="800px">
@@ -126,7 +127,6 @@
           <v-sheet width="800px" class="d-flex justify-center">
             <v-btn
               color="primary_orange"
-              v-model="sticky"
               v-on:click="registProduct"
               >등록하기</v-btn
             >

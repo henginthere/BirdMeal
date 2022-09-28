@@ -26,8 +26,8 @@
         <v-avatar class="mb-4" color="grey darken-1" size="64">
           <img src="../assets/birdmeal_logo.png" height="60" />
         </v-avatar>
-
-        <div class="">{{ userEmail }}</div>
+        <div>{{ auth.user.sellerNickname }}</div>
+        <div>{{ auth.userBalance }} ELN</div>
       </v-sheet>
 
       <v-divider></v-divider>
@@ -70,10 +70,10 @@ const auth = authState();
 const drawer = ref(true);
 const links = ref([
   ['홈', '/home'],
-  ['내상품보기', '/products'],
-  ['상품등록', '/product/regist'],
-  ['주문목록보기', '/orders'],
-  ['마이페이지', '/mypage'],
+  ['내 상품', '/products'],
+  ['상품 등록', '/product/regist'],
+  ['주문 목록', '/orders'],
+  ['판매자 정보', '/mypage'],
   ['테스트', '/test'],
   ['지갑', '/wallet'],
 ]);

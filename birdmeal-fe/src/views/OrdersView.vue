@@ -5,11 +5,11 @@
         <v-col class="ml-4 mt-4 mb-0">주문목록</v-col>
       </v-row>
     </v-container>
-    <v-card elevation="0" class="mx-4">
+    <v-container>
       <v-table fixed-header height="100%">
         <thead>
           <tr>
-            <th class="text-center"></th>
+            <th class="text-center">Info</th>
             <th class="text-center">주문번호</th>
             <th class="text-center">상품정보</th>
             <th class="text-center">수량</th>
@@ -41,8 +41,8 @@
           </tr>
         </tbody>
       </v-table>
-    </v-card>
-    <v-pagination v-model="currentPage" :length="pageLength"></v-pagination>
+      <v-pagination v-model="currentPage" :length="pageLength"></v-pagination>
+    </v-container>
   </v-app>
 </template>
 
