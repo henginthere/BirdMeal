@@ -3,6 +3,7 @@ package com.backend.birdmeal.controller;
 import com.backend.birdmeal.dto.CategoryDto;
 import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.ProductResponseDto;
+import com.backend.birdmeal.dto.ProductSearchDto;
 import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.service.CategoryService;
 import com.backend.birdmeal.service.ProductService;
@@ -12,10 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -83,7 +81,26 @@ public class ProductController {
             res = ResponseFrame.of(false,"상품 상세 정보 불러오기를 실패했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
+    /**
+     * 상품 검색하기
+     *
+     * @param productSearchDto
+     * @return Object
+     */
 
+    @ApiOperation(value="상품 검색하기",response = Object.class)
+    @GetMapping("/search")
+    public ResponseEntity<?> searchProductInfo(@RequestBody ProductSearchDto productSearchDto){
+        List<ProductResponseDto> productDto = productService.searchProductInfo(productSearchDto);
+        ResponseFrame<?> res;
+        if(productDto!=null){
+            res = ResponseFrame.of(productDto,"상품 검색을 성공했습니다.");
+        }
+        else {
+            res = ResponseFrame.of(false,"상품 검색을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }
