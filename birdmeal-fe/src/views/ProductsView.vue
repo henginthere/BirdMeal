@@ -13,6 +13,7 @@
             <th class="text-center">상품명</th>
             <th class="text-center">가격</th>
             <th class="text-center">카테고리</th>
+            <th class="text-center">등록일</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
               {{ product.productPrice.toLocaleString() }}ELN
             </td>
             <td class="text-center">{{ category[product.categorySeq] }}</td>
+            <td class="text-center">{{ product.productCreateDate }}</td>
           </tr>
         </tbody>
       </v-table>
