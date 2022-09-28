@@ -1,23 +1,22 @@
 package com.ssafy.birdmeal.view.donation
 
 import android.util.Log
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonateBinding
 import com.ssafy.birdmeal.utils.CustomTextWatcher
-import com.ssafy.birdmeal.utils.SingleLiveEvent
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.view.home.LoadingDialog
 import com.ssafy.birdmeal.view.home.UserViewModel
 import java.text.DecimalFormat
-import kotlin.math.log
 
 class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_donate) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
     private val donationViewModel by activityViewModels<DonationViewModel>()
+    private val loadingDialog by lazy { LoadingDialog("기부중...") }
 
     override fun init() {
         binding.apply {
@@ -36,8 +35,8 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
 
     private fun initViewModelCallBack() {
         userViewModel.apply {
-            userBalance.observe(viewLifecycleOwner){
-                binding.tvBeforeDonate.text = getDecimalFormat(it)+"  ELN"
+            userBalance.observe(viewLifecycleOwner) {
+                binding.tvBeforeDonate.text = getDecimalFormat(it) + "  ELN"
             }
 
             errMsgEvent.observe(viewLifecycleOwner) {
@@ -46,6 +45,17 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
         }
 
         donationViewModel.apply {
+
+            loadingMsgEvent.observe(viewLifecycleOwner) {
+                Log.d(TAG, "loadingMsgEvent: $it")
+                // 로딩 시작
+                if (it) {
+                    loadingDialog.show(childFragmentManager, "loadingDialog")
+                } else {
+                    loadingDialog.dismiss()
+                }
+            }
+
             errMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }

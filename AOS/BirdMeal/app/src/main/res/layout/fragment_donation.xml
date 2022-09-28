@@ -115,7 +115,7 @@
                 android:layout_marginTop="130dp"
                 />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.yy.mobile.rollingtextview.RollingTextView
                 android:id="@+id/tv_balance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,7 +127,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/header_balance"
-                tools:text="1000원" />
+                tools:text="1000원"/>
+
+            <!--            <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_balance"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toTopOf="@id/btn_detail"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/header_balance"
+                            tools:text="1000원" />-->
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/btn_detail"
