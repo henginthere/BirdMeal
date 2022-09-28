@@ -36,7 +36,7 @@
                 android:padding="18dp"
                 android:clipToOutline="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/meal"
+                categoryImg="@{category.categoryIcon}"
                 tools:src="@drawable/meal" />
         </androidx.cardview.widget.CardView>
 

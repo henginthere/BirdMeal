@@ -48,8 +48,7 @@ class ShoppingViewModel @Inject constructor(
     private val _productCnt = MutableStateFlow(0)
     val productCnt get() = _productCnt
 
-    private val _totalPrice = MutableStateFlow(0)
-    val totalPrice get() = _totalPrice
+    var totalPrice = MutableStateFlow(0)
 
     private val _donationAmount = MutableStateFlow(0)
     val donationAmount get() = _donationAmount
@@ -120,7 +119,7 @@ class ShoppingViewModel @Inject constructor(
             var total = p.productPrice * p.productCount
             price += total
         }
-        _totalPrice.value = price
+        totalPrice.value = price
         getTotalAmount()
     }
 
@@ -129,7 +128,7 @@ class ShoppingViewModel @Inject constructor(
         var amount = totalPrice.value!!.toDouble() * 0.03
         _donationAmount.value = floor(amount).toInt()
 
-        var total = _totalPrice.value!! + _donationAmount.value!!
+        var total = totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
     }
 

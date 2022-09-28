@@ -32,6 +32,8 @@ class ApplicationClass : Application() {
 
     companion object {
         var appContext: Context? = null
+        // 패키지 정보
+        var PACKAGE_NAME = ""
 
         lateinit var manager: FastRawTransactionManager
         private var contractList: MutableList<Trade> = mutableListOf()
