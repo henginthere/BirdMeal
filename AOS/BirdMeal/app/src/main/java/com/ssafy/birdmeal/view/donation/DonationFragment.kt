@@ -7,6 +7,7 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonationBinding
 import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,10 +57,15 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         }
 
         // 자세히 보기 버튼튼
-       btnDetail.setOnClickListener {
-           Log.d("TAG", "initClickListener: ")
-           findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
-       }
+        btnDetail.setOnClickListener {
+            Log.d("TAG", "initClickListener: ")
+            findNavController().navigate(R.id.action_donationFragment_to_donationHistoryFragment)
+        }
+
+        btnMakeCard.setOnClickListener {
+            Log.d(TAG, "initClickListener: " + "my mind")
+            donationViewModel.insertPhotoCard();
+        }
 //        // 전체 기부내역 불러오기
 //        btnHistoryDoantion.setOnClickListener {
 //            findNavController().navigate(R.id.action_donationFragment_to_donorHistoryFragment)
