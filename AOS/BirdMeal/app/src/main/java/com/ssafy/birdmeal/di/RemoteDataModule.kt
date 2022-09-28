@@ -87,4 +87,11 @@ object RemoteDataModule {
     fun provideOrderApi(retrofit: Retrofit) : OrderApi {
         return retrofit.create(OrderApi::class.java)
     }
+
+    // NftApi DI
+    @Provides
+    @Singleton
+    fun provideNftApi(retrofit: Retrofit) : NftApi {
+        return retrofit.create(NftApi::class.java)
+    }
 }

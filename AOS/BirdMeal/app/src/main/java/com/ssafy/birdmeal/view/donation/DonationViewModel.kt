@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
+import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
@@ -194,5 +195,15 @@ class DonationViewModel @Inject constructor(
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
+    }
+
+    /** NFT */
+    // 마음 전하기
+    fun insertPhotoCard() = viewModelScope.launch(IO) {
+        nftRepository.insertPhotoCard(ChildPhotoCardDto(1,"img", "", 0)).collectLatest {
+            Log.d(TAG, "insertPhotoCard: " + it)
+        }
+
+
     }
 }
