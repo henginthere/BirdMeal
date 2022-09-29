@@ -64,6 +64,7 @@ class UserViewModel @Inject constructor(
     private val _userBalance = SingleLiveEvent<Long>()
     val userBalance get() = _userBalance
 
+
     // 지갑이 이미 있는지 확인
     fun checkPrivateKey(context: Context) {
         val path = context.getWalletPath()
