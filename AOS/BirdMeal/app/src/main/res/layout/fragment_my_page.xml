@@ -9,130 +9,210 @@
         <variable
             name="userVM"
             type="com.ssafy.birdmeal.view.home.UserViewModel" />
+        <variable
+            name="orderVM"
+            type="com.ssafy.birdmeal.view.my_page.OrderViewModel" />
     </data>
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/back_beige">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layout_user"
-            android:layout_width="0dp"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical"
+            android:layout_marginStart="@dimen/toolbar_margin"
+            android:layout_marginTop="@dimen/toolbar_margin"
+            android:layout_marginEnd="@dimen/toolbar_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{userVM.user.userNickname}"
-                tools:text="닉네임" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_wallet"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/toolbar_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="마이페이지" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hori_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hori_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_user">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_wallet_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="지갑 주소"
-                android:textSize="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_wallet_address_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{userVM.user.userEoa}"
-                tools:text="abcdedfdgasdgasdfaewfd"
-                android:textSize="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_wallet_address" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_my_eln_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{userVM.userELN.toString()}"
-                tools:text="12,000 ELN"
-                android:textSize="40dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_wallet_address_value" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_fill_up_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="충전하기"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_my_eln_value" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="@id/gl_hori_30" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_menu"
+            android:id="@+id/card_info"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/background_mypage"
+            app:layout_constraintBottom_toBottomOf="@id/gl_hori_30"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_wallet">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_donation_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="기부 내역"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_order_history"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_order_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="주문 목록"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_modify_user"
-                app:layout_constraintStart_toEndOf="@id/btn_donation_history"
-                app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="0.2">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_modify_user"
+                android:layout_width="90dp"
+                android:layout_height="27dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_my_nft"
+                android:layout_width="90dp"
+                android:layout_height="27dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_nft"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_modify_user"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_hello"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="내 정보 수정"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/gong_gothic_light"
+                android:text="안녕하세요"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/gong_gothic_medium"
+                android:text="@{userVM.user.userNickname+`   님`}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_hello"
+                tools:text="ㅇㅇㅇ  님" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_eln"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/gong_gothic_medium"
+                android:text="@{userVM.userELN.toString()+` ELN`}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_order_history"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintHorizontal_bias="0.0"
+                tools:text="2,000 ELN" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_fill_up_money"
+                android:layout_width="90dp"
+                android:layout_height="27dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_charge"
+                app:layout_constraintBottom_toTopOf="@+id/tv_eln"
+                app:layout_constraintEnd_toEndOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_menu_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그아웃"
-            android:id="@+id/btn_logout"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_info"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:checked="true"
+                android:tag="1"
+                android:text="주문내역 보기"
+                android:fontFamily="@font/gong_gothic_light"
+                android:textColor="@color/chip_text_color"
+                app:chipBackgroundColor="@color/chip_color"
+                app:chipEndPadding="16dp"
+                app:chipStartPadding="16dp"
+                app:chipStrokeColor="@color/chip_stroke_color"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:tag="2"
+                android:text="내 기부내역 보기"
+                android:textColor="@color/chip_text_color"
+                app:chipBackgroundColor="@color/chip_color"
+                app:chipEndPadding="16dp"
+                app:chipStartPadding="16dp"
+                app:chipStrokeColor="@color/chip_stroke_color"
+                app:chipStrokeWidth="1dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_menu_group"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
