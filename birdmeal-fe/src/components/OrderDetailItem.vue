@@ -72,7 +72,7 @@
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">이름</v-col>
-          <v-col>{{ order.userSeq }}</v-col>
+          <v-col>{{ order.userNickname }}</v-col>
         </v-row>
         <v-row>
           <v-col cols="1" />
