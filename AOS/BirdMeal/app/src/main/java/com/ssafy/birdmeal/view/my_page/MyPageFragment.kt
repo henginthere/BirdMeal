@@ -1,26 +1,36 @@
 package com.ssafy.birdmeal.view.my_page
 
+import android.content.Intent
+import android.util.Log
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.chip.Chip
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentMyPageBinding
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.getDecimalFormat
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.login.LoginActivity
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
 import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
-    lateinit var myOrderHistoryFragment: MyOrderHistoryFragment
+    private lateinit var myOrderHistoryFragment: MyOrderHistoryFragment
     lateinit var myDonationHistoryFragment: MyDonationHistoryFragment
 
     override fun init() {
         userViewModel.getUserTokenValue()
         binding.userVM = userViewModel
+        userViewModel.getUserInfo()
+        if(userViewModel.user.value?.userChargeState==true){
+            binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
+        }
         initViewModelCallBack()
         initClickListener()
         initFragmentManager()
@@ -34,6 +44,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
             userELN.observe(viewLifecycleOwner){
                 binding.tvEln.text = getDecimalFormat(it) +"  ELN"
+            }
+            user.observe(viewLifecycleOwner){
+                Log.d(TAG, "initViewModelCallBack: userObserve")
+                if(it.userChargeState)
+                    binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
             }
         }
     }
@@ -55,18 +70,18 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 //
 //        }
 
-//        // 로그아웃
-//        btnLogout.setOnClickListener {
-//            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .build()
-//            val client = GoogleSignIn.getClient(requireActivity(), gso)
-//            client.signOut().addOnCompleteListener {
-//                showToast("로그아웃 완료")
-//            }
-//            Intent(requireContext(), LoginActivity::class.java).apply {
-//                startActivity(this)
-//            }
-//        }
+        // 로그아웃
+        toolbar.setOnClickListener {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .build()
+            val client = GoogleSignIn.getClient(requireActivity(), gso)
+            client.signOut().addOnCompleteListener {
+                showToast("로그아웃 완료")
+            }
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                startActivity(this)
+            }
+        }
     }
 
     // 토큰 충전 다이얼로그 리스너

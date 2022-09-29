@@ -39,6 +39,7 @@ class MyOrderDetailFragment : BaseFragment<FragmentMyOrderDetailBinding>(R.layou
             rvOrderDetail.adapter = adapter
         }
 
+
         initViewModelCallBack()
     }
 
