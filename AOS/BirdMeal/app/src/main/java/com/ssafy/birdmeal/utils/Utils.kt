@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
+import java.text.DecimalFormat
 
 // 다이얼로그 사이즈 조절
 fun Context.dialogResize(dialog: Dialog, width: Float, height: Float) {
@@ -74,4 +75,15 @@ fun changeStatusBarColor(activity: Activity, color: String) {
             }
         }
     }
+}
+
+//화폐단위
+fun getDecimalFormat(number: Long): String {
+    val decimalFormat = DecimalFormat("#,###")
+    return decimalFormat.format(number)
+}
+
+fun getDecimalFormat(number: Int): String {
+    val decimalFormat = DecimalFormat("#,###")
+    return decimalFormat.format(number)
 }
