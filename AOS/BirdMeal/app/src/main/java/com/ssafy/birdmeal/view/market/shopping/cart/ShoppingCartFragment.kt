@@ -8,6 +8,7 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentShoppingCartBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
+import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.fragment_shopping_cart) {
 
     private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
+
     private val args by navArgs<ShoppingCartFragmentArgs>()
     private lateinit var cart : CartEntity
     private lateinit var adapter : ShoppingCartAdapter
@@ -24,7 +27,7 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
             this.cart = args.cart!!
             shoppingViewModel.insert(cart)
         }
-        shoppingViewModel.getCartList() // 장바구니 물품 조회
+        shoppingViewModel.getCartList(userViewModel.user.value!!.userRole) // 장바구니 물품 조회
         adapter = ShoppingCartAdapter(listener)
 
         binding.apply {
