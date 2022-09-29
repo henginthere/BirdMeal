@@ -1,8 +1,7 @@
 package com.ssafy.birdmeal.view.donation.nft
 
 import android.graphics.Color
-import android.util.Log
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
@@ -13,19 +12,24 @@ import com.ssafy.birdmeal.databinding.FragmentCanvasBinding
 
 class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_canvas) {
 
-    private val canvasViewModel by viewModels<CanvasViewModel>()
+    private val canvasViewModel by activityViewModels<CanvasViewModel>()
 
     override fun init() {
+        canvasViewModel.setColor(Color.parseColor("#000000"))
 
         initViewModelCallBack()
 
         initClickListener()
     }
 
-    private fun initViewModelCallBack() {
+    private fun initViewModelCallBack() = with(binding) {
         canvasViewModel.apply {
             color.observe(viewLifecycleOwner) {
-                binding.canvas.setPaintColor(it)
+                canvas.setPaintColor(it)
+            }
+
+            textMsgEvent.observe(viewLifecycleOwner) {
+                canvas.addTextSticker(text?.value!!, color?.value!!, null)
             }
         }
     }
@@ -58,7 +62,8 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
 
         // text 버튼
         ivText.setOnClickListener {
-
+            canvasViewModel.text.postValue("")
+            TextDialog().show(childFragmentManager, "textDialog")
         }
 
         // photo 버튼
