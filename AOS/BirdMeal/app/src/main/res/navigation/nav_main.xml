@@ -144,6 +144,13 @@
         <action
             android:id="@+id/action_myPageFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_myOrderHistoryFragment_to_myOrderDetailFragment"
+            app:destination="@id/myOrderDetailFragment" />
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/myDonationHistoryFragment"

@@ -8,6 +8,7 @@ import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonateBinding
 import com.ssafy.birdmeal.utils.CustomTextWatcher
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.getDecimalFormat
 import com.ssafy.birdmeal.view.home.LoadingDialog
 import com.ssafy.birdmeal.view.home.UserViewModel
 import java.text.DecimalFormat
@@ -86,10 +87,10 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
             findNavController().popBackStack()
         }
     }
-
-    private fun getDecimalFormat(number: Long): String {
-        val decimalFormat = DecimalFormat("#,###")
-        return decimalFormat.format(number)
-    }
+//
+//    private fun getDecimalFormat(number: Long): String {
+//        val decimalFormat = DecimalFormat("#,###")
+//        return decimalFormat.format(number)
+//    }
 
 }
