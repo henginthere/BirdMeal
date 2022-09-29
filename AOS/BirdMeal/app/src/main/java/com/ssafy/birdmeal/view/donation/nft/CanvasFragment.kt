@@ -1,6 +1,12 @@
 package com.ssafy.birdmeal.view.donation.nft
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
+import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -9,6 +15,11 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCanvasBinding
+import com.ssafy.birdmeal.utils.FileUtil
+import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.fileToBitmap
+
+private val PERMISSIONS_REQUIRED = Manifest.permission.READ_EXTERNAL_STORAGE
 
 class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_canvas) {
 
@@ -67,13 +78,13 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
         }
 
         // photo 버튼
-        ivPhoto.setOnClickListener {
-
-        }
+//        ivPhoto.setOnClickListener {
+//
+//        }
 
         // gallery 버튼
         ivGallery.setOnClickListener {
-
+            requestPermissionLauncher.launch(PERMISSIONS_REQUIRED)
         }
     }
 
@@ -93,4 +104,46 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
             .setBottomSpace(12) // set a bottom space between the last slidebar and buttons.
             .show()
     }
+
+    val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            // PERMISSION GRANTED
+            pick()
+        } else {
+            // PERMISSION NOT GRANTED
+            showToast("권한이 거부됨")
+        }
+    }
+
+    // 사진 선택
+    private fun pick() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        filterActivityLauncher.launch(intent)
+    }
+
+    // 사진 골라서 가져온 결과
+    private val filterActivityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+
+                val imagePath = it.data!!.data
+                Log.d(TAG, "imagePath: $imagePath")
+
+                val file = FileUtil.toFile(requireContext(), imagePath!!)
+                Log.d(TAG, "file: $file")
+
+                val bm = fileToBitmap(file)
+                Log.d(TAG, "bm: $bm")
+
+                binding.canvas.addBitmapSticker(bm!!)
+
+            } else if (it.resultCode == Activity.RESULT_CANCELED) {
+                showToast("사진 선택 취소")
+            } else {
+                Log.d(TAG, "filterActivityLauncher wrong")
+            }
+        }
 }
