@@ -1,12 +1,10 @@
 package com.ssafy.birdmeal.view.market
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCategoryBinding
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,13 +16,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
 
     override fun init() {
         marketViewModel.getCategoryList()
-        val adapter = CategoryGridAdapter(listener)
+        shoppingViewModel.getCartList()
 
         binding.apply {
             marketVM = marketViewModel
-            productCnt = shoppingViewModel.productCnt.value
-
-            rvCategoryGrid.adapter = adapter
+            rvCategoryGrid.adapter = CategoryGridAdapter(listener)
         }
 
         initViewModelCallBack()
@@ -35,6 +31,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     private fun initViewModelCallBack() {
         marketViewModel.errorMsgEvent.observe(this){
             showToast(it)
+        }
+        shoppingViewModel.updateSuccessMsgEvent.observe(viewLifecycleOwner){
+            binding.productCnt =  shoppingViewModel.productCnt.value
         }
     }
 
