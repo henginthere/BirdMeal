@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.view.market.shopping.cart
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -9,7 +8,6 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentShoppingCartBinding
 import com.ssafy.birdmeal.model.entity.CartEntity
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,7 +39,6 @@ class ShoppingCartFragment : BaseFragment<FragmentShoppingCartBinding>(R.layout.
 
     private fun initViewModelCallBack() = with(shoppingViewModel){
         updateSuccessMsgEvent.observe(viewLifecycleOwner){
-            Log.d(TAG, "initViewModelCallBack: ${productList.value}")
             adapter.submitList(null)
             adapter.submitList(productList.value)
         }

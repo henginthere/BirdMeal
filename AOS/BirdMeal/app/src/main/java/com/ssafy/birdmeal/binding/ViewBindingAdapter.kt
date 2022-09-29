@@ -31,6 +31,18 @@ object ViewBindingAdapter {
         text = "$t ELN"
     }
 
+    @BindingAdapter("cartThumbnail")
+    @JvmStatic
+    fun ImageView.setCartThumbnail(url: String?) {
+        if (url != null) {
+            Glide.with(this.context)
+                .load("$url")
+                .override(R.dimen.cartImg*2, R.dimen.cartImg*2)
+                .placeholder(com.ssafy.birdmeal.R.drawable.meal)
+                .into(this)
+        }
+    }
+
     @BindingAdapter("productThumbnail")
     @JvmStatic
     fun ImageView.setProductThumbnail(url: String?) {
