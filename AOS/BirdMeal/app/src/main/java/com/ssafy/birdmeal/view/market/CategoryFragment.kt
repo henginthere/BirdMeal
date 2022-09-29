@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCategoryBinding
+import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -13,10 +14,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
 
     private val marketViewModel by activityViewModels<MarketViewModel>()
     private val shoppingViewModel by activityViewModels<ShoppingViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
         marketViewModel.getCategoryList()
-        shoppingViewModel.getCartList()
+        shoppingViewModel.getCartList(userViewModel.user.value!!.userRole)
 
         binding.apply {
             marketVM = marketViewModel

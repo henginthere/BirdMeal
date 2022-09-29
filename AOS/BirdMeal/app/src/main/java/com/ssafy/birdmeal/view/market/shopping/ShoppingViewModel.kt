@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.birdmeal.wrapper.Trade
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.OrderCompleteDto
@@ -18,6 +17,7 @@ import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.wrapper.Trade
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,12 +31,14 @@ import kotlin.math.floor
 @HiltViewModel
 class ShoppingViewModel @Inject constructor(
     private val cartRepository: CartRepository,
-    private val orderRepository: OrderRepository
+    private val orderRepository: OrderRepository,
 ): ViewModel() {
 
     private val _productList: MutableStateFlow<List<CartEntity>>
         = MutableStateFlow(listOf())
     val productList get() = _productList
+
+    private val _userRole = MutableStateFlow(false)
 
     private val _txList: MutableList<String> = mutableListOf()
 
@@ -95,7 +97,9 @@ class ShoppingViewModel @Inject constructor(
     }
 
     // 장바구니 목록 조회
-    fun getCartList() = viewModelScope.launch(Dispatchers.IO){
+    fun getCartList(userRole : Boolean) = viewModelScope.launch(Dispatchers.IO){
+        _userRole.value = userRole
+
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
                 _productList.value = it.data
@@ -125,8 +129,11 @@ class ShoppingViewModel @Inject constructor(
 
     // 총 결제금의 3% 기부금액을 합한 총 금액
     private fun getTotalAmount(){
-        var amount = totalPrice.value!!.toDouble() * 0.03
-        _donationAmount.value = floor(amount).toInt()
+        if(!_userRole.value!!){ // 일반 유저 라면 기부 금액 계산
+            var amount = totalPrice.value!!.toDouble() * 0.03
+            _donationAmount.value = floor(amount).toInt()
+        }
+
 
         var total = totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
@@ -150,29 +157,28 @@ class ShoppingViewModel @Inject constructor(
         }
         // 기부 컨트랙트 엘레나 승인 및 3% 기부
         Log.d(TAG, "buyingList: 상품 컨트랙트 승인 - buying - addOrderSheet 완료")
-        elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
-        fundingContract.funding(donationAmount.value.toBigInteger()).sendAsync().get()
 
-        Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
+        if(!_userRole.value){ // 일반유저면 간접기부도 하기
+            elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
+            fundingContract.funding(_donationAmount.value.toBigInteger()).sendAsync().get()
+
+            Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
+            createDonation() // DB에 기부 내역 저장하기
+        }
 
         // 서버에 주문내역 전송하기
         productList.value.mapIndexed { idx, p ->
             var order = OrderRequestDto(userSeq, p.productCount, _txList[idx], p.productSeq)
             _orderList.add(order);
         }
-
         createOrderList(_orderList)
         // 주문 완료 객체 만들기
         createOrderComplete()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createOrderComplete(){
-        var date : String = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-        _orderCompleteDto.postValue(
-            OrderCompleteDto(productList.value[0].productName, productList.value.size,
-                null, date, totalAmount.value, _donationAmount.value)
-        )
+    // 기부 내역 저장하기
+    private fun createDonation() = viewModelScope.launch(Dispatchers.IO){
+        
     }
 
     // 주문 내역 저장하기
@@ -192,6 +198,13 @@ class ShoppingViewModel @Inject constructor(
             }
     }
 
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createOrderComplete(){
+        var date : String = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        _orderCompleteDto.postValue(
+            OrderCompleteDto(productList.value[0].productName, productList.value.size,
+                null, date, totalAmount.value, _donationAmount.value)
+        )
+    }
 
 }
