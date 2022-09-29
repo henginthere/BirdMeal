@@ -18,12 +18,16 @@ import com.ssafy.birdmeal.databinding.FragmentCanvasBinding
 import com.ssafy.birdmeal.utils.FileUtil
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.fileToBitmap
+import com.ssafy.birdmeal.view.home.LoadingDialog
+import com.ssafy.birdmeal.view.home.YesOrNoDialog
+
 
 private val PERMISSIONS_REQUIRED = Manifest.permission.READ_EXTERNAL_STORAGE
 
 class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_canvas) {
 
     private val canvasViewModel by activityViewModels<CanvasViewModel>()
+    private val loadingDialog by lazy { LoadingDialog("포토카드 제작중...") }
 
     override fun init() {
         canvasViewModel.setColor(Color.parseColor("#000000"))
@@ -42,6 +46,12 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
             textMsgEvent.observe(viewLifecycleOwner) {
                 canvas.addTextSticker(text?.value!!, color?.value!!, null)
             }
+
+            fileMsgEvent.observe(viewLifecycleOwner) {
+                loadingDialog.dismiss()
+                showToast(it)
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -53,7 +63,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
 
         // NFT생성 버튼
         ivMakeNft.setOnClickListener {
-
+            showYesOrNoDialog()
         }
 
         // undo 버튼
@@ -86,6 +96,26 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
         ivGallery.setOnClickListener {
             requestPermissionLauncher.launch(PERMISSIONS_REQUIRED)
         }
+    }
+
+    private fun showYesOrNoDialog() {
+        val positiveListener = {
+            loadingDialog.show(parentFragmentManager, "loadingDialog")
+            val bitmap = binding.canvas.downloadBitmap()
+            val multipartBody = FileUtil.bitmapToMultiPart(bitmap)
+            canvasViewModel.saveFile(multipartBody)
+            Unit
+        }
+        val negativeListener = {
+            Unit
+        }
+        YesOrNoDialog(
+            title = "마음을 담은 포토카드를\n생성하시겠습니까?",
+            positive = "생성하기",
+            negative = "취소",
+            positiveListener,
+            negativeListener
+        ).show(childFragmentManager, "YesOrNoDialog")
     }
 
     private fun showPaletteDialog() {
