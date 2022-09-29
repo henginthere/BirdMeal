@@ -9,4 +9,8 @@
     <dimen name="toolbar_title">16sp</dimen>
 
     <dimen name="categoryImg">80dp</dimen>
+
+    <dimen name="thumbnailImgWidth">400dp</dimen>
+    <dimen name="thumbnailImgHeight">250dp</dimen>
+    <dimen name="descriptionImgHeight">1800dp</dimen>
 </resources>
