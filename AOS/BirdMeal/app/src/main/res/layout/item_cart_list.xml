@@ -42,14 +42,17 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_product_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{cart.productName}"
+                android:textColor="@color/second_orange"
                 android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toStartOf="@id/iv_delete"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/iv_product"
                 app:layout_constraintTop_toTopOf="@id/iv_product"
-                android:textColor="@color/second_orange"
-                android:text="@{cart.productName}"
                 tools:text="삼겹살" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
@@ -84,6 +87,7 @@
                 app:tint="@color/green"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_product_name"
                 android:src="@drawable/ic_baseline_close_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
