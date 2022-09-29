@@ -162,6 +162,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="구매하기"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@drawable/btn_round_main_color"
             android:layout_marginHorizontal="20dp"
