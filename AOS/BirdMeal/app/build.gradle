@@ -117,4 +117,7 @@ dependencies {
 
     // colorpickerview
     implementation "com.github.skydoves:colorpickerview:2.2.4"
+
+    // AwesomeDialog
+    implementation 'com.github.chnouman:AwesomeDialog:1.0.5'
 }
