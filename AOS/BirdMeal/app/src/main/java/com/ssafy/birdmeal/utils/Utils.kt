@@ -3,6 +3,8 @@ package com.ssafy.birdmeal.utils
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.os.Build
 import android.text.TextUtils
@@ -13,6 +15,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
+import java.io.File
+import java.io.FileInputStream
 import java.text.DecimalFormat
 
 // 다이얼로그 사이즈 조절
@@ -86,4 +90,16 @@ fun getDecimalFormat(number: Long): String {
 fun getDecimalFormat(number: Int): String {
     val decimalFormat = DecimalFormat("#,###")
     return decimalFormat.format(number)
+}
+
+// imagePath to Bitmap
+fun fileToBitmap(f: File): Bitmap? {
+    return try {
+        val options = BitmapFactory.Options()
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888
+        BitmapFactory.decodeStream(FileInputStream(f), null, options)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }

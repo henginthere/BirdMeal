@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flow
 import com.ssafy.birdmeal.utils.Result
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,6 +44,15 @@ class NftRepository @Inject constructor(private val nftRemoteDataSource: NftRemo
     fun getPhotoCardUrl(userSeq: Int) : Flow<Result<BaseResponse<Any>>> = flow {
         emit(Result.Loading)
         nftRemoteDataSource.getPhotoCardUrl(userSeq).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e->
+        emit(Result.Error(e))
+    }
+
+    fun saveFile(file: MultipartBody.Part) : Flow<Result<BaseResponse<String>>> = flow {
+        emit(Result.Loading)
+        nftRemoteDataSource.saveFile(file).collect {
             emit(Result.Success(it))
         }
     }.catch { e->
