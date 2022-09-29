@@ -1,8 +1,13 @@
 package com.ssafy.birdmeal.utils
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 
@@ -44,5 +49,18 @@ object FileUtil {
         val ext = context.contentResolver.getType(uri)!!.split("/").last()
 
         return "$name.$ext"
+    }
+
+    fun bitmapToMultiPart(bitmap: Bitmap): MultipartBody.Part {
+
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 99 /*ignored for PNG*/, bos)
+        val bitmapdata: ByteArray = bos.toByteArray()
+
+        return MultipartBody.Part.createFormData(
+            "file",
+            "nftPhotoCard" + System.currentTimeMillis().toString() + ".png",
+            bitmapdata.toRequestBody("image/*".toMediaTypeOrNull(), 0, bitmapdata.size)
+        )
     }
 }
