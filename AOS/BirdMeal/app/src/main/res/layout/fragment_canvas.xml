@@ -14,18 +14,16 @@
             android:id="@+id/layout_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
+            android:layout_marginVertical="20dp"
             android:gravity="center"
             android:paddingHorizontal="20dp"
-            app:layout_constraintBottom_toTopOf="@id/canvas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_cancel"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                style="@style/canvas_icon"
                 android:src="@drawable/ic_cancel" />
 
             <Space
@@ -35,31 +33,30 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_make_nft"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                style="@style/canvas_icon"
                 android:src="@drawable/ic_nft" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <com.outsbook.libs.canvaseditor.CanvasEditorView
             android:id="@+id/canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="40dp"
             android:background="@drawable/background_white_round"
             android:clipToOutline="true"
-            app:layout_constraintBottom_toTopOf="@id/layout_footer"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_header" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/layout_footer"
+            android:id="@+id/layout_do"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginVertical="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/canvas">
@@ -77,12 +74,31 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+                android:layout_weight="5"></Space>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_redo"
                 style="@style/canvas_icon"
                 android:src="@drawable/ic_redo" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_footer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_do">
+
 
             <Space
                 android:layout_width="0dp"
@@ -109,15 +125,15 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"></Space>
 
-<!--            <androidx.appcompat.widget.AppCompatImageView-->
-<!--                android:id="@+id/iv_photo"-->
-<!--                style="@style/canvas_icon"-->
-<!--                android:src="@drawable/ic_photo" />-->
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <!--                android:id="@+id/iv_photo"-->
+            <!--                style="@style/canvas_icon"-->
+            <!--                android:src="@drawable/ic_photo" />-->
 
-<!--            <Space-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:layout_weight="1"></Space>-->
+            <!--            <Space-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="1dp"-->
+            <!--                android:layout_weight="1"></Space>-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_gallery"
