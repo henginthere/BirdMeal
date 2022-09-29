@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
 import com.ssafy.birdmeal.utils.TAG
 
@@ -36,10 +37,24 @@ object ViewBindingAdapter {
         if (url != null) {
             Glide.with(this.context)
                 .load("$url")
+                .override(R.dimen.thumbnailImgWidth*2, R.dimen.thumbnailImgHeight*2)
                 .placeholder(com.ssafy.birdmeal.R.drawable.meal)
                 .into(this)
         }
     }
+
+    @BindingAdapter("productDescription")
+    @JvmStatic
+    fun ImageView.setProductDescription(url: String?) {
+        if (url != null) {
+            Glide.with(this.context)
+                .load("$url")
+                .override(R.dimen.thumbnailImgWidth*2, R.dimen.descriptionImgHeight*2)
+                .placeholder(R.drawable.meal)
+                .into(this)
+        }
+    }
+
 
     @BindingAdapter("totalAmount", "userELN")
     @JvmStatic
