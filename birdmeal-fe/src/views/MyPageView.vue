@@ -30,7 +30,7 @@
           <v-col cols="7">{{ sellerInfo.sellerAddress }}</v-col>
         </v-row>
         <v-row class="my-4">
-          <v-col cols="2">업체명</v-col>
+          <v-col cols="2">소개</v-col>
           <v-col cols="7">{{ sellerInfo.sellerInfo }}</v-col>
         </v-row>
         <v-row class="my-4">

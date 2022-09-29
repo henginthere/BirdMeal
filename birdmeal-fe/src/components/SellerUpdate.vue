@@ -21,8 +21,8 @@
 
       <v-container>
         <v-row style="height: 100px" align="center">
-          <v-col cols="2">프로필 사진</v-col>
-          <v-col cols="4">
+          <v-col cols="2" offset-md="1">프로필 사진</v-col>
+          <v-col cols="4" offset-md="1">
             <v-file-input
               label="이미지를 넣어주세요"
               id="sellerUpdateImg"
@@ -75,7 +75,7 @@
           ></v-col>
         </v-row>
         <v-row style="height: 100px" align="center">
-          <v-col cols="2" offset-md="1">업체명</v-col>
+          <v-col cols="2" offset-md="1">소개</v-col>
           <v-col cols="7" offset-md="1"
             ><v-text-field
               v-model="sellerInfo.sellerInfo"
