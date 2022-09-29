@@ -120,6 +120,9 @@
         <action
             android:id="@+id/action_orderFragment_to_orderCompletedFragment"
             app:destination="@id/orderCompletedFragment" />
+        <action
+            android:id="@+id/action_orderFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderCompletedFragment"
