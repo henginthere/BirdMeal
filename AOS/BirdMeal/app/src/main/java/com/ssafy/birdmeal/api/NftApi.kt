@@ -2,11 +2,9 @@ package com.ssafy.birdmeal.api
 
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import retrofit2.Response
+import retrofit2.http.*
 
 interface NftApi {
 
@@ -25,4 +23,9 @@ interface NftApi {
     // [기부자] 랜덤 포토카드 뽑기
     @GET("nft/{user-seq}")
     suspend fun getPhotoCardUrl(@Path("user-seq") userSeq: Int): BaseResponse<Any>
+
+    // 파일 업로드
+    @Multipart
+    @POST("file")
+    suspend fun saveFile(@Part file: MultipartBody.Part): BaseResponse<String>
 }

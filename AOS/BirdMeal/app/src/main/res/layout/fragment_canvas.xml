@@ -109,15 +109,15 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"></Space>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_photo"
-                style="@style/canvas_icon"
-                android:src="@drawable/ic_photo" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/iv_photo"-->
+<!--                style="@style/canvas_icon"-->
+<!--                android:src="@drawable/ic_photo" />-->
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+<!--            <Space-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:layout_weight="1"></Space>-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_gallery"

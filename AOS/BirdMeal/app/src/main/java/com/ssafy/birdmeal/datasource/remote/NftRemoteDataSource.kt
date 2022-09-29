@@ -5,6 +5,7 @@ import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,5 +25,9 @@ class NftRemoteDataSource @Inject constructor(private val nftApi: NftApi) {
 
     fun getPhotoCardUrl(userSeq: Int) : Flow<BaseResponse<Any>> = flow {
         emit(nftApi.getPhotoCardUrl(userSeq))
+    }
+
+    fun saveFile(file: MultipartBody.Part) : Flow<BaseResponse<String>> = flow {
+        emit(nftApi.saveFile(file))
     }
 }
