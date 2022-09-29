@@ -25,13 +25,20 @@ class OrderDetailListAdapter(private val listener: OrderDetailListener)
         fun bind(item : OrderDetailResponse){
             binding.orderDetail = item
             binding.executePendingBindings()
-            if(item.orderToState){
+            if(item.orderDeliveryCompany==null&&item.orderDeliveryNumber==null){
+                binding.tvDeliveryCompany.text = "택배사 정보가 입력되지 않았습니다."
+                binding.tvDeliveryNumber.text = "운송장 번호가 입력되지 않았습니다."
+            }
+
+            if(item.orderToState||item.orderDeliveryCompany==null&&item.orderDeliveryNumber==null){
                 binding.ivOrderState.setImageResource(R.drawable.btn_order_state_true)
                 binding.ivOrderState.setClickable(false)
             }
             else if(!item.orderToState){
                 binding.ivOrderState.setImageResource(R.drawable.btn_order_state_false)
             }
+
+
 
             }
     }
