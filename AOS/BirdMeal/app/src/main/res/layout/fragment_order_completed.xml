@@ -30,14 +30,15 @@
             app:layout_constraintEnd_toEndOf="parent">
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card"
             android:layout_width="0dp"
-            android:layout_height="600dp"
+            android:layout_height="500dp"
             android:elevation="12dp"
             android:translationZ="12dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_receipt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,8 +50,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_logo"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/logo"
                     android:layout_marginTop="24dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
                     android:id="@+id/tv_order_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:text="주문 완료"
                     android:textSize="28sp"
                     android:fontFamily="@font/gong_gothic_medium"
@@ -123,7 +124,8 @@
                     android:fontFamily="@font/gong_gothic_medium"
                     app:layout_constraintTop_toTopOf="@id/tv_address"
                     app:layout_constraintBottom_toBottomOf="@id/tv_address"
-                    app:layout_constraintEnd_toEndOf="@id/tv_order_name_value" />
+                    app:layout_constraintEnd_toEndOf="@id/tv_order_name_value"
+                    android:layout_marginStart="30dp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_order_date"
@@ -186,46 +188,52 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_price"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+
+                    >
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_donation_pre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이번 주문으로"
+                        android:text="이번 주문으로 "
                         android:textSize="18sp"
-                        android:layout_marginStart="28dp"
+                        android:gravity="right"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"/>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_donation_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
                         productPrice="@{shoppingVM.orderCompleteDto.donationAmount}"
                         tools:text="135,000 ELN"
                         android:textColor="@color/primary_orange"
                         android:textSize="18sp"
+                        android:gravity="center"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_donation_pre"
-                        app:layout_constraintEnd_toStartOf="@id/tv_donation_after"/>
+                        app:layout_constraintEnd_toStartOf="@id/tv_donation_after"
+                        app:layout_constraintHorizontal_chainStyle="packed"/>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_donation_after"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="를 기부했어요"
+                        android:text=" 를 기부했어요"
                         android:textSize="18sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tv_donation_value"/>
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_back"
@@ -235,7 +243,7 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:background="@drawable/btn_round_main_color"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="50dp"
             android:layout_marginHorizontal="20dp"
             app:layout_constraintStart_toStartOf="@id/card"
             app:layout_constraintEnd_toEndOf="@id/card"

@@ -25,7 +25,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             shoppingVM = shoppingViewModel
             userVM = userViewModel
         }
-
         initClickListener()
 
         initViewModelCallBack()
@@ -50,7 +49,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun initClickListener() = with(binding){
+    private fun initClickListener() = with(binding) {
         // 뒤로가기 버튼 클릭
         toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -59,12 +58,14 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         btnBuy.setOnClickListener {
             it.isEnabled = false // 버튼 비활성화
             // 상품 컨트랙트 목록 불러오기
-            val contractList : MutableList<Trade> = (requireActivity().application as ApplicationClass)
+            val contractList: MutableList<Trade> =
+                (requireActivity().application as ApplicationClass)
                     .getTradeContract(shoppingViewModel.productList.value)
 
             // 상품 컨트랙트 주문 넣기
             shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
         }
+
         // 주문자 정보 저장
         btnSaveInfo.setOnClickListener {
             it.isEnabled = false
@@ -73,7 +74,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         // 주소 검색
         btnSearchAddress.setOnClickListener {
             // findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
-        }
-    }
 
+        }
+
+    }
 }
