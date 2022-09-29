@@ -53,6 +53,9 @@ public class SellerOrderService {
             Optional<UserEntity> userOptional = userRepository.findByUserSeq(orderEntity.getUserSeq());
             UserEntity userEntity = userOptional.get();
 
+            // 가격
+            int price = productEntity.getProductPrice() * orderDetailEntity.getOrderQuantity();
+
             // 반환값 만들기
             SellerOrderResponseDto sellerOrderResponseDto = SellerOrderResponseDto.builder()
                     .orderSeq(orderEntity.getOrderSeq())
@@ -60,7 +63,7 @@ public class SellerOrderService {
                     .userNickname(userEntity.getUserNickname())
                     .userTel(userEntity.getUserTel())
                     .userAdd(userEntity.getUserAdd())
-                    .orderPrice(orderEntity.getOrderPrice())
+                    .orderPrice(price)
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                     .productSeq(productEntity.getProductSeq())
                     .sellerSeq(productEntity.getSellerSeq())
