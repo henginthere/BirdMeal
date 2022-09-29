@@ -33,7 +33,7 @@ public class CategoryService {
     }
 
     public List<ProductResponseDto> getProductList(Long categorySeq){
-        List<ProductEntity> list = productRepository.findAllByCategorySeq(categorySeq);
+        List<ProductEntity> list = productRepository.findAllByCategorySeqOrderByProductSeqDesc(categorySeq);
 
         List<ProductResponseDto> resList = new ArrayList<>();
 
