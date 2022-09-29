@@ -30,5 +30,5 @@ object BolckChainModule {
     // PollingProcessor DI
     @Singleton
     @Provides
-    fun providePollingProcessor(web3: Web3j) = PollingTransactionReceiptProcessor(web3, 2000, 30)
+    fun providePollingProcessor(web3: Web3j) = PollingTransactionReceiptProcessor(web3, 500, 100)
 }
