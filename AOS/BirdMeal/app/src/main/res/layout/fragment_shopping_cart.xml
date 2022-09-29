@@ -65,6 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="총 결제금액 : "
+            android:textSize="16sp"
+            android:textColor="@color/black_high_emphasis"
             android:layout_marginBottom="16dp"
             app:layout_constraintStart_toStartOf="@id/rv_cart_list"
             app:layout_constraintBottom_toTopOf="@id/btn_buy" />
@@ -74,7 +76,9 @@
             android:layout_height="wrap_content"
             productPrice="@{shoppingVM.totalPrice}"
             tools:text="25,000원"
+            android:textSize="16sp"
             android:textColor="@color/primary_orange"
+            android:fontFamily="@font/gong_gothic_medium"
             app:layout_constraintEnd_toEndOf="@id/rv_cart_list"
             app:layout_constraintBottom_toBottomOf="@id/tv_total"
             app:layout_constraintTop_toTopOf="@id/tv_total"/>
@@ -85,7 +89,7 @@
             android:layout_height="60dp"
             android:textColor="@color/white"
             android:background="@drawable/btn_button"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="@id/tv_total"
             app:layout_constraintEnd_toEndOf="@id/tv_total_price"
             app:layout_constraintTop_toBottomOf="@id/tv_total_price"
