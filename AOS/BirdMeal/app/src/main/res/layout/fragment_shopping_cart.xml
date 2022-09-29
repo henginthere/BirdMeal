@@ -53,7 +53,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             tools:listitem="@layout/item_cart_list"
-            submitListLocal="@{shoppingVM.productList}"
             android:layout_marginVertical="20dp"
             android:layout_marginHorizontal="16dp"
             app:layout_constraintStart_toStartOf="parent"

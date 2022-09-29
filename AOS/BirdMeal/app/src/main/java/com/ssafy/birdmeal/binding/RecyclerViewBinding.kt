@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.binding
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,11 +8,9 @@ import com.ssafy.birdmeal.model.dto.CategoryDto
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
-import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.donation.history.ChildHistoryListAdapter
 import com.ssafy.birdmeal.view.donation.history.DonationHistoryListAdapter
 import com.ssafy.birdmeal.view.market.CategoryGridAdapter
@@ -29,7 +26,6 @@ object RecyclerViewBinding {
     @JvmStatic
     @BindingAdapter("submitList")
     fun bindSubmitList(view: RecyclerView, result: Result<*>){
-        Log.d(TAG, "bindSubmitList: bindSubmitList : $result")
         if(result is Result.Success){
             if(result.data is BaseResponse<*>){
                 when(view.adapter){
@@ -66,15 +62,5 @@ object RecyclerViewBinding {
             (view.adapter as ListAdapter<Any, *>).submitList(emptyList())
         }
     }
-
-    @JvmStatic
-    @BindingAdapter("submitListLocal")
-    fun submitListLocal(view: RecyclerView, result: List<CartEntity>){
-        Log.d(TAG, "submitListLocal: submitListLocal : $result")
-        if(result.isNotEmpty()){
-            (view.adapter as ListAdapter<Any, *>).submitList(result)
-        }
-    }
-
 
 }
