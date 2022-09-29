@@ -26,8 +26,6 @@ public class OrderController {
     // 나중에 Service로 대체 ( 회원정보 불러오기로 )
     private final UserRepository userRepository; 
 
-    private final OrderRepository orderRepository;
-
     /**
      * 주문 내역 저장
      *
