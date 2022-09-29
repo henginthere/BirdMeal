@@ -21,6 +21,7 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
             userVM = userViewModel
         }
 
+        userViewModel.getUserInfo()
         initClickListener()
 
         initViewModelCallBack()
@@ -32,7 +33,11 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
         }
     }
 
-    private fun initViewModelCallBack() {
+    private fun initViewModelCallBack()= with(userViewModel) {
+
+        user.observe(viewLifecycleOwner) {
+            binding.tvAddressValue.text = it.userAdd
+        }
 
     }
 

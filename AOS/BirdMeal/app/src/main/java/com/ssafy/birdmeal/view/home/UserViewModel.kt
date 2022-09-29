@@ -187,6 +187,7 @@ class UserViewModel @Inject constructor(
     // 회원정보 수정
     fun updateUserProfile() = viewModelScope.launch(Dispatchers.IO) {
 
+
         val userSeq = user.value?.userSeq ?: -1
         val map = HashMap<String, String>()
         map.put("userTel", user.value?.userTel ?: "")
