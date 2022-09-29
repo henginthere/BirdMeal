@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.awesomedialog.*
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
@@ -19,7 +20,6 @@ import com.ssafy.birdmeal.utils.FileUtil
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.fileToBitmap
 import com.ssafy.birdmeal.view.home.LoadingDialog
-import com.ssafy.birdmeal.view.home.YesOrNoDialog
 
 
 private val PERMISSIONS_REQUIRED = Manifest.permission.READ_EXTERNAL_STORAGE
@@ -50,6 +50,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
             fileMsgEvent.observe(viewLifecycleOwner) {
                 loadingDialog.dismiss()
                 showToast(it)
+                completedPhotoCardDialog()
                 findNavController().popBackStack()
             }
         }
@@ -63,7 +64,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
 
         // NFT생성 버튼
         ivMakeNft.setOnClickListener {
-            showYesOrNoDialog()
+            makePhotoCardDialog()
         }
 
         // undo 버튼
@@ -98,26 +99,56 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
         }
     }
 
-    private fun showYesOrNoDialog() {
-        val positiveListener = {
-            loadingDialog.show(parentFragmentManager, "loadingDialog")
-            val bitmap = binding.canvas.downloadBitmap()
-            val multipartBody = FileUtil.bitmapToMultiPart(bitmap)
-            canvasViewModel.saveFile(multipartBody)
-            Unit
-        }
-        val negativeListener = {
-            Unit
-        }
-        YesOrNoDialog(
-            title = "마음을 담은 포토카드를\n생성하시겠습니까?",
-            positive = "생성하기",
-            negative = "취소",
-            positiveListener,
-            negativeListener
-        ).show(childFragmentManager, "YesOrNoDialog")
+    // 포토카드 생성확인 다이얼로그
+    private fun makePhotoCardDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("알림")
+            .body("포토카드를 생성하시겠습니까?")
+            .icon(R.drawable.ic_photocard)
+            .onPositive(text = "생성", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+                uploadPhotoCard()
+            }
+            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
+
+            }
+//        val positiveListener = {
+//            loadingDialog.show(parentFragmentManager, "loadingDialog")
+//            val bitmap = binding.canvas.downloadBitmap()
+//            val multipartBody = FileUtil.bitmapToMultiPart(bitmap)
+//            canvasViewModel.saveFile(multipartBody)
+//            Unit
+//        }
+//        val negativeListener = {
+//            Unit
+//        }
+//        YesOrNoDialog(
+//            title = "마음을 담은 포토카드를\n생성하시겠습니까?",
+//            positive = "생성하기",
+//            negative = "취소",
+//            positiveListener,
+//            negativeListener
+//        ).show(childFragmentManager, "YesOrNoDialog")
     }
 
+    // 포토카드 생성 완료시 다이얼로그
+    private fun completedPhotoCardDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("알림")
+            .body("포토카드 NFT가 완성되었습니다")
+            .icon(R.drawable.ic_photocard)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green)
+            .position(AwesomeDialog.POSITIONS.CENTER)
+    }
+
+    // 포토카드 생성
+    private fun uploadPhotoCard() {
+        loadingDialog.show(parentFragmentManager, "loadingDialog")
+        val bitmap = binding.canvas.downloadBitmap()
+        val multipartBody = FileUtil.bitmapToMultiPart(bitmap)
+        canvasViewModel.saveFile(multipartBody)
+    }
+
+    // 팔레트 선택 다이얼로그
     private fun showPaletteDialog() {
         ColorPickerDialog.Builder(requireContext())
             .setPreferenceName("platteDialog")
