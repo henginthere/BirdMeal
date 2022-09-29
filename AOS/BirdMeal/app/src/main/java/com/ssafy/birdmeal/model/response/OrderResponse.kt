@@ -9,7 +9,7 @@ data class OrderResponse (
     @SerializedName("orderDate") val orderDate: String,
     @SerializedName("orderCnt") val orderCnt: Int,
     @SerializedName("orderFirstName") val orderFirstName: String,
-    @SerializedName("productPrice") val productPrice: Int,
+    @SerializedName("orderPrice") val orderPrice: Int,
     @SerializedName("productThumbnailImg") val productThumbnailImg: String
 
     )
