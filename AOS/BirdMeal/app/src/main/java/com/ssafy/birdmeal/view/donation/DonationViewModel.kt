@@ -202,14 +202,4 @@ class DonationViewModel @Inject constructor(
             }
         }
     }
-
-    /** NFT */
-    // 마음 전하기
-    fun insertPhotoCard() = viewModelScope.launch(IO) {
-        nftRepository.insertPhotoCard(ChildPhotoCardDto(1,"img", "", 0)).collectLatest {
-            Log.d(TAG, "insertPhotoCard: " + it)
-        }
-
-
-    }
 }
