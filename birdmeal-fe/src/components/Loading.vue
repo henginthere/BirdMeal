@@ -9,14 +9,27 @@
       </div>
     </div>
     <blockquote class="info"></blockquote> -->
-    <div>
-      <img src="@/guideImg/loading.gif">
+    <div >
+      <Vue3Lottie :animationData="loadingJson" :height="600" :width="600" />
     </div>
 
 </template>
 
 <script>
-export default {};
+  import { Vue3Lottie } from 'vue3-lottie'
+  import 'vue3-lottie/dist/style.css'
+  import loadingJson from '@/guideImg/loading.json'
+export default {
+  components: {
+    Vue3Lottie,
+  },
+  data(){
+    return {
+      loadingJson,
+    }
+  }
+
+};
 </script>
 
 <style lang="scss" scoped>

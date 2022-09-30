@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-overlay :model-value="overlay" class="align-center justify-center" height="500" width="500" persistent>
+    <v-overlay :model-value="overlay" class="align-center justify-center" persistent>
       <loading />
     </v-overlay>
 
