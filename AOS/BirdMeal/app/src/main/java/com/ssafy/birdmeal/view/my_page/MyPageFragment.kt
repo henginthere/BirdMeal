@@ -81,6 +81,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
             Intent(requireContext(), LoginActivity::class.java).apply {
                 startActivity(this)
+                requireActivity().finish()
             }
         }
     }
