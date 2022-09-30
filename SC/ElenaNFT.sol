@@ -4,9 +4,8 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ElenaNFT is ERC721URIStorage, Ownable {
+contract ElenaNFT is ERC721URIStorage{
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
@@ -16,7 +15,7 @@ contract ElenaNFT is ERC721URIStorage, Ownable {
 
     // 보낸 이미지 URI를 담아서 NFT민팅
     // 이후 토큰ID를 계정주소와 매핑해둠
-    function mintNFT(string memory tokenURI) public onlyOwner{
+    function mintNFT(string memory tokenURI) public{
         _tokenIds.increment();
 
         uint256 newItemId = _tokenIds.current();
