@@ -1,6 +1,7 @@
 package com.ssafy.birdmeal.view.market.shopping.order
 
 import android.os.Build
+import android.text.InputFilter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import com.ssafy.birdmeal.di.ApplicationClass
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import com.ssafy.birdmeal.wrapper.Trade
+import java.util.regex.Pattern
 
 class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order) {
 
@@ -28,6 +30,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         initClickListener()
 
         initViewModelCallBack()
+
+        initNickNameRule()
     }
 
     private fun initViewModelCallBack(){
@@ -76,12 +80,35 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         // 주문자 정보 저장
         btnSaveInfo.setOnClickListener {
             it.isEnabled = false // 버튼 비활성화
+
+            userViewModel.user.value!!.apply { // 정보 업데이트
+                userNickname = etName.text.toString()
+                userTel = etTelNumber.text.toString()
+                userAdd = etAddress.text.toString()
+            }
             userViewModel.updateUserProfile()
         }
         // 주소 검색
         btnSearchAddress.setOnClickListener {
             // findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
         }
-
     }
+
+    // 닉네임 설정 제한
+    private fun initNickNameRule(){
+        binding.etName.filters = arrayOf(
+            InputFilter { src, _, _, _, _, _ ->
+                // val ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-흐]+$") // 영문 숫자 한글
+                // 영문 숫자 한글 천지인 middle dot[ᆞ]
+                val ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
+                if (src.equals("") || ps.matcher(src).matches()) {
+                    return@InputFilter src;
+                }
+                showToast("닉네임은 한글, 영문, 숫자로만 2자 ~ 8자까지 입력 가능합니다.")
+                return@InputFilter "";
+            },
+            InputFilter.LengthFilter(8)
+        )
+    }
+
 }
