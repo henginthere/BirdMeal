@@ -139,6 +139,8 @@ public class UserController {
     @ApiOperation(value="회원 정보 수정",response = Object.class)
     @PutMapping("")
     public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto){
+        System.out.println("변경된 닉네임 : " + updateUserDto.getUserNickname());
+        System.out.println("변경된 번호 : " + updateUserDto.getUserTel());
         boolean success = userService.updateUser(updateUserDto);
         ResponseFrame<?> res;
 
