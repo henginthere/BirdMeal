@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.binding
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,8 +8,6 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
-import com.ssafy.birdmeal.utils.TAG
-
 
 object ViewBindingAdapter {
 
@@ -111,7 +108,6 @@ object ViewBindingAdapter {
     @BindingAdapter("cartNewIcon")
     @JvmStatic
     fun ImageView.setNewIcon(productCnt: Int) {
-        Log.d(TAG, "setNewIcon: 들어왔나요 $productCnt")
         if (productCnt > 0) {
             this.visibility = View.VISIBLE
         } else {
