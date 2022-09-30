@@ -74,20 +74,45 @@
             tools:listitem="@layout/item_category_horizon"
             submitList="@{marketVM.cateList}"/>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp"
+            app:layout_constraintStart_toStartOf="@id/rv_category_horizon"
+            app:layout_constraintEnd_toEndOf="@id/rv_category_horizon"
+            app:layout_constraintTop_toBottomOf="@id/rv_category_horizon" >
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="관심 있는 상품을 검색하세요."
+                android:textSize="14sp"
+                android:textColor="@color/green"
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionSearch"
+                android:padding="4dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_baseline_search_24" />
+        </androidx.cardview.widget.CardView>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_product_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginTop="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_category_horizon"
-            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintTop_toBottomOf="@id/card_search"
             app:spanCount="2"
-            tools:listitem="@layout/item_product_list"
-            submitList="@{marketVM.productList}"/>
+            tools:listitem="@layout/item_product_list" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

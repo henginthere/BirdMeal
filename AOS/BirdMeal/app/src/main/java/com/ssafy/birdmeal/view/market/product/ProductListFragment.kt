@@ -1,11 +1,14 @@
 package com.ssafy.birdmeal.view.market.product
 
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentProductListBinding
+import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.view.market.CategoryListener
 import com.ssafy.birdmeal.view.market.MarketViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
@@ -19,6 +22,11 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     private var categorySeq = -1
     private var categoryName = ""
 
+    private var searchList = mutableListOf<ProductDto>()
+    private lateinit var productListAll : List<ProductDto>
+
+    private lateinit var productAdapter : ProductListAdapter
+
     override fun init() {
         this.categorySeq = args.categorySeq
         this.categoryName = args.categoryName
@@ -28,11 +36,13 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         initClickListener()
 
         initViewModelCallBack()
+
+        initSearch()
     }
 
     private fun initRecyclerView() {
         val categoryAdapter = CategoryHorizonAdapter(categoryListener)
-        val productAdapter = ProductListAdapter(productListener)
+        productAdapter = ProductListAdapter(productListener)
 
         binding.apply {
             rvCategoryHorizon.adapter = categoryAdapter
@@ -41,20 +51,22 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         }
     }
 
-    private fun initClickListener() {
-        binding.apply {
-            toolbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
-            ivShoppingCart.setOnClickListener {
-                findNavController().navigate(R.id.action_productListFragment_to_shoppingCartFragment)
-            }
+    private fun initClickListener() = with(binding){
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+        ivShoppingCart.setOnClickListener {
+            findNavController().navigate(R.id.action_productListFragment_to_shoppingCartFragment)
         }
     }
 
-    private fun initViewModelCallBack() {
-        marketViewModel.errorMsgEvent.observe(this){
+    private fun initViewModelCallBack() = with(marketViewModel){
+        errorMsgEvent.observe(viewLifecycleOwner){
             showToast(it)
+        }
+        listSuccessEvent.observe(viewLifecycleOwner){
+            productListAll = productList.value
+            productAdapter.submitList(productListAll)
         }
     }
 
@@ -72,6 +84,24 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
             val action = ProductListFragmentDirections.actionProductListFragmentToProductDetailFragment(productSeq)
             findNavController().navigate(action)
         }
+    }
+
+    private fun initSearch(){
+        binding.etSearch.addTextChangedListener(object : TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // 실시간 검색
+                binding.apply {
+                    searchList.clear() // 검색 리스트 초기화
+                    searchList.addAll(
+                        productListAll.filter {
+                            it.productName.contains(p0.toString())
+                        }
+                    )
+                    productAdapter.submitList(searchList.toMutableList())
+                }
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
     override fun onStart() {

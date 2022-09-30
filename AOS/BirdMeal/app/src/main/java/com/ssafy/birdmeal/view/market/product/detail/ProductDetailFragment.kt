@@ -55,7 +55,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
     }
 
     private fun initViewModelCallBack() {
-        marketViewModel.successMsgEvent.observe(viewLifecycleOwner){
+        marketViewModel.detailSuccessEvent.observe(viewLifecycleOwner){
             binding.product = marketViewModel.product.value
         }
     }
