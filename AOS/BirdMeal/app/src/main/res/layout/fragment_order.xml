@@ -76,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:padding="4dp"
+            android:padding="8dp"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             tools:text="김사장"
