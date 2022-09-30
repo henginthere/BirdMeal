@@ -25,7 +25,17 @@
                 v-if="!item.orderDeliveryNumber || !item.orderDeliveryCompany"
               >
                 <v-icon color="red"> mdi-alert-circle </v-icon>
-                <p class="text-error">배송정보</p>
+                <p class="text-error">배송전</p>
+              </div>
+              <div v-else>
+                <div v-if="!item.orderToState">
+                  <v-icon color="orange"> mdi-alert-circle </v-icon>
+                  <p class="text-orange">배송중</p>
+                </div>
+                <div v-else>
+                  <v-icon color="green"> mdi-alert-circle </v-icon>
+                  <p class="text-green">완료</p>
+                </div>
               </div>
             </td>
             <td class="text-center">{{ item.orderSeq }}</td>

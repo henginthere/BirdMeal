@@ -1,19 +1,14 @@
 <template>
   <v-app>
-
-    <v-overlay :model-value="overlay" class="align-center justify-center" persistent>
+    <v-overlay
+      :model-value="overlay"
+      class="align-center justify-center"
+      persistent
+    >
       <loading />
     </v-overlay>
 
-
-
-
-
-
-
     <v-container class="text-h4">
-
-
       <v-row>
         <v-col class="ml-4 mt-4">상품등록</v-col>
       </v-row>
@@ -125,9 +120,7 @@
       <v-row>
         <v-col>
           <v-sheet width="800px" class="d-flex justify-center">
-            <v-btn
-              color="primary_orange"
-              v-on:click="registProduct"
+            <v-btn color="primary_orange" v-on:click="registProduct"
               >등록하기</v-btn
             >
           </v-sheet>
@@ -142,7 +135,7 @@ import { createTrade } from '@/web3util/events';
 import axios from 'axios';
 import { mapState } from 'pinia';
 import { authState } from '@/stores/auth';
-import loading from '@/components/Loading.vue'
+import loading from '@/components/Loading.vue';
 export default {
   data() {
     return {
@@ -181,13 +174,9 @@ export default {
     ...mapState(authState, ['user']),
   },
 
-  components:{
-    loading
+  components: {
+    loading,
   },
-
-
-
-
 
   methods: {
     createTrade,
@@ -251,7 +240,7 @@ export default {
       } else if (this.productDescriptionImgURL === '') {
         alert('상세설명 파일을 선택해주십시오');
       } else {
-        this.overlay = !this.overlay
+        this.overlay = !this.overlay;
         createTrade(this.name, this.price)
           .then(
             (res) =>
@@ -271,7 +260,8 @@ export default {
               },
               { headers: { 'Content-type': 'application/json' } }
             )
-          ).then(()=> this.overlay = !this.overlay)
+          )
+          .then(() => (this.overlay = !this.overlay))
           .then(() => this.$router.push('/products'));
       }
     },

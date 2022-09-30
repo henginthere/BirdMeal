@@ -1,18 +1,16 @@
 <template>
   <v-app>
-
-
-    <v-overlay :model-value="overlay" class="align-center justify-center" height="500" width="500" persistent>
-      <!-- <loading /> -->
-      
+    <v-overlay
+      :model-value="overlay"
+      class="align-center justify-center"
+      persistent
+    >
+      <loading />
     </v-overlay>
-
-
 
     <v-container class="text-h4">
       <v-row>
         <v-col class="ml-4 mt-4">상세정보</v-col>
-
       </v-row>
     </v-container>
     <v-container>
@@ -112,7 +110,11 @@
             <v-btn v-else color="primary_orange" @click="setProduct">
               저장
             </v-btn>
-            <v-btn class="ml-2" v-on:click="deleteProduct" color="blue-grey-lighten-5">
+            <v-btn
+              class="ml-2"
+              v-on:click="deleteProduct"
+              color="blue-grey-lighten-5"
+            >
               삭제
             </v-btn>
           </v-sheet>
@@ -123,12 +125,12 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapState } from "pinia";
-import { authState } from "@/stores/auth";
-import http from "../api/http";
-import { updateProduct } from "@/web3util/events.js";
-import loading from '@/components/Loading.vue'
+import axios from 'axios';
+import { mapState } from 'pinia';
+import { authState } from '@/stores/auth';
+import http from '../api/http';
+import { updateProduct } from '@/web3util/events.js';
+import loading from '@/components/Loading.vue';
 
 export default {
   data() {
@@ -138,9 +140,9 @@ export default {
       prePrice: null,
       name: null,
       price: null,
-      productThumbnailImgURL: "",
-      productDescriptionImgURL: "",
-      overlay:false,
+      productThumbnailImgURL: '',
+      productDescriptionImgURL: '',
+      overlay: false,
       modify: false,
     };
   },
@@ -148,11 +150,9 @@ export default {
     ...mapState(authState, ['user']),
   },
 
-  components:{
-    loading
+  components: {
+    loading,
   },
-
-  
 
   methods: {
     /*
@@ -167,10 +167,10 @@ export default {
 
     setProduct() {
       if (this.preName === this.name || this.prePrice === this.price) {
-
-        this.overlay = !this.overlay
-        axios.put(
-            "https://j7d101.p.ssafy.io/api/seller/product/update",
+        this.overlay = !this.overlay;
+        axios
+          .put(
+            'https://j7d101.p.ssafy.io/api/seller/product/update',
             {
               productName: this.name,
               productSeq: this.product.productSeq,
@@ -180,26 +180,26 @@ export default {
             },
             { headers: { 'Content-type': 'application/json' } }
           )
-          .then(() => this.overlay = !this.overlay)
-          .then(() => this.$router.push("/products"))
-      }
-      else{
-        this.overlay = !this.overlay
+          .then(() => (this.overlay = !this.overlay))
+          .then(() => this.$router.push('/products'));
+      } else {
+        this.overlay = !this.overlay;
         updateProduct(this.name, this.price, this.product.productCa)
-        .then(()=> axios.put(
-            "https://j7d101.p.ssafy.io/api/seller/product/update",
-            {
-              productName: this.name,
-              productSeq: this.product.productSeq,
-              productPrice: this.price,
-              productThumbnailImg:this.productThumbnailImgURL,
-              productDescriptionImg: this.productDescriptionImgURL
-            },
-            { headers: { "Content-type": "application/json" } }
-          ))
-          .then(() => this.overlay = !this.overlay)
-          .then(() => this.$router.push("/products"))
-
+          .then(() =>
+            axios.put(
+              'https://j7d101.p.ssafy.io/api/seller/product/update',
+              {
+                productName: this.name,
+                productSeq: this.product.productSeq,
+                productPrice: this.price,
+                productThumbnailImg: this.productThumbnailImgURL,
+                productDescriptionImg: this.productDescriptionImgURL,
+              },
+              { headers: { 'Content-type': 'application/json' } }
+            )
+          )
+          .then(() => (this.overlay = !this.overlay))
+          .then(() => this.$router.push('/products'));
       }
     },
 
