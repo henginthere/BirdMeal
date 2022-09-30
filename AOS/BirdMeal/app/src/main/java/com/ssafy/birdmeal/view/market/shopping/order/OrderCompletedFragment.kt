@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.market.shopping.order
 
+import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
@@ -16,12 +17,16 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        userViewModel.getUserInfo()
+
         binding.apply {
+            if(shoppingViewModel.userRole.value){ // 결식아동은 기부 텍스트 삭제
+                layoutDonationText.visibility = View.INVISIBLE
+            }
             shoppingVM = shoppingViewModel
             userVM = userViewModel
         }
 
-        userViewModel.getUserInfo()
         initClickListener()
 
         initViewModelCallBack()
@@ -34,11 +39,9 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
     }
 
     private fun initViewModelCallBack()= with(userViewModel) {
-
         user.observe(viewLifecycleOwner) {
             binding.tvAddressValue.text = it.userAdd
         }
-
     }
 
 }

@@ -30,6 +30,7 @@ const val CA_ELENA = "0x24Dae25c6005577E20D6c6927B56564d97C8aBe3" // 토큰 컨�
 const val CA_FUNDING = "0x1272AD925859Dd4e485b6d36AD941A5163e380De" // 기부 컨트랙트
 const val CA_TRADE_MANAGER = "0xA22F0dF64e4Ec81942662117A5A558E686b9f265" // 거래 매니저 컨트랙트
 const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전소 컨트랙트
+const val CA_NFT = "0xCb0eC79c8Cc01a2f257Ba41125e1D65B1e5473b3"   // NFT 컨트랙트
 
 // 주소 검색 띄울 주소
 const val ADDRESS_API_URL = "html"

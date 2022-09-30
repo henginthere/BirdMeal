@@ -8,43 +8,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import com.ssafy.birdmeal.R
-import com.ssafy.birdmeal.databinding.DialogTextBinding
+import com.ssafy.birdmeal.databinding.DialogCompletedMintingBinding
 
-class TextDialog : DialogFragment() {
+class CompletedMintingDialog(val imgUrl: String) : DialogFragment() {
 
-    var binding: DialogTextBinding? = null
-    private val nftViewModel by activityViewModels<NFTViewModel>()
+    var binding: DialogCompletedMintingBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_text, container, false)
-
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.dialog_completed_minting, container, false)
 
         // 배경 투명하게 바꿔줌
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.nftVM = nftViewModel
+        binding?.imgUrl = this.imgUrl
 
         initClickListener()
     }
 
     private fun initClickListener() = with(binding!!) {
         btnOk.setOnClickListener {
-            nftViewModel.emitTextMsg()
-            dismiss()
-        }
-
-        btnCancel.setOnClickListener {
             dismiss()
         }
     }

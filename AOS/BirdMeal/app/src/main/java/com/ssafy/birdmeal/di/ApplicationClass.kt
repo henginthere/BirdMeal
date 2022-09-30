@@ -8,8 +8,9 @@ import com.dttmm.web3test.wrapper.Exchange
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.wrapper.Funding
-import com.ssafy.birdmeal.wrapper.TradeManager
 import com.ssafy.birdmeal.wrapper.Trade
+import com.ssafy.birdmeal.wrapper.TradeManager
+import com.ssafy.test.ElenaNFT
 import dagger.hilt.android.HiltAndroidApp
 import org.web3j.crypto.Credentials
 import org.web3j.protocol.Web3j
@@ -32,6 +33,7 @@ class ApplicationClass : Application() {
 
     companion object {
         var appContext: Context? = null
+
         // 패키지 정보
         var PACKAGE_NAME = ""
 
@@ -44,6 +46,7 @@ class ApplicationClass : Application() {
         lateinit var exchangeContract: Exchange
         lateinit var tradeManagerContract: TradeManager
         lateinit var tradeContract: Trade
+        lateinit var nftContract: ElenaNFT
     }
 
     override fun onCreate() {
@@ -74,5 +77,6 @@ class ApplicationClass : Application() {
         elenaContract = Elena.load(CA_ELENA, web3j, manager, gasProvider)
         exchangeContract = Exchange.load(CA_EXCHANGE, web3j, manager, gasProvider)
         tradeManagerContract = TradeManager.load(CA_TRADE_MANAGER, web3j, manager, gasProvider)
+        nftContract = ElenaNFT.load(CA_NFT, web3j, manager, gasProvider)
     }
 }

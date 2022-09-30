@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.datasource.remote
 import com.ssafy.birdmeal.api.NftApi
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
+import com.ssafy.birdmeal.model.response.NftImgResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
@@ -19,11 +20,11 @@ class NftRemoteDataSource @Inject constructor(private val nftApi: NftApi) {
         emit(nftApi.getMyPhotoCard(userSeq))
     }
 
-    fun createNftFromPhotoCard(userSeq: Int) : Flow<BaseResponse<Any>> = flow {
-        emit(nftApi.createNftFromPhotoCard(userSeq))
+    fun changeMintState(userSeq: Int) : Flow<BaseResponse<Any>> = flow {
+        emit(nftApi.changeMintState(userSeq))
     }
 
-    fun getPhotoCardUrl(userSeq: Int) : Flow<BaseResponse<Any>> = flow {
+    fun getPhotoCardUrl(userSeq: Int) : Flow<BaseResponse<NftImgResponse>> = flow {
         emit(nftApi.getPhotoCardUrl(userSeq))
     }
 
