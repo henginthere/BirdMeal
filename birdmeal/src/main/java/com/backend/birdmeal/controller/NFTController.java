@@ -1,5 +1,6 @@
 package com.backend.birdmeal.controller;
 
+import com.backend.birdmeal.dto.ChildNFTDto;
 import com.backend.birdmeal.dto.ChildNFTRequestDto;
 import com.backend.birdmeal.dto.ChildNFTResponseDto;
 import com.backend.birdmeal.dto.NFTImgResponseDto;
@@ -61,6 +62,23 @@ public class NFTController {
         }else{
             res = ResponseFrame.of(nftImgResponseDto, "NFT imgURI 가져오기를 성공했습니다.");
         }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * NFT 리스트 가져오기
+     *
+     * @param
+     * @return Object
+     */
+
+    @ApiOperation(value="NFT 리스트 가져오기",response = Object.class)
+    @GetMapping("")
+    public ResponseEntity<?> getNFTList(){
+        List<ChildNFTDto> list = nftService.getNFTList();
+
+        ResponseFrame<?> res;
+        res = ResponseFrame.of(list, "NFT List 가져오기를 성공했습니다.");
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
