@@ -28,8 +28,8 @@ class SearchAddressFragment :
         webView.apply {
             settings.javaScriptEnabled = true
             addJavascriptInterface(BridgeInterface(), "Android")
-            webViewClient = object : WebViewClient() {
 
+            webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     loadUrl("javascript:sample2_execDaumPostcode();")
                 }

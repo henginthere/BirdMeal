@@ -90,7 +90,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
         // 주소 검색
         btnSearchAddress.setOnClickListener {
-            // findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
+            findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
         }
     }
 
