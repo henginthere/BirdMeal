@@ -1,6 +1,6 @@
 <template>
 
-    <div class="box">
+    <!-- <div class="box">
       <div class="cat">
         <div class="cat__body"></div>
         <div class="cat__body"></div>
@@ -8,7 +8,10 @@
         <div class="cat__head"></div>
       </div>
     </div>
-    <blockquote class="info"></blockquote>
+    <blockquote class="info"></blockquote> -->
+    <div>
+      <img src="@/guideImg/loading.gif">
+    </div>
 
 </template>
 
