@@ -35,7 +35,7 @@ public class ChildNFTEntity {
     private int nftCnt;
 
     @Basic
-    @Column(name = "nft_creat_date", length = 30)
+    @Column(name = "nft_create_date", length = 30)
     private String nftCreateDate;
 
     @PrePersist

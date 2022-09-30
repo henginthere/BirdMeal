@@ -5,6 +5,7 @@ import com.backend.birdmeal.dto.ChildNFTRequestDto;
 import com.backend.birdmeal.dto.NFTImgResponseDto;
 import com.backend.birdmeal.entity.ChildNFTEntity;
 import com.backend.birdmeal.entity.UserEntity;
+import com.backend.birdmeal.mapper.ChildNFTMapper;
 import com.backend.birdmeal.repository.ChildNFTRepository;
 import com.backend.birdmeal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -111,5 +112,15 @@ public class NFTService {
         userRepository.save(userEntity);
 
         return true;
+    }
+
+    
+    // nft 리스트 가져오기
+    public List<ChildNFTDto> getNFTList() {
+        List<ChildNFTEntity> list = childNFTRepository.findAll();
+
+        List<ChildNFTDto> resList = ChildNFTMapper.MAPPER.toDtoList(list);
+
+        return resList;
     }
 }
