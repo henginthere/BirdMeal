@@ -137,9 +137,9 @@ public class UserController {
      * @return Object
      */
     @ApiOperation(value="회원 정보 수정",response = Object.class)
-    @PutMapping("/{user-seq}")
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto, @PathVariable("user-seq") long userSeq){
-        boolean success = userService.updateUser(userSeq, updateUserDto);
+    @PutMapping("")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDto updateUserDto){
+        boolean success = userService.updateUser(updateUserDto);
         ResponseFrame<?> res;
 
         if(success){

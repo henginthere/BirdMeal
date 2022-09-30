@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-09-27T17:28:08+0900",
+    date = "2022-09-30T15:22:18+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public List<UserDto> toDtoList(List<UserEntity> entityList) {
-        if ( entityList == null ) {
+    public List<UserDto> toDtoList(List<UserEntity> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<UserDto> list = new ArrayList<UserDto>( entityList.size() );
-        for ( UserEntity userEntity : entityList ) {
+        List<UserDto> list = new ArrayList<UserDto>( arg0.size() );
+        for ( UserEntity userEntity : arg0 ) {
             list.add( toDto( userEntity ) );
         }
 
@@ -30,13 +30,13 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<UserEntity> toEntityList(List<UserDto> dtoList) {
-        if ( dtoList == null ) {
+    public List<UserEntity> toEntityList(List<UserDto> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<UserEntity> list = new ArrayList<UserEntity>( dtoList.size() );
-        for ( UserDto userDto : dtoList ) {
+        List<UserEntity> list = new ArrayList<UserEntity>( arg0.size() );
+        for ( UserDto userDto : arg0 ) {
             list.add( toEntity( userDto ) );
         }
 
@@ -53,6 +53,7 @@ public class UserMapperImpl implements UserMapper {
 
         userEntity.userSeq( userDto.getUserSeq() );
         userEntity.userEmail( userDto.getUserEmail() );
+        userEntity.userPass( userDto.getUserPass() );
         userEntity.userRole( userDto.isUserRole() );
         userEntity.userNickname( userDto.getUserNickname() );
         userEntity.userEoa( userDto.getUserEoa() );
@@ -61,6 +62,7 @@ public class UserMapperImpl implements UserMapper {
         userEntity.userIsMint( userDto.isUserIsMint() );
         userEntity.userMonthMoney( userDto.getUserMonthMoney() );
         userEntity.userChargeState( userDto.isUserChargeState() );
+        userEntity.userRegistDate( userDto.getUserRegistDate() );
         userEntity.userUpdateDate( userDto.getUserUpdateDate() );
 
         return userEntity.build();
@@ -79,6 +81,7 @@ public class UserMapperImpl implements UserMapper {
         if ( userEntity.getUserRole() != null ) {
             userDto.userRole( userEntity.getUserRole() );
         }
+        userDto.userPass( userEntity.getUserPass() );
         userDto.userNickname( userEntity.getUserNickname() );
         userDto.userEoa( userEntity.getUserEoa() );
         userDto.userTel( userEntity.getUserTel() );
@@ -86,6 +89,7 @@ public class UserMapperImpl implements UserMapper {
         userDto.userIsMint( userEntity.isUserIsMint() );
         userDto.userMonthMoney( userEntity.getUserMonthMoney() );
         userDto.userChargeState( userEntity.isUserChargeState() );
+        userDto.userRegistDate( userEntity.getUserRegistDate() );
         userDto.userUpdateDate( userEntity.getUserUpdateDate() );
 
         return userDto.build();

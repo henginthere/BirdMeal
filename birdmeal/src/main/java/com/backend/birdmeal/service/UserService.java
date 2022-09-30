@@ -97,8 +97,8 @@ public class UserService {
         return userDto;
     }
 
-    public boolean updateUser(Long userSeq, UpdateUserDto updateUserDto){
-        Optional<UserEntity> userOptional = userRepository.findByUserSeq(userSeq);
+    public boolean updateUser(UpdateUserDto updateUserDto){
+        Optional<UserEntity> userOptional = userRepository.findByUserSeq(updateUserDto.getUserSeq());
 
         if(userOptional.isEmpty()){
             return false;
