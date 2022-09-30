@@ -108,6 +108,7 @@ public class UserService {
 
         user.setUserAdd(updateUserDto.getUserAdd());
         user.setUserTel(updateUserDto.getUserTel());
+        user.setUserNickname(updateUserDto.getUserNickname());
 
         return true;
     }
