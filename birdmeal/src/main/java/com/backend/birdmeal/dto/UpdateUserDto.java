@@ -13,5 +13,6 @@ public class UpdateUserDto {
 
     private String userTel;
     private String userAdd;
+    private String userNickname;
 
 }
