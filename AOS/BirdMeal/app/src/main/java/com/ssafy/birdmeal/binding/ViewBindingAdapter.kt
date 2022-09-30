@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.binding
 
+import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -139,6 +140,21 @@ object ViewBindingAdapter {
                 .load(url)
                 .placeholder(R.drawable.loading)
                 .into(this)
+        }
+    }
+
+    // NFT 받기 텍스트 색
+    @BindingAdapter("setGetNftButton")
+    @JvmStatic
+    fun TextView.setGetNftButton(isMint: Boolean?) {
+        if (isMint != null) {
+            if (isMint) {
+                this.setTextColor(resources.getColor(R.color.white))
+                this.background = resources.getDrawable(R.drawable.btn_round_green_color)
+            } else {
+                this.setTextColor(Color.parseColor("#AAAAAA"))
+                this.background = resources.getDrawable(R.drawable.btn_round_gray)
+            }
         }
     }
 }
