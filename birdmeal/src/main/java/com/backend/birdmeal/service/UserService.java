@@ -110,6 +110,8 @@ public class UserService {
         user.setUserTel(updateUserDto.getUserTel());
         user.setUserNickname(updateUserDto.getUserNickname());
 
+        userRepository.save(user);
+
         return true;
     }
 
