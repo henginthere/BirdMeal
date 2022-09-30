@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateUserDto {
 
+    private long userSeq;
     private String userTel;
     private String userAdd;
     private String userNickname;

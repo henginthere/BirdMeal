@@ -13,6 +13,7 @@ public class UserDto {
     private long userSeq;
     private String userEmail;
     private boolean userRole; // 0이면 일반사용자, 1이면 child
+    private String userPass;
     private String userNickname;
     private String userEoa;
     private String userTel;
@@ -20,6 +21,6 @@ public class UserDto {
     private boolean userIsMint; // 0이면 민팅대상자x, 1이면 민팅대상자
     private int userMonthMoney;
     private boolean userChargeState;
-    private String userCreateDate;
+    private String userRegistDate;
     private String userUpdateDate;
 }
