@@ -38,11 +38,18 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                 showToast(it)
                 findNavController().navigate(R.id.action_orderFragment_to_orderCompletedFragment)
             }
+            donateSuccessMsgEvent.observe(viewLifecycleOwner){
+                showToast(it)
+            }
+            errMsgEvent.observe(viewLifecycleOwner){
+                showToast(it)
+            }
         }
+
         userViewModel.apply {
             // 회원정보 수정이 완료된 경우
             userUpdateMsgEvent.observe(viewLifecycleOwner) {
-                binding.btnSaveInfo.isEnabled = true
+                binding.btnSaveInfo.isEnabled = true // 버튼 재활성화
                 showToast(it)
             }
         }
@@ -68,13 +75,12 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
 
         // 주문자 정보 저장
         btnSaveInfo.setOnClickListener {
-            it.isEnabled = false
+            it.isEnabled = false // 버튼 비활성화
             userViewModel.updateUserProfile()
         }
         // 주소 검색
         btnSearchAddress.setOnClickListener {
             // findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
-
         }
 
     }
