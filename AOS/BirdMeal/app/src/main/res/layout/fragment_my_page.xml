@@ -96,7 +96,6 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_nft"
-                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_modify_user"/>
 
