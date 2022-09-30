@@ -19,9 +19,8 @@ interface UserApi {
     suspend fun updateUserEOA(@Body request: EOARequest): BaseResponse<String>
 
     // 회원 정보 업데이트
-    @PUT("user/{user-seq}")
+    @PUT("user")
     suspend fun updateUserProfile(
-        @Path("user-seq") userSeq: Int,
         @Body map: Map<String, String>
     ): BaseResponse<String>
 }

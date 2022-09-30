@@ -124,20 +124,15 @@ class UserViewModel @Inject constructor(
         val request = EOARequest(user.value!!.userSeq, credentials.value?.address!!)
 
         userRepository.updateUserEOA(request).collectLatest {
-            Log.d(TAG, "updateUserEOA response: $it")
-
-            if (it is Result.Success) {
-                Log.d(TAG, "updateUserEOA data: ${it.data}")
-
-                // 유저 EOA 갱신 성공한 경우
-                if (it.data.success) {
+            when(it){
+                is Result.Success -> {
+                    Log.d(TAG, "updateUserEOA data: ${it.data}")
                     // 업데이트된 유저정보 받음
                     getUserInfo()
-
                     _userInfoMsgEvent.postValue("EOA 업데이트 성공")
                 }
-            } else if (it is Result.Error) {
-                _errMsgEvent.postValue("서버 에러 발생")
+                is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
             }
         }
     }
@@ -149,18 +144,15 @@ class UserViewModel @Inject constructor(
         Log.d(TAG, "getUserInfo userSeq: $userSeq")
 
         userRepository.getUserInfo(userSeq).collectLatest {
-            Log.d(TAG, "getUserInfo response: $it")
+            when(it){
+                is Result.Success -> {
+                    Log.d(TAG, "getUserInfo data: ${it.data}")
 
-            if (it is Result.Success) {
-                Log.d(TAG, "getUserInfo data: ${it.data}")
-
-                // 회원가입 성공한 경우
-                if (it.data.success) {
                     _user.postValue(it.data.data)
                     _userInfoMsgEvent.postValue("유저 정보 가져오기 성공")
                 }
-            } else if (it is Result.Error) {
-                _errMsgEvent.postValue("서버 에러 발생")
+                is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
             }
         }
     }
@@ -186,26 +178,23 @@ class UserViewModel @Inject constructor(
 
     // 회원정보 수정
     fun updateUserProfile() = viewModelScope.launch(Dispatchers.IO) {
-
-
-        val userSeq = user.value?.userSeq ?: -1
         val map = HashMap<String, String>()
-        map.put("userTel", user.value?.userTel ?: "")
-        map.put("userAdd", user.value?.userAdd ?: "")
 
-        userRepository.updateUserProfile(userSeq, map).collectLatest {
-            Log.d(TAG, "updateUserProfile response: $it")
+        map.apply {
+            put("userSeq", user.value?.userSeq.toString())
+            put("userTel", user.value?.userTel ?: "")
+            put("userAdd", user.value?.userAdd ?: "")
+            put("userNickname", user.value?.userNickname ?: "")
+        }
 
-            if (it is Result.Success) {
-                Log.d(TAG, "updateUserProfile data: ${it.data}")
-
-                // 회원정보 수정 성공한 경우
-                if (it.data.success) {
+        userRepository.updateUserProfile(map).collectLatest {
+            when(it){
+                is Result.Success -> {
                     getUserInfo()
                     _userUpdateMsgEvent.postValue("회원정보 수정 성공")
                 }
-            } else if (it is Result.Error) {
-                _errMsgEvent.postValue("서버 에러 발생")
+                is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
             }
         }
     }

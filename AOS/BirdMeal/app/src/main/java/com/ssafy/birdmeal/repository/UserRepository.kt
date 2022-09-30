@@ -20,7 +20,11 @@ class UserRepository @Inject constructor(
     fun getUserInfo(userSeq: Int): Flow<Result<BaseResponse<UserDto>>> = flow {
         emit(Result.Loading)
         userRemoteDataSource.getUserInfo(userSeq).collect {
-            emit(Result.Success(it))
+            if(it.success){
+                emit(Result.Success(it))
+            } else {
+                emit(Result.Fail(it))
+            }
         }
     }.catch { e ->
         emit(Result.Error(e))
@@ -29,16 +33,24 @@ class UserRepository @Inject constructor(
     fun updateUserEOA(request: EOARequest): Flow<Result<BaseResponse<String>>> = flow {
         emit(Result.Loading)
         userRemoteDataSource.updateUserEOA(request).collect {
-            emit(Result.Success(it))
+            if(it.success){
+                emit(Result.Success(it))
+            } else {
+                emit(Result.Fail(it))
+            }
         }
     }.catch { e ->
         emit(Result.Error(e))
     }
 
-    fun updateUserProfile(userSeq: Int, map: Map<String, String>): Flow<Result<BaseResponse<String>>> = flow {
+    fun updateUserProfile(map: Map<String, String>): Flow<Result<BaseResponse<String>>> = flow {
         emit(Result.Loading)
-        userRemoteDataSource.updateUserProfile(userSeq,map).collect {
-            emit(Result.Success(it))
+        userRemoteDataSource.updateUserProfile(map).collect {
+            if(it.success){
+                emit(Result.Success(it))
+            } else {
+                emit(Result.Fail(it))
+            }
         }
     }.catch { e ->
         emit(Result.Error(e))
