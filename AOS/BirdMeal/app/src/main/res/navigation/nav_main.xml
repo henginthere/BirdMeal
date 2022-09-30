@@ -154,6 +154,9 @@
             android:name="orderSeq"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_myPageFragment_to_myNftListFragment"
+            app:destination="@id/myNftListFragment" />
     </fragment>
     <fragment
         android:id="@+id/myDonationHistoryFragment"
@@ -217,4 +220,9 @@
         android:name="com.ssafy.birdmeal.view.donation.nft.CanvasFragment"
         android:label="CanvasFragment"
         tools:layout="@layout/fragment_canvas" />
+    <fragment
+        android:id="@+id/myNftListFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.nft.MyNftListFragment"
+        android:label="MyNftListFragment"
+        tools:layout="@layout/fragment_my_nft_list"/>
 </navigation>
