@@ -1,6 +1,5 @@
 package com.ssafy.birdmeal.view.market
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
@@ -9,7 +8,6 @@ import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,9 +25,9 @@ class MarketViewModel @Inject constructor(
         = MutableStateFlow(Result.Uninitialized)
     val cateList get() = _categoryList.asStateFlow()
 
-    private val _productList : MutableStateFlow<Result<BaseResponse<List<ProductDto>>>>
-        = MutableStateFlow(Result.Uninitialized)
-    val productList get() = _productList.asStateFlow()
+    private val _productList : MutableStateFlow<List<ProductDto>>
+        = MutableStateFlow(listOf())
+    val productList get() = _productList
 
     private val _product : MutableStateFlow<ProductDto>
         = MutableStateFlow(ProductDto(-1, -1, -1, "", "",0, "", "", "", false, "", ""))
@@ -38,8 +36,11 @@ class MarketViewModel @Inject constructor(
     private val _errorMsgEvent = SingleLiveEvent<String>()
     val errorMsgEvent get() = _errorMsgEvent
 
-    private val _successMsgEvent = SingleLiveEvent<String>()
-    val successMsgEvent get() = _successMsgEvent
+    private val _listSuccessEvent = SingleLiveEvent<String>()
+    val listSuccessEvent get() = _listSuccessEvent
+
+    private val _detailSuccessEvent = SingleLiveEvent<String>()
+    val detailSuccessEvent get() = _detailSuccessEvent
 
     // 카테고리 목록 조회
     fun getCategoryList(){
@@ -63,8 +64,8 @@ class MarketViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             productRepository.getProductList(categorySeq).collectLatest {
                 if(it is Result.Success){ // 값을 제대로 받아옴
-                    Log.d(TAG, "getProductList: ${it.data.data}")
-                    _productList.value = it
+                    _productList.value = it.data.data
+                    _listSuccessEvent.postValue("상품 목록 조회에 성공했습니다.")
                 }
                 else if(it is Result.Fail){ // 값을 제대로 받아오지 못함
                     _errorMsgEvent.postValue(it.data.msg)
@@ -82,7 +83,7 @@ class MarketViewModel @Inject constructor(
             productRepository.getProduct(productSeq).collectLatest {
                 if(it is Result.Success){
                     _product.value = it.data.data
-                    _successMsgEvent.postValue(it.data.msg)
+                    _detailSuccessEvent.postValue(it.data.msg)
                 }
                 else if(it is Result.Fail){
                     _errorMsgEvent.postValue(it.data.msg)
