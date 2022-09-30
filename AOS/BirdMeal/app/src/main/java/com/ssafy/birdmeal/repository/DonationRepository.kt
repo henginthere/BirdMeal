@@ -21,7 +21,12 @@ class DonationRepository @Inject constructor(
         flow {
             emit(Result.Loading)
             donationRemoteDataSource.insertDonationHistory(donationHistory).collect {
-                emit(Result.Success(it))
+                if(it.success){
+                    emit(Result.Success(it))
+                }
+                else {
+                    emit(Result.Fail(it))
+                }
             }
         }.catch { e ->
             emit(Result.Error(e))
