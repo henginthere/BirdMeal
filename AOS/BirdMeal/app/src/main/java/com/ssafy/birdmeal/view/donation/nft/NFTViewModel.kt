@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import java.math.BigInteger
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,6 +43,9 @@ class NFTViewModel @Inject constructor(
 
     private val _mintingMsgEvent = SingleLiveEvent<String>()
     val mintingMsgEvent get() = _mintingMsgEvent
+
+    private val _myNftList = SingleLiveEvent<List<String>>()
+    val myNftList get() = _myNftList
 
     fun setColor(color: Int) {
         _color.value = color
@@ -122,5 +126,18 @@ class NFTViewModel @Inject constructor(
         Log.d(TAG, "doMinting: $result")
 
         _mintingMsgEvent.postValue(imgUrl)
+    }
+
+    // 나의 NFT 목록 불러오기 (컨트랙트)
+    fun getMyNft() {
+        val tokenIdList = nftContract.myToken.sendAsync().get()
+        Log.d(TAG, "getMyNft: $tokenIdList")
+
+        val myList = arrayListOf<String>()
+        tokenIdList.forEach {
+            val imgUrl = nftContract.tokenURI(it as BigInteger).sendAsync().get()
+            myList.add(imgUrl)
+        }
+        _myNftList.postValue(myList)
     }
 }

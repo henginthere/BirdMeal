@@ -11,8 +11,7 @@ import com.google.android.material.chip.Chip
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentMyPageBinding
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.getDecimalFormat
+import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.login.LoginActivity
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
@@ -25,6 +24,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     lateinit var myDonationHistoryFragment: MyDonationHistoryFragment
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), BEIGE)
+
         userViewModel.getUserTokenValue()
         binding.userVM = userViewModel
         userViewModel.getUserInfo()
@@ -65,10 +66,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             dialog.show()
         }
 
-//        // my nft 보기
-//        btnMyNft.setOnClickListener{
-//
-//        }
+        // my nft 보기
+        btnMyNft.setOnClickListener{
+            findNavController().navigate(R.id.action_myPageFragment_to_myNftListFragment)
+        }
 
         // 로그아웃
         toolbar.setOnClickListener {
