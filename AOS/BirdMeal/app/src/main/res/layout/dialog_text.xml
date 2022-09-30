@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="canvasVM"
-            type="com.ssafy.birdmeal.view.donation.nft.CanvasViewModel" />
+            name="nftVM"
+            type="com.ssafy.birdmeal.view.donation.nft.NFTViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,17 +17,21 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_white_round"
         android:gravity="center"
-        android:minWidth="300dp"
+        android:minWidth="360dp"
         android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="40dp">
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_"
-            style="@style/header_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="마음을 전하세요"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="마음을 전해요"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,8 +60,9 @@
                 android:id="@+id/et_"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:hint="텍스트를 입력하세요"
-                android:text="@={canvasVM.text}"
+                android:text="@={nftVM.text}"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,8 +71,10 @@
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/btn_round_main_color"
             android:text="취소"
             android:textColor="@color/white"
@@ -81,6 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/btn_round_10_green"
             android:text="확인"
             android:textColor="@color/white"
