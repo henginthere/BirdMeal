@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
+import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.dto.OrderCompleteDto
 import com.ssafy.birdmeal.model.entity.CartEntity
 import com.ssafy.birdmeal.model.request.OrderRequestDto
 import com.ssafy.birdmeal.repository.CartRepository
+import com.ssafy.birdmeal.repository.DonationRepository
 import com.ssafy.birdmeal.repository.OrderRepository
 import com.ssafy.birdmeal.utils.CA_FUNDING
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
@@ -32,6 +34,7 @@ import kotlin.math.floor
 class ShoppingViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val orderRepository: OrderRepository,
+    private val donationRepository: DonationRepository
 ): ViewModel() {
 
     private val _productList: MutableStateFlow<List<CartEntity>>
@@ -39,6 +42,7 @@ class ShoppingViewModel @Inject constructor(
     val productList get() = _productList
 
     private val _userRole = MutableStateFlow(false)
+    val userRole get() = _userRole
 
     private val _txList: MutableList<String> = mutableListOf()
 
@@ -63,6 +67,9 @@ class ShoppingViewModel @Inject constructor(
 
     private val _orderSuccessMsgEvent = SingleLiveEvent<String>()
     val orderSuccessMsgEvent get() = _orderSuccessMsgEvent
+
+    private val _donateSuccessMsgEvent = SingleLiveEvent<String>()
+    val donateSuccessMsgEvent get() = _donateSuccessMsgEvent
 
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
@@ -99,14 +106,13 @@ class ShoppingViewModel @Inject constructor(
     // 장바구니 목록 조회
     fun getCartList(userRole : Boolean) = viewModelScope.launch(Dispatchers.IO){
         _userRole.value = userRole
+        Log.d(TAG, "유저 구분: ${_userRole.value}")
 
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
                 _productList.value = it.data
                 _productCnt.value = it.data.size
                 getTotalPrice()
-
-                Log.d(TAG, "getCartList: 목록 조회 함 ${productCnt.value}")
 
                 _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
             }
@@ -133,7 +139,6 @@ class ShoppingViewModel @Inject constructor(
             var amount = totalPrice.value!!.toDouble() * 0.03
             _donationAmount.value = floor(amount).toInt()
         }
-
 
         var total = totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
@@ -163,7 +168,7 @@ class ShoppingViewModel @Inject constructor(
             fundingContract.funding(_donationAmount.value.toBigInteger()).sendAsync().get()
 
             Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
-            createDonation() // DB에 기부 내역 저장하기
+            createDonation(userSeq) // DB에 기부 내역 저장하기
         }
 
         // 서버에 주문내역 전송하기
@@ -176,28 +181,42 @@ class ShoppingViewModel @Inject constructor(
         createOrderComplete()
     }
 
-    // 기부 내역 저장하기
-    private fun createDonation() = viewModelScope.launch(Dispatchers.IO){
-        
-    }
+    // 간접 기부 내역 DB에 저장하기
+    private fun createDonation(userSeq: Int) =
+        viewModelScope.launch(Dispatchers.IO){
+            val donationHistory = DonationHistoryDto(
+                userSeq = userSeq,
+                donationPrice = _donationAmount.value.toLong(),
+                donationType = false
+            )
+            donationRepository.insertDonationHistory(donationHistory).collectLatest {
+                Log.d(TAG, "insertDonationHistory response: $it")
+                when (it) {
+                    is Result.Success -> {
+                        _donateSuccessMsgEvent.postValue(it.data.msg)
+                    }
+                    is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                    is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
+                }
+            }
+        }
 
-    // 주문 내역 저장하기
+    // 주문 내역 DB에 저장하기
     private fun createOrderList(orderRequestDtoList: List<OrderRequestDto>) =
         viewModelScope.launch(Dispatchers.IO){
             orderRepository.createOrderList(orderRequestDtoList).collectLatest {
-                if(it is Result.Success){
-                    _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
-                    clear() // 장바구니 초기화
-                }
-                if(it is Result.Fail){
-                    _errMsgEvent.postValue(it.data.msg)
-                }
-                if(it is Result.Error){
-                    _errMsgEvent.postValue("서버 통신에 실패했습니다.")
+                when(it){
+                    is Result.Success -> {
+                        _orderSuccessMsgEvent.postValue("주문이 완료되었습니다.")
+                        clear() // 장바구니 초기화
+                    }
+                    is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                    is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
                 }
             }
-    }
+        }
 
+    // 주문완료 화면에 보여줄 주문 완료 객체 생성
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createOrderComplete(){
         var date : String = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
