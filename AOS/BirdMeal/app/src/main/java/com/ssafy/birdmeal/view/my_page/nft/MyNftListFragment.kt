@@ -22,7 +22,12 @@ class MyNftListFragment : BaseFragment<FragmentMyNftListBinding>(R.layout.fragme
 
         binding.userVM = userViewModel
 
-        nftViewModel.getMyNft()
+        // 아동인 경우
+        if (userViewModel.user.value?.userRole!!) {
+            nftViewModel.getMyPhotoCard()
+        } else {
+            nftViewModel.getMyNft()
+        }
 
         initAdapter()
 
