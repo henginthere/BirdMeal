@@ -140,4 +140,25 @@ class NFTViewModel @Inject constructor(
         }
         _myNftList.postValue(myList)
     }
+
+    // 내가 만든 포토카드 불러오기
+    fun getMyPhotoCard() = viewModelScope.launch(Dispatchers.IO) {
+        val userSeq = sharedPreferences.getInt(USER_SEQ, -1)
+        Log.d(TAG, "getMyPhotoCard userSeq: $userSeq")
+
+        nftRepository.getMyPhotoCard(userSeq).collectLatest {
+            Log.d(TAG, "getMyPhotoCard response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "getMyPhotoCard data: ${it.data}")
+
+                // 성공한 경우
+                if (it.data.success) {
+                    _myNftList.postValue(it.data.data?.map { it.nftImg })
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+    }
 }
