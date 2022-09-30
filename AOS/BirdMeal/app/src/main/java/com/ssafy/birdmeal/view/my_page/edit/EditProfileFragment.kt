@@ -1,9 +1,11 @@
 package com.ssafy.birdmeal.view.my_page.edit
 
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.home.UserViewModel
 
 class EditProfileFragment :
@@ -29,11 +31,12 @@ class EditProfileFragment :
     private fun initClickListener() = with(binding) {
 
         // 주소 검색
-        tvAddress.setOnClickListener {
+        btnSearchAddress.setOnClickListener {
             findNavController().navigate(R.id.action_editProfileFragment_to_searchAddressFragment)
         }
 
         btnSave.setOnClickListener {
+            Log.d(TAG, "initClickListener: 수정하기 클릭")
             userViewModel.updateUserProfile()
         }
     }
