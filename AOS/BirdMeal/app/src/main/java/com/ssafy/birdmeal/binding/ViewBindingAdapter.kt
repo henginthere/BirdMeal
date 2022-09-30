@@ -37,7 +37,7 @@ object ViewBindingAdapter {
         if (url != null) {
             Glide.with(this.context)
                 .load("$url")
-                .override(R.dimen.cartImg*2, R.dimen.cartImg*2)
+                .override(R.dimen.cartImg * 2, R.dimen.cartImg * 2)
                 .placeholder(com.ssafy.birdmeal.R.drawable.meal)
                 .into(this)
         }
@@ -49,7 +49,7 @@ object ViewBindingAdapter {
         if (url != null) {
             Glide.with(this.context)
                 .load("$url")
-                .override(R.dimen.thumbnailImgWidth*2, R.dimen.thumbnailImgHeight*2)
+                .override(R.dimen.thumbnailImgWidth * 2, R.dimen.thumbnailImgHeight * 2)
                 .placeholder(com.ssafy.birdmeal.R.drawable.meal)
                 .into(this)
         }
@@ -61,7 +61,7 @@ object ViewBindingAdapter {
         if (url != null) {
             Glide.with(this.context)
                 .load("$url")
-                .override(R.dimen.thumbnailImgWidth*2, R.dimen.descriptionImgHeight*2)
+                .override(R.dimen.thumbnailImgWidth * 2, R.dimen.descriptionImgHeight * 2)
                 .placeholder(R.drawable.meal)
                 .into(this)
         }
@@ -112,7 +112,7 @@ object ViewBindingAdapter {
     @JvmStatic
     fun ImageView.setNewIcon(productCnt: Int) {
         Log.d(TAG, "setNewIcon: 들어왔나요 $productCnt")
-        if(productCnt > 0){
+        if (productCnt > 0) {
             this.visibility = View.VISIBLE
         } else {
             this.visibility = View.INVISIBLE
@@ -123,10 +123,22 @@ object ViewBindingAdapter {
     @BindingAdapter("textEmpty")
     @JvmStatic
     fun TextView.setTextEmpty(productCnt: Int) {
-        if(productCnt > 0){
+        if (productCnt > 0) {
             this.visibility = View.GONE
         } else {
             this.visibility = View.VISIBLE
+        }
+    }
+
+    // NFT 이미지
+    @BindingAdapter("nftImg")
+    @JvmStatic
+    fun ImageView.setNftImg(url: String?) {
+        if (url != null) {
+            Glide.with(this.context)
+                .load(url)
+                .placeholder(R.drawable.loading)
+                .into(this)
         }
     }
 }
