@@ -19,18 +19,21 @@ import com.ssafy.birdmeal.databinding.FragmentCanvasBinding
 import com.ssafy.birdmeal.utils.FileUtil
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.fileToBitmap
-import com.ssafy.birdmeal.view.home.LoadingDialog
+import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingPhotoCardDialog
 
 
 private val PERMISSIONS_REQUIRED = Manifest.permission.READ_EXTERNAL_STORAGE
 
 class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_canvas) {
 
-    private val canvasViewModel by activityViewModels<CanvasViewModel>()
-    private val loadingDialog by lazy { LoadingDialog("포토카드 제작중...") }
+    private val nftViewModel by activityViewModels<NFTViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
+
 
     override fun init() {
-        canvasViewModel.setColor(Color.parseColor("#000000"))
+        nftViewModel.setColor(Color.parseColor("#000000"))
 
         initViewModelCallBack()
 
@@ -38,7 +41,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
     }
 
     private fun initViewModelCallBack() = with(binding) {
-        canvasViewModel.apply {
+        nftViewModel.apply {
             color.observe(viewLifecycleOwner) {
                 canvas.setPaintColor(it)
             }
@@ -48,7 +51,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
             }
 
             fileMsgEvent.observe(viewLifecycleOwner) {
-                loadingDialog.dismiss()
+                loadingPhotoCardDialog.dismiss()
                 showToast(it)
                 completedPhotoCardDialog()
                 findNavController().popBackStack()
@@ -84,7 +87,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
 
         // text 버튼
         ivText.setOnClickListener {
-            canvasViewModel.text.postValue("")
+            nftViewModel.text.postValue("")
             TextDialog().show(childFragmentManager, "textDialog")
         }
 
@@ -142,10 +145,10 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
 
     // 포토카드 생성
     private fun uploadPhotoCard() {
-        loadingDialog.show(parentFragmentManager, "loadingDialog")
+        LoadingFragmentDialog.loadingPhotoCardDialog.show(parentFragmentManager, "loadingDialog")
         val bitmap = binding.canvas.downloadBitmap()
         val multipartBody = FileUtil.bitmapToMultiPart(bitmap)
-        canvasViewModel.saveFile(multipartBody)
+        nftViewModel.saveFile(multipartBody)
     }
 
     // 팔레트 선택 다이얼로그
@@ -155,7 +158,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
             .setPositiveButton("선택",
                 object : ColorEnvelopeListener {
                     override fun onColorSelected(envelope: ColorEnvelope?, fromUser: Boolean) {
-                        canvasViewModel.setColor(envelope?.color ?: Color.parseColor("#000000"))
+                        nftViewModel.setColor(envelope?.color ?: Color.parseColor("#000000"))
                     }
                 }
             )

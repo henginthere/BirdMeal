@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.nftContract
 import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
 import com.ssafy.birdmeal.repository.NftRepository
 import com.ssafy.birdmeal.utils.Result
@@ -20,7 +21,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
-class CanvasViewModel @Inject constructor(
+class NFTViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val nftRepository: NftRepository
 ) : ViewModel() {
@@ -38,6 +39,9 @@ class CanvasViewModel @Inject constructor(
 
     private val _fileMsgEvent = SingleLiveEvent<String>()
     val fileMsgEvent get() = _fileMsgEvent
+
+    private val _mintingMsgEvent = SingleLiveEvent<String>()
+    val mintingMsgEvent get() = _mintingMsgEvent
 
     fun setColor(color: Int) {
         _color.value = color
@@ -88,5 +92,35 @@ class CanvasViewModel @Inject constructor(
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
+    }
+
+    // 랜덤 포토카드 뽑기
+    fun getPhotoCardUrl() = viewModelScope.launch(Dispatchers.IO) {
+        val userSeq = sharedPreferences.getInt(USER_SEQ, -1)
+        Log.d(TAG, "getPhotoCardUrl userSeq: $userSeq")
+
+        nftRepository.getPhotoCardUrl(userSeq).collectLatest {
+            Log.d(TAG, "getPhotoCardUrl response: $it")
+
+            if (it is Result.Success) {
+                Log.d(TAG, "getPhotoCardUrl data: ${it.data}")
+
+                // 성공한 경우
+                if (it.data.success) {
+                    // 받은 이미지 url로 민팅
+                    doMinting(it.data.data.nftImg)
+                }
+            } else if (it is Result.Error) {
+                _errMsgEvent.postValue("서버 에러 발생")
+            }
+        }
+    }
+
+    // 민팅하기 (컨트랙트)
+    fun doMinting(imgUrl: String) = viewModelScope.launch(Dispatchers.IO) {
+        val result = nftContract.mintNFT(imgUrl).sendAsync().get()
+        Log.d(TAG, "doMinting: $result")
+
+        _mintingMsgEvent.postValue(imgUrl)
     }
 }
