@@ -5,15 +5,17 @@
     tools:context=".view.my_page.MyPageFragment">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="userVM"
             type="com.ssafy.birdmeal.view.home.UserViewModel" />
+
         <variable
             name="orderVM"
             type="com.ssafy.birdmeal.view.my_page.OrderViewModel" />
     </data>
-
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,12 +34,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/toolbar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="마이페이지" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/toolbar_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="마이페이지" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -83,22 +85,21 @@
                 android:id="@+id/btn_modify_user"
                 android:layout_width="90dp"
                 android:layout_height="27dp"
-                android:layout_marginEnd="30dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/btn_edit_profile"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_my_nft"
                 android:layout_width="90dp"
                 android:layout_height="27dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/btn_nft"
-                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_modify_user"/>
+                app:layout_constraintEnd_toStartOf="@+id/btn_modify_user"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_hello"
@@ -158,6 +159,18 @@
                 app:layout_constraintBottom_toTopOf="@+id/tv_eln"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_get_nft"
+                setGetNftButton="@{userVM.user.userIsMint}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:minHeight="32dp"
+                android:text="NFT 받기"
+                app:layout_constraintBottom_toBottomOf="@id/tv_eln"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_eln" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -170,8 +183,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_info"
             app:selectionRequired="true"
-            app:singleSelection="true"
-            >
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
@@ -179,9 +191,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:checked="true"
+                android:fontFamily="@font/gong_gothic_light"
                 android:tag="1"
                 android:text="주문내역 보기"
-                android:fontFamily="@font/gong_gothic_light"
                 android:textColor="@color/chip_text_color"
                 app:chipBackgroundColor="@color/chip_color"
                 app:chipEndPadding="16dp"
@@ -196,8 +208,8 @@
                 android:layout_marginHorizontal="8dp"
                 android:tag="2"
                 android:text="내 기부내역 보기"
-                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
                 android:textColor="@color/chip_text_color"
+                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
                 app:chipBackgroundColor="@color/chip_color"
                 app:chipEndPadding="16dp"
                 app:chipStartPadding="16dp"

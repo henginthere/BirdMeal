@@ -62,11 +62,11 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
                 showToast(it)
             }
 
-            user.observe(viewLifecycleOwner) {
-                if (it.userIsMint) {
-                    mintingDialog()
-                }
-            }
+//            user.observe(viewLifecycleOwner) {
+//                if (it.userIsMint) {
+//                    mintingDialog()
+//                }
+//            }
         }
 
         donationViewModel.apply {
