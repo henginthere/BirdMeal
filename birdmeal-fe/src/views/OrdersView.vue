@@ -136,4 +136,9 @@ async function updatePageData(pageNum, oldNum) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-table th {
+  font-size: 1.0em !important;
+  font-weight: 400;
+}
+</style>

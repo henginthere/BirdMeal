@@ -16,7 +16,7 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-card width="800px">
+          <v-card width="800px" class="elevation-0">
             <v-card-title>상품명</v-card-title>
             <v-card-text class="mt-3">
               <v-text-field
@@ -31,7 +31,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-card width="800px">
+          <v-card width="800px" class="elevation-0">
             <v-card-title>상품가격</v-card-title>
             <v-card-text class="mt-3">
               <v-text-field
@@ -47,7 +47,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-card width="800px">
+          <v-card width="800px" class="elevation-0">
             <v-card-title>카테고리</v-card-title>
             <v-card-text class="mt-3">
               <v-select
@@ -56,7 +56,7 @@
                 label="카테고리"
                 dense
                 color="primary_orange"
-                variant="outlined"
+                variant="underlined"
               ></v-select>
             </v-card-text>
           </v-card>
@@ -65,9 +65,9 @@
 
       <v-row>
         <v-col class="pe-0">
-          <v-card width="800px">
+          <v-card width="800px" class="elevation-0">
             <v-card-title>상품 이미지</v-card-title>
-            <v-card class="mx-4 my-2">
+            <v-card class="mx-4 my-2 elevation-0">
               <v-card-title>대표 이미지</v-card-title>
               <v-card-text class="mt-2">
                 <v-file-input
@@ -75,7 +75,7 @@
                   id="productThumbnailImg"
                   v-on:change="imgUpload1"
                   prepend-icon="mdi-camera"
-                  variant="outlined"
+                  variant="underlined"
                 />
                 <v-img
                   :src="
@@ -88,7 +88,7 @@
                 />
               </v-card-text>
             </v-card>
-            <v-card class="mx-4 my-2">
+            <v-card class="mx-4 my-2 elevation-0">
               <v-card-title>상세설명 이미지</v-card-title>
               <v-card-text class="mt-2">
                 <v-file-input
@@ -97,7 +97,7 @@
                   id="productDescriptionImg"
                   v-on:change="imgUpload2"
                   prepend-icon="mdi-camera"
-                  variant="outlined"
+                  variant="underlined"
                 ></v-file-input>
                 <v-img
                   :src="

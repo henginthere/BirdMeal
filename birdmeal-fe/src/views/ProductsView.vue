@@ -104,4 +104,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.v-table th {
+  font-size: 1em !important;
+  font-weight: 400;
+}
+</style>
