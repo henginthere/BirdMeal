@@ -23,4 +23,8 @@ interface UserApi {
     suspend fun updateUserProfile(
         @Body map: Map<String, String>
     ): BaseResponse<String>
+
+    // 결식 아동 충전 상태 변경
+    @PUT("user/check-child/{user-seq}")
+    suspend fun updateChildState(@Path("user-seq") userSeq: Int): BaseResponse<Any>
 }

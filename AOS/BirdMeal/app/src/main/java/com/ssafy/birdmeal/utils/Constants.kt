@@ -38,3 +38,10 @@ const val ADDRESS_API_URL = "html"
 // 상태바 색 변경 이름
 const val WHITE = "white"
 const val BEIGE = "beige"
+
+// 결식아동 토큰 충전 상태
+const val FILL_ALREADY = "already"  // 이미 금주에 토큰 충전 완료
+const val FILL_COMPLETED = "completed" // 토큰 충전 완료
+const val FILL_POSSIBLE = "possible" // 토큰 충전 가능
+const val FILL_OVER = "over" // 토큰 보유액 10만 이상
+

@@ -55,4 +55,17 @@ class UserRepository @Inject constructor(
     }.catch { e ->
         emit(Result.Error(e))
     }
+
+    fun updateChildState(userSeq: Int): Flow<Result<BaseResponse<Any>>> = flow {
+        emit(Result.Loading)
+        userRemoteDataSource.updateChildState(userSeq).collect {
+            if(it.success){
+                emit(Result.Success(it))
+            } else {
+                emit(Result.Fail(it))
+            }
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
 }
