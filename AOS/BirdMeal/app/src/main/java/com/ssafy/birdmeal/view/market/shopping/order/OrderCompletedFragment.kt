@@ -6,6 +6,9 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderCompletedBinding
+import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.WHITE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +20,8 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), BEIGE)
+
         userViewModel.getUserInfo()
 
         binding.apply {
