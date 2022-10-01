@@ -5,6 +5,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
+import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import java.util.regex.Pattern
 
@@ -14,6 +16,8 @@ class EditProfileFragment :
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), BEIGE)
+
         binding.userVM = userViewModel
 
         initViewModelCallBack()
