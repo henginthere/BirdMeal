@@ -11,8 +11,9 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Birdmeal 판매</v-toolbar-title>
+      <v-toolbar-title>Birdmeal 스토어</v-toolbar-title>
       <v-spacer></v-spacer>
+      <div class="mr-4">{{ auth.user.sellerNickname }}님 환영합니다.</div>
     </v-app-bar>
 
     <!-- nav bar -->
@@ -22,17 +23,23 @@
       permanent
       class="elevation-1"
     >
-      <v-sheet color="back_beige lighten-4" class="pa-4">
-        <v-avatar class="mb-4" color="grey darken-1" size="64">
-          <img src="../assets/birdmeal_logo.png" height="60" />
-        </v-avatar>
-        <div>{{ auth.user.sellerNickname }}</div>
-        <div>{{ auth.userBalance }} ELN</div>
+      <v-sheet color="grey-lighten-4">
+        <v-container>
+          <v-row>
+            <v-col cols="3">
+              <v-avatar size="40">
+                <img src="../assets/birdmeal_logo.png" height="32" />
+              </v-avatar>
+            </v-col>
+            <v-col class="d-flex flex-column">
+              <div>판매수익</div>
+              <div>{{ auth.userBalance }} ETH</div>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-sheet>
 
-      <v-divider></v-divider>
-
-      <v-list color="back_beige">
+      <v-list>
         <v-list-item
           v-for="[text, path] in links"
           :key="links.id"
@@ -54,11 +61,13 @@
     <v-main>
       <router-view />
     </v-main>
+
+    <!-- footer -->
   </v-app>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { authState } from '@/stores/auth';
 
@@ -74,13 +83,8 @@ const links = ref([
   ['상품 등록', '/product/regist'],
   ['주문 목록', '/orders'],
   ['판매자 정보', '/mypage'],
-  ['테스트', '/test'],
-  ['지갑', '/wallet'],
+  ['꽥', '/test'],
 ]);
-
-const userEmail = computed(() => {
-  return auth.user ? auth.user.sellerEmail : '로그인 해주세요.';
-});
 
 /** Function */
 function movePages(path) {

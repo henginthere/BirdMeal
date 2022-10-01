@@ -14,7 +14,7 @@
           ></v-col>
         </v-row>
         <v-row class="my-4">
-          <v-col cols="2">이름</v-col>
+          <v-col cols="2">업체명</v-col>
           <v-col cols="7">{{ sellerInfo.sellerNickname }}</v-col>
         </v-row>
         <v-row class="my-4">

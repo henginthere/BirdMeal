@@ -141,7 +141,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { defineProps } from 'vue';
 import http from '@/api/http.js';
 
 /** Store, Router, Props */

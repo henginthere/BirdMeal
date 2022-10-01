@@ -2,7 +2,20 @@
   <v-app>
     <v-container class="text-h4">
       <v-row>
-        <v-col class="ml-4 mt-4 mb-0">주문목록</v-col>
+        <v-col class="ml-4 mt-4 mb-2">주문목록</v-col>
+      </v-row>
+    </v-container>
+    <v-container class="mb-0 pb-0">
+      <v-row>
+        <v-col lg="2" sm="4" class="mb-0 pb-0">
+          <v-select
+            v-model="filter"
+            :items="filter_list"
+            variant="underlined"
+            label="필터"
+            density="comfortable"
+          ></v-select>
+        </v-col>
       </v-row>
     </v-container>
     <v-container>
@@ -25,7 +38,17 @@
                 v-if="!item.orderDeliveryNumber || !item.orderDeliveryCompany"
               >
                 <v-icon color="red"> mdi-alert-circle </v-icon>
-                <p class="text-error">배송정보</p>
+                <p class="text-error">배송전</p>
+              </div>
+              <div v-else>
+                <div v-if="!item.orderToState">
+                  <v-icon color="orange"> mdi-alert-circle </v-icon>
+                  <p class="text-orange">배송중</p>
+                </div>
+                <div v-else>
+                  <v-icon color="green"> mdi-alert-circle </v-icon>
+                  <p class="text-green">완료</p>
+                </div>
               </div>
             </td>
             <td class="text-center">{{ item.orderSeq }}</td>
@@ -58,6 +81,9 @@ import OrderDetailItem from '@/components/OrderDetailItem.vue';
 const auth = authState();
 
 /** Variable */
+const filter_list = ref(['전체', '배송전', '배송중', '완료']);
+const filter = ref('전체');
+
 let orderList = [];
 
 const currentPage = ref(1);
@@ -75,6 +101,30 @@ onMounted(() => {
   });
 });
 watch(currentPage, updatePageData);
+watch(filter, async function (newVal, oldVal) {
+  http.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
+    orderList = res.data.data;
+  });
+
+  if (newVal == '배송전')
+    orderList = orderList.filter(
+      (item) => !item.orderDeliveryNumber || !item.orderDeliveryCompany
+    );
+
+  if (newVal == '배송중')
+    orderList = orderList.filter(
+      (item) =>
+        item.orderDeliveryNumber &&
+        item.orderDeliveryCompany &&
+        !item.orderToState
+    );
+
+  if (newVal == '완료')
+    orderList = orderList.filter((item) => item.orderToState);
+
+  pageLength.value = Math.ceil(orderList.length / itemsPerPage);
+  updatePageData(1);
+});
 
 /** Function */
 async function updatePageData(pageNum, oldNum) {
