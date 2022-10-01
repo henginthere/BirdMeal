@@ -9,15 +9,13 @@ import com.ssafy.birdmeal.databinding.FragmentDonateBinding
 import com.ssafy.birdmeal.utils.CustomTextWatcher
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.getDecimalFormat
-import com.ssafy.birdmeal.view.home.LoadingDialog
 import com.ssafy.birdmeal.view.home.UserViewModel
-import java.text.DecimalFormat
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingDonationDialog
 
 class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_donate) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
     private val donationViewModel by activityViewModels<DonationViewModel>()
-    private val loadingDialog by lazy { LoadingDialog("기부중...") }
 
     override fun init() {
         binding.apply {
@@ -51,9 +49,9 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
                 Log.d(TAG, "loadingMsgEvent: $it")
                 // 로딩 시작
                 if (it) {
-                    loadingDialog.show(childFragmentManager, "loadingDialog")
+                    loadingDonationDialog.show(childFragmentManager, "loadingDialog")
                 } else {
-                    loadingDialog.dismiss()
+                    loadingDonationDialog.dismiss()
                 }
             }
 
