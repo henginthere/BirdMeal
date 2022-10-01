@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.exchangeContract
+import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.UserDto
 import com.ssafy.birdmeal.model.request.EOARequest
 import com.ssafy.birdmeal.repository.UserRepository
@@ -42,6 +43,12 @@ class UserViewModel @Inject constructor(
 
     private val _walletMsgEvent = SingleLiveEvent<Boolean>()
     val walletMsgEvent get() = _walletMsgEvent
+
+    private val _tokenChildMsgEvent = SingleLiveEvent<String>()
+    val tokenChildMsgEvent get() = _tokenChildMsgEvent
+
+    private val _tokenChildLoadingEvent = SingleLiveEvent<Boolean>()
+    val tokenChildLoadingEvent get() = _tokenChildLoadingEvent
 
     private val _credentials = SingleLiveEvent<Credentials>()
     val credentials get() = _credentials
@@ -124,7 +131,7 @@ class UserViewModel @Inject constructor(
         val request = EOARequest(user.value!!.userSeq, credentials.value?.address!!)
 
         userRepository.updateUserEOA(request).collectLatest {
-            when(it){
+            when (it) {
                 is Result.Success -> {
                     Log.d(TAG, "updateUserEOA data: ${it.data}")
                     // 업데이트된 유저정보 받음
@@ -144,7 +151,7 @@ class UserViewModel @Inject constructor(
         Log.d(TAG, "getUserInfo userSeq: $userSeq")
 
         userRepository.getUserInfo(userSeq).collectLatest {
-            when(it){
+            when (it) {
                 is Result.Success -> {
                     Log.d(TAG, "getUserInfo data: ${it.data}")
 
@@ -188,7 +195,7 @@ class UserViewModel @Inject constructor(
         }
 
         userRepository.updateUserProfile(map).collectLatest {
-            when(it){
+            when (it) {
                 is Result.Success -> {
                     getUserInfo()
                     _userUpdateMsgEvent.postValue("회원정보 수정 성공")
@@ -216,5 +223,54 @@ class UserViewModel @Inject constructor(
         // 유저 보유 토큰 재조회
         getUserTokenValue()
         _successMsgEvent.postValue("충전이 완료되었습니다.")
+    }
+
+    // 토큰 충전가능한지 검사 (결식 아동)
+    fun checkFillUpTokenChild() = viewModelScope.launch(Dispatchers.IO) {
+        // 충전 가능 상태인지 검사
+        if (user.value?.userChargeState == false) {
+            _tokenChildMsgEvent.postValue(FILL_ALREADY)
+            return@launch
+        }
+
+        // 보유액이 10만 이상인 경우
+        if (_userELN.value!! >= 100000) {
+            _tokenChildMsgEvent.postValue(FILL_OVER)
+            return@launch
+        }
+
+        _tokenChildMsgEvent.postValue(FILL_POSSIBLE)
+    }
+
+    // 아동 토큰 충전 시작
+    fun fillUpTokenChild() = viewModelScope.launch(Dispatchers.IO) {
+        _tokenChildLoadingEvent.postValue(true)
+
+        val result = fundingContract.takeMoney(true).sendAsync().get()
+        Log.d(TAG, "fillUpTokenChild: $result")
+
+        // 유저 토큰 값 다시 조회
+        getUserTokenValue()
+
+        // 아동 충전 완료 여부 변경
+        fillUpCompleted()
+
+        _tokenChildLoadingEvent.postValue(false)
+        _tokenChildMsgEvent.postValue(FILL_COMPLETED)
+    }
+
+    // 아동 충전 완료 여부 변경
+    fun fillUpCompleted() = viewModelScope.launch(Dispatchers.IO) {
+        userRepository.updateChildState(user.value?.userSeq!!).collectLatest {
+            Log.d(TAG, "fillUpCompleted response: ${it}")
+            when (it) {
+                is Result.Success -> {
+                    getUserInfo()
+                    _userUpdateMsgEvent.postValue("아동 충전 상태 변경 성공")
+                }
+                is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
+                is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")
+            }
+        }
     }
 }

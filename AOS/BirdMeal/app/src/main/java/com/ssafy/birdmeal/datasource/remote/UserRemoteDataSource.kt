@@ -25,4 +25,8 @@ class UserRemoteDataSource @Inject constructor(
     fun updateUserProfile(map: Map<String, String>): Flow<BaseResponse<String>> = flow {
         emit(userApi.updateUserProfile(map))
     }
+
+    fun updateChildState(userSeq: Int): Flow<BaseResponse<Any>> = flow {
+        emit(userApi.updateChildState(userSeq))
+    }
 }

@@ -10,6 +10,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.utils.TAG
 
 object ViewBindingAdapter {
 
@@ -166,4 +167,17 @@ object ViewBindingAdapter {
         }
     }
 
+    // 토큰 충전 버튼 색 (아동)
+    @BindingAdapter("setFillUpButton")
+    @JvmStatic
+    fun ImageView.setFillUpButton(userChargeState: Boolean?) {
+        Log.d(TAG, "setFillUpButton: $userChargeState")
+        if (userChargeState != null) {
+            if (userChargeState) {
+                this.setImageResource(R.drawable.btn_charge)
+            } else {
+                this.setImageResource(R.drawable.btn_charged)
+            }
+        }
+    }
 }

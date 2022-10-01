@@ -1,7 +1,6 @@
 package com.ssafy.birdmeal.view.my_page
 
 import android.content.Intent
-import android.util.Log
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -12,14 +11,12 @@ import com.google.android.material.chip.Chip
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentMyPageBinding
-import com.ssafy.birdmeal.utils.BEIGE
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.changeStatusBarColor
-import com.ssafy.birdmeal.utils.getDecimalFormat
+import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.view.donation.nft.CompletedMintingDialog
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
 import com.ssafy.birdmeal.view.login.LoginActivity
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
 import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
@@ -38,9 +35,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         userViewModel.getUserTokenValue()
         binding.userVM = userViewModel
         userViewModel.getUserInfo()
-        if (userViewModel.user.value?.userChargeState == true) {
-            binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
-        }
+
         initViewModelCallBack()
         initClickListener()
         initFragmentManager()
@@ -52,13 +47,37 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             successMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
+
+            tokenChildMsgEvent.observe(viewLifecycleOwner) {
+                when (it) {
+                    // 이미 이번주에 충전한 경우
+                    FILL_ALREADY -> {
+                        alreadyFillUpDialog()
+                    }
+                    // 보유 토큰이 10만 이상인 경우
+                    FILL_OVER -> {
+                        overFillUpDialog()
+                    }
+                    // 충전이 가능한 경우
+                    FILL_POSSIBLE -> {
+                        confirmFillUpDialog()
+                    }
+                    // 충전 완료된 경우
+                    FILL_COMPLETED -> {
+                        completedFillUpDialog()
+                    }
+                }
+            }
+
+            tokenChildLoadingEvent.observe(viewLifecycleOwner) {
+                when (it) {
+                    true -> loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
+                    false -> loadingFillUpDialog.dismiss()
+                }
+            }
+
             userELN.observe(viewLifecycleOwner) {
                 binding.tvEln.text = getDecimalFormat(it) + "  ELN"
-            }
-            user.observe(viewLifecycleOwner) {
-                Log.d(TAG, "initViewModelCallBack: userObserve")
-                if (it.userChargeState)
-                    binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
             }
         }
 
@@ -79,8 +98,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         // 충전하기 버튼 클릭
         btnFillUpMoney.setOnClickListener {
-            val dialog = FillUpMoneyDialog(requireContext(), listener)
-            dialog.show()
+            // 아동인 경우
+            if (userViewModel.user.value?.userRole!!) {
+                userViewModel.checkFillUpTokenChild()
+            }
+            // 일반인인 경우
+            else {
+                val dialog = FillUpMoneyDialog(requireContext(), listener)
+                dialog.show()
+            }
         }
 
         // my nft 보기
@@ -172,6 +198,53 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             .title("조건이 충족되지 않았습니다")
             .body("전월 기부액이 100,000ELN 이상이면\nNFT를 받을 수 있습니다")
             .icon(R.drawable.ic_photocard)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
+    }
+
+    // 충전 확인 다이얼로그(아동) (충전하기 직전)
+    private fun confirmFillUpDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("충전 하시겠습니까?")
+            .body("보유 토큰을 10만 ELN로 충전합니다\n추가 충전은 다음주에 가능합니다")
+            .icon(R.drawable.ic_meat)
+            .onPositive(text = "충전", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+                userViewModel.fillUpTokenChild()
+            }
+            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
+
+            }
+    }
+
+    // 충전 불가 다이얼로그(아동) (이미 충전한 경우)
+    private fun alreadyFillUpDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("충전 불가")
+            .body("이번 주에는 이미 충전을 하였습니다\n다음 주에 충전을 해주세요")
+            .icon(R.drawable.ic_duck)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
+    }
+
+    // 충전 불가 다이얼로그(아동) (보유 토큰 10만 이상인 경우)
+    private fun overFillUpDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("충전 불가")
+            .body("보유 가능한 토큰은 10만 ELN이 최대입니다\n토큰을 소진하시고 충전해주세요")
+            .icon(R.drawable.ic_duck)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
+    }
+
+    // 충전 완료 다이얼로그(아동)
+    private fun completedFillUpDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("충전 완료")
+            .body("충전이 완료되었습니다")
+            .icon(R.drawable.ic_duck)
             .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
 
             }

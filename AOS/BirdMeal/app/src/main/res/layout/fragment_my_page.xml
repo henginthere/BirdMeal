@@ -151,13 +151,14 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_fill_up_money"
+                setFillUpButton="@{userVM.user.userChargeState}"
                 android:layout_width="90dp"
                 android:layout_height="27dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_charge"
                 app:layout_constraintBottom_toTopOf="@+id/tv_eln"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@drawable/btn_charge" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_get_nft"
@@ -167,6 +168,7 @@
                 android:layout_marginStart="30dp"
                 android:minHeight="32dp"
                 android:text="NFT 받기"
+                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_eln"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_eln" />
