@@ -33,7 +33,7 @@ const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전
 const val CA_NFT = "0xCb0eC79c8Cc01a2f257Ba41125e1D65B1e5473b3"   // NFT 컨트랙트
 
 // 주소 검색 띄울 주소
-const val ADDRESS_API_URL = "html"
+const val ADDRESS_API_URL = "https://searchaddress-2c847.web.app/"
 
 // 상태바 색 변경 이름
 const val WHITE = "white"
