@@ -35,7 +35,7 @@ class DonationViewModel @Inject constructor(
     private val nftRepository: NftRepository
 ) : ViewModel() {
 
-    private val _loadingMsgEvent = SingleLiveEvent<Boolean>()
+    private val _loadingMsgEvent = SingleLiveEvent<String>()
     val loadingMsgEvent get() = _loadingMsgEvent
 
     private val _errMsgEvent = SingleLiveEvent<String>()
@@ -88,24 +88,31 @@ class DonationViewModel @Inject constructor(
         Log.d(TAG, "fundingContract.currentBalance: $result")
     }
 
-    // 기부하기 (컨트랙트)
-    fun doDonate(userBalance: Long, donationType: Boolean) = viewModelScope.launch(IO) {
-        _loadingMsgEvent.postValue(true)
-
+    // 기부 가능한지 확인
+    fun checkDonate(userBalance: Long, donationType: Boolean) {
         Log.d(TAG, "목표 기부액: ${donationPrice.value}")
         Log.d(TAG, "나의 잔액: $userBalance")
 
         if (donationPrice.value.isNullOrBlank()) {
             _errMsgEvent.postValue("기부 금액을 입력해주세요")
-            return@launch
+            _loadingMsgEvent.postValue(DONATE_EMPTY)
+            return
         }
 
         val amount = donationPrice.value?.replace(",", "")?.toLong()!!
 
         if (amount > userBalance) {
             _errMsgEvent.postValue("기부 금액이 보유 잔액보다 많습니다")
-            return@launch
+            _loadingMsgEvent.postValue(DONATE_BALANCE)
+            return
         }
+
+        doDonate(amount, donationType)
+    }
+
+    // 기부하기 (컨트랙트)
+    fun doDonate(amount: Long, donationType: Boolean) = viewModelScope.launch(IO) {
+        _loadingMsgEvent.postValue(DONATE_POSSIBLE)
 
         elenaContract.approve(CA_FUNDING, amount.fromEtherToWei().toBigInteger()).sendAsync().get()
         val result = fundingContract.funding(BigInteger.valueOf(amount)).sendAsync().get()
@@ -113,7 +120,7 @@ class DonationViewModel @Inject constructor(
 
         insertDonationHistory(amount, donationType)
 
-        _loadingMsgEvent.postValue(false)
+        _loadingMsgEvent.postValue(DONATE_COMPLETED)
     }
 
     // chip 선택시 기부 금액 증가

@@ -45,3 +45,8 @@ const val FILL_COMPLETED = "completed" // 토큰 충전 완료
 const val FILL_POSSIBLE = "possible" // 토큰 충전 가능
 const val FILL_OVER = "over" // 토큰 보유액 10만 이상
 
+// 기부 가능한지 상태
+const val DONATE_EMPTY = "empty" // 금액을 입력하지 않음
+const val DONATE_BALANCE = "balance" // 금액이 부족함
+const val DONATE_POSSIBLE = "possible" // 기부 가능
+const val DONATE_COMPLETED = "completed" // 기부 완료
