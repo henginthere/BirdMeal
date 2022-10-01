@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class DonationHistoryDto(
     @SerializedName("donationSeq") val donationSeq: Int = 0,
-    @SerializedName("userSeq") val userSeq: Int,
+    @SerializedName("userSeq") val userSeq: Int = 0,
     @SerializedName("userNickname") val userNickname: String = "",
     @SerializedName("donationDate") val donationDate: String = "",
-    @SerializedName("donationPrice") val donationPrice: Long,
-    @SerializedName("donationType") val donationType: Boolean,
+    @SerializedName("donationPrice") val donationPrice: Long = 0,
+    @SerializedName("donationType") val donationType: Boolean = false,
 )
