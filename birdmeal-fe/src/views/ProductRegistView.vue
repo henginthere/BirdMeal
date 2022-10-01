@@ -10,7 +10,7 @@
 
     <v-container class="text-h4">
       <v-row>
-        <v-col class="ml-4 mt-4">상품등록</v-col>
+        <v-col class="ml-4 mt-4 mb-2">상품등록</v-col>
       </v-row>
     </v-container>
     <v-container>

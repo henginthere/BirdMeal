@@ -24,15 +24,17 @@ export const authState = defineStore('authState', {
     async login(credential) {
       let userData = decodeCredential(credential);
       let email = userData.email;
-      const response = await http.post('/login', {
+      const loginInfo = await http.post('/login', {
         googleAccessToken: credential,
       });
+      const sellerInfo = await http.get(`/${loginInfo.data.data.sellerSeq}`);
 
       const user = {
         sellerEmail: email,
-        sellerSeq: response.data.data.sellerSeq,
-        accessToken: response.data.data.tokenDto.accessToken,
-        refreshToken: response.data.data.tokenDto.refreshToken,
+        sellerSeq: loginInfo.data.data.sellerSeq,
+        sellerNickname : sellerInfo.data.data.sellerNickname,
+        accessToken: loginInfo.data.data.tokenDto.accessToken,
+        refreshToken: loginInfo.data.data.tokenDto.refreshToken,
       };
 
       this.user = user;

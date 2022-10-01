@@ -4,7 +4,6 @@
       <v-row>
         <v-col class="ml-4 mt-4 mb-2">주문목록</v-col>
       </v-row>
-      <v-divider thickness="3" width="600px"></v-divider>
     </v-container>
     <v-container class="mb-0 pb-0">
       <v-row>
