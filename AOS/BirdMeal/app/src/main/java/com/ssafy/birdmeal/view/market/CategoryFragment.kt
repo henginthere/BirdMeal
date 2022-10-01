@@ -5,6 +5,8 @@ import androidx.navigation.fragment.findNavController
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCategoryBinding
+import com.ssafy.birdmeal.utils.WHITE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +19,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), WHITE)
+
         marketViewModel.getCategoryList()
         shoppingViewModel.getCartList(userViewModel.user.value!!.userRole)
 
