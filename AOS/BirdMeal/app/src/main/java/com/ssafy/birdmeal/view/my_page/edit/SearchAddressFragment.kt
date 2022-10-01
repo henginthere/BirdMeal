@@ -10,8 +10,9 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentSearchAddressBinding
 import com.ssafy.birdmeal.utils.ADDRESS_API_URL
-import com.ssafy.birdmeal.utils.BASE_URL
 import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.WHITE
+import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 
 class SearchAddressFragment :
@@ -20,7 +21,11 @@ class SearchAddressFragment :
     private val userViewModel by activityViewModels<UserViewModel>()
 
     override fun init() {
+        changeStatusBarColor(requireActivity(), WHITE)
+
         initWebView()
+
+        initClickListener()
     }
 
     private fun initWebView() = with(binding) {
@@ -31,12 +36,12 @@ class SearchAddressFragment :
 
             webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
+                    Log.d(TAG, "onPageFinished: ")
                     loadUrl("javascript:sample2_execDaumPostcode();")
                 }
             }
+            loadUrl(ADDRESS_API_URL)
         }
-
-        webView.loadUrl(BASE_URL + ADDRESS_API_URL)
     }
 
     inner class BridgeInterface() {
@@ -46,4 +51,11 @@ class SearchAddressFragment :
             findNavController().popBackStack()
         }
     }
+
+    private fun initClickListener() = with(binding) {
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
 }
