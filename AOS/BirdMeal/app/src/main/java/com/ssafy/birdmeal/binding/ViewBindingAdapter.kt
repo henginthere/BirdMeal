@@ -154,4 +154,16 @@ object ViewBindingAdapter {
             }
         }
     }
+
+    // 이번달 내 기부금액 텍스트
+    @BindingAdapter("myDonationAmount")
+    @JvmStatic
+    fun TextView.myDonationAmount(productCnt: Int) {
+        if (productCnt > 0) {
+            this.visibility = View.GONE
+        } else {
+            this.visibility = View.VISIBLE
+        }
+    }
+
 }

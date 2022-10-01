@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="amount"
+            type="String" />
+
+        <variable
             name="donationVM"
             type="com.ssafy.birdmeal.view.donation.DonationViewModel" />
     </data>
@@ -15,9 +19,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_month_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="12dp"
+            android:background="@drawable/background_white_round"
+            android:elevation="4dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp"
+            android:translationZ="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_header_month_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="이번달 내 기부 금액"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_month_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@{donationVM.myDonationAmount + ` ELN`}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_month_amount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_month_amount"
+                tools:text="100,000 ELN" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_header_month_amount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/logo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_header_month_amount"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_donation_histroy"
-            submitList="@{donationVM.donationMyHistoryList}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -25,7 +92,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_month_amount"
             tools:listitem="@layout/item_donation_history_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

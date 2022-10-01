@@ -1,13 +1,15 @@
 package com.ssafy.birdmeal.view.donation
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
-import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.repository.DonationRepository
@@ -23,6 +25,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.math.BigInteger
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,10 +53,25 @@ class DonationViewModel @Inject constructor(
     private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
     val donationAllHistoryList get() = _donationAllHistoryList
 
-    private val _donationMyHistoryList:
-            MutableStateFlow<Result<BaseResponse<List<DonationHistoryDto>>>> =
-        MutableStateFlow(Result.Uninitialized)
-    val donationMyHistoryList get() = _donationMyHistoryList.asStateFlow()
+    private val _donationMyHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
+    val donationMyHistoryList get() = _donationMyHistoryList
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    val myDonationAmount =
+        Transformations.map(_donationMyHistoryList) { list ->
+            var sum = 0L;
+            val today = LocalDate.now()
+            Log.d(TAG, "${today.year}: ")
+            Log.d(TAG, "${today.monthValue}: ")
+            list.forEach {
+                if (it.donationDate.substring(0, 4) == today.year.toString() &&
+                    it.donationDate.substring(4, 6) == today.monthValue.toString()
+                ) {
+                    sum += it.donationPrice
+                }
+            }
+            sum.priceConvert()
+        }
 
     private val _orderChildHistoryList:
             MutableStateFlow<Result<BaseResponse<List<ChildHistoryResponse>>>> =
@@ -146,7 +164,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationMyHistoryList.value = it
+                    _donationMyHistoryList.postValue(it.data.data)
                     _donateMsgEvent.postValue("나의 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {

@@ -30,6 +30,10 @@ class MyDonationHistoryFragment :
         donateMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
         }
+
+        donationMyHistoryList.observe(viewLifecycleOwner){
+            donationHistoryListAdapter.submitList(it)
+        }
     }
 
 }
