@@ -5,14 +5,21 @@ import android.util.Log
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.awesomedialog.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.chip.Chip
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentMyPageBinding
-import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.TAG
+import com.ssafy.birdmeal.utils.changeStatusBarColor
+import com.ssafy.birdmeal.utils.getDecimalFormat
+import com.ssafy.birdmeal.view.donation.nft.CompletedMintingDialog
+import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog
 import com.ssafy.birdmeal.view.login.LoginActivity
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
 import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
@@ -20,6 +27,8 @@ import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
+    private val nftViewModel by activityViewModels<NFTViewModel>()
+
     private lateinit var myOrderHistoryFragment: MyOrderHistoryFragment
     lateinit var myDonationHistoryFragment: MyDonationHistoryFragment
 
@@ -29,7 +38,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         userViewModel.getUserTokenValue()
         binding.userVM = userViewModel
         userViewModel.getUserInfo()
-        if(userViewModel.user.value?.userChargeState==true){
+        if (userViewModel.user.value?.userChargeState == true) {
             binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
         }
         initViewModelCallBack()
@@ -40,16 +49,24 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     private fun initViewModelCallBack() {
         userViewModel.apply {
-            successMsgEvent.observe(viewLifecycleOwner){
+            successMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
-            userELN.observe(viewLifecycleOwner){
-                binding.tvEln.text = getDecimalFormat(it) +"  ELN"
+            userELN.observe(viewLifecycleOwner) {
+                binding.tvEln.text = getDecimalFormat(it) + "  ELN"
             }
-            user.observe(viewLifecycleOwner){
+            user.observe(viewLifecycleOwner) {
                 Log.d(TAG, "initViewModelCallBack: userObserve")
-                if(it.userChargeState)
+                if (it.userChargeState)
                     binding.btnFillUpMoney.setImageResource(R.drawable.btn_charged)
+            }
+        }
+
+        nftViewModel.apply {
+            mintingMsgEvent.observe(viewLifecycleOwner) {
+                LoadingFragmentDialog.loadingMintingDialog.dismiss()
+                userViewModel.getUserInfo()
+                CompletedMintingDialog(it).show(childFragmentManager, "CompletedMintingDialog")
             }
         }
     }
@@ -67,7 +84,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
 
         // my nft 보기
-        btnMyNft.setOnClickListener{
+        btnMyNft.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_myNftListFragment)
         }
 
@@ -81,16 +98,27 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
             Intent(requireContext(), LoginActivity::class.java).apply {
                 startActivity(this)
+                requireActivity().finish()
+            }
+        }
+
+        // NFT 받기
+        btnGetNft.setOnClickListener {
+            if (userViewModel.user.value?.userIsMint!!) {
+                mintingDialog()
+            } else {
+                noMintingDialog()
             }
         }
     }
 
     // 토큰 충전 다이얼로그 리스너
-    private val listener = object : FillUpMoneyListener{
+    private val listener = object : FillUpMoneyListener {
         override fun onItemClick(requestMoney: Int) {
             userViewModel.fillUpToken(requestMoney)
         }
     }
+
     private fun initFragmentManager() = with(binding) {
 
         myOrderHistoryFragment = MyOrderHistoryFragment()
@@ -120,4 +148,32 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         }
     }
 
+    // 민팅하라는 다이얼로그
+    private fun mintingDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("따뜻한 마음 감사합니다")
+            .body("아이들이 제작한 포토카드 NFT를 받을 수 있습니다")
+            .icon(R.drawable.ic_photocard)
+            .onPositive(text = "받기", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+                nftViewModel.getPhotoCardUrl()
+                LoadingFragmentDialog.loadingMintingDialog.show(
+                    childFragmentManager,
+                    "loadingMintingDialog"
+                )
+            }
+            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
+
+            }
+    }
+
+    // 민팅 불가 다이얼로그
+    private fun noMintingDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("조건이 충족되지 않았습니다")
+            .body("전월 기부액이 100,000ELN 이상이면\nNFT를 받을 수 있습니다")
+            .icon(R.drawable.ic_photocard)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
+    }
 }
