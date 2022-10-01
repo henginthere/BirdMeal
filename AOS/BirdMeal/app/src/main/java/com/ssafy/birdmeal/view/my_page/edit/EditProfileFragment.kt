@@ -45,15 +45,21 @@ class EditProfileFragment :
             }
             userViewModel.updateUserProfile()
         }
+
+        // 지갑 정보 보기
+        btnWallet.setOnClickListener {
+            WalletInfoDialog().show(childFragmentManager, "WalletInfoDialog")
+        }
     }
 
     // 닉네임 설정 제한
-    private fun initNickNameRule(){
+    private fun initNickNameRule() {
         binding.etName.filters = arrayOf(
             InputFilter { src, _, _, _, _, _ ->
                 // val ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-흐]+$") // 영문 숫자 한글
                 // 영문 숫자 한글 천지인 middle dot[ᆞ]
-                val ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
+                val ps =
+                    Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
                 if (src.equals("") || ps.matcher(src).matches()) {
                     return@InputFilter src;
                 }

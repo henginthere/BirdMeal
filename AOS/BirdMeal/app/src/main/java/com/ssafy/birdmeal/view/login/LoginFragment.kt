@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.view.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,11 +20,11 @@ import com.ssafy.birdmeal.MainActivity
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentLoginBinding
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.WHITE
-import com.ssafy.birdmeal.utils.changeStatusBarColor
+import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.view.home.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
@@ -31,6 +32,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     private val loginViewModel by activityViewModels<LoginViewModel>()
     private lateinit var googleSignInClient: GoogleSignInClient
     private val loadingDialog by lazy { LoadingDialog("로그인중...") }
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun init() {
         changeStatusBarColor(requireActivity(), WHITE)
@@ -57,6 +61,26 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         // 구글 소셜 로그인 버튼 클릭시
         ivGoogle.setOnClickListener {
             googleSignIn()
+        }
+
+        // 지갑 삭제
+        btnRemoveWallet.setOnClickListener {
+            removeWallet()
+        }
+    }
+
+    fun removeWallet() {
+        val path = context?.getWalletPath()
+        val walletFile = File(path)
+
+        if (walletFile.exists()) {
+            val files = walletFile.listFiles()
+            if (!files.isNullOrEmpty()) {
+                val walletPath = files[0]
+                walletPath.delete()
+                sharedPref.edit().remove(WALLET_PASSWORD)
+                showToast("지갑 삭제 완료")
+            }
         }
     }
 
