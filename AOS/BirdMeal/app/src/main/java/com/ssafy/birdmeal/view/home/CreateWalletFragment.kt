@@ -172,7 +172,7 @@ class CreateWalletFragment :
             requireActivity().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         var pasteData = ""
 
-        if (clipboard.hasPrimaryClip() || clipboard.primaryClipDescription!!.hasMimeType(
+        if (clipboard.hasPrimaryClip() && clipboard.primaryClipDescription!!.hasMimeType(
                 ClipDescription.MIMETYPE_TEXT_PLAIN
             )
         ) {

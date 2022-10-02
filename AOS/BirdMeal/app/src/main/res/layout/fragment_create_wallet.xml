@@ -268,13 +268,16 @@
                 app:boxStrokeWidth="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/gl_layout_create_wallet_hori_50"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_create"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="지갑 비밀번호"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
                     android:textSize="12sp"
                     tools:text="1111" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -341,6 +344,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="개인키"
+                    android:maxLength="64"
                     android:textSize="12sp"
                     tools:text="1111" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -373,13 +377,16 @@
                 app:boxStrokeWidth="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/gl_layout_private_wallet_hori_50"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password_private"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="지갑 비밀번호"
+                    android:inputType="textPassword"
+                    android:maxLength="30"
                     android:textSize="12sp"
                     tools:text="1111" />
             </com.google.android.material.textfield.TextInputLayout>
