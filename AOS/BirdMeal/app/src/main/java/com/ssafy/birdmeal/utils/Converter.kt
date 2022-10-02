@@ -19,6 +19,11 @@ class Converter {
             return myFormat.format(this)
         }
 
+        fun Int.priceConvert(): String {
+            val myFormat = DecimalFormat("###,###")
+            return myFormat.format(this)
+        }
+
         // Wei -> Ether 단위 변환
         fun BigInteger.fromWeiToEther(): BigDecimal {
             return Convert.fromWei(toBigDecimal(), Convert.Unit.ETHER)

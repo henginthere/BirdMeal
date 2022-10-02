@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.elenaContract
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.fundingContract
 import com.ssafy.birdmeal.model.dto.DonationHistoryDto
@@ -20,8 +19,6 @@ import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromWeiToEther
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.priceConvert
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.math.BigInteger
@@ -76,10 +73,12 @@ class DonationViewModel @Inject constructor(
             sum.priceConvert()
         }
 
-    private val _orderChildHistoryList:
-            MutableStateFlow<Result<BaseResponse<List<ChildHistoryResponse>>>> =
-        MutableStateFlow(Result.Uninitialized)
-    val orderChildHistoryList get() = _orderChildHistoryList.asStateFlow()
+    private val _orderChildHistoryList = SingleLiveEvent<List<ChildHistoryResponse>>()
+    val orderChildHistoryList get() = _orderChildHistoryList
+
+    val childUseAmount = Transformations.map(_orderChildHistoryList) { list ->
+        list.sumOf { it.productPrice * it.orderQuantity }
+    }
 
     // 총 기부액 불러오기 (컨트랙트)
     fun getDonationAmount() = viewModelScope.launch(IO) {
@@ -228,12 +227,18 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _orderChildHistoryList.value = it
+                    _orderChildHistoryList.postValue(it.data.data)
                     _donateMsgEvent.postValue("아이들 기부금 사용 내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
+    }
+
+    // 아이들 총 인출액 불러오기
+    fun getChildAmount() = viewModelScope.launch(IO) {
+        val result = fundingContract.totalWithdrawal.sendAsync().get()
+        Log.d(TAG, "getChildAmount: $result")
     }
 }

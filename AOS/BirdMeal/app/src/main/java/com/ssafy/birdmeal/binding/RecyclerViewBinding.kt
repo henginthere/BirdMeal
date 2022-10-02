@@ -38,13 +38,9 @@ object RecyclerViewBinding {
                     is ProductListAdapter -> {
                         (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<ProductDto>)
                     }
-                    is ChildHistoryListAdapter -> {
-                        (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<ChildHistoryResponse>)
-                    }
                     is OrderHistoryListAdapter -> {
                         (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<OrderResponse>)
                     }
-
                     is OrderDetailListAdapter -> {
                         (view.adapter as ListAdapter<Any, *>).submitList(result.data.data as List<OrderDetailResponse>)
                     }

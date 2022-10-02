@@ -16,6 +16,7 @@ class ChildHistoryFragment :
     override fun init() {
         binding.donationVM = donationViewModel
         donationViewModel.getChildOrderHistory()
+        donationViewModel.getChildAmount()
 
         initAdapter()
 
@@ -29,6 +30,9 @@ class ChildHistoryFragment :
     private fun initViewModelCallBack() = with(donationViewModel) {
         donateMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
+        }
+        orderChildHistoryList.observe(viewLifecycleOwner) {
+            childHistoryListAdapter.submitList(it)
         }
     }
 }
