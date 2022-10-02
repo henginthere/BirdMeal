@@ -18,6 +18,7 @@ private val PERMISSIONS_REQUIRED = Manifest.permission.CAMERA
 class CardFragment : BaseFragment<FragmentCardBinding>(R.layout.fragment_card) {
 
     private val loginViewModel by activityViewModels<LoginViewModel>()
+    private val ocrFragment by lazy { OcrFragment() }
 
     override fun init() {
         binding.loginVM = loginViewModel
@@ -56,11 +57,7 @@ class CardFragment : BaseFragment<FragmentCardBinding>(R.layout.fragment_card) {
         // OCR 인식 성공
         ocrMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
-            binding.apply {
-                containerPreview.visibility = View.GONE
-                headerScan.visibility = View.VISIBLE
-                btnScan.visibility = View.VISIBLE
-            }
+            closeScan()
         }
     }
 
@@ -71,11 +68,16 @@ class CardFragment : BaseFragment<FragmentCardBinding>(R.layout.fragment_card) {
 
         // 스캔창 닫기
         btnOcrClose.setOnClickListener {
-            containerPreview.visibility = View.GONE
-            btnOcrClose.visibility = View.GONE
-            headerScan.visibility = View.VISIBLE
-            btnScan.visibility = View.VISIBLE
+            closeScan()
         }
+    }
+
+    fun closeScan() = with(binding) {
+        childFragmentManager.beginTransaction().remove(ocrFragment).commit()
+        containerPreview.visibility = View.GONE
+        btnOcrClose.visibility = View.GONE
+        headerScan.visibility = View.VISIBLE
+        btnScan.visibility = View.VISIBLE
     }
 
     val requestPermissionLauncher = registerForActivityResult(
@@ -83,7 +85,7 @@ class CardFragment : BaseFragment<FragmentCardBinding>(R.layout.fragment_card) {
     ) { isGranted ->
         if (isGranted) {
             // PERMISSION GRANTED
-            childFragmentManager.beginTransaction().replace(R.id.container_preview, OcrFragment())
+            childFragmentManager.beginTransaction().replace(R.id.container_preview, ocrFragment)
                 .commit()
             binding.apply {
                 containerPreview.visibility = View.VISIBLE
