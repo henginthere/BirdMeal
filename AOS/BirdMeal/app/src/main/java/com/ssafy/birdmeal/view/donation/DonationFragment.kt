@@ -33,18 +33,18 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
 
         binding.userVM = userViewModel
         binding.donationVM = donationViewModel
-        binding.tvBalance.apply {
-            animationDuration = 2000L
-            charStrategy = Strategy.NormalAnimation()
-            addCharOrder(CharOrder.Alphabet)
-            animationInterpolator = AccelerateInterpolator()
-            addAnimatorListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    Log.d(TAG, "onAnimationEnd: ")
-                }
-            })
-        }
+//        binding.tvBalance.apply {
+//            animationDuration = 2000L
+//            charStrategy = Strategy.NormalAnimation()
+//            addCharOrder(CharOrder.Alphabet)
+//            animationInterpolator = AccelerateInterpolator()
+//            addAnimatorListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationEnd(animation: Animator?) {
+//                    super.onAnimationEnd(animation)
+//                    Log.d(TAG, "onAnimationEnd: ")
+//                }
+//            })
+//        }
 
         initViewModelCallBack()
 

@@ -3,7 +3,6 @@ package com.ssafy.birdmeal.view.login
 import android.content.SharedPreferences
 import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.model.request.JoinRequest
@@ -38,6 +37,9 @@ class LoginViewModel @Inject constructor(
     private val _joinSuccessMsgEvent = SingleLiveEvent<String>()
     val joinSuccessMsgEvent get() = _joinSuccessMsgEvent
 
+    private val _ocrMsgEvent = SingleLiveEvent<String>()
+    val ocrMsgEvent get() = _ocrMsgEvent
+
     val cardNumber = MutableStateFlow("")
 
     private val _childSuccessMsgEvent = SingleLiveEvent<String>()
@@ -67,7 +69,7 @@ class LoginViewModel @Inject constructor(
                     _errMsgEvent.postValue("서버 에러 발생")
                 }
                 // 등록 되지 않은 사용자면 회원가입으로
-                else if(it is Result.Fail){
+                else if (it is Result.Fail) {
                     _email.value = email
                     _joinMsgEvent.postValue("회원 가입 페이지로 이동 합니다.")
                 }
@@ -94,8 +96,7 @@ class LoginViewModel @Inject constructor(
 
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
-            }
-            else if(it is Result.Fail){
+            } else if (it is Result.Fail) {
                 _errMsgEvent.postValue(it.data.msg)
             }
         }
@@ -132,5 +133,11 @@ class LoginViewModel @Inject constructor(
                 _errMsgEvent.postValue("서버 에러 발생")
             }
         }
+    }
+
+    // OCR 인식한 결과
+    fun ocr(text: String) {
+        cardNumber.value = text.replace(" ", "")
+        _ocrMsgEvent.postValue("OCR 인식 성공")
     }
 }
