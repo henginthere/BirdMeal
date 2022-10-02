@@ -44,6 +44,9 @@ class UserViewModel @Inject constructor(
     private val _walletMsgEvent = SingleLiveEvent<Boolean>()
     val walletMsgEvent get() = _walletMsgEvent
 
+    private val _tokenMsgEvent = SingleLiveEvent<String>()
+    val tokenMsgEvent get() = _tokenMsgEvent
+
     private val _tokenChildMsgEvent = SingleLiveEvent<String>()
     val tokenChildMsgEvent get() = _tokenChildMsgEvent
 
@@ -222,6 +225,8 @@ class UserViewModel @Inject constructor(
         Log.d(TAG, "fillUpToken: $result")
         // 유저 보유 토큰 재조회
         getUserTokenValue()
+
+        _tokenMsgEvent.postValue(FILL_COMPLETED)
         _successMsgEvent.postValue("충전이 완료되었습니다.")
     }
 

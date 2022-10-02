@@ -76,6 +76,16 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                 }
             }
 
+            // 일반인 충전이 완료된 경우
+            tokenMsgEvent.observe(viewLifecycleOwner) {
+                when (it) {
+                    FILL_COMPLETED -> {
+                        loadingFillUpDialog.dismiss()
+                        completedFillUpDialog()
+                    }
+                }
+            }
+
             userELN.observe(viewLifecycleOwner) {
                 binding.tvEln.text = getDecimalFormat(it) + "  ELN"
             }
@@ -105,7 +115,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             // 일반인인 경우
             else {
                 val dialog = FillUpMoneyDialog(requireContext(), listener)
-                dialog.show()
+                dialog.show(childFragmentManager, "FillUpMoneyDialog")
             }
         }
 
@@ -142,6 +152,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     private val listener = object : FillUpMoneyListener {
         override fun onItemClick(requestMoney: Int) {
             userViewModel.fillUpToken(requestMoney)
+            loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
         }
     }
 
