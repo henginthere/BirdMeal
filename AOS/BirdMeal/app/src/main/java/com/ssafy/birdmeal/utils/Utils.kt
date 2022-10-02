@@ -13,11 +13,13 @@ import android.view.WindowInsetsController
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.ssafy.birdmeal.R
 import java.io.File
 import java.io.FileInputStream
 import java.text.DecimalFormat
+import java.time.LocalDate
 
 // 다이얼로그 사이즈 조절
 fun Context.dialogResize(dialog: Dialog, width: Float, height: Float) {
@@ -102,4 +104,11 @@ fun fileToBitmap(f: File): Bitmap? {
         e.printStackTrace()
         null
     }
+}
+
+// 오늘 날짜 한글로
+@RequiresApi(Build.VERSION_CODES.O)
+fun getTodayInfo(): String {
+    val today = LocalDate.now()
+    return today.year.toString() + "년 " + today.monthValue.toString() + "월 " + today.dayOfMonth + "일"
 }
