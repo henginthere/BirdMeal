@@ -68,6 +68,10 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
 
                         // EditText 초기화
                         binding.etAmount.text = null
+
+                        findNavController().popBackStack()
+
+                        setDonateCompleted()
                     }
                 }
             }

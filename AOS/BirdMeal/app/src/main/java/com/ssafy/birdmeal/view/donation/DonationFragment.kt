@@ -11,6 +11,7 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonationBinding
 import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.DONATE_COMPLETED
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.donation.nft.CompletedMintingDialog
@@ -77,6 +78,18 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
             // 불러온 전체 기부액 표시
             donationMsgEvent.observe(viewLifecycleOwner) {
                 tvBalance.setText(it)
+            }
+
+            loadingMsgEvent.observe(viewLifecycleOwner) {
+                when (it) {
+                    // 기부가 완료 됨
+                    DONATE_COMPLETED -> {
+                        CompletedDonationDialog().show(
+                            childFragmentManager,
+                            "CompletedDonationDialog"
+                        )
+                    }
+                }
             }
         }
 

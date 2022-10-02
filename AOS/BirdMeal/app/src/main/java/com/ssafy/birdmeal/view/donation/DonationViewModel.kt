@@ -50,6 +50,9 @@ class DonationViewModel @Inject constructor(
     private val _donationPrice = SingleLiveEvent<String>()
     val donationPrice get() = _donationPrice
 
+    private val _donationAmount = SingleLiveEvent<Long>()
+    val donationAmount get() = _donationAmount
+
     private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
     val donationAllHistoryList get() = _donationAllHistoryList
 
@@ -100,6 +103,7 @@ class DonationViewModel @Inject constructor(
         }
 
         val amount = donationPrice.value?.replace(",", "")?.toLong()!!
+        _donationAmount.postValue(amount)
 
         if (amount > userBalance) {
             _errMsgEvent.postValue("기부 금액이 보유 잔액보다 많습니다")
@@ -108,6 +112,11 @@ class DonationViewModel @Inject constructor(
         }
 
         doDonate(amount, donationType)
+    }
+
+    // 기부 완료 상태 발생
+    fun setDonateCompleted() {
+        _loadingMsgEvent.postValue(DONATE_COMPLETED)
     }
 
     // 기부하기 (컨트랙트)
