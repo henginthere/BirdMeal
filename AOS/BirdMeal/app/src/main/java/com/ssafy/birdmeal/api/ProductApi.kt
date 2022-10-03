@@ -27,6 +27,6 @@ interface ProductApi {
     // 상품 검색
     @GET("product/search")
     suspend fun searchProduct(
-        @Path("productSearchName") name: String
+        @Path("product-search-name ") name: String
     ) : BaseResponse<List<ProductDto>>
 }
