@@ -50,6 +50,9 @@ class DonationViewModel @Inject constructor(
     private val _donationAmount = SingleLiveEvent<Long>()
     val donationAmount get() = _donationAmount
 
+    private val _animationMsgEvent = SingleLiveEvent<String>()
+    val animationMsgEvent get() = _animationMsgEvent
+
     private val _donationAllHistoryList = SingleLiveEvent<List<DonationHistoryDto>>()
     val donationAllHistoryList get() = _donationAllHistoryList
 
@@ -240,5 +243,10 @@ class DonationViewModel @Inject constructor(
     fun getChildAmount() = viewModelScope.launch(IO) {
         val result = fundingContract.totalWithdrawal.sendAsync().get()
         Log.d(TAG, "getChildAmount: $result")
+    }
+
+    // 기부 완료 애니메이션 시작
+    fun setAnimation() {
+        _animationMsgEvent.postValue("기부완료")
     }
 }
