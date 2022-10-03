@@ -1,4 +1,4 @@
-package com.ssafy.birdmeal.view.market.product.detail
+package com.ssafy.birdmeal.view.market.product.detail.seller
 
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels

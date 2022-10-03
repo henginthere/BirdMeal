@@ -5,18 +5,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.base.BaseResponse
 import com.ssafy.birdmeal.model.dto.CategoryDto
-import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 import com.ssafy.birdmeal.model.dto.ProductDto
-import com.ssafy.birdmeal.model.response.ChildHistoryResponse
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.view.donation.history.ChildHistoryListAdapter
-import com.ssafy.birdmeal.view.donation.history.DonationHistoryListAdapter
 import com.ssafy.birdmeal.view.market.CategoryGridAdapter
 import com.ssafy.birdmeal.view.market.product.CategoryHorizonAdapter
 import com.ssafy.birdmeal.view.market.product.ProductListAdapter
-import com.ssafy.birdmeal.view.market.product.detail.SellerProductAdapter
+import com.ssafy.birdmeal.view.market.product.detail.seller.SellerProductAdapter
 import com.ssafy.birdmeal.view.my_page.history.order.OrderHistoryListAdapter
 import com.ssafy.birdmeal.view.my_page.history.order.detail.OrderDetailListAdapter
 
