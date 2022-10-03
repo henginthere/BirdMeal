@@ -1,12 +1,9 @@
 package com.ssafy.birdmeal.view.my_page
 
-import android.content.Intent
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.awesomedialog.*
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.chip.Chip
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
@@ -17,7 +14,6 @@ import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
-import com.ssafy.birdmeal.view.login.LoginActivity
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
 import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
 
@@ -122,20 +118,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         // my nft 보기
         btnMyNft.setOnClickListener {
             findNavController().navigate(R.id.action_myPageFragment_to_myNftListFragment)
-        }
-
-        // 로그아웃
-        toolbar.setOnClickListener {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .build()
-            val client = GoogleSignIn.getClient(requireActivity(), gso)
-            client.signOut().addOnCompleteListener {
-                showToast("로그아웃 완료")
-            }
-            Intent(requireContext(), LoginActivity::class.java).apply {
-                startActivity(this)
-                requireActivity().finish()
-            }
         }
 
         // NFT 받기
