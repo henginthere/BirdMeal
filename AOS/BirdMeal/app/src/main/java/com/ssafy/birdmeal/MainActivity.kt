@@ -11,6 +11,8 @@ import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
 import com.ssafy.birdmeal.view.donation.DonationViewModel
+import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +24,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
 
     private val donationViewModel by viewModels<DonationViewModel>()
+    private val userViewModel by viewModels<UserViewModel>()
+    private val orderViewModel by viewModels<OrderViewModel>()
 
     override fun init() {
         PACKAGE_NAME = application.packageName
@@ -62,7 +66,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun initViewModelCallBack() {
         donationViewModel.contractErrMsgEvent.observe(this) {
-            contractErrdialog()
+            contractErrdialog(it)
+        }
+        userViewModel.contractErrMsgEvent.observe(this) {
+            contractErrdialog(it)
+        }
+        orderViewModel.contractErrMsgEvent.observe(this) {
+            contractErrdialog(it)
         }
     }
 
@@ -81,12 +91,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     // 블록체인 통신 오류 다이얼로그
-    fun contractErrdialog() {
+    fun contractErrdialog(msg: String) {
         AwesomeDialog.build(this)
             .title("통신 오류")
-            .body("블록체인 네트워크 통신에\n오류가 발생했습니다\n다시 시도해주세요")
+            .body("블록체인 네트워크 통신에\n오류가 발생했습니다\n다시 시도해주세요\n$msg")
             .icon(R.drawable.ic_warn)
-            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_main_color) {
 
             }
     }

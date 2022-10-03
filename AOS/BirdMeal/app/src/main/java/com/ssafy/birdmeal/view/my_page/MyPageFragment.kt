@@ -62,6 +62,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                     FILL_COMPLETED -> {
                         completedFillUpDialog()
                     }
+                    // 컨트랙트 통신 오류
+                    FILL_ERR -> {
+                        loadingFillUpDialog.dismiss()
+                    }
                 }
             }
 
@@ -78,6 +82,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                     FILL_COMPLETED -> {
                         loadingFillUpDialog.dismiss()
                         completedFillUpDialog()
+                    }
+                    // 컨트랙트 통신 오류
+                    FILL_ERR -> {
+                        loadingFillUpDialog.dismiss()
                     }
                 }
             }
