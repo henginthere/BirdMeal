@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.awesomedialog.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -74,7 +75,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         // 지갑 삭제
         btnRemoveWallet.setOnClickListener {
-            removeWallet()
+            deleteWalletDialog()
         }
     }
 
@@ -141,5 +142,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
+    }
+
+    // 지갑삭제 다이얼로그
+    private fun deleteWalletDialog() {
+        AwesomeDialog.build(requireActivity())
+            .title("지갑 알림")
+            .body("지갑을 삭제하시겠습니까?")
+            .icon(R.drawable.ic_digital_wallet)
+            .onPositive(text = "삭제", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+                removeWallet()
+            }
+            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
+
+            }
     }
 }
