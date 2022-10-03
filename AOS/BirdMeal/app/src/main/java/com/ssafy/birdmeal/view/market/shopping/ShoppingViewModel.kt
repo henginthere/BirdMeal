@@ -151,7 +151,7 @@ class ShoppingViewModel @Inject constructor(
 
     // 장바구니 결제하기
     @RequiresApi(Build.VERSION_CODES.O)
-    fun buyingList(tradeContract : MutableList<Trade>, userSeq : Int){
+    fun buyingList(tradeContract : MutableList<Trade>, userSeq : Int) = viewModelScope.launch(Dispatchers.IO){
         // 상품 컨트랙트 마다 거래 처리하기
         productList.value.mapIndexed { idx, p ->
             // 상품 컨트랙트에 대한 엘레나 거래 승인
