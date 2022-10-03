@@ -62,6 +62,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                     FILL_COMPLETED -> {
                         completedFillUpDialog()
                     }
+                    // 컨트랙트 통신 오류
+                    FILL_ERR -> {
+                        loadingFillUpDialog.dismiss()
+                    }
                 }
             }
 
@@ -79,6 +83,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                         loadingFillUpDialog.dismiss()
                         completedFillUpDialog()
                     }
+                    // 컨트랙트 통신 오류
+                    FILL_ERR -> {
+                        loadingFillUpDialog.dismiss()
+                    }
                 }
             }
 
@@ -90,8 +98,21 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         nftViewModel.apply {
             mintingMsgEvent.observe(viewLifecycleOwner) {
                 LoadingFragmentDialog.loadingMintingDialog.dismiss()
-                userViewModel.getUserInfo()
-                CompletedMintingDialog(it).show(childFragmentManager, "CompletedMintingDialog")
+                when (it) {
+                    // 컨트랙트 통신에 실패한 경우
+                    "" -> {
+
+                    }
+                    // 통신 성공한 경우
+                    else -> {
+                        userViewModel.getUserInfo()
+                        CompletedMintingDialog(it).show(
+                            childFragmentManager,
+                            "CompletedMintingDialog"
+                        )
+                    }
+                }
+
             }
         }
     }

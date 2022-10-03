@@ -60,7 +60,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             (requireActivity().application as ApplicationClass).initContract(it)
 
             userViewModel.updateUserEOA()
-            donationViewModel.getDonationAmount()
             showToast("인증서 준비 완료")
         }
     }

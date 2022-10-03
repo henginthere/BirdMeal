@@ -10,7 +10,11 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCreateWalletBinding
 import com.ssafy.birdmeal.utils.*
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingWalletDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.WalletUtils
@@ -62,13 +66,21 @@ class CreateWalletFragment :
                 val password = etPasswordCreate.text.toString()
 
                 try {
-                    // generating the etherium wallet
-                    val walletName = WalletUtils.generateLightNewWalletFile(password, walletFile)
+                    loadingWalletDialog.show(childFragmentManager, "loadingWalletDialog")
 
-                    setWalletInfo(walletName, password)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        // generating the etherium wallet
+                        val walletName =
+                            WalletUtils.generateLightNewWalletFile(password, walletFile)
 
+                        CoroutineScope(Dispatchers.Main).launch {
+                            setWalletInfo(walletName, password)
+                        }
+
+                    }
                 } catch (e: java.lang.Exception) {
                     Log.e(TAG, "createWallet: $e")
+                    loadingWalletDialog.dismiss()
                     showToast("지갑 생성 failed")
                 }
             } else {
@@ -90,19 +102,25 @@ class CreateWalletFragment :
                 val path = TedPermissionProvider.context.getWalletPath()
 
                 try {
-                    val walletName = WalletUtils.generateWalletFile(
-                        password,
-                        ECKeyPair(BigInteger(private, 16), BigInteger(public, 16)),
-                        File(path),
-                        false
-                    )
+                    loadingWalletDialog.show(childFragmentManager, "loadingWalletDialog")
+                    CoroutineScope(Dispatchers.IO).launch {
 
-                    setWalletInfo(walletName, password)
-                    userViewModel.setWalletName(walletName)
-                    userViewModel.createCredentials(password)
+                        val walletName = WalletUtils.generateWalletFile(
+                            password,
+                            ECKeyPair(BigInteger(private, 16), BigInteger(public, 16)),
+                            File(path),
+                            false
+                        )
 
+                        CoroutineScope(Dispatchers.Main).launch {
+                            setWalletInfo(walletName, password)
+                            userViewModel.setWalletName(walletName)
+                            userViewModel.createCredentials(password)
+                        }
+                    }
                 } catch (e: Exception) {
                     Log.d(TAG, "generateWalletFile: $e")
+                    loadingWalletDialog.dismiss()
                     showToast("지갑 생성 실패")
                 }
             } else {
@@ -143,6 +161,8 @@ class CreateWalletFragment :
         sharedPreferences.edit().putString(WALLET_PASSWORD, password).apply()
 
         completedWallet(privateKey, eoa)
+
+        loadingWalletDialog.dismiss()
 
         showToast("지갑 생성이 완료되었습니다")
         hideKeyboard()

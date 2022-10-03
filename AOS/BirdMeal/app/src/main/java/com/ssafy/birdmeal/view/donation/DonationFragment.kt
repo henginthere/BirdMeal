@@ -105,11 +105,11 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         }
 
         nftViewModel.apply {
-            mintingMsgEvent.observe(viewLifecycleOwner) {
-                loadingMintingDialog.dismiss()
-                userViewModel.getUserInfo()
-                CompletedMintingDialog(it).show(childFragmentManager, "CompletedMintingDialog")
-            }
+//            mintingMsgEvent.observe(viewLifecycleOwner) {
+//                loadingMintingDialog.dismiss()
+//                userViewModel.getUserInfo()
+//                CompletedMintingDialog(it).show(childFragmentManager, "CompletedMintingDialog")
+//            }
         }
     }
 
@@ -134,18 +134,18 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
         }
     }
 
-    // 민팅하라는 다이얼로그
-    private fun mintingDialog() {
-        AwesomeDialog.build(requireActivity())
-            .title("따뜻한 마음 감사합니다")
-            .body("아이들이 제작한 포토카드 NFT를 받을 수 있습니다")
-            .icon(R.drawable.ic_photocard)
-            .onPositive(text = "받기", buttonBackgroundColor = R.drawable.btn_round_10_green) {
-                nftViewModel.getPhotoCardUrl()
-                loadingMintingDialog.show(childFragmentManager, "loadingMintingDialog")
-            }
-            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
-
-            }
-    }
+//    // 민팅하라는 다이얼로그
+//    private fun mintingDialog() {
+//        AwesomeDialog.build(requireActivity())
+//            .title("따뜻한 마음 감사합니다")
+//            .body("아이들이 제작한 포토카드 NFT를 받을 수 있습니다")
+//            .icon(R.drawable.ic_photocard)
+//            .onPositive(text = "받기", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+//                nftViewModel.getPhotoCardUrl()
+//                loadingMintingDialog.show(childFragmentManager, "loadingMintingDialog")
+//            }
+//            .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
+//
+//            }
+//    }
 }
