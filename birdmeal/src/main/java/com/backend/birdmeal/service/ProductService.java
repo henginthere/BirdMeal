@@ -1,8 +1,6 @@
 package com.backend.birdmeal.service;
 
-import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.ProductResponseDto;
-import com.backend.birdmeal.dto.ProductSearchDto;
 import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.entity.SellerEntity;
 import com.backend.birdmeal.repository.ProductRepository;
@@ -46,10 +44,10 @@ public class ProductService {
     }
 
     // 상품 검색하기
-    public List<ProductResponseDto> searchProductInfo(ProductSearchDto productSearchDto) {
+    public List<ProductResponseDto> searchProductInfo(String productSearchName) {
         List<ProductResponseDto> resList = new ArrayList<>();
 
-        List<ProductEntity> list = productRepository.findAllByProductNameContaining(productSearchDto.getProductSearchName());
+        List<ProductEntity> list = productRepository.findAllByProductNameContaining(productSearchName);
 
         for(int i=0; i<list.size();i++){
             ProductEntity productEntity = list.get(i);

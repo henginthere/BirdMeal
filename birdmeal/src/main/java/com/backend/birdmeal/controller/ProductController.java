@@ -1,10 +1,7 @@
 package com.backend.birdmeal.controller;
 
 import com.backend.birdmeal.dto.CategoryDto;
-import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.ProductResponseDto;
-import com.backend.birdmeal.dto.ProductSearchDto;
-import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.service.CategoryService;
 import com.backend.birdmeal.service.ProductService;
 import com.backend.birdmeal.util.ResponseFrame;
@@ -86,14 +83,14 @@ public class ProductController {
     /**
      * 상품 검색하기
      *
-     * @param productSearchDto
+     * @param productSearchName
      * @return Object
      */
 
     @ApiOperation(value="상품 검색하기",response = Object.class)
-    @GetMapping("/search")
-    public ResponseEntity<?> searchProductInfo(@RequestBody ProductSearchDto productSearchDto){
-        List<ProductResponseDto> productDto = productService.searchProductInfo(productSearchDto);
+    @GetMapping("/search/{product-search-name}")
+    public ResponseEntity<?> searchProductInfo(@PathVariable("product-search-name") String productSearchName){
+        List<ProductResponseDto> productDto = productService.searchProductInfo(productSearchName);
         ResponseFrame<?> res;
         if(productDto!=null){
             res = ResponseFrame.of(productDto,"상품 검색을 성공했습니다.");
