@@ -32,6 +32,9 @@ class NFTViewModel @Inject constructor(
 
     val text = MutableLiveData<String>()
 
+    private val _contractErrMsgEvent = SingleLiveEvent<String>()
+    val contractErrMsgEvent get() = _contractErrMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -122,23 +125,35 @@ class NFTViewModel @Inject constructor(
 
     // 민팅하기 (컨트랙트)
     fun doMinting(imgUrl: String) = viewModelScope.launch(Dispatchers.IO) {
-        val result = nftContract.mintNFT(imgUrl).sendAsync().get()
-        Log.d(TAG, "doMinting: $result")
 
-        _mintingMsgEvent.postValue(imgUrl)
+        try {
+            val result = nftContract.mintNFT(imgUrl).sendAsync().get()
+            Log.d(TAG, "doMinting: $result")
+
+            _mintingMsgEvent.postValue(imgUrl)
+        } catch (e: Exception) {
+            _mintingMsgEvent.postValue("")
+            _contractErrMsgEvent.postValue("doMinting")
+            Log.d(TAG, "doMinting err: $e")
+        }
     }
 
     // 나의 NFT 목록 불러오기 (컨트랙트)
     fun getMyNft() {
-        val tokenIdList = nftContract.myToken.sendAsync().get()
-        Log.d(TAG, "getMyNft: $tokenIdList")
+        try {
+            val tokenIdList = nftContract.myToken.sendAsync().get()
+            Log.d(TAG, "getMyNft: $tokenIdList")
 
-        val myList = arrayListOf<String>()
-        tokenIdList.forEach {
-            val imgUrl = nftContract.tokenURI(it as BigInteger).sendAsync().get()
-            myList.add(imgUrl)
+            val myList = arrayListOf<String>()
+            tokenIdList.forEach {
+                val imgUrl = nftContract.tokenURI(it as BigInteger).sendAsync().get()
+                myList.add(imgUrl)
+            }
+            _myNftList.postValue(myList)
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue("getMyNft")
+            Log.d(TAG, "getMyNft err: $e")
         }
-        _myNftList.postValue(myList)
     }
 
     // 내가 만든 포토카드 불러오기

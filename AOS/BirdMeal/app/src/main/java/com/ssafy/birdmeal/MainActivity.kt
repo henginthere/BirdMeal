@@ -11,6 +11,7 @@ import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
 import com.ssafy.birdmeal.view.donation.DonationViewModel
+import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val donationViewModel by viewModels<DonationViewModel>()
     private val userViewModel by viewModels<UserViewModel>()
     private val orderViewModel by viewModels<OrderViewModel>()
+    private val nftViewModel by viewModels<NFTViewModel>()
 
     override fun init() {
         PACKAGE_NAME = application.packageName
@@ -72,6 +74,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             contractErrdialog(it)
         }
         orderViewModel.contractErrMsgEvent.observe(this) {
+            contractErrdialog(it)
+        }
+        nftViewModel.contractErrMsgEvent.observe(this) {
             contractErrdialog(it)
         }
     }
