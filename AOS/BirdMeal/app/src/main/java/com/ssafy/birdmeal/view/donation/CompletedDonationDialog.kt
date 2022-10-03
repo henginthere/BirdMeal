@@ -54,4 +54,9 @@ class CompletedDonationDialog : DialogFragment() {
             dismiss()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        donationViewModel.setAnimation()
+    }
 }
