@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductSearchDto {
     private String productSearchName;
-    private long categorySeq;
 }
