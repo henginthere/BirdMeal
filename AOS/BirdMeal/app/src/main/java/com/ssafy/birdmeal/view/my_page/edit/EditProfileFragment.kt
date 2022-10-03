@@ -1,6 +1,7 @@
 package com.ssafy.birdmeal.view.my_page.edit
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.text.InputFilter
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -9,15 +10,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.utils.BEIGE
+import com.ssafy.birdmeal.utils.USER_SEQ
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.regex.Pattern
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class EditProfileFragment :
     BaseFragment<com.ssafy.birdmeal.databinding.FragmentEditProfileBinding>(R.layout.fragment_edit_profile) {
 
     private val userViewModel by activityViewModels<UserViewModel>()
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun init() {
         changeStatusBarColor(requireActivity(), BEIGE)
@@ -61,6 +69,7 @@ class EditProfileFragment :
 
         // 로그아웃
         btnLogout.setOnClickListener {
+            sharedPref.edit().remove(USER_SEQ).apply()
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .build()
             val client = GoogleSignIn.getClient(requireActivity(), gso)

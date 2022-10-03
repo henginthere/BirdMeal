@@ -40,6 +40,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
         initGso()
 
+        autoLogin()
+
         initClickListener()
 
         initViewModelCallBack()
@@ -54,6 +56,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    }
+
+    private fun autoLogin() { // 자동 로그인
+        val seq = sharedPref.getInt(USER_SEQ, -1)
+
+        if (seq != -1) {
+            googleSignIn()
+        }
     }
 
     private fun initClickListener() = with(binding) {
