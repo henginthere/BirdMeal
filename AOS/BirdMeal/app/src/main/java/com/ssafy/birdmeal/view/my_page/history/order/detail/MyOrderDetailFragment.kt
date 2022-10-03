@@ -27,7 +27,9 @@ class MyOrderDetailFragment :
         changeStatusBarColor(requireActivity(), WHITE)
 
         this.orderSeq = args.orderSeq
+
         orderViewModel.getOrderDetail(orderSeq)
+
         val adapter = OrderDetailListAdapter(listener)
         binding.apply {
             orderVM = orderViewModel
@@ -52,10 +54,16 @@ class MyOrderDetailFragment :
 
         // 해당 제품의 해시값 불러오기 성공
         orderDetailSeqMsgEvent.observe(viewLifecycleOwner) {
-            initCheckDialog(it)
             Log.d(TAG, "getOrderTHash: ${orderViewModel.orderDetailHash.value.productCa}")
-            (requireActivity().application as ApplicationClass)
-                .getTradeContract(orderViewModel.orderDetailHash.value.productCa)
+
+            try {
+                (requireActivity().application as ApplicationClass)
+                    .getTradeContract(orderViewModel.orderDetailHash.value.productCa)
+                initCheckDialog(it)
+            } catch (e: Exception) {
+                orderViewModel.setContractErr("getTradeContract")
+                Log.d(TAG, "getTradeContract err: $e")
+            }
         }
     }
 
@@ -75,6 +83,7 @@ class MyOrderDetailFragment :
     private val dialogListener = object : CheckDialogListener {
         override fun onItemClick(orderDetailSeq: Int) { //구매확정처리
             loadingAssumeDialog.show(childFragmentManager, "loadingAssumeDialog")
+
             val request = OrderStateRequest(orderDetailSeq, true)
             orderViewModel.updateOrderState(request)
             showToast("구매 확정을 하였습니다.")

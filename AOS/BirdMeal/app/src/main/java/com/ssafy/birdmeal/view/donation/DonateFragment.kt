@@ -73,6 +73,10 @@ class DonateFragment : BaseFragment<FragmentDonateBinding>(R.layout.fragment_don
 
                         setDonateCompleted()
                     }
+                    // 컨트랙트 통신 오류
+                    DONATE_ERR -> {
+                        loadingDonationDialog.dismiss()
+                    }
                 }
             }
 

@@ -16,7 +16,7 @@ class ChildHistoryFragment :
     override fun init() {
         binding.donationVM = donationViewModel
         donationViewModel.getChildOrderHistory()
-        donationViewModel.getChildAmount()
+//        donationViewModel.getChildAmount()
 
         initAdapter()
 
