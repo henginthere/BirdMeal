@@ -1,26 +1,26 @@
 package com.ssafy.birdmeal.view.donation
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.util.Log
-import android.view.animation.AccelerateInterpolator
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.awesomedialog.*
+import com.mikhaellopez.rxanimation.RxAnimation
+import com.mikhaellopez.rxanimation.scale
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentDonationBinding
 import com.ssafy.birdmeal.utils.BEIGE
 import com.ssafy.birdmeal.utils.DONATE_COMPLETED
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.donation.nft.CompletedMintingDialog
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingMintingDialog
-import com.yy.mobile.rollingtextview.CharOrder
-import com.yy.mobile.rollingtextview.strategy.Strategy
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment_donation) {
@@ -89,6 +89,17 @@ class DonationFragment : BaseFragment<FragmentDonationBinding>(R.layout.fragment
                             "CompletedDonationDialog"
                         )
                     }
+                }
+            }
+
+            // 기부 완료시 애니메이션
+            animationMsgEvent.observe(viewLifecycleOwner) {
+                lottie.playAnimation()
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(500)
+                    RxAnimation.from(ivMoney)
+                        .scale(1.3f, duration = 1000L, reverse = true)
+                        .subscribe()
                 }
             }
         }
