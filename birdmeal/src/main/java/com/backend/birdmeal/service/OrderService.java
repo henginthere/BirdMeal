@@ -121,7 +121,6 @@ public class OrderService {
 
         // 주문 개수
         int orderCnt = orderEntityList.size();
-        System.out.println("주문 개수 : " + orderCnt);
 
         // 주문 개수만큼 돌면서 ResponseDto 채우기
         for(int i=0; i<orderCnt; i++){
@@ -141,8 +140,6 @@ public class OrderService {
 
             // 주문 상세가 없으면 통과
             if(orderDetailEntityList.size() == 0) continue;
-
-            System.out.println("상세주문개수 : " + orderDetailEntityList.size());
 
             // 제일 처음 주문 상품 저장
             OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(0);
