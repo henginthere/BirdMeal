@@ -2,6 +2,7 @@ package com.ssafy.birdmeal.view.market.shopping.order
 
 import android.os.Build
 import android.text.InputFilter
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,7 @@ import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderBinding
 import com.ssafy.birdmeal.di.ApplicationClass
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderDialog
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import com.ssafy.birdmeal.wrapper.Trade
 import java.util.regex.Pattern
@@ -34,18 +36,20 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         initNickNameRule()
     }
 
-    private fun initViewModelCallBack(){
+    private fun initViewModelCallBack() {
         shoppingViewModel.apply {
             // 주문 완료된 경우 주문완료 페이지로 이동
-            orderSuccessMsgEvent.observe(viewLifecycleOwner){
+            orderSuccessMsgEvent.observe(viewLifecycleOwner) {
+                loadingOrderDialog.dismiss()
+
                 binding.btnBuy.isEnabled = true // 버튼 재활성화
                 showToast(it)
                 findNavController().navigate(R.id.action_orderFragment_to_orderCompletedFragment)
             }
-            donateSuccessMsgEvent.observe(viewLifecycleOwner){
+            donateSuccessMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
-            errMsgEvent.observe(viewLifecycleOwner){
+            errMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
         }
@@ -67,6 +71,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
+            loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
+
             it.isEnabled = false // 버튼 비활성화
             // 상품 컨트랙트 목록 불러오기
             val contractList: MutableList<Trade> =
@@ -95,12 +101,13 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     }
 
     // 닉네임 설정 제한
-    private fun initNickNameRule(){
+    private fun initNickNameRule() {
         binding.etName.filters = arrayOf(
             InputFilter { src, _, _, _, _, _ ->
                 // val ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-흐]+$") // 영문 숫자 한글
                 // 영문 숫자 한글 천지인 middle dot[ᆞ]
-                val ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
+                val ps =
+                    Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
                 if (src.equals("") || ps.matcher(src).matches()) {
                     return@InputFilter src;
                 }

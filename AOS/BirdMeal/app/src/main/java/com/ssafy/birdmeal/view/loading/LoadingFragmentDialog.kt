@@ -10,5 +10,6 @@ class LoadingFragmentDialog {
         val loadingLoginDialog by lazy { LoadingDialog("로그인중...") }
         val loadingDonationDialog by lazy { LoadingDialog("기부중...") }
         val loadingAssumeDialog by lazy { LoadingDialog("구매 확정중...") }
+        val loadingOrderDialog by lazy { LoadingDialog("결제 진행중...") }
     }
 }
