@@ -44,6 +44,7 @@ const val FILL_ALREADY = "already"  // 이미 금주에 토큰 충전 완료
 const val FILL_COMPLETED = "completed" // 토큰 충전 완료
 const val FILL_POSSIBLE = "possible" // 토큰 충전 가능
 const val FILL_OVER = "over" // 토큰 보유액 10만 이상
+const val FILL_ERR = "err" // 컨트랙트 통신 오류
 
 // 기부 가능한지 상태
 const val DONATE_EMPTY = "empty" // 금액을 입력하지 않음

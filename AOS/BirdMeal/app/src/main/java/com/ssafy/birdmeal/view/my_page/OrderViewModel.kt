@@ -36,6 +36,9 @@ class OrderViewModel @Inject constructor(
         MutableStateFlow(OrderTHashResponse(-1, "", -1, -1, ""))
     val orderDetailHash get() = _orderDetailHash.asStateFlow()
 
+    private val _contractErrMsgEvent = SingleLiveEvent<String>()
+    val contractErrMsgEvent get() = _contractErrMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -109,15 +112,23 @@ class OrderViewModel @Inject constructor(
 
                         // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
                         Log.d(TAG, "buyingList: 주문 컨트랙트 승인 - paying 완료")
-                        elenaContract.approve(orderDetailHash.value.productCa,
-                            (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
-                                .fromEtherToWei().toBigInteger()
-                        ).sendAsync().get()
-                        tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
-                        _orderMsgEvent.postValue(it.data.msg)
+                        try {
+                            elenaContract.approve(
+                                orderDetailHash.value.productCa,
+                                (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
+                                    .fromEtherToWei().toBigInteger()
+                            ).sendAsync().get()
+                            tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
+                            _orderMsgEvent.postValue(it.data.msg)
 
-                        _loadingAssumeMsgEvent.postValue("상품 인수")
-                        getOrderDetail(_orderSeq.value!!)
+                            getOrderDetail(_orderSeq.value!!)
+                        } catch (e: Exception) {
+                            _contractErrMsgEvent.postValue("updateOrderState")
+                            Log.d(TAG, "updateOrderState err: $e")
+                        } finally {
+                            _loadingAssumeMsgEvent.postValue("로딩 종료")
+                        }
+
                     } else {
                         _orderMsgEvent.postValue(it.data.msg)
                     }
@@ -142,4 +153,8 @@ class OrderViewModel @Inject constructor(
         }
     }
 
+    // 컨트랙트 오류 메시지 발생
+    fun setContractErr(msg: String) {
+        _contractErrMsgEvent.postValue(msg)
+    }
 }
