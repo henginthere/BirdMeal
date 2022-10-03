@@ -85,6 +85,16 @@ object ViewBindingAdapter {
         this.text = text
     }
 
+    @BindingAdapter("orderHistoryName", "orderHistorySize")
+    @JvmStatic
+    fun TextView.setOrderHistoryName(name: String, size: Int) {
+        var text = "$name"
+        if (size > 0) {
+            text += " 외 ${size}건"
+        }
+        this.text = text
+    }
+
     // 직접기부, 간접기부 이미지 분기
     @BindingAdapter("donationImg")
     @JvmStatic
