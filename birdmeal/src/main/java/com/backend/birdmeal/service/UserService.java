@@ -60,13 +60,17 @@ public class UserService {
         UserEntity userEntity = UserEntity.builder()
                 .userSeq(0)
                 .userEmail(registUserDto.getUserEmail())
-                .userChargeState(true)
+                .userChargeState(false)
                 .userNickname(registUserDto.getUserNickname())
                 .userPass(passwordEncoder.encode(pass))
                 .userRole(role)
                 .authorities(Collections.singleton(authority))
                 .build();
 
+        // 일반 사용자면 state true로
+        if(!userEntity.getUserRole()){
+            userEntity.setUserChargeState(true);
+        }
 
         userRepository.save(userEntity);
 
