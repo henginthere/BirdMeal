@@ -79,7 +79,7 @@ object ViewBindingAdapter {
     @JvmStatic
     fun TextView.setOrderName(name: String, size: Int) {
         var text = "$name"
-        if (size > 1) {
+        if (size > 2) {
             text += " 외 ${size - 1}건"
         }
         this.text = text
