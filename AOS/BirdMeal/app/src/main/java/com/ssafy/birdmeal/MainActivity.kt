@@ -2,12 +2,15 @@ package com.ssafy.birdmeal
 
 import android.content.SharedPreferences
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.example.awesomedialog.*
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.view.donation.DonationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,10 +21,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     lateinit var sharedPref: SharedPreferences
     private lateinit var navController: NavController
 
+    private val donationViewModel by viewModels<DonationViewModel>()
+
     override fun init() {
         PACKAGE_NAME = application.packageName
 
         initNavigation()
+
+        initViewModelCallBack()
     }
 
     private fun initNavigation() {
@@ -53,6 +60,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
+    private fun initViewModelCallBack() {
+        donationViewModel.contractErrMsgEvent.observe(this) {
+            contractErrdialog()
+        }
+    }
+
     var waitTime = 0L
     override fun onBackPressed() { // 기부 화면에서 뒤로가기 2번 클릭 시 앱 종료
         if (navController.currentDestination?.id == R.id.donationFragment) {
@@ -67,4 +80,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
+    // 블록체인 통신 오류 다이얼로그
+    fun contractErrdialog() {
+        AwesomeDialog.build(this)
+            .title("통신 오류")
+            .body("블록체인 네트워크 통신에\n오류가 발생했습니다\n다시 시도해주세요")
+            .icon(R.drawable.ic_warn)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
+    }
 }
