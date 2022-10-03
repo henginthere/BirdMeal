@@ -54,7 +54,8 @@ class ShoppingViewModel @Inject constructor(
     private val _productCnt = MutableStateFlow(0)
     val productCnt get() = _productCnt
 
-    var totalPrice = MutableStateFlow(0)
+    private val _totalPrice = MutableStateFlow(0)
+    val totalPrice get() = _totalPrice
 
     private val _donationAmount = MutableStateFlow(0)
     val donationAmount get() = _donationAmount
@@ -117,7 +118,7 @@ class ShoppingViewModel @Inject constructor(
                     _productList.value = it.data
                 }
                 _productCnt.value = it.data.size
-                getTotalPrice()
+                calTotalPrice()
 
                 _updateSuccessMsgEvent.postValue("새 상품 목록을 불러왔습니다.")
             }
@@ -128,24 +129,24 @@ class ShoppingViewModel @Inject constructor(
     }
 
     // 장바구니 물품의 전체 금액 더해주기
-    private fun getTotalPrice(){
+    private fun calTotalPrice(){
         var price = 0
         _productList.value.map { p ->
             var total = p.productPrice * p.productCount
             price += total
         }
-        totalPrice.value = price
+        _totalPrice.value = price
         getTotalAmount()
     }
 
     // 총 결제금의 3% 기부금액을 합한 총 금액
     private fun getTotalAmount(){
         if(!_userRole.value!!){ // 일반 유저 라면 기부 금액 계산
-            var amount = totalPrice.value!!.toDouble() * 0.03
+            var amount = _totalPrice.value!!.toDouble() * 0.03
             _donationAmount.value = floor(amount).toInt()
         }
 
-        var total = totalPrice.value!! + _donationAmount.value!!
+        var total = _totalPrice.value!! + _donationAmount.value!!
         _totalAmount.value = total
     }
 
