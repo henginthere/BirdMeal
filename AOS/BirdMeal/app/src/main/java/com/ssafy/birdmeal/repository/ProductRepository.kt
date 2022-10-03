@@ -61,4 +61,18 @@ class ProductRepository @Inject constructor(
         emit(Result.Error(e))
     }
 
+    // 상품 검색
+    fun searchProduct(name: String) : Flow<Result<BaseResponse<List<ProductDto>>>> = flow {
+        emit(Result.Loading)
+        productRemoteDataSource.searchProduct(name).collect {
+            if(it.success){
+                emit(Result.Success(it))
+            }
+            else {
+                emit(Result.Fail(it))
+            }
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
 }

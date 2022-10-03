@@ -29,4 +29,9 @@ class ProductRemoteDataSource @Inject constructor(
         emit(productApi.getProduct(productSeq))
     }
 
+    // 상품 검색
+    fun searchProduct(name: String) : Flow<BaseResponse<List<ProductDto>>> = flow {
+        emit(productApi.searchProduct(name))
+    }
+
 }

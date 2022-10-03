@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.market
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.base.BaseResponse
@@ -8,6 +9,7 @@ import com.ssafy.birdmeal.model.dto.ProductDto
 import com.ssafy.birdmeal.repository.ProductRepository
 import com.ssafy.birdmeal.utils.Result
 import com.ssafy.birdmeal.utils.SingleLiveEvent
+import com.ssafy.birdmeal.utils.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,6 +43,9 @@ class MarketViewModel @Inject constructor(
 
     private val _detailSuccessEvent = SingleLiveEvent<String>()
     val detailSuccessEvent get() = _detailSuccessEvent
+
+    private val _searchSuccessEvent = SingleLiveEvent<String>()
+    val searchSuccessEvent get() = _searchSuccessEvent
 
     // 카테고리 목록 조회
     fun getCategoryList(){
@@ -94,5 +99,21 @@ class MarketViewModel @Inject constructor(
             }
         }
     }
+
+    // 상품 검색
+    fun searchProduct(name: String) = viewModelScope.launch(Dispatchers.IO) {
+            productRepository.searchProduct(name).collectLatest {
+                Log.d(TAG, "searchProduct: $it")
+
+                when (it) {
+                    is Result.Success -> {
+                        _productList.value = it.data.data
+                        _searchSuccessEvent.postValue(it.data.msg)
+                    }
+                    is Result.Fail -> _errorMsgEvent.postValue(it.data.msg)
+                    is Result.Error -> _errorMsgEvent.postValue("상품 검색 중 통신에 실패했습니다.")
+                }
+            }
+        }
 
 }

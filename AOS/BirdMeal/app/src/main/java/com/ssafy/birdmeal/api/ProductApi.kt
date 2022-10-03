@@ -23,4 +23,10 @@ interface ProductApi {
     suspend fun getProduct(
         @Path("product-seq") productSeq: Int
     ) : BaseResponse<ProductDto>
+
+    // 상품 검색
+    @GET("product/search")
+    suspend fun searchProduct(
+        @Path("productSearchName") name: String
+    ) : BaseResponse<List<ProductDto>>
 }
