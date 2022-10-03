@@ -64,6 +64,7 @@ class ApplicationClass : Application() {
     }
 
     fun getTradeContract(CA: String) {
+        Log.d(TAG, "getTradeContract: $CA")
         tradeContract = Trade.load(CA, web3j, manager, gasProvider)
     }
 
