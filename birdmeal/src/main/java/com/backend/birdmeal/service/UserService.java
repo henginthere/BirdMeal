@@ -60,6 +60,7 @@ public class UserService {
         UserEntity userEntity = UserEntity.builder()
                 .userSeq(0)
                 .userEmail(registUserDto.getUserEmail())
+                .userChargeState(true)
                 .userNickname(registUserDto.getUserNickname())
                 .userPass(passwordEncoder.encode(pass))
                 .userRole(role)
