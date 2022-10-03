@@ -136,11 +136,11 @@ class ShoppingViewModel @Inject constructor(
             price += total
         }
         _totalPrice.value = price
-        getTotalAmount()
+        calTotalAmount()
     }
 
     // 총 결제금의 3% 기부금액을 합한 총 금액
-    private fun getTotalAmount(){
+    private fun calTotalAmount(){
         if(!_userRole.value!!){ // 일반 유저 라면 기부 금액 계산
             var amount = _totalPrice.value!!.toDouble() * 0.03
             _donationAmount.value = floor(amount).toInt()
