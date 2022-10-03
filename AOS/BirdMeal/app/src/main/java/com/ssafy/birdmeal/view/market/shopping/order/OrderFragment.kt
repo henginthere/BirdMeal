@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.view.market.shopping.order
 import android.os.Build
 import android.text.InputFilter
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -28,6 +29,11 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         binding.apply {
             shoppingVM = shoppingViewModel
             userVM = userViewModel
+
+            if(shoppingViewModel.userRole.value){ // 아동이면 기부금 텍스트 숨김
+                tvDonationAmount.visibility = View.GONE
+                tvDonationAmountEln.visibility = View.GONE
+            }
         }
         initClickListener()
 
