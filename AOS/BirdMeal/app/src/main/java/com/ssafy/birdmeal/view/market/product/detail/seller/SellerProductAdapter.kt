@@ -1,4 +1,4 @@
-package com.ssafy.birdmeal.view.market.product.detail
+package com.ssafy.birdmeal.view.market.product.detail.seller
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/sellerDetailFragment"
-        android:name="com.ssafy.birdmeal.view.market.product.detail.SellerDetailFragment"
+        android:name="com.ssafy.birdmeal.view.market.product.detail.seller.SellerDetailFragment"
         android:label="fragment_seller_detail"
         tools:layout="@layout/fragment_seller_detail" >
         <argument
