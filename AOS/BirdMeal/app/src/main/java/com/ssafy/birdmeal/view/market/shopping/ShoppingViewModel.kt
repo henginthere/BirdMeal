@@ -97,6 +97,7 @@ class ShoppingViewModel @Inject constructor(
 
     // 장바구니 품목 삭제
     private fun clear(){
+        _orderList.clear() // 서버에 보낼 주문목록 초기화
         _txList.clear() // 주문한 상품 해쉬 목록 삭제
         viewModelScope.launch(Dispatchers.IO) {
             cartRepository.clearCart()
@@ -110,7 +111,11 @@ class ShoppingViewModel @Inject constructor(
 
         cartRepository.getCartList().collectLatest {
             if(it is Result.Success){
-                _productList.value = it.data
+                if(it.data.isEmpty()){
+                    _productList.value = mutableListOf()
+                } else {
+                    _productList.value = it.data
+                }
                 _productCnt.value = it.data.size
                 getTotalPrice()
 

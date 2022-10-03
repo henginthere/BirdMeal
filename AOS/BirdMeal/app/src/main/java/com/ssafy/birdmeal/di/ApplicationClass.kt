@@ -38,7 +38,7 @@ class ApplicationClass : Application() {
         var PACKAGE_NAME = ""
 
         lateinit var manager: FastRawTransactionManager
-        private var contractList: MutableList<Trade> = mutableListOf()
+        lateinit var contractList: MutableList<Trade>
 
         // 컨트랙트 객체들
         lateinit var fundingContract: Funding
@@ -55,6 +55,8 @@ class ApplicationClass : Application() {
     }
 
     fun getTradeContract(product: List<CartEntity>): MutableList<Trade> {
+        contractList = mutableListOf()
+
         product.map {
             Log.d(TAG, "getTradeContract: ${it.productName}, ${it.productCount}")
             tradeContract = Trade.load(it.productCa, web3j, manager, gasProvider)
