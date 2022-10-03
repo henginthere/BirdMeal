@@ -36,266 +36,285 @@
                 android:text="결제" />
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <View
-            android:id="@+id/view1"
+        <ScrollView
             android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@color/light_grey"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_header_buyer"
-            style="@style/header_text"
-            android:text="주문자"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view1" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_save_info"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="@dimen/header_margin"
-            android:background="@drawable/btn_round_green_color"
-            android:text="저장"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="@id/tv_header_buyer"
-            app:layout_constraintBottom_toBottomOf="@id/tv_header_buyer"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이름"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_header_buyer"
-            app:layout_constraintStart_toStartOf="@id/tv_header_buyer" />
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginTop="8dp"
-            android:textSize="16sp"
-            tools:text="김사장"
-            android:text="@{userVM.user.userNickname}"
-            android:background="@drawable/et_round_main_color"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"
-            app:layout_constraintStart_toStartOf="@id/tv_name"
-            app:layout_constraintEnd_toEndOf="@id/btn_save_info"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_tel_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전화번호"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/et_name"
-            app:layout_constraintStart_toStartOf="@id/tv_name" />
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_tel_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:textSize="16sp"
-            tools:text="01012344567"
-            android:text="@{userVM.user.userTel}"
-            android:inputType="number"
-            android:maxLength="11"
-            android:background="@drawable/et_round_main_color"
-            app:layout_constraintTop_toBottomOf="@id/tv_tel_number"
-            app:layout_constraintStart_toStartOf="@id/tv_tel_number"
-            app:layout_constraintEnd_toEndOf="@id/btn_save_info"/>
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:background="@color/light_grey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_header_buyer"
+                    style="@style/header_text"
+                    android:text="주문자"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view1" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_save_info"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="@dimen/header_margin"
+                    android:background="@drawable/btn_round_green_color"
+                    android:text="저장"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/tv_header_buyer"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_buyer"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이름"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_buyer"
+                    app:layout_constraintStart_toStartOf="@id/tv_header_buyer" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    tools:text="김사장"
+                    android:text="@{userVM.user.userNickname}"
+                    android:background="@drawable/et_round_main_color"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    app:layout_constraintStart_toStartOf="@id/tv_name"
+                    app:layout_constraintEnd_toEndOf="@id/btn_save_info"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_tel_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전화번호"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:layout_constraintStart_toStartOf="@id/tv_name" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_tel_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:textSize="16sp"
+                    tools:text="01012344567"
+                    android:text="@{userVM.user.userTel}"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:background="@drawable/et_round_main_color"
+                    app:layout_constraintTop_toBottomOf="@id/tv_tel_number"
+                    app:layout_constraintStart_toStartOf="@id/tv_tel_number"
+                    app:layout_constraintEnd_toEndOf="@id/btn_save_info"/>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_header_address"
-            style="@style/header_text"
-            android:text="배송지"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_tel_number" />
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_search_address"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="@dimen/header_margin"
-            android:background="@drawable/btn_round_green_color"
-            android:text="주소검색"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toTopOf="@id/tv_header_address"
-            app:layout_constraintBottom_toBottomOf="@id/tv_header_address"
-            app:layout_constraintEnd_toEndOf="parent" />
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:enabled="false"
-            android:textSize="16sp"
-            tools:text="구미시 수출대로 28길 304호"
-            android:text="@{userVM.user.userAdd}"
-            android:background="@drawable/et_round_main_color"
-            app:layout_constraintTop_toBottomOf="@id/btn_search_address"
-            app:layout_constraintStart_toStartOf="@id/et_tel_number"
-            app:layout_constraintEnd_toEndOf="@id/btn_search_address"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_header_address"
+                    style="@style/header_text"
+                    android:text="배송지"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_tel_number" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_search_address"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="@dimen/header_margin"
+                    android:background="@drawable/btn_round_green_color"
+                    android:text="주소검색"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/tv_header_address"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_address"
+                    app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:enabled="false"
+                    android:textSize="16sp"
+                    tools:text="구미시 수출대로 28길 304호"
+                    android:text="@{userVM.user.userAdd}"
+                    android:background="@drawable/et_round_main_color"
+                    app:layout_constraintTop_toBottomOf="@id/btn_search_address"
+                    app:layout_constraintStart_toStartOf="@id/et_tel_number"
+                    app:layout_constraintEnd_toEndOf="@id/btn_search_address"/>
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/light_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_address" />
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/light_grey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/et_address" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_header_my_coin"
-            style="@style/header_text"
-            android:text="보유 코인"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view2" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_my_coin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_margin"
-            productPrice="@{userVM.userELN}"
-            tools:text="98,000 ELN"
-            android:textColor="@color/black_high_emphasis"
-            android:fontFamily="@font/gong_gothic_medium"
-            app:layout_constraintTop_toTopOf="@id/tv_header_my_coin"
-            app:layout_constraintBottom_toBottomOf="@id/tv_header_my_coin"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_header_my_coin"
+                    style="@style/header_text"
+                    android:text="보유 코인"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view2" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_my_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/header_margin"
+                    productPrice="@{userVM.userELN}"
+                    tools:text="98,000 ELN"
+                    android:textColor="@color/black_high_emphasis"
+                    android:fontFamily="@font/gong_gothic_medium"
+                    app:layout_constraintTop_toTopOf="@id/tv_header_my_coin"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_header_my_coin"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/light_grey"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_header_my_coin" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/light_grey"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_my_coin" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_header_order_info"
-            style="@style/header_text"
-            android:text="주문 정보"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view3" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_header_order_info"
+                    style="@style/header_text"
+                    android:text="주문 정보"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view3" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_order_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 주문 금액"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_header_order_info"
-            app:layout_constraintStart_toStartOf="@id/tv_header_order_info" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_order_amount_eln"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_margin"
-            productPrice="@{shoppingVM.totalPrice}"
-            tools:text="45,880 ELN"
-            android:textColor="@color/black_high_emphasis"
-            android:fontFamily="@font/gong_gothic_medium"
-            app:layout_constraintTop_toTopOf="@id/tv_order_amount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_order_amount"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_order_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 주문 금액"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_order_info"
+                    app:layout_constraintStart_toStartOf="@id/tv_header_order_info" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_order_amount_eln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/header_margin"
+                    productPrice="@{shoppingVM.totalPrice}"
+                    tools:text="45,880 ELN"
+                    android:textColor="@color/black_high_emphasis"
+                    android:fontFamily="@font/gong_gothic_medium"
+                    app:layout_constraintTop_toTopOf="@id/tv_order_amount"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_order_amount"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_donation_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="기부 금액"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_order_amount"
-            app:layout_constraintStart_toStartOf="@id/tv_order_amount" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_donation_amount_eln"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_margin"
-            productPrice="@{shoppingVM.donationAmount}"
-            tools:text="1,370 ELN"
-            android:textColor="@color/green"
-            android:fontFamily="@font/gong_gothic_medium"
-            app:layout_constraintTop_toTopOf="@id/tv_donation_amount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_donation_amount"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_donation_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기부 금액"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_order_amount"
+                    app:layout_constraintStart_toStartOf="@id/tv_order_amount" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_donation_amount_eln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/header_margin"
+                    productPrice="@{shoppingVM.donationAmount}"
+                    tools:text="1,370 ELN"
+                    android:textColor="@color/green"
+                    android:fontFamily="@font/gong_gothic_medium"
+                    app:layout_constraintTop_toTopOf="@id/tv_donation_amount"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_donation_amount"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <View
-            android:id="@+id/view4"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/black_low_emphasis"
-            app:layout_constraintStart_toStartOf="@id/tv_donation_amount"
-            app:layout_constraintEnd_toEndOf="@id/tv_donation_amount_eln"
-            app:layout_constraintTop_toBottomOf="@id/tv_donation_amount" />
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/black_low_emphasis"
+                    app:layout_constraintStart_toStartOf="@id/tv_donation_amount"
+                    app:layout_constraintEnd_toEndOf="@id/tv_donation_amount_eln"
+                    app:layout_constraintTop_toBottomOf="@id/tv_donation_amount" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_payment_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="총 결제 금액"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/view4"
-            app:layout_constraintStart_toStartOf="@id/view4" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_payment_amount_eln"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_margin"
-            productPrice="@{shoppingVM.totalAmount}"
-            tools:text="47,250 ELN"
-            android:textColor="@color/primary_orange"
-            android:fontFamily="@font/gong_gothic_medium"
-            app:layout_constraintTop_toTopOf="@id/tv_payment_amount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_payment_amount"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_payment_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 결제 금액"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/view4"
+                    app:layout_constraintStart_toStartOf="@id/view4" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_payment_amount_eln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/header_margin"
+                    productPrice="@{shoppingVM.totalAmount}"
+                    tools:text="47,250 ELN"
+                    android:textColor="@color/primary_orange"
+                    android:fontFamily="@font/gong_gothic_medium"
+                    app:layout_constraintTop_toTopOf="@id/tv_payment_amount"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_payment_amount"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_rest_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="결제 후 보유 코인"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_payment_amount"
-            app:layout_constraintStart_toStartOf="@id/tv_payment_amount" />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_rest_amount_eln"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/header_margin"
-            totalAmount="@{shoppingVM.totalAmount}"
-            userELN="@{userVM.userELN}"
-            tools:text="40,750 ELN"
-            android:textColor="@color/black_high_emphasis"
-            android:fontFamily="@font/gong_gothic_medium"
-            app:layout_constraintTop_toTopOf="@id/tv_rest_amount"
-            app:layout_constraintBottom_toBottomOf="@id/tv_rest_amount"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_rest_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="결제 후 보유 코인"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_payment_amount"
+                    app:layout_constraintStart_toStartOf="@id/tv_payment_amount"
+                    app:layout_constraintBottom_toTopOf="@id/btn_buy"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_rest_amount_eln"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/header_margin"
+                    totalAmount="@{shoppingVM.totalAmount}"
+                    userELN="@{userVM.userELN}"
+                    tools:text="40,750 ELN"
+                    android:textColor="@color/black_high_emphasis"
+                    android:fontFamily="@font/gong_gothic_medium"
+                    app:layout_constraintTop_toTopOf="@id/tv_rest_amount"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_rest_amount"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_buy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="결제하기"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_round_main_color"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintStart_toStartOf="@id/tv_header_order_info"
-            app:layout_constraintEnd_toEndOf="@id/tv_rest_amount_eln"
-            app:layout_constraintTop_toBottomOf="@id/tv_rest_amount"
-            app:layout_constraintBottom_toBottomOf="parent" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_buy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/btn_round_main_color"
+                    android:text="결제하기"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/tv_rest_amount_eln"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/tv_header_order_info"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rest_amount" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

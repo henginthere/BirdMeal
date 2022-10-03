@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.market.product.detail.SellerDetailFragment">
+    tools:context=".view.market.product.detail.seller.SellerDetailFragment">
 
     <data>
 
         <variable
             name="sellerVM"
-            type="com.ssafy.birdmeal.view.market.product.detail.SellerViewModel" />
+            type="com.ssafy.birdmeal.view.market.product.detail.seller.SellerViewModel" />
 
         <variable
             name="productCnt"
@@ -67,7 +67,7 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -163,7 +163,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_rv"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -188,7 +188,7 @@
                         android:id="@+id/rv_seller_product"
                         submitList="@{sellerVM.productList}"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="24dp"
                         android:layout_marginTop="20dp"
                         android:orientation="horizontal"
