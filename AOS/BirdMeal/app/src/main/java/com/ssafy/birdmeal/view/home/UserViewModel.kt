@@ -35,6 +35,9 @@ class UserViewModel @Inject constructor(
     private val _user = SingleLiveEvent<UserDto>()
     val user get() = _user
 
+    private val _contractErrMsgEvent = SingleLiveEvent<String>()
+    val contractErrMsgEvent get() = _contractErrMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -209,25 +212,37 @@ class UserViewModel @Inject constructor(
         }
     }
 
-    // 유저 보유 토큰 값 조회
+    // 유저 보유 토큰 값 조회 (컨트랙트)
     fun getUserTokenValue() = viewModelScope.launch(Dispatchers.IO) {
-        val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
-        val value = result.fromWeiToEther().toInt()
+        try {
+            val result = elenaContract.balanceOf(user.value!!.userEoa).sendAsync().get()
+            val value = result.fromWeiToEther().toInt()
 
-        _userELN.postValue(value)
-        _userBalance.postValue(result.fromWeiToEther().toLong())
-        _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
+            _userELN.postValue(value)
+            _userBalance.postValue(result.fromWeiToEther().toLong())
+            _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue("getUserTokenValue")
+            Log.d(TAG, "getUserTokenValue err: $e")
+        }
     }
 
-    // 유저 토큰 충전하기
+    // 유저 토큰 충전하기 (컨트랙트)
     fun fillUpToken(requestMoney: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val result = exchangeContract.changeMoney(requestMoney.toBigInteger()).sendAsync().get()
-        Log.d(TAG, "fillUpToken: $result")
-        // 유저 보유 토큰 재조회
-        getUserTokenValue()
 
-        _tokenMsgEvent.postValue(FILL_COMPLETED)
-        _successMsgEvent.postValue("충전이 완료되었습니다.")
+        try {
+            val result = exchangeContract.changeMoney(requestMoney.toBigInteger()).sendAsync().get()
+            Log.d(TAG, "fillUpToken: $result")
+            // 유저 보유 토큰 재조회
+            getUserTokenValue()
+
+            _tokenMsgEvent.postValue(FILL_COMPLETED)
+            _successMsgEvent.postValue("충전이 완료되었습니다.")
+        } catch (e: Exception) {
+            _tokenMsgEvent.postValue(FILL_ERR)
+            _contractErrMsgEvent.postValue("fillUpToken")
+            Log.d(TAG, "fillUpToken err: $e")
+        }
     }
 
     // 토큰 충전가능한지 검사 (결식 아동)
@@ -247,21 +262,28 @@ class UserViewModel @Inject constructor(
         _tokenChildMsgEvent.postValue(FILL_POSSIBLE)
     }
 
-    // 아동 토큰 충전 시작
+    // 아동 토큰 충전 시작 (컨트랙트)
     fun fillUpTokenChild() = viewModelScope.launch(Dispatchers.IO) {
         _tokenChildLoadingEvent.postValue(true)
 
-        val result = fundingContract.takeMoney(true).sendAsync().get()
-        Log.d(TAG, "fillUpTokenChild: $result")
+        try {
+            val result = fundingContract.takeMoney(true).sendAsync().get()
+            Log.d(TAG, "fillUpTokenChild: $result")
 
-        // 유저 토큰 값 다시 조회
-        getUserTokenValue()
+            // 유저 토큰 값 다시 조회
+            getUserTokenValue()
 
-        // 아동 충전 완료 여부 변경
-        fillUpCompleted()
+            // 아동 충전 완료 여부 변경
+            fillUpCompleted()
 
-        _tokenChildLoadingEvent.postValue(false)
-        _tokenChildMsgEvent.postValue(FILL_COMPLETED)
+            _tokenChildLoadingEvent.postValue(false)
+            _tokenChildMsgEvent.postValue(FILL_COMPLETED)
+        } catch (e: Exception) {
+            _tokenChildMsgEvent.postValue(FILL_ERR)
+            _contractErrMsgEvent.postValue("fillUpTokenChild")
+            Log.d(TAG, "fillUpTokenChild err: $e")
+        }
+
     }
 
     // 아동 충전 완료 여부 변경

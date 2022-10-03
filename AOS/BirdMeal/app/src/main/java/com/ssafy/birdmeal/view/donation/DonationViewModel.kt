@@ -35,6 +35,9 @@ class DonationViewModel @Inject constructor(
     private val _loadingMsgEvent = SingleLiveEvent<String>()
     val loadingMsgEvent get() = _loadingMsgEvent
 
+    private val _contractErrMsgEvent = SingleLiveEvent<String>()
+    val contractErrMsgEvent get() = _contractErrMsgEvent
+
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
@@ -85,12 +88,16 @@ class DonationViewModel @Inject constructor(
 
     // 총 기부액 불러오기 (컨트랙트)
     fun getDonationAmount() = viewModelScope.launch(IO) {
+        try {
+            val result = fundingContract.currentBalance().sendAsync().get()
+            val text = result.fromWeiToEther().priceConvert() + " ELN"
 
-        val result = fundingContract.currentBalance().sendAsync().get()
-        val text = result.fromWeiToEther().priceConvert() + " ELN"
-
-        _donationMsgEvent.postValue(text)
-        Log.d(TAG, "fundingContract.currentBalance: $result")
+            _donationMsgEvent.postValue(text)
+            Log.d(TAG, "fundingContract.currentBalance: $result")
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue("getDonationAmount")
+            Log.d(TAG, "getDonationAmount err: $e")
+        }
     }
 
     // 기부 가능한지 확인
@@ -125,13 +132,20 @@ class DonationViewModel @Inject constructor(
     fun doDonate(amount: Long, donationType: Boolean) = viewModelScope.launch(IO) {
         _loadingMsgEvent.postValue(DONATE_POSSIBLE)
 
-        elenaContract.approve(CA_FUNDING, amount.fromEtherToWei().toBigInteger()).sendAsync().get()
-        val result = fundingContract.funding(BigInteger.valueOf(amount)).sendAsync().get()
-        Log.d(TAG, "fundingContract.funding: $result")
+        try {
+            elenaContract.approve(CA_FUNDING, amount.fromEtherToWei().toBigInteger()).sendAsync()
+                .get()
+            val result = fundingContract.funding(BigInteger.valueOf(amount)).sendAsync().get()
+            Log.d(TAG, "fundingContract.funding: $result")
 
-        insertDonationHistory(amount, donationType)
+            insertDonationHistory(amount, donationType)
 
-        _loadingMsgEvent.postValue(DONATE_COMPLETED)
+            _loadingMsgEvent.postValue(DONATE_COMPLETED)
+        } catch (e: Exception) {
+            _loadingMsgEvent.postValue(DONATE_ERR)
+            _contractErrMsgEvent.postValue("doDonate")
+            Log.d(TAG, "doDonate err: $e")
+        }
     }
 
     // chip 선택시 기부 금액 증가
