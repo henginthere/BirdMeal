@@ -64,7 +64,13 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
         errorMsgEvent.observe(viewLifecycleOwner){
             showToast(it)
         }
+        // 카테고리 상품 목록 조회에 성공한 경우
         listSuccessEvent.observe(viewLifecycleOwner){
+            productListAll = productList.value
+            productAdapter.submitList(productListAll)
+        }
+        // 검색 성공한 경우
+        searchSuccessEvent.observe(viewLifecycleOwner){
             productListAll = productList.value
             productAdapter.submitList(productListAll)
         }
@@ -107,11 +113,16 @@ class ProductListFragment : BaseFragment<FragmentProductListBinding>(R.layout.fr
     override fun onStart() {
         super.onStart()
 
-        if(categorySeq > 0){ // 파라미터가 잘 전달된 경우
+        if(categorySeq > 0){ // 카테고리로 들어온 경우
             marketViewModel.getProductList(categorySeq)
-        } else { // 파라미터가 전달되지 않은 경우
+        }
+        else if(categorySeq == 0) { // 검색으로 들어온 경우
+            marketViewModel.searchProduct(categoryName)
+        }
+        else { // 파라미터가 전달되지 않은 경우
             showToast("상품 카테고리Seq 전달 받지 못했습니다.")
         }
+
         binding.apply {
             marketVM = marketViewModel
             tvToolbar.text = categoryName

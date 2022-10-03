@@ -35,18 +35,34 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     }
 
     private fun initViewModelCallBack() {
-        marketViewModel.errorMsgEvent.observe(this){
-            showToast(it)
+        marketViewModel.apply {
+            errorMsgEvent.observe(viewLifecycleOwner){
+                showToast(it)
+            }
         }
+
         shoppingViewModel.updateSuccessMsgEvent.observe(viewLifecycleOwner){
             binding.productCnt =  shoppingViewModel.productCnt.value
         }
     }
 
-    private fun initClickListener() {
-        binding.ivShoppingCart.setOnClickListener {
+    private fun initClickListener() = with(binding) {
+        ivShoppingCart.setOnClickListener {
             findNavController().navigate(R.id.action_categoryFragment_to_shoppingCartFragment)
         }
+        // 상품 전체검색
+        btnSearch.setOnClickListener {
+            val name = etSearch.text.toString()
+            if(name.isEmpty()){
+                showToast("검색어를 입력해 주세요.")
+            } else {
+                val action = CategoryFragmentDirections.actionCategoryFragmentToProductListFragment(0, name)
+                findNavController().navigate(action)
+
+                etSearch.text.clear()
+            }
+        }
+
     }
 
     private val listener = object : CategoryListener{
