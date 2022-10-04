@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserDto {
-
     private long userSeq;
     private String userTel;
     private String userAdd;
+    private String userAddDetail;
     private String userNickname;
-
 }

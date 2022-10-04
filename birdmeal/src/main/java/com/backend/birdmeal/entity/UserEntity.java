@@ -60,6 +60,10 @@ public class UserEntity implements Serializable {
     private String userAdd;
 
     @Basic
+    @Column(name="user_add_detail",length = 256)
+    private String userAddDetail;
+
+    @Basic
     @Column(name="user_is_mint")
     @ColumnDefault("0")
     private boolean userIsMint;
