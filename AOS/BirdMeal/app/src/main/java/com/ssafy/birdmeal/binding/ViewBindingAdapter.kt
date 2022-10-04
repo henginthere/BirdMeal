@@ -154,14 +154,12 @@ object ViewBindingAdapter {
     // NFT 받기 텍스트 색
     @BindingAdapter("setGetNftButton")
     @JvmStatic
-    fun TextView.setGetNftButton(isMint: Boolean?) {
+    fun ImageView.setGetNftButton(isMint: Boolean?) {
         if (isMint != null) {
             if (isMint) {
-                this.setTextColor(resources.getColor(R.color.white))
-                this.background = resources.getDrawable(R.drawable.btn_round_green_color)
+                this.background = resources.getDrawable(R.drawable.btn_get_nft)
             } else {
-                this.setTextColor(Color.parseColor("#AAAAAA"))
-                this.background = resources.getDrawable(R.drawable.btn_round_gray)
+                this.background = resources.getDrawable(R.drawable.btn_get_nft_false)
             }
         }
     }

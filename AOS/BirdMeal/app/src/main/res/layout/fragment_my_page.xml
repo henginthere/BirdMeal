@@ -162,13 +162,15 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btn_get_nft"
-                android:layout_marginStart="30dp"
+                setGetNftButton="@{userVM.user.userIsMint}"
                 android:layout_width="90dp"
                 android:layout_height="27dp"
-                android:background="@drawable/btn_get_nft_false"
+                android:layout_marginStart="30dp"
+                android:visibility="@{userVM.user.userRole ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_eln"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_eln" />
+                app:layout_constraintTop_toTopOf="@id/tv_eln"
+                tools:background="@drawable/btn_get_nft_false" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
