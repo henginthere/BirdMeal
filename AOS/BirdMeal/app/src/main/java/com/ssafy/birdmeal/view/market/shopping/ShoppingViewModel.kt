@@ -41,6 +41,9 @@ class ShoppingViewModel @Inject constructor(
         = MutableStateFlow(listOf())
     val productList get() = _productList
 
+    private val _contractErrMsgEvent = SingleLiveEvent<String>()
+    val contractErrMsgEvent get() = _contractErrMsgEvent
+
     private val _userRole = MutableStateFlow(false)
     val userRole get() = _userRole
 
@@ -153,38 +156,45 @@ class ShoppingViewModel @Inject constructor(
     // 장바구니 결제하기
     @RequiresApi(Build.VERSION_CODES.O)
     fun buyingList(tradeContract : MutableList<Trade>, userSeq : Int) = viewModelScope.launch(Dispatchers.IO){
-        // 상품 컨트랙트 마다 거래 처리하기
-        productList.value.mapIndexed { idx, p ->
-            // 상품 컨트랙트에 대한 엘레나 거래 승인
-            Log.d(TAG, "buyingList: ${p.productName}, ${p.productCount}")
-            var amount = (p.productPrice * p.productCount).toLong().fromEtherToWei()
-            elenaContract.approve(p.productCa, amount.toBigInteger()).sendAsync().get()
 
-            // 승인 이후 컨트랙트에 buying 함수 호출
-            var result = tradeContract[idx].buying(p.productCount.toBigInteger()).sendAsync().get()
-            tradeContract[idx].addOrderSheet(result.transactionHash, p.productCount.toBigInteger()).sendAsync().get()
+        try {
+            // 상품 컨트랙트 마다 거래 처리하기
+            productList.value.mapIndexed { idx, p ->
+                // 상품 컨트랙트에 대한 엘레나 거래 승인
+                Log.d(TAG, "buyingList: ${p.productName}, ${p.productCount}")
+                var amount = (p.productPrice * p.productCount).toLong().fromEtherToWei()
+                elenaContract.approve(p.productCa, amount.toBigInteger()).sendAsync().get()
 
-            _txList.add(result.transactionHash)
+                // 승인 이후 컨트랙트에 buying 함수 호출
+                var result = tradeContract[idx].buying(p.productCount.toBigInteger()).sendAsync().get()
+                tradeContract[idx].addOrderSheet(result.transactionHash, p.productCount.toBigInteger()).sendAsync().get()
+
+                _txList.add(result.transactionHash)
+            }
+            // 기부 컨트랙트 엘레나 승인 및 3% 기부
+            Log.d(TAG, "buyingList: 상품 컨트랙트 승인 - buying - addOrderSheet 완료")
+
+            if(!_userRole.value){ // 일반유저면 간접기부도 하기
+                elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
+                fundingContract.funding(_donationAmount.value.toBigInteger()).sendAsync().get()
+
+                Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
+                createDonation(userSeq) // DB에 기부 내역 저장하기
+            }
+
+            // 서버에 주문내역 전송하기
+            productList.value.mapIndexed { idx, p ->
+                var order = OrderRequestDto(userSeq, p.productCount, _txList[idx], p.productSeq)
+                _orderList.add(order);
+            }
+            createOrderList(_orderList)
+            // 주문 완료 객체 만들기
+            createOrderComplete()
+
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue("buyingList")
+            Log.d(TAG, "buyingList err: $e")
         }
-        // 기부 컨트랙트 엘레나 승인 및 3% 기부
-        Log.d(TAG, "buyingList: 상품 컨트랙트 승인 - buying - addOrderSheet 완료")
-
-        if(!_userRole.value){ // 일반유저면 간접기부도 하기
-            elenaContract.approve(CA_FUNDING, donationAmount.value.toLong().fromEtherToWei().toBigInteger()).sendAsync().get()
-            fundingContract.funding(_donationAmount.value.toBigInteger()).sendAsync().get()
-
-            Log.d(TAG, "buyingList: 기부 완료 기부금 ${donationAmount.value}")
-            createDonation(userSeq) // DB에 기부 내역 저장하기
-        }
-
-        // 서버에 주문내역 전송하기
-        productList.value.mapIndexed { idx, p ->
-            var order = OrderRequestDto(userSeq, p.productCount, _txList[idx], p.productSeq)
-            _orderList.add(order);
-        }
-        createOrderList(_orderList)
-        // 주문 완료 객체 만들기
-        createOrderComplete()
     }
 
     // 간접 기부 내역 DB에 저장하기
