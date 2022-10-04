@@ -58,6 +58,7 @@ class EditProfileFragment :
                 userNickname = etName.text.toString()
                 userTel = etTelNumber.text.toString()
                 userAdd = etAddress.text.toString()
+                userAddDetail = etAddressDetail.text.toString()
             }
             userViewModel.updateUserProfile()
         }
