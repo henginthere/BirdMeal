@@ -244,22 +244,57 @@
             app:lottie_fileName="coin.json"
             app:lottie_loop="false" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_make_card"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_make_card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="80dp"
-            android:background="@drawable/btn_round_50_main_color"
-            android:elevation="8dp"
-            android:text="마음 전하기"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:translationZ="4dp"
             android:visibility="@{userVM.user.userRole ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gl_hori_80" />
+            app:layout_constraintTop_toTopOf="@id/gl_hori_80">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/header_make_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="감사한 마음을 전해보세요!"
+                android:textColor="@color/back_orange"
+                app:layout_constraintBottom_toTopOf="@id/btn_make_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_make_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="80dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:elevation="8dp"
+                android:text="마음 전하기"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:translationZ="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie_letter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:translationZ="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/header_make_card"
+                app:layout_constraintStart_toEndOf="@id/header_make_card"
+                app:layout_constraintTop_toTopOf="@id/header_make_card"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="letter.json"
+                app:lottie_loop="true"
+                app:lottie_speed="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
