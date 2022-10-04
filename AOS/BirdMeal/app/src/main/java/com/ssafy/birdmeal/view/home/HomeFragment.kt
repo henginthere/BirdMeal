@@ -6,8 +6,6 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentHomeBinding
 import com.ssafy.birdmeal.di.ApplicationClass
-import com.ssafy.birdmeal.utils.WHITE
-import com.ssafy.birdmeal.utils.changeStatusBarColor
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +16,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val donationViewModel by activityViewModels<DonationViewModel>()
 
     override fun init() {
-        changeStatusBarColor(requireActivity(), WHITE)
 
         userViewModel.getUserInfo()
 
