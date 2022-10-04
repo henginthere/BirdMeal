@@ -1,7 +1,6 @@
 package com.ssafy.birdmeal.view.my_page
 
 import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.awesomedialog.*
@@ -33,9 +32,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.userVM = userViewModel
         userViewModel.getUserInfo()
 
-        if(userViewModel.user.value?.userRole!!){
+        if (userViewModel.user.value?.userRole!!) {
             binding.btnMyNft.setImageResource(R.drawable.btn_mind)
-            binding.btnGetNft.isVisible = false
         }
 
         initViewModelCallBack()
@@ -98,12 +96,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
             userELN.observe(viewLifecycleOwner) {
                 binding.tvEln.text = getDecimalFormat(it) + "  ELN"
-            }
-
-            user.observe(viewLifecycleOwner){
-                if(userViewModel.user.value?.userIsMint!!){
-                    binding.btnGetNft.setImageResource(R.drawable.btn_get_nft)
-            }
             }
         }
 
