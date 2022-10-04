@@ -109,15 +109,29 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_delivery_company"
                 tools:text="운송장번호 : 536726371628" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/iv_order_state"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/btn_order_state_false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/btn_round_green_color"
+                android:minHeight="28dp"
+                android:text="구매 확정"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />
+
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <!--                android:id="@+id/iv_order_state"-->
+            <!--                android:layout_width="100dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:src="@drawable/btn_order_state_false"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
