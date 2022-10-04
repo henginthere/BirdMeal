@@ -78,7 +78,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
-            if(checkText() && checkEln()){
+            if(checkText() && checkEln()){ // 정보 및 결제 금액 유효성 검사
                 loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
 
                 it.isEnabled = false // 버튼 비활성화
@@ -113,13 +113,14 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
 
     // 결제 금액 검사
     private fun checkEln() : Boolean {
-        val text = binding.tvRestAmountEln.text.split(" ")[0]
-
-        if(text.toInt() < 0){
-            showToast("결제 금액이 부족합니다.")
+        binding.apply {
+            if(userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0){
+                showToast("보유 금액이 부족합니다.")
+                return false
+            } else {
+                return true
+            }
         }
-
-        return text.toInt() >= 0
     }
 
     // 유저 정보 유효성 검사
@@ -130,7 +131,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                 return false
             }
             else if(etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9){
-                showToast("연락처를 입력해주세요.")
+                showToast("연락처를 입력해주세요(9자리 이상).")
                 return false
             }
             else if(etAddress.text.isNullOrEmpty()){
