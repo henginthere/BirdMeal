@@ -36,6 +36,15 @@ class CreateWalletFragment :
         binding.state = WALLET_SELECT
 
         initClickListener()
+
+        checkInfo()
+    }
+
+    private fun checkInfo() {
+        if (sharedPreferences.getBoolean(INFO_WALLET, true)) {
+            showInfo()
+            sharedPreferences.edit().putBoolean(INFO_WALLET, false).apply()
+        }
     }
 
     private fun initClickListener() = with(binding) {
@@ -152,6 +161,11 @@ class CreateWalletFragment :
         btnClose.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        // info 버튼
+        ivQuestion.setOnClickListener {
+            showInfo()
+        }
     }
 
     // 지갑 생성 후, path, credential 설정
@@ -179,6 +193,13 @@ class CreateWalletFragment :
         tvTitle.text = "생성된 지갑 정보입니다"
         tvPrivateKey.text = privateKey
         tvEoa.text = eoa
+    }
+
+    // 지갑 설명 띄우기
+    private fun showInfo() {
+        Intent(requireContext(), IntroWallet::class.java).apply {
+            startActivity(this)
+        }
     }
 
     // 클립보드 복사하기
