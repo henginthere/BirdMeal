@@ -63,6 +63,27 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_hori_41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.41" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/back_beige"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="50dp"
+            app:layout_constraintBottom_toBottomOf="@id/gl_hori_41"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -134,13 +155,13 @@
                     android:id="@+id/et_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="관심 있는 상품을 검색하세요."
+                    android:hint=" 관심 있는 상품을 검색하세요."
                     android:textSize="14sp"
                     android:textColor="@color/green"
                     android:inputType="text"
                     android:maxLines="1"
                     android:imeOptions="actionSearch"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/ic_baseline_search_24" />
             </androidx.cardview.widget.CardView>
