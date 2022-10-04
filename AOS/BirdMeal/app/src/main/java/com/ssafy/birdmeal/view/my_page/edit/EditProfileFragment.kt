@@ -41,7 +41,7 @@ class EditProfileFragment :
 
     private fun initViewModelCallBack() = with(userViewModel) {
         userUpdateMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
             findNavController().popBackStack()
         }
     }

@@ -37,7 +37,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
 
         userInfoMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
         }
 
         user.observe(viewLifecycleOwner) {
@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             (requireActivity().application as ApplicationClass).initContract(it)
 
             userViewModel.updateUserEOA()
-            showToast("인증서 준비 완료")
+//            showToast("인증서 준비 완료")
         }
     }
 

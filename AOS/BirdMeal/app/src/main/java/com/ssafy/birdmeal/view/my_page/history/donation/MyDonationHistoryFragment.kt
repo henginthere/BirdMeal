@@ -28,7 +28,7 @@ class MyDonationHistoryFragment :
 
     private fun initViewModelCallBack() = with(donationViewModel) {
         donateMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
         }
 
         donationMyHistoryList.observe(viewLifecycleOwner){

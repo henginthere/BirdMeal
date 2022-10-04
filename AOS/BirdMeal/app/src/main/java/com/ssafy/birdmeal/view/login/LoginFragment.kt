@@ -99,13 +99,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
             showToast(it)
         }
         loginViewModel.loginMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
             // 홈 화면 이동
             startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
         loginViewModel.joinMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
             // 회원가입 화면 이동
             loadingLoginDialog.dismiss()
             findNavController().navigate(R.id.action_loginFragment_to_joinFragment)
