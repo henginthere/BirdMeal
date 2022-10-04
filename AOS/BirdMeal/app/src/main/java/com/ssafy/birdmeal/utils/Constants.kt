@@ -14,6 +14,7 @@ const val WALLET_PASSWORD = "wallet_password"
 
 // 부트페이 API ID
 const val PAY_APPLICATION_ID = "633b9616cf9f6d001e9268c9"
+
 // TAG
 const val TAG = "TAG"
 
@@ -54,3 +55,6 @@ const val DONATE_BALANCE = "balance" // 금액이 부족함
 const val DONATE_POSSIBLE = "possible" // 기부 가능
 const val DONATE_COMPLETED = "completed" // 기부 완료
 const val DONATE_ERR = "err" // 컨트랙트 통신 오류
+
+// Info 화면 다시보기 여부
+const val INFO_WALLET = "info_wallet" // 지갑 인포

@@ -136,4 +136,7 @@ dependencies {
     // BootPay API
     implementation 'io.github.bootpay:android:+' //최신 버전 추천
     implementation 'io.github.bootpay:android-bio:+' //생체인증 결제 사용시 추가
+
+    // AppIntro
+    implementation 'com.github.AppIntro:AppIntro:6.2.0'
 }
