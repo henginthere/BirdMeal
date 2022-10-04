@@ -173,7 +173,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationAllHistoryList.postValue(it.data.data)
+                    _donationAllHistoryList.postValue(it.data.data.reversed())
                     _donateMsgEvent.postValue("전체 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {
@@ -196,7 +196,7 @@ class DonationViewModel @Inject constructor(
 
                 // 불러오기 성공한 경우
                 if (it.data.success) {
-                    _donationMyHistoryList.postValue(it.data.data)
+                    _donationMyHistoryList.postValue(it.data.data.reversed())
                     _donateMsgEvent.postValue("나의 기부내역 불러오기 성공")
                 }
             } else if (it is Result.Error) {

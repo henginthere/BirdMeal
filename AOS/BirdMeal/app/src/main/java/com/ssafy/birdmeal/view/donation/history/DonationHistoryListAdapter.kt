@@ -11,6 +11,10 @@ import com.ssafy.birdmeal.model.dto.DonationHistoryDto
 class DonationHistoryListAdapter() :
     ListAdapter<DonationHistoryDto, DonationHistoryListAdapter.ViewHolder>(diffUtil) {
 
+    init {
+        setHasStableIds(false)
+    }
+
     inner class ViewHolder(private val binding: ItemDonationHistoryListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
