@@ -13,6 +13,7 @@ import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val userViewModel by viewModels<UserViewModel>()
     private val orderViewModel by viewModels<OrderViewModel>()
     private val nftViewModel by viewModels<NFTViewModel>()
+    private val shoppingViewModel by viewModels<ShoppingViewModel>()
 
     override fun init() {
         PACKAGE_NAME = application.packageName
@@ -77,6 +79,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             contractErrdialog(it)
         }
         nftViewModel.contractErrMsgEvent.observe(this) {
+            contractErrdialog(it)
+        }
+        shoppingViewModel.contractErrMsgEvent.observe(this) {
             contractErrdialog(it)
         }
     }

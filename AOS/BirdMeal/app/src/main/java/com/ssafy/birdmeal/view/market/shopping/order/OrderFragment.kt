@@ -58,6 +58,11 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             errMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
+
+            // 컨트랙트 오류나면 로딩창 닫기
+            contractErrMsgEvent.observe(viewLifecycleOwner){
+                loadingOrderDialog.dismiss()
+            }
         }
 
         userViewModel.apply {
