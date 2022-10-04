@@ -168,7 +168,8 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         myOrderHistoryFragment = MyOrderHistoryFragment()
         myDonationHistoryFragment = MyDonationHistoryFragment()
 
-        childFragmentManager.beginTransaction().replace(R.id.container_view, myOrderHistoryFragment)
+        childFragmentManager.beginTransaction()
+            .replace(R.id.container_view, myDonationHistoryFragment)
             .commit()
     }
 
@@ -180,12 +181,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             when (tag) {
                 "1" -> {
                     childFragmentManager.beginTransaction()
-                        .replace(R.id.container_view, myOrderHistoryFragment)
+                        .replace(R.id.container_view, myDonationHistoryFragment)
                         .commit()
                 }
                 "2" -> {
                     childFragmentManager.beginTransaction()
-                        .replace(R.id.container_view, myDonationHistoryFragment)
+                        .replace(R.id.container_view, myOrderHistoryFragment)
                         .commit()
                 }
             }
