@@ -15,4 +15,8 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
     List<OrderDetailEntity> findAllByOrderDetailSeq(long orderDetailSeq);
 
     List<OrderDetailEntity> findAllByOrderSeqOrderByOrderSeqDesc(long orderSeq);
+
+    List<OrderDetailEntity> findAllByProductSeq(long productSeq);
+
+    void deleteByOrderDetailSeq(long orderDetailSeq);
 }

@@ -4,13 +4,12 @@ import com.backend.birdmeal.dto.ProductDto;
 import com.backend.birdmeal.dto.SellerProductDto;
 import com.backend.birdmeal.dto.SellerProductUpdateDto;
 import com.backend.birdmeal.entity.CategoryEntity;
+import com.backend.birdmeal.entity.OrderDetailEntity;
 import com.backend.birdmeal.entity.ProductEntity;
 import com.backend.birdmeal.entity.SellerEntity;
 import com.backend.birdmeal.mapper.ProductMapper;
 import com.backend.birdmeal.mapper.SellerProductMapper;
-import com.backend.birdmeal.repository.CategoryRepository;
-import com.backend.birdmeal.repository.SellerInfoRepository;
-import com.backend.birdmeal.repository.SellerProductRepository;
+import com.backend.birdmeal.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,8 @@ public class SellerProductService {
     private final SellerInfoRepository sellerInfoRepository;
     private final SellerProductRepository sellerProductRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderDetailRepository orderDetailRepository;
+    private final OrderRepository orderRepository;
 
     // 상품 판매 등록
     public boolean setSellerProduct(SellerProductDto sellerProductDto) {
@@ -92,6 +93,21 @@ public class SellerProductService {
 
         // 삭제하기 ( soft delete )
         productEntity.setProductIsDeleted(true);
+
+        // orderDetail에 있는 주문들 삭제하기
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByProductSeq(productSeq);
+
+        for(int i=0; i<orderDetailEntityList.size(); i++){
+            OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(i);
+
+            // order삭제하기
+            // order가 있으면
+            if(orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq()) != null){
+                orderRepository.deleteByOrderSeq(orderDetailEntity.getOrderSeq());
+            }
+
+            orderDetailRepository.deleteByOrderDetailSeq(orderDetailEntity.getOrderDetailSeq());
+        }
 
         // 저장
         sellerProductRepository.save(productEntity);
