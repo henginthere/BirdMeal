@@ -50,10 +50,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             /*
-            홈, 지갑생성, 기부하기, 포토카드, MY NFT, 주소 검색
+            지갑생성, 기부하기, 포토카드, MY NFT, 주소 검색
             화면에서 바텀 네비 미표시
              */
-            if (destination.id == R.id.homeFragment || destination.id == R.id.createWalletFragment ||
+            if (destination.id == R.id.createWalletFragment ||
                 destination.id == R.id.donateFragment || destination.id == R.id.canvasFragment ||
                 destination.id == R.id.myNftListFragment || destination.id == R.id.searchAddressFragment
             ) {
