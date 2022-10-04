@@ -3,6 +3,7 @@ package com.ssafy.birdmeal.di
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.dttmm.web3test.wrapper.Elena
 import com.dttmm.web3test.wrapper.Exchange
 import com.ssafy.birdmeal.model.entity.CartEntity
@@ -71,15 +72,22 @@ class ApplicationClass : Application() {
     }
 
     fun initContract(credentials: Credentials) {
-        manager = FastRawTransactionManager(
-            web3j, credentials, BOLCKCHAIN_NETWORK_CHAINID,
-            pollingProcessor
-        )
 
-        fundingContract = Funding.load(CA_FUNDING, web3j, manager, gasProvider)
-        elenaContract = Elena.load(CA_ELENA, web3j, manager, gasProvider)
-        exchangeContract = Exchange.load(CA_EXCHANGE, web3j, manager, gasProvider)
-        tradeManagerContract = TradeManager.load(CA_TRADE_MANAGER, web3j, manager, gasProvider)
-        nftContract = ElenaNFT.load(CA_NFT, web3j, manager, gasProvider)
+        try {
+            manager = FastRawTransactionManager(
+                web3j, credentials, BOLCKCHAIN_NETWORK_CHAINID,
+                pollingProcessor
+            )
+
+            fundingContract = Funding.load(CA_FUNDING, web3j, manager, gasProvider)
+            elenaContract = Elena.load(CA_ELENA, web3j, manager, gasProvider)
+            exchangeContract = Exchange.load(CA_EXCHANGE, web3j, manager, gasProvider)
+            tradeManagerContract = TradeManager.load(CA_TRADE_MANAGER, web3j, manager, gasProvider)
+            nftContract = ElenaNFT.load(CA_NFT, web3j, manager, gasProvider)
+        } catch (e: Exception) {
+            Log.d(TAG, "initContract Err: $e")
+            Toast.makeText(this, "트랜잭션 객체 생성 오류", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }

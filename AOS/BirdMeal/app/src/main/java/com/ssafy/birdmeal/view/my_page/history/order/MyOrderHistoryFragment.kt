@@ -31,7 +31,7 @@ class MyOrderHistoryFragment : BaseFragment<FragmentMyOrderHistoryBinding>(R.lay
 
     private fun initViewModelCallBack() = with(orderViewModel) {
         orderMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
         }
     }
 

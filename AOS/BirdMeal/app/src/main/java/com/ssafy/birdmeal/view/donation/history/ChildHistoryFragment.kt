@@ -29,7 +29,7 @@ class ChildHistoryFragment :
 
     private fun initViewModelCallBack() = with(donationViewModel) {
         donateMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
         }
         orderChildHistoryList.observe(viewLifecycleOwner) {
             childHistoryListAdapter.submitList(it)

@@ -45,7 +45,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     private fun initViewModelCallBack() {
         userViewModel.apply {
             successMsgEvent.observe(viewLifecycleOwner) {
-                showToast(it)
+//                showToast(it)
             }
 
             tokenChildMsgEvent.observe(viewLifecycleOwner) {
