@@ -111,6 +111,7 @@ public class UserService {
         user.setUserAdd(updateUserDto.getUserAdd());
         user.setUserTel(updateUserDto.getUserTel());
         user.setUserNickname(updateUserDto.getUserNickname());
+        user.setUserAddDetail(updateUserDto.getUserAddDetail());
 
         userRepository.save(user);
 

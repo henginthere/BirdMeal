@@ -18,6 +18,7 @@ public class UserDto {
     private String userEoa;
     private String userTel;
     private String userAdd;
+    private String userAddDetail;
     private boolean userIsMint; // 0이면 민팅대상자x, 1이면 민팅대상자
     private int userMonthMoney;
     private boolean userChargeState;
