@@ -11,6 +11,7 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderBinding
 import com.ssafy.birdmeal.di.ApplicationClass
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderDialog
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
@@ -77,32 +78,67 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
-            loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
+            if(checkText() && checkEln()){
+                loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
 
-            it.isEnabled = false // 버튼 비활성화
-            // 상품 컨트랙트 목록 불러오기
-            val contractList: MutableList<Trade> =
-                (requireActivity().application as ApplicationClass)
-                    .getTradeContract(shoppingViewModel.productList.value)
+                it.isEnabled = false // 버튼 비활성화
+                // 상품 컨트랙트 목록 불러오기
+                val contractList: MutableList<Trade> =
+                    (requireActivity().application as ApplicationClass)
+                        .getTradeContract(shoppingViewModel.productList.value)
 
-            // 상품 컨트랙트 주문 넣기
-            shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
+                // 상품 컨트랙트 주문 넣기
+                shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
+            }
         }
 
         // 주문자 정보 저장
         btnSaveInfo.setOnClickListener {
-            it.isEnabled = false // 버튼 비활성화
+            if(checkText()){ // 텍스트 유효성검증
+                it.isEnabled = false // 버튼 비활성화
 
-            userViewModel.user.value!!.apply { // 정보 업데이트
-                userNickname = etName.text.toString()
-                userTel = etTelNumber.text.toString()
-                userAdd = etAddress.text.toString()
+                userViewModel.user.value!!.apply { // 정보 업데이트
+                    userNickname = etName.text.toString()
+                    userTel = etTelNumber.text.toString()
+                    userAdd = etAddress.text.toString()
+                }
+                userViewModel.updateUserProfile()
             }
-            userViewModel.updateUserProfile()
         }
         // 주소 검색
         btnSearchAddress.setOnClickListener {
             findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
+        }
+    }
+
+    // 결제 금액 검사
+    private fun checkEln() : Boolean {
+        val text = binding.tvRestAmountEln.text.split(" ")[0]
+
+        if(text.toInt() < 0){
+            showToast("결제 금액이 부족합니다.")
+        }
+
+        return text.toInt() >= 0
+    }
+
+    // 유저 정보 유효성 검사
+    private fun checkText() : Boolean {
+        binding.apply {
+            if(etName.text.isNullOrEmpty()){
+                showToast("이름을 입력해주세요.")
+                return false
+            }
+            else if(etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9){
+                showToast("연락처를 입력해주세요.")
+                return false
+            }
+            else if(etAddress.text.isNullOrEmpty()){
+                showToast("배송지를 입력해주세요.")
+                return false
+            }
+            // 유효한 경우
+            return true
         }
     }
 
@@ -112,12 +148,11 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             InputFilter { src, _, _, _, _, _ ->
                 // val ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-흐]+$") // 영문 숫자 한글
                 // 영문 숫자 한글 천지인 middle dot[ᆞ]
-                val ps =
-                    Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
+                val ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
                 if (src.equals("") || ps.matcher(src).matches()) {
                     return@InputFilter src;
                 }
-                showToast("닉네임은 한글, 영문, 숫자로만 2자 ~ 8자까지 입력 가능합니다.")
+                showToast("닉네임은 한글, 영문, 숫자로만 입력 가능합니다.")
                 return@InputFilter "";
             },
             InputFilter.LengthFilter(8)
