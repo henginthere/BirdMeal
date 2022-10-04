@@ -33,7 +33,7 @@
             </v-col>
             <v-col class="d-flex flex-column">
               <div>판매수익</div>
-              <div>{{ auth.userBalance }} ETH</div>
+              <div>{{ auth.userBalance }} ELN</div>
             </v-col>
           </v-row>
         </v-container>
