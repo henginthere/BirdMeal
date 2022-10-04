@@ -43,6 +43,8 @@ class EditProfileFragment :
         userUpdateMsgEvent.observe(viewLifecycleOwner) {
             showToast(it)
             findNavController().popBackStack()
+
+            binding.btnSave.isEnabled = true // 버튼 재활성화
         }
     }
 
@@ -54,13 +56,17 @@ class EditProfileFragment :
         }
 
         btnSave.setOnClickListener {
-            userViewModel.user.value!!.apply { // 정보 업데이트
-                userNickname = etName.text.toString()
-                userTel = etTelNumber.text.toString()
-                userAdd = etAddress.text.toString()
-                userAddDetail = etAddressDetail.text.toString()
+            if(checkText()){
+                it.isEnabled = false // 연속 클릭 방지
+
+                userViewModel.user.value!!.apply { // 정보 업데이트
+                    userNickname = etName.text.toString()
+                    userTel = etTelNumber.text.toString()
+                    userAdd = etAddress.text.toString()
+                    userAddDetail = etAddressDetail.text.toString()
+                }
+                userViewModel.updateUserProfile()
             }
-            userViewModel.updateUserProfile()
         }
 
         // 지갑 정보 보기
@@ -84,6 +90,30 @@ class EditProfileFragment :
         }
     }
 
+    // 유저 정보 유효성 검사
+    private fun checkText() : Boolean {
+        binding.apply {
+            if(etName.text.isNullOrEmpty()){
+                showToast("이름을 입력해주세요.")
+                return false
+            }
+            else if(etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9){
+                showToast("연락처를 입력해주세요.")
+                return false
+            }
+            else if(etAddress.text.isNullOrEmpty()){
+                showToast("배송지를 입력해주세요.")
+                return false
+            }
+            else if(etAddressDetail.text.isNullOrEmpty()){
+                showToast("배송지 상세주소를 입력해주세요.")
+                return false
+            }
+            // 유효한 경우
+            return true
+        }
+    }
+
     // 닉네임 설정 제한
     private fun initNickNameRule() {
         binding.etName.filters = arrayOf(
@@ -95,7 +125,7 @@ class EditProfileFragment :
                 if (src.equals("") || ps.matcher(src).matches()) {
                     return@InputFilter src;
                 }
-                showToast("닉네임은 한글, 영문, 숫자로만 2자 ~ 8자까지 입력 가능합니다.")
+                showToast("닉네임은 한글, 영문, 숫자로만 입력 가능합니다.")
                 return@InputFilter "";
             },
             InputFilter.LengthFilter(8)
