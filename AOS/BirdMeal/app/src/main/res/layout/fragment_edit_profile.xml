@@ -166,13 +166,14 @@
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/et_round_main_color"
                 android:enabled="false"
+                android:hint="주소"
                 android:padding="8dp"
                 android:text="@{userVM.user.userAdd}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/et_tel_number"
                 app:layout_constraintTop_toBottomOf="@id/btn_search_address"
-                tools:text="구미시 수출대로 28길 304호" />
+                tools:text="구미시 수출대로 28길" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_wallet"
@@ -188,6 +189,22 @@
                 android:translationZ="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_address_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/et_round_main_color"
+                android:hint="상세 주소"
+                android:padding="8dp"
+                android:text="@{userVM.user.userAddDetail}"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/et_tel_number"
+                app:layout_constraintTop_toBottomOf="@id/et_address"
+                tools:text="만루홈런 304호" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
