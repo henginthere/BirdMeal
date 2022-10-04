@@ -32,6 +32,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         binding.userVM = userViewModel
         userViewModel.getUserInfo()
 
+        if(userViewModel.user.value?.userRole!!){
+            binding.btnMyNft.setImageResource(R.drawable.btn_mind)
+        }
+
         initViewModelCallBack()
         initClickListener()
         initFragmentManager()
