@@ -197,6 +197,7 @@ class UserViewModel @Inject constructor(
             put("userSeq", user.value?.userSeq.toString())
             put("userTel", user.value?.userTel ?: "")
             put("userAdd", user.value?.userAdd ?: "")
+            put("userAddDetail", user.value?.userAddDetail ?: "")
             put("userNickname", user.value?.userNickname ?: "")
         }
 
