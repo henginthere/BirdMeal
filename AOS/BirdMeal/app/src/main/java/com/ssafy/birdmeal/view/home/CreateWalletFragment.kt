@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.gun0912.tedpermission.provider.TedPermissionProvider
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentCreateWalletBinding
@@ -20,6 +19,7 @@ import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.math.BigInteger
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -99,7 +99,12 @@ class CreateWalletFragment :
                 Log.d(TAG, "btnCreatePrivate private: ${BigInteger(private, 16)}")
                 Log.d(TAG, "btnCreatePrivate public: $public")
 
-                val path = TedPermissionProvider.context.getWalletPath()
+                if (!Pattern.matches("^[a-zA-Z0-9]*\$", private) || private.length != 64) {
+                    showToast("등록할 수 없는 형식입니다\n개인키를 확인해 주세요")
+                    return@setOnClickListener
+                }
+
+                val path = requireContext().getWalletPath()
 
                 try {
                     loadingWalletDialog.show(childFragmentManager, "loadingWalletDialog")

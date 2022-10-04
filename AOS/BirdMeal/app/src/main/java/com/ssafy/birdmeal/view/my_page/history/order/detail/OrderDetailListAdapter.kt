@@ -8,43 +8,61 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.ItemOrderDetailListBinding
 import com.ssafy.birdmeal.model.response.OrderDetailResponse
-import com.ssafy.birdmeal.view.my_page.OrderViewModel
 
 
-class OrderDetailListAdapter(private val listener: OrderDetailListener)
-    : ListAdapter<OrderDetailResponse, OrderDetailListAdapter.ViewHolder>(diffUtil) {
+class OrderDetailListAdapter(private val listener: OrderDetailListener) :
+    ListAdapter<OrderDetailResponse, OrderDetailListAdapter.ViewHolder>(diffUtil) {
 
-    inner class ViewHolder(private val binding : ItemOrderDetailListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemOrderDetailListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.ivOrderState.setOnClickListener{
+            binding.ivOrderState.setOnClickListener {
                 listener.onStateClick(getItem(absoluteAdapterPosition).orderDetailSeq)
             }
         }
 
-        fun bind(item : OrderDetailResponse){
+        fun bind(item: OrderDetailResponse) = with(binding) {
             binding.orderDetail = item
             binding.executePendingBindings()
-            if(item.orderDeliveryCompany==null&&item.orderDeliveryNumber==null){
-                binding.tvDeliveryCompany.text = "택배사 정보가 입력되지 않았습니다."
-                binding.tvDeliveryNumber.text = "운송장 번호가 입력되지 않았습니다."
-            }
 
-            if(item.orderToState||item.orderDeliveryCompany==null&&item.orderDeliveryNumber==null){
-                binding.ivOrderState.setImageResource(R.drawable.btn_order_state_true)
-                binding.ivOrderState.setClickable(false)
-            }
-            else if(!item.orderToState){
-                binding.ivOrderState.setImageResource(R.drawable.btn_order_state_false)
-            }
+            // 배송 준비중
+            if (item.orderDeliveryCompany == null && item.orderDeliveryNumber == null) {
+                tvDeliveryCompany.text = "배송 준비중"
+                tvDeliveryNumber.text = ""
 
+                ivOrderState.background =
+                    itemView.context.resources.getDrawable(R.drawable.btn_round_gray_no_stroke)
+                ivOrderState.setTextColor(itemView.context.resources.getColor(R.color.black_low_emphasis))
 
+                ivOrderState.text = "인수 확인"
+                ivOrderState.setClickable(false)
 
+            } else {
+                // 구매확정 이미 했을 때
+                if (item.orderToState) {
+                    ivOrderState.background =
+                        itemView.context.resources.getDrawable(R.drawable.background_transparent)
+                    ivOrderState.setTextColor(itemView.context.resources.getColor(R.color.black_low_emphasis))
+
+                    ivOrderState.text = "인수 완료"
+                    ivOrderState.setClickable(false)
+                }
+                // 구매확정 가능할 때
+                else if (!item.orderToState) {
+                    ivOrderState.background =
+                        itemView.context.resources.getDrawable(R.drawable.btn_round_green_color)
+                    ivOrderState.setTextColor(itemView.context.resources.getColor(R.color.white))
+
+                    ivOrderState.text = "인수 확인"
+                }
             }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemOrderDetailListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemOrderDetailListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -53,12 +71,18 @@ class OrderDetailListAdapter(private val listener: OrderDetailListener)
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<OrderDetailResponse>(){
-            override fun areItemsTheSame(oldItem: OrderDetailResponse, newItem: OrderDetailResponse): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<OrderDetailResponse>() {
+            override fun areItemsTheSame(
+                oldItem: OrderDetailResponse,
+                newItem: OrderDetailResponse
+            ): Boolean {
                 return oldItem.orderDetailSeq == newItem.orderDetailSeq
             }
 
-            override fun areContentsTheSame(oldItem: OrderDetailResponse, newItem: OrderDetailResponse): Boolean {
+            override fun areContentsTheSame(
+                oldItem: OrderDetailResponse,
+                newItem: OrderDetailResponse
+            ): Boolean {
                 return oldItem == newItem
             }
         }

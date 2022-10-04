@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:text="⚠ 개인키는 외부에 노출되지 않도록 ⚠\n개인이 잘 보관해주세요!!"
                 android:textColor="@color/primary_orange"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -98,7 +98,7 @@
                 android:id="@+id/header_eoa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="계정 주소"
+                android:text="지갑 주소"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
