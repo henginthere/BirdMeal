@@ -12,6 +12,8 @@ const val USER_SEQ = "user_seq"
 // 지갑 private_key 비밀번호
 const val WALLET_PASSWORD = "wallet_password"
 
+// 부트페이 API ID
+const val PAY_APPLICATION_ID = "633b9616cf9f6d001e9268c9"
 // TAG
 const val TAG = "TAG"
 
