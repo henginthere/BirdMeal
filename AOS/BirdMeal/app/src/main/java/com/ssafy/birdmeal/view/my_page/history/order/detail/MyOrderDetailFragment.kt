@@ -44,7 +44,7 @@ class MyOrderDetailFragment :
 
     private fun initViewModelCallBack() = with(orderViewModel) {
         orderMsgEvent.observe(viewLifecycleOwner) {
-            showToast(it)
+//            showToast(it)
         }
 
         // 상품 인수 끝
