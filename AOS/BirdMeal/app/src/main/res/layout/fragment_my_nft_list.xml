@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{`제작한 포토카드 NFT : `+ count +`개`}"
+            android:text="@{`제작한 포토카드 : `+ count +`개`}"
             android:textSize="16sp"
             android:visibility="@{userVM.user.userRole ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
