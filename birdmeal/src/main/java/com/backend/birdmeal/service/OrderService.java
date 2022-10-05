@@ -210,15 +210,18 @@ public class OrderService {
 
             MyOrderDetailResponseDto myOrderDetailResponseDto = MyOrderDetailResponseDto.builder()
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
-                    .productName(productEntity.getProductName())
-                    .productPrice(productEntity.getProductPrice())
+                    .productName(orderDetailEntity.getProductName())
+                    .productPrice(orderDetailEntity.getProductPrice())
                     .orderQuantity(orderDetailEntity.getOrderQuantity())
                     .orderDate(orderEntity.getOrderDate())
                     .orderToState(orderDetailEntity.isOrderToState())
                     .orderDeliveryNumber(orderDetailEntity.getOrderDeliveryNumber())
                     .orderDeliveryCompany(orderDetailEntity.getOrderDeliveryCompany())
-                    .productThumbnailImg(productEntity.getProductThumbnailImg())
+                    .productThumbnailImg(orderDetailEntity.getProductThumbnailImg())
                     .orderTHash(orderDetailEntity.getOrderTHash())
+                    .orderIsCanceled(orderDetailEntity.isOrderIsCanceled())
+                    .orderIsRefunded(orderDetailEntity.isOrderIsRefunded())
+                    .productIsDeleted(orderDetailEntity.isProductIsDeleted())
                     .build();
 
             myOrderDetailResponseDtoList.add(myOrderDetailResponseDto);
