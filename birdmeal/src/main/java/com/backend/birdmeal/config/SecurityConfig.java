@@ -81,8 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/register","/api/user/login").permitAll() // 관리자 권한 허용
                 .antMatchers("/api/seller/**").permitAll() // 관리자 권한
                 .antMatchers("/api/file/**").permitAll() // 파일 업로드
-                .antMatchers("/api/user/**","/api/product/**","/api/donation/**","/api/order/**","/api/nft/**").hasAnyAuthority("ROLE_CHILD","ROLE_ADMIN")
-                .antMatchers("/api/product/**").hasAuthority("ROLE_SELLER")
+                .antMatchers("/api/user/**","/api/donation/**","/api/order/**","/api/nft/**").hasAnyAuthority("ROLE_CHILD","ROLE_ADMIN")
+                .antMatchers("/api/product/**").hasAnyAuthority("ROLE_SELLER","USER_ADMIN","USER_CHILD")
                 .anyRequest().authenticated()
 
                 .and()
