@@ -51,4 +51,28 @@ public class OrderDetailEntity {
     @Column(name = "order_delivery_company",length = 32)
     private String orderDeliveryCompany;
 
+    @Basic
+    @Column(name = "product_name", length = 256)
+    private String productName;
+
+    @Basic
+    @Column(name = "product_price")
+    private int productPrice;
+
+    @Basic
+    @Column(name = "product_thumbnail_img", length = 1024)
+    private String productThumbnailImg;
+
+    @Basic
+    @Column(name = "product_is_deleted", columnDefinition = "boolean default false")
+    private boolean productIsDeleted; //상품 삭제 여부
+
+    @Basic
+    @Column(name = "order_is_canceled", columnDefinition = "boolean default false")
+    private boolean orderIsCanceled; //주문 취소 여부
+
+    @Basic
+    @Column(name = "order_is_refunded", columnDefinition = "boolean default false")
+    private boolean orderIsRefunded; // 주문 환불 여부
+
 }
