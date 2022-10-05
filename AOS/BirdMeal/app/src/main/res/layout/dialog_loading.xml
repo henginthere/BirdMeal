@@ -52,7 +52,7 @@
             android:id="@+id/tv_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="블록체인 연결은 10초 이상\n소요될 수 있습니다..."
+            android:text="블록체인 연결은 10초 이상\n소요될 수도 있습니다..."
             android:textColor="@color/white"
             android:textSize="18dp"
             android:gravity="center"
