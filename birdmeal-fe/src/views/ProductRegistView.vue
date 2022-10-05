@@ -147,7 +147,7 @@ export default {
       productDescriptionImgURL: '',
       overlay: false,
       category: {
-        육류: 1,
+        '고기': 1,
         '채소/과일': 2,
         '밀키트/간편식': 3,
         냉동식품: 4,
@@ -158,7 +158,7 @@ export default {
         '양념/오일': 9,
       },
       categorys: [
-        '육류',
+        '고기',
         '채소/과일',
         '밀키트/간편식',
         '냉동식품',

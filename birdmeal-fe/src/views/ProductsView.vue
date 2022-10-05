@@ -56,7 +56,7 @@ export default {
     return {
       products: null,
       category: {
-        1: '육류',
+        1: '고기',
         2: '채소/과일',
         3: '밀키트/간편식',
         4: '냉동식품',
