@@ -146,7 +146,7 @@ export default {
     return {
       product: null,
       preName: null,
-      prePrice: null,
+      prePrice: 0,
       name: null,
       price: null,
       productThumbnailImgURL: '',
@@ -175,7 +175,9 @@ export default {
     },
 
     setProduct() {
-      if (this.preName === this.name || this.prePrice === this.price) {
+      
+      if (this.preName === this.name && this.prePrice === this.price) {
+        
         this.overlay = !this.overlay;
         axios
           .put(
@@ -196,6 +198,7 @@ export default {
           .then(() => (this.overlay = !this.overlay))
           .then(() => this.$router.push('/products'));
       } else {
+        console.log(this.prePrice, this.price);
         this.overlay = !this.overlay;
         updateProduct(this.name, this.price, this.product.productCa)
           .then(() =>
@@ -236,8 +239,8 @@ export default {
         )
         .then(() => (this.name = this.product.productName))
         .then(() => (this.preName = this.product.productName))
-        .then(() => (this.preprice = this.product.productPrice))
-        .then(() => (this.price = this.product.productPrice));
+        .then(() => (this.prePrice = this.product.productPrice))
+        .then(() => (this.price = this.product.productPrice))
     },
     imgUpload1() {
       let form = new FormData();
