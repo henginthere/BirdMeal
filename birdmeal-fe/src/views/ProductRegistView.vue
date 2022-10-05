@@ -10,7 +10,7 @@
 
     <v-container class="text-h4">
       <v-row>
-        <v-col class="ml-4 mt-4 mb-2">상품등록</v-col>
+        <v-col class="ml-4 mt-4 mb-2">상품 등록</v-col>
       </v-row>
     </v-container>
     <v-container>
@@ -32,7 +32,7 @@
       <v-row>
         <v-col>
           <v-card width="800px" class="elevation-0">
-            <v-card-title>상품가격</v-card-title>
+            <v-card-title>판매가</v-card-title>
             <v-card-text class="mt-3">
               <v-text-field
                 variant="underlined"

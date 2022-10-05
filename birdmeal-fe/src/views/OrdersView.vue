@@ -2,7 +2,7 @@
   <v-app>
     <v-container class="text-h4">
       <v-row>
-        <v-col class="ml-4 mt-4 mb-2">주문목록</v-col>
+        <v-col class="ml-4 mt-4 mb-2">주문 목록</v-col>
       </v-row>
     </v-container>
     <v-container class="mb-0 pb-0">
@@ -15,6 +15,15 @@
             label="필터"
             density="comfortable"
           ></v-select>
+        </v-col>
+        <v-col>
+          <v-switch
+            v-model="order_order"
+            hide-details
+            color="red"
+            inset
+            :label="`${order_order ? '최신순' : '오래된순'}`"
+          ></v-switch>
         </v-col>
       </v-row>
     </v-container>
@@ -92,6 +101,8 @@ const pageLength = ref(0);
 
 const pageData = ref([]);
 
+const order_order = ref(false);
+
 /** LifeCycle Hook */
 onMounted(() => {
   http.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
@@ -100,45 +111,65 @@ onMounted(() => {
     updatePageData(1);
   });
 });
+
 watch(currentPage, updatePageData);
-watch(filter, async function (newVal, oldVal) {
-  http.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
+watch(filter, filterState);
+watch(order_order, filterOrder);
+
+/** Function */
+async function updatePageData(pageNum, oldNum) {
+  pageLength.value = Math.ceil(orderList.length / itemsPerPage);
+  pageData.value = orderList.slice(
+    (pageNum - 1) * itemsPerPage,
+    Math.min(pageNum * itemsPerPage, orderList.length)
+  );
+}
+
+async function filterState(newVal, oldVal) {
+  await http.get(`/order/${auth.user.sellerSeq}`).then(function (res) {
     orderList = res.data.data;
   });
 
-  if (newVal == '배송전')
+  if (newVal == '배송전') {
     orderList = orderList.filter(
       (item) => !item.orderDeliveryNumber || !item.orderDeliveryCompany
     );
+  }
 
-  if (newVal == '배송중')
+  if (newVal == '배송중') {
     orderList = orderList.filter(
       (item) =>
         item.orderDeliveryNumber &&
         item.orderDeliveryCompany &&
         !item.orderToState
     );
+  }
 
-  if (newVal == '완료')
+  if (newVal == '완료') {
     orderList = orderList.filter((item) => item.orderToState);
+  }
 
-  pageLength.value = Math.ceil(orderList.length / itemsPerPage);
-  updatePageData(1);
-});
+  filterOrder(order_order.value, null);
+  updatePageData(1, 1);
+}
 
-/** Function */
-async function updatePageData(pageNum, oldNum) {
-  if (orderList.length == 0) return;
-  pageData.value = orderList.slice(
-    (pageNum - 1) * itemsPerPage,
-    Math.min(pageNum * itemsPerPage, orderList.length)
-  );
+async function filterOrder(newVal, oldVal) {
+  if (newVal) {
+    orderList = orderList.sort((a, b) => {
+      return b.orderSeq - a.orderSeq;
+    });
+  } else {
+    orderList = orderList.sort((a, b) => {
+      return a.orderSeq - b.orderSeq;
+    });
+  }
+  updatePageData(1, 1);
 }
 </script>
 
 <style lang="scss" scoped>
 .v-table th {
-  font-size: 1.0em !important;
+  font-size: 1em !important;
   font-weight: 400;
 }
 </style>
