@@ -109,7 +109,7 @@ onMounted(() => {
     orderList = res.data.data;
     pageLength.value = Math.ceil(orderList.length / itemsPerPage);
     updatePageData(1);
-  });
+  }).then(()=> console.log(orderList));
 });
 
 watch(currentPage, updatePageData);

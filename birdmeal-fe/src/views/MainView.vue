@@ -71,13 +71,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'; 
 import { useRouter } from 'vue-router';
 import { authState } from '@/stores/auth';
+import { balanceOf } from '@/web3util/events';
+import { onMounted } from 'vue'
 
 /** Router, Store */
 const router = useRouter();
 const auth = authState();
+
+
+
+onMounted(() => {
+  balanceOf().then(r=>auth.setBalance(r));
+})
+
 
 /** Variable */
 const drawer = ref(true);
