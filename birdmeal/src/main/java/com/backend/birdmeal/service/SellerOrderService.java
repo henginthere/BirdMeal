@@ -40,11 +40,8 @@ public class SellerOrderService {
             // order 가져오기
             OrderEntity orderEntity = orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq());
 
-            // product 가져오기
-            ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
-
             // category 가져오기
-            CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(productEntity.getCategorySeq());
+            CategoryEntity categoryEntity = categoryRepository.findByCategorySeq(orderDetailEntity.getCategorySeq());
 
             // user 가져오기
             Optional<UserEntity> userOptional = userRepository.findByUserSeq(orderEntity.getUserSeq());
@@ -63,8 +60,7 @@ public class SellerOrderService {
                     .userAddDetail(userEntity.getUserAddDetail())
                     .orderPrice(price)
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
-                    .productSeq(productEntity.getProductSeq())
-                    .sellerSeq(productEntity.getSellerSeq())
+                    .sellerSeq(orderDetailEntity.getSellerSeq())
                     .orderDate(orderEntity.getOrderDate())
                     .orderQuantity(orderDetailEntity.getOrderQuantity())
                     .orderTHash(orderDetailEntity.getOrderTHash())
@@ -74,14 +70,11 @@ public class SellerOrderService {
                     .categoryName(categoryEntity.getCategoryName())
                     .productName(orderDetailEntity.getProductName())
                     .productPrice(orderDetailEntity.getProductPrice())
-                    .productCa(productEntity.getProductCa())
+                    .productCa(orderDetailEntity.getProductCa())
                     .productThumbnailImg(orderDetailEntity.getProductThumbnailImg())
-                    .productDescriptionImg(productEntity.getProductDescriptionImg())
                     .productIsDeleted(orderDetailEntity.isProductIsDeleted())
                     .orderIsCanceled(orderDetailEntity.isOrderIsCanceled())
                     .orderIsRefunded(orderDetailEntity.isOrderIsRefunded())
-                    .productCreateDate(productEntity.getProductCreateDate())
-                    .productUpdateDate(productEntity.getProductUpdateDate())
                     .build();
 
             sellerOrderResponseDtoList.add(sellerOrderResponseDto);

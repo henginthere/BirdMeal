@@ -24,8 +24,8 @@ public class OrderDetailEntity {
     private long orderSeq;
 
     @Basic
-    @Column(name = "product_seq")
-    private long productSeq;
+    @Column(name = "category_seq")
+    private long categorySeq;
 
     @Basic
     @Column(name = "seller_seq")
@@ -38,6 +38,10 @@ public class OrderDetailEntity {
     @Basic
     @Column(name = "order_t_hash",length = 1024)
     private String orderTHash;
+
+    @Basic
+    @Column(name = "productCa",length = 256)
+    private String productCa;
 
     @Basic
     @Column(name = "order_to_state", columnDefinition = "boolean default false")
