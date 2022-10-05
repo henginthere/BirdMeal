@@ -78,6 +78,9 @@ public class OrderService {
                     .orderQuantity(orderRequestDto.getOrderQuantity())
                     .orderTHash(orderRequestDto.getOrderTHash())
                     .orderToState(false)
+                    .productName(productEntity.getProductName())
+                    .productPrice(productEntity.getProductPrice())
+                    .productThumbnailImg(productEntity.getProductThumbnailImg())
                     .build();
 
             // 저장하기
