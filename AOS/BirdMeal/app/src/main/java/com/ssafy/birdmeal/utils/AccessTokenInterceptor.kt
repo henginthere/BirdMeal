@@ -20,7 +20,6 @@ class AccessTokenInterceptor @Inject constructor(
             .addHeader(JWT, "Bearer $token")
             .build()
 
-        Log.d(TAG, "intercept 호출: $token")
         return chain.proceed(request)
     }
 }
