@@ -129,7 +129,7 @@ public class OrderController {
      * @return Object
      */
 
-    @ApiOperation(value="주문 취소하기",response = Object.class)
+    @ApiOperation(value="주문 취소 상태 업데이트",response = Object.class)
     @PutMapping("cancel/{order-detail-seq}")
     public ResponseEntity<?> updateOrderIsCanceled(@PathVariable("order-detail-seq") long orderDetailSeq){
         boolean success = orderService.updateOrderIsCanceled(orderDetailSeq);
@@ -139,6 +139,27 @@ public class OrderController {
             res = ResponseFrame.of(success, "주문 취소 상태 업데이트를 성공했습니다.");
         }else{
             res = ResponseFrame.of(success, "주문이 없어 주문 취소 상태 업데이트를 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    /**
+     * 환불 상태
+     *
+     * @param orderDetailSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="주문 환불 상태 업데이트",response = Object.class)
+    @PutMapping("refund/{order-detail-seq}")
+    public ResponseEntity<?> updateOrderIsRefunded(@PathVariable("order-detail-seq") long orderDetailSeq){
+        boolean success = orderService.updateOrderIsRefunded(orderDetailSeq);
+        ResponseFrame<?> res;
+
+        if(success) {
+            res = ResponseFrame.of(success, "주문 환불 상태 업데이트를 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "주문이 없어 주문 환불 상태 업데이트를 실패했습니다.");
         }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
