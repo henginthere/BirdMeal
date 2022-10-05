@@ -74,7 +74,6 @@ public class OrderService {
             // 주문 Detail Table에 컬럼 생성하기
             OrderDetailEntity orderDetailEntity = OrderDetailEntity.builder()
                     .orderSeq(orderSeq)
-                    .productSeq(orderRequestDto.getProductSeq())
                     .sellerSeq(productEntity.getSellerSeq())
                     .orderQuantity(orderRequestDto.getOrderQuantity())
                     .orderTHash(orderRequestDto.getOrderTHash())
@@ -82,6 +81,8 @@ public class OrderService {
                     .productName(productEntity.getProductName())
                     .productPrice(productEntity.getProductPrice())
                     .productThumbnailImg(productEntity.getProductThumbnailImg())
+                    .productCa(productEntity.getProductCa())
+                    .categorySeq(productEntity.getCategorySeq())
                     .build();
 
             // 저장하기
@@ -147,7 +148,7 @@ public class OrderService {
 
             // 제일 처음 주문 상품 저장
             OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(0);
-            ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
+            //ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
 
 
             // 상세 주문 저장
@@ -246,7 +247,7 @@ public class OrderService {
             OrderEntity orderEntity = orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq());
 
             // 상품 정보 가져오기
-            ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
+           // ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
 
             MyOrderDetailResponseDto myOrderDetailResponseDto = MyOrderDetailResponseDto.builder()
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
@@ -305,14 +306,14 @@ public class OrderService {
 
         // 상품
 
-        ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
+        //ProductEntity productEntity = productRepository.findByProductSeq(orderDetailEntity.getProductSeq());
 
         OrderDetailResponseDto orderDetailResponseDto = OrderDetailResponseDto.builder()
                 .orderQuantity(orderDetailEntity.getOrderQuantity())
                 .productPrice(orderDetailEntity.getProductPrice())
                 .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                 .orderTHash(orderDetailEntity.getOrderTHash())
-                .productCa(productEntity.getProductCa())
+                .productCa(orderDetailEntity.getProductCa())
                 .build();
 
         return orderDetailResponseDto;
