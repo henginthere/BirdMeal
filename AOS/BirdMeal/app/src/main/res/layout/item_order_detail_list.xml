@@ -88,14 +88,26 @@
                 tools:text="2022-09-09" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_product"
+                tools:text="배송전입니다" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_delivery_company"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@{`택배사 : `+orderDetail.orderDeliveryCompany}"
+                android:text="@{orderDetail.orderDeliveryCompany == null ? `` : `택배사 : `+orderDetail.orderDeliveryCompany}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_product"
+                app:layout_constraintTop_toBottomOf="@+id/tv_header"
                 tools:text="택배사 : CJ대한통운" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -103,25 +115,52 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@{`운송장번호 : `+orderDetail.orderDeliveryNumber}"
+                android:text="@{orderDetail.orderDeliveryNumber == null ? `` : `운송장번호 : `+orderDetail.orderDeliveryNumber}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_delivery_company"
                 tools:text="운송장번호 : 536726371628" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/iv_order_state"
+                android:id="@+id/btn_order_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginBottom="4dp"
                 android:background="@drawable/btn_round_green_color"
                 android:minHeight="28dp"
-                android:text="구매 확정"
+                android:text="인수 확인"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_refund"
                 app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:minHeight="28dp"
+                android:text="환불 하기"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/btn_order_state"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="@id/btn_order_state" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:minHeight="28dp"
+                android:text="취소 하기"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/btn_refund"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_order_state" />
 
             <!--            <androidx.appcompat.widget.AppCompatImageView-->
             <!--                android:id="@+id/iv_order_state"-->

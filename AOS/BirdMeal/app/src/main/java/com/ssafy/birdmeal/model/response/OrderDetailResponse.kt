@@ -2,7 +2,7 @@ package com.ssafy.birdmeal.model.response
 
 import com.google.gson.annotations.SerializedName
 
-data class OrderDetailResponse (
+data class OrderDetailResponse(
 
     @SerializedName("orderDetailSeq") val orderDetailSeq: Int,
     @SerializedName("productName") val productName: String,
@@ -12,6 +12,9 @@ data class OrderDetailResponse (
     @SerializedName("orderToState") val orderToState: Boolean,
     @SerializedName("orderDeliveryNumber") val orderDeliveryNumber: String,
     @SerializedName("orderDeliveryCompany") val orderDeliveryCompany: String,
-    @SerializedName("productThumbnailImg") val productThumbnailImg: String
+    @SerializedName("productThumbnailImg") val productThumbnailImg: String,
+    @SerializedName("productIsDeleted") val productIsDeleted : Boolean,
+    @SerializedName("orderIsCanceled") val orderIsCanceled: Boolean,
+    @SerializedName("orderIsRefunded") val orderIsRefunded: Boolean
 
-    )
+)

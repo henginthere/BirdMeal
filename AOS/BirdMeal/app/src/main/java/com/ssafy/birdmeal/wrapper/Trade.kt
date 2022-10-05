@@ -131,6 +131,14 @@ class Trade : Contract {
         return executeRemoteCallSingleValueReturn(function, BigInteger::class.java)
     }
 
+    fun refund(orderTransaction: String?): RemoteFunctionCall<TransactionReceipt> {
+        val function = Function(
+            FUNC_REFUND,
+            Arrays.asList<Type<*>>(Utf8String(orderTransaction)), emptyList()
+        )
+        return executeRemoteCallTransaction(function)
+    }
+
     fun seller(): RemoteFunctionCall<String> {
         val function = Function(
             FUNC_SELLER,
@@ -159,6 +167,7 @@ class Trade : Contract {
         const val FUNC_ORDERSHEET = "orderSheet"
         const val FUNC_PAYING = "paying"
         const val FUNC_PRICE = "price"
+        const val FUNC_REFUND = "refund"
         const val FUNC_SELLER = "seller"
         const val FUNC_SETPRODUCT = "setProduct"
         @Deprecated("")
