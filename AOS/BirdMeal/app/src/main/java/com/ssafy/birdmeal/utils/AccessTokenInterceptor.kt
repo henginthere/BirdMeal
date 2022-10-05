@@ -1,6 +1,7 @@
 package com.ssafy.birdmeal.utils
 
 import android.content.SharedPreferences
+import android.util.Log
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -16,9 +17,10 @@ class AccessTokenInterceptor @Inject constructor(
         }
 
         val request = chain.request().newBuilder()
-            .addHeader(JWT, token)
+            .addHeader(JWT, "Bearer $token")
             .build()
 
+        Log.d(TAG, "intercept 호출: $token")
         return chain.proceed(request)
     }
 }
