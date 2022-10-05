@@ -200,11 +200,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             .body("아이들이 제작한 포토카드 NFT를 받을 수 있습니다")
             .icon(R.drawable.ic_photocard)
             .onPositive(text = "받기", buttonBackgroundColor = R.drawable.btn_round_10_green) {
-                nftViewModel.getPhotoCardUrl()
                 LoadingFragmentDialog.loadingMintingDialog.show(
                     childFragmentManager,
                     "loadingMintingDialog"
                 )
+                nftViewModel.getPhotoCardUrl()
             }
             .onNegative(text = "취소", buttonBackgroundColor = R.drawable.btn_round_main_color) {
 
