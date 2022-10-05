@@ -56,7 +56,10 @@ fun ImageView.imageFormatter(url: String) {
 }
 
 // 지갑 path 가져오기
-fun Context.getWalletPath() = run { "$filesDir/wallet" }
+fun Context.getWalletPath() = run {
+    val userSeq = getSharedPreferences("app_preference", Context.MODE_PRIVATE).getInt(USER_SEQ, -1)
+    "$filesDir/wallet/$userSeq"
+}
 
 // EditText 유효성 검사
 fun validity(et: EditText) = !TextUtils.isEmpty(et.text)
