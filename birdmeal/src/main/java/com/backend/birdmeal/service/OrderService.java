@@ -74,6 +74,7 @@ public class OrderService {
             // 주문 Detail Table에 컬럼 생성하기
             OrderDetailEntity orderDetailEntity = OrderDetailEntity.builder()
                     .orderSeq(orderSeq)
+                    .productSeq(productEntity.getProductSeq())
                     .sellerSeq(productEntity.getSellerSeq())
                     .orderQuantity(orderRequestDto.getOrderQuantity())
                     .orderTHash(orderRequestDto.getOrderTHash())
