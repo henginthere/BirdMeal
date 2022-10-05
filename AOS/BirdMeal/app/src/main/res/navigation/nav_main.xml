@@ -119,7 +119,8 @@
         tools:layout="@layout/fragment_order" >
         <action
             android:id="@+id/action_orderFragment_to_orderCompletedFragment"
-            app:destination="@id/orderCompletedFragment" />
+            app:destination="@id/orderCompletedFragment"
+            app:popUpTo="@id/categoryFragment"/>
         <action
             android:id="@+id/action_orderFragment_to_searchAddressFragment"
             app:destination="@id/searchAddressFragment" />
@@ -130,8 +131,8 @@
         android:label="fragment_order_completed"
         tools:layout="@layout/fragment_order_completed" >
         <action
-            android:id="@+id/action_orderCompletedFragment_to_categoryFragment"
-            app:destination="@id/categoryFragment" />
+            android:id="@+id/action_orderCompletedFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/myPageFragment"
