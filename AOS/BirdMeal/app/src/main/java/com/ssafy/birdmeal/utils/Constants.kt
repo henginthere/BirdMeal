@@ -4,7 +4,7 @@ package com.ssafy.birdmeal.utils
 const val BASE_URL = "http://j7d101.p.ssafy.io:8081/api/"
 
 // JWT
-const val JWT = "JWT-AUTHENTICATION"
+const val JWT = "Authorization"
 
 // 유저 정보
 const val USER_SEQ = "user_seq"
