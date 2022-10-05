@@ -621,6 +621,19 @@ export const TradeAbi = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "orderTransaction",
+				"type": "string"
+			}
+		],
+		"name": "refund",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "seller",
 		"outputs": [
