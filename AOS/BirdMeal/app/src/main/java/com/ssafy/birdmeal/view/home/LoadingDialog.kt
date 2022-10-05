@@ -39,11 +39,8 @@ class LoadingDialog(val title: String) : DialogFragment() {
 
         // 구매확정과 결제 로딩에만 설명 텍스트 보여주기
         val str = this.title.split(" ")[0]
-        binding?.apply {
-            when (str){
-                "결제" -> tvDescription.visibility = View.VISIBLE
-                "구매" -> tvDescription.visibility = View.VISIBLE
-            }
+        if(str == "결제" || str == "구매" || str == "기부"){
+            binding?.tvDescription!!.visibility = View.VISIBLE
         }
 
         initAnimation()
