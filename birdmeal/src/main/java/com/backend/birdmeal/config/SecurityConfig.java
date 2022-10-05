@@ -45,7 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/favicon.ico",
                         "/error",
-                        "/configuration/**"
+                        "/configuration/**",
+                        "/swagger/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**"
                 );
     }
 
