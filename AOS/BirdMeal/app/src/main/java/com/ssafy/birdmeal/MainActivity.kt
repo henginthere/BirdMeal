@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -15,6 +16,7 @@ import com.example.awesomedialog.*
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
@@ -145,42 +147,42 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun initViewModelCallBack() {
         donationViewModel.apply {
             errMsgEvent.observe(this@MainActivity) {
-                serverErrdialog(it)
+                serverErrDialog(it)
             }
             contractErrMsgEvent.observe(this@MainActivity) {
-                contractErrdialog(it)
+                contractErrDialog(it)
             }
         }
         userViewModel.apply {
             errMsgEvent.observe(this@MainActivity) {
-                serverErrdialog(it)
+                serverErrDialog(it)
             }
             contractErrMsgEvent.observe(this@MainActivity) {
-                contractErrdialog(it)
+                contractErrDialog(it)
             }
         }
         orderViewModel.apply {
             errMsgEvent.observe(this@MainActivity) {
-                serverErrdialog(it)
+                serverErrDialog(it)
             }
             contractErrMsgEvent.observe(this@MainActivity) {
-                contractErrdialog(it)
+                contractErrDialog(it)
             }
         }
         nftViewModel.apply {
             errMsgEvent.observe(this@MainActivity) {
-                serverErrdialog(it)
+                serverErrDialog(it)
             }
             contractErrMsgEvent.observe(this@MainActivity) {
-                contractErrdialog(it)
+                contractErrDialog(it)
             }
         }
         shoppingViewModel.apply {
             errMsgEvent.observe(this@MainActivity) {
-                serverErrdialog(it)
+                serverErrDialog(it)
             }
             contractErrMsgEvent.observe(this@MainActivity) {
-                contractErrdialog(it)
+                contractErrDialog(it)
             }
         }
     }
@@ -200,8 +202,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     // 블록체인 통신 오류 다이얼로그
-    fun contractErrdialog(msg: String) {
-        loadingDissmiss()
+    private fun contractErrDialog(msg: String) {
+        loadingDismiss()
 
         AwesomeDialog.build(this)
             .title("통신 오류")
@@ -212,8 +214,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
     }
 
-    fun serverErrdialog(msg: String) {
-        loadingDissmiss()
+    private fun serverErrDialog(msg: String) {
+        loadingDismiss()
 
         AwesomeDialog.build(this)
             .title("통신 오류")
@@ -224,7 +226,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
     }
 
-    fun loadingDissmiss() {
+    private fun loadingDismiss() {
         if (loadingPhotoCardDialog.isAdded) loadingPhotoCardDialog.dismiss()
         if (loadingMintingDialog.isAdded) loadingMintingDialog.dismiss()
         if (loadingFillUpDialog.isAdded) loadingFillUpDialog.dismiss()
