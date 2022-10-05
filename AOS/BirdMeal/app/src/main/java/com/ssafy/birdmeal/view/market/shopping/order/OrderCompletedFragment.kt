@@ -39,7 +39,7 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
 
     private fun initClickListener() = with(binding){
         btnBack.setOnClickListener { // 마켓 카테고리 화면으로 이동
-            findNavController().navigate(R.id.action_orderCompletedFragment_to_categoryFragment)
+            findNavController().navigate(R.id.action_orderCompletedFragment_to_myPageFragment)
         }
     }
 
