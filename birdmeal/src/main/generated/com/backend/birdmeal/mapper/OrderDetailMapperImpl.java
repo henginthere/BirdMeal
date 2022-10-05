@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-05T10:13:58+0900",
+    date = "2022-10-06T02:29:23+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class OrderDetailMapperImpl implements OrderDetailMapper {
 
     @Override
-    public List<OrderDetailEntity> toEntityList(List<OrderDetailDto> dtoList) {
-        if ( dtoList == null ) {
+    public List<OrderDetailEntity> toEntityList(List<OrderDetailDto> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<OrderDetailEntity> list = new ArrayList<OrderDetailEntity>( dtoList.size() );
-        for ( OrderDetailDto orderDetailDto : dtoList ) {
+        List<OrderDetailEntity> list = new ArrayList<OrderDetailEntity>( arg0.size() );
+        for ( OrderDetailDto orderDetailDto : arg0 ) {
             list.add( toEntity( orderDetailDto ) );
         }
 
@@ -39,7 +39,6 @@ public class OrderDetailMapperImpl implements OrderDetailMapper {
 
         orderDetailEntity.orderDetailSeq( orderDetailDto.getOrderDetailSeq() );
         orderDetailEntity.orderSeq( orderDetailDto.getOrderSeq() );
-        orderDetailEntity.productSeq( orderDetailDto.getProductSeq() );
         orderDetailEntity.sellerSeq( orderDetailDto.getSellerSeq() );
         orderDetailEntity.orderQuantity( orderDetailDto.getOrderQuantity() );
         orderDetailEntity.orderTHash( orderDetailDto.getOrderTHash() );
@@ -60,7 +59,6 @@ public class OrderDetailMapperImpl implements OrderDetailMapper {
 
         orderDetailDto.orderDetailSeq( orderDetailEntity.getOrderDetailSeq() );
         orderDetailDto.orderSeq( orderDetailEntity.getOrderSeq() );
-        orderDetailDto.productSeq( orderDetailEntity.getProductSeq() );
         orderDetailDto.sellerSeq( orderDetailEntity.getSellerSeq() );
         orderDetailDto.orderQuantity( orderDetailEntity.getOrderQuantity() );
         orderDetailDto.orderTHash( orderDetailEntity.getOrderTHash() );

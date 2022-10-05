@@ -24,6 +24,10 @@ public class OrderDetailEntity {
     private long orderSeq;
 
     @Basic
+    @Column(name = "product_seq")
+    private long productSeq;
+
+    @Basic
     @Column(name = "category_seq")
     private long categorySeq;
 
