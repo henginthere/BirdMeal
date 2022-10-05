@@ -226,7 +226,7 @@ public class OrderService {
     // 아이들 주문 상세 내역 불러오기
     public List<OrderChildResponseDto> getChildOrderInfo() {
         // 리턴 List ( 최신날짜 순 )
-        List<OrderChildEntity> orderChildEntityList = orderChildRepository.findAllByOrderByOrderDateDesc();
+        List<OrderChildEntity> orderChildEntityList = orderChildRepository.findAllByOrderByOrderChildDetailSeqDesc();
         List<OrderChildResponseDto> orderChildResponseDtoList = new ArrayList<>();
 
         // 아이들 거래 횟수

@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface OrderChildRepository extends JpaRepository<OrderChildEntity, Long> {
-    List<OrderChildEntity> findAllByOrderByOrderDateDesc();
+
+    List<OrderChildEntity> findAllByOrderByOrderChildDetailSeqDesc();
 }
