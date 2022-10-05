@@ -1,7 +1,12 @@
 <template>
   <v-dialog v-model="dialog" persistent>
     <template v-slot:activator="{ props }">
-      <v-btn color="primary_orange" variant="outlined" v-bind="props" @click="getOrderDetail">
+      <v-btn
+        color="primary_orange"
+        variant="outlined"
+        v-bind="props"
+        @click="getOrderDetail"
+      >
         상세보기
       </v-btn>
     </template>
@@ -82,7 +87,7 @@
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">주소</v-col>
-          <v-col>{{ order.userAdd }}</v-col>
+          <v-col>{{ order.userAdd }} {{ order }}</v-col>
         </v-row>
         <v-row class="my-2">
           <v-col><v-divider thickness="3"></v-divider></v-col>
@@ -97,14 +102,22 @@
           <v-col cols="1" />
           <v-col cols="2">택배사</v-col>
           <v-col
-            ><v-text-field v-model="company" variant="outlined" placeholder="택배사 이름"></v-text-field
+            ><v-text-field
+              v-model="company"
+              variant="outlined"
+              placeholder="택배사 이름"
+            ></v-text-field
           ></v-col>
         </v-row>
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">운송장번호</v-col>
           <v-col
-            ><v-text-field v-model="number" variant="outlined" placeholder="운송장번호"></v-text-field
+            ><v-text-field
+              v-model="number"
+              variant="outlined"
+              placeholder="운송장번호"
+            ></v-text-field
           ></v-col>
         </v-row>
         <v-row>
