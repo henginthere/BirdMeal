@@ -1,6 +1,11 @@
 package com.ssafy.birdmeal
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
+import android.nfc.NdefMessage
+import android.nfc.NfcAdapter
 import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -34,6 +39,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     lateinit var sharedPref: SharedPreferences
     private lateinit var navController: NavController
 
+    // NFC ForegroundMode
+    private lateinit var pIntent: PendingIntent
+    private lateinit var filters: Array<IntentFilter>
+    private lateinit var nfcAdapter: NfcAdapter
+
     private val donationViewModel by viewModels<DonationViewModel>()
     private val userViewModel by viewModels<UserViewModel>()
     private val orderViewModel by viewModels<OrderViewModel>()
@@ -44,9 +54,62 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun init() {
         PACKAGE_NAME = application.packageName
 
+        initNfc()
+
         initNavigation()
 
         initViewModelCallBack()
+    }
+
+    // nfc 포그라운드
+    private fun initNfc() {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this)
+
+        val intent = Intent(this, javaClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }
+        pIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        val filter = IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
+        filters = arrayOf(filter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        nfcAdapter.enableForegroundDispatch(this, pIntent, filters, null)
+    }
+
+    // NFC TAG 인식
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        val action = intent!!.action
+        if(action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED) ||
+            action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) ||
+            action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)
+        ){
+            getNdefMessages(intent)
+        }
+    }
+
+    private fun getNdefMessages(intent: Intent){
+        // 1. 인텐트에서 NdefMessage 배열 데이터를 가져온다
+        var messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+        // 2. Data 변환
+        if(messages != null){
+            val msgArr = arrayOfNulls<NdefMessage>(messages.size)
+
+            for(i in msgArr.indices){
+                msgArr[i] = messages[i] as NdefMessage?
+            }
+
+            // 3. NdefMessage 에서 NdefRecode -> payload 가져오기, 여러개인 경우 for 문 사용
+            val payload = msgArr[0]!!.records[0].payload
+            var result = String(payload).substring(3) // 앞에 en 빼주기
+
+            var price = result!!.toInt()
+            Log.d(TAG, "getNdefMessages 들어온 금액: $price")
+        }
     }
 
     private fun initNavigation() {
@@ -122,7 +185,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         }
     }
 
-    var waitTime = 0L
+    private var waitTime = 0L
     override fun onBackPressed() { // 기부 화면에서 뒤로가기 2번 클릭 시 앱 종료
         if (navController.currentDestination?.id == R.id.donationFragment) {
             if (System.currentTimeMillis() - waitTime >= 1500) {
@@ -170,5 +233,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         if (loadingAssumeDialog.isAdded) loadingAssumeDialog.dismiss()
         if (loadingOrderDialog.isAdded) loadingOrderDialog.dismiss()
         if (loadingWalletDialog.isAdded) loadingWalletDialog.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        nfcAdapter.disableForegroundDispatch(this)
     }
 }
