@@ -1,5 +1,6 @@
 package com.ssafy.birdmeal.view.my_page
 
+import android.util.Log
 import androidx.core.view.children
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,9 @@ import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
 import com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment
 import com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment
+import kr.co.bootpay.android.Bootpay
+import kr.co.bootpay.android.events.BootpayEventListener
+import kr.co.bootpay.android.models.Payload
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
@@ -28,13 +32,15 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     override fun init() {
         changeStatusBarColor(requireActivity(), BEIGE)
 
-        userViewModel.getUserTokenValue()
-        binding.userVM = userViewModel
-        userViewModel.getUserInfo()
+        userViewModel.apply {
+            getUserTokenValue()
+            getUserInfo()
 
-        if (userViewModel.user.value?.userRole!!) {
-            binding.btnMyNft.setImageResource(R.drawable.btn_mind)
+            if(user.value?.userRole!!){
+                binding.btnMyNft.setImageResource(R.drawable.btn_mind)
+            }
         }
+        binding.userVM = userViewModel
 
         initViewModelCallBack()
         initClickListener()
@@ -104,9 +110,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                 LoadingFragmentDialog.loadingMintingDialog.dismiss()
                 when (it) {
                     // 컨트랙트 통신에 실패한 경우
-                    "" -> {
-
-                    }
+                    "" -> {}
                     // 통신 성공한 경우
                     else -> {
                         userViewModel.getUserInfo()
@@ -157,10 +161,41 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     // 토큰 충전 다이얼로그 리스너
     private val listener = object : FillUpMoneyListener {
-        override fun onItemClick(requestMoney: Int) {
+        override fun onItemClick(requestMoney: Int) { // 결제 API 호출
             userViewModel.fillUpToken(requestMoney)
             loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
+            // payRequest(requestMoney)
         }
+    }
+
+    // 결제 API 호출
+    private fun payRequest(requestMoney : Int){
+        val payload = Payload().apply {
+            applicationId = PAY_APPLICATION_ID
+            orderName = "BirdMeal 엘레나 토큰 충전"
+            price = requestMoney.toDouble()
+            orderId = "1"
+        }
+
+        Bootpay.init(childFragmentManager, requireContext())
+            .setPayload(payload)
+            .setEventListener(object : BootpayEventListener {
+                override fun onDone(data: String?) { // 결제가 완료된 경우
+                    Log.d(TAG, "onDone: $data")
+                    userViewModel.fillUpToken(requestMoney)
+                    loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
+                }
+                override fun onConfirm(data: String?): Boolean { return true }
+                override fun onClose() { Bootpay.removePaymentWindow() }
+                override fun onCancel(data: String?) { Log.d(TAG, "onCancel: $data") }
+                override fun onIssued(data: String?) {} // 가상계좌 설정에 사용됨
+                override fun onError(data: String?) { // 계좌에 예금이 부족한 경우 등 에러 처리
+                    Log.d(TAG, "onError: $data")
+                    val message = data!!.split(",")
+                    val value = message[3].split(":")
+                    showToast(value[1])
+                }
+            }).requestPayment()
     }
 
     private fun initFragmentManager() = with(binding) {
