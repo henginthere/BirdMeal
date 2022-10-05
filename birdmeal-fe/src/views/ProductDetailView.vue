@@ -187,7 +187,11 @@ export default {
               productThumbnailImg: this.productThumbnailImgURL,
               productDescriptionImg: this.productDescriptionImgURL,
             },
-            { headers: { 'Content-type': 'application/json' } }
+            {
+              headers: {
+                'Content-type': 'application/json',
+              },
+            }
           )
           .then(() => (this.overlay = !this.overlay))
           .then(() => this.$router.push('/products'));
@@ -216,7 +220,10 @@ export default {
       axios({
         url: `https://j7d101.p.ssafy.io/api/product/${productSeq}`,
         method: 'get',
-        headers: { 'Content-type': 'application/json' },
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: 'Bearer ' + this.user.accessToken,
+        },
         data: {},
       })
         .then((res) => (this.product = res.data.data))
@@ -255,7 +262,7 @@ export default {
       axios
         .post('https://j7d101.p.ssafy.io/api/file', form, {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data'
           },
         })
         .then((res) => (this.productDescriptionImgURL = res.data.data))
