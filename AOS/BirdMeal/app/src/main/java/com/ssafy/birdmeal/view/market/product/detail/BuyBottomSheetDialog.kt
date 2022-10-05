@@ -31,35 +31,37 @@ class BuyBottomSheetDialog(context: Context, private val product: ProductDto, pr
         initClickListener()
     }
 
-    private fun initClickListener(){
-        binding.apply {
-            var cnt = tvBuyCnt.text.toString().toInt()
+    private fun initClickListener() = with(binding) {
+        var cnt = tvBuyCnt.text.toString().toInt()
 
-            btnCntMinus.setOnClickListener {
-                if(cnt == 1){
-                    Toast.makeText(context, "최소 수량은 1개 입니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    cnt--
-                    tvBuyCnt.text = cnt.toString()
-                }
+        btnCntMinus.setOnClickListener {
+            if(cnt == 1){
+                Toast.makeText(context, "최소 수량은 1개 입니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                cnt--
+                tvBuyCnt.text = cnt.toString()
             }
-            btnCntPlus.setOnClickListener {
+        }
+        btnCntPlus.setOnClickListener {
+            if(cnt == 10){
+                Toast.makeText(context, "최대 수량은 10개 입니다.", Toast.LENGTH_SHORT).show()
+            } else {
                 cnt++
                 tvBuyCnt.text = cnt.toString()
             }
-            btnBuy.setOnClickListener { // 장바구니에 담기
-                val cart = CartEntity(
-                    product.productSeq,
-                    product.productName,
-                    product.productPrice,
-                    product.productCa,
-                    product.productThumbnailImg,
-                    product.productDescriptionImg,
-                    cnt
-                )
-                listener.onItemClick(cart)
-                dismiss()
-            }
+        }
+        btnBuy.setOnClickListener { // 장바구니에 담기
+            val cart = CartEntity(
+                product.productSeq,
+                product.productName,
+                product.productPrice,
+                product.productCa,
+                product.productThumbnailImg,
+                product.productDescriptionImg,
+                cnt
+            )
+            listener.onItemClick(cart)
+            dismiss()
         }
     }
 
