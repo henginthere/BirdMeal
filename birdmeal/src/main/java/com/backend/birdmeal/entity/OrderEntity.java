@@ -31,6 +31,10 @@ public class OrderEntity {
     private int orderPrice; //총 가격
 
     @Basic
+    @Column(name = "order_state", columnDefinition = "boolean default false")
+    private Boolean orderState; //0 : 상품인수중 1: 상품인수 완료
+
+    @Basic
     @Column(name = "order_date",length = 30)
     private String orderDate;
 

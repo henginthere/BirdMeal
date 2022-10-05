@@ -51,6 +51,7 @@ public class OrderService {
         OrderEntity orderEntity = OrderEntity.builder()
                     .orderSeq(0)
                     .userSeq(orderRequestList.get(0).getUserSeq())
+                    .orderState(false)
                     .build();
 
         // 저장하기
@@ -203,6 +204,22 @@ public class OrderService {
 
         orderDetailEntity.setOrderIsRefunded(true);
         orderDetailRepository.save(orderDetailEntity);
+        return true;
+    }
+
+    public boolean updateOrderState(long orderSeq){
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeq(orderSeq);
+
+        if(orderDetailEntityList.size()==0) return false;
+        for(int i=0;i<orderDetailEntityList.size();i++){
+            if(orderDetailEntityList.get(i).isOrderToState()) continue;
+            else{
+                return false;
+            }
+        }
+
+        OrderEntity orderEntity = orderRepository.findByOrderSeq(orderSeq);
+        orderEntity.setOrderState(true);
         return true;
     }
 

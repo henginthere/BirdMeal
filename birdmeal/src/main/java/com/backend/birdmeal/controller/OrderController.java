@@ -164,6 +164,26 @@ public class OrderController {
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    /**
+     * 주문별 인수 상태 확인
+     *
+     * @param orderSeq
+     * @return Object
+     */
+
+    @ApiOperation(value="주문별 인수 상태 확인 및 변경",response = Object.class)
+    @PutMapping("/takeOver/{order-seq}")
+    public ResponseEntity<?> updateOrderState(@PathVariable("order-seq") long orderSeq){
+        boolean success = orderService.updateOrderState(orderSeq);
+        ResponseFrame<?> res;
+
+        if(success) {
+            res = ResponseFrame.of(success, "주문별 인수 상태 변경을 성공했습니다.");
+        }else{
+            res = ResponseFrame.of(success, "주문이 없어 주문별 인수 상태 변경을 실패했습니다.");
+        }
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
 
     /**
      * 아이들 주문 상세 내역 불러오기
