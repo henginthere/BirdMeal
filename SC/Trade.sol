@@ -52,6 +52,12 @@ contract Trade {
         price = _price;
     }
 
+    // 환불함수 호출한 사람한테 돈 환불해 줌
+    function refund(string memory orderTransaction) public payable {
+        uint paymentAmount = orderSheet[orderTransaction]*price;
+        _currencyContract.transfer(msg.sender,paymentAmount*10**18);
+    }
+
 
 
 }
