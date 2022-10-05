@@ -183,6 +183,18 @@ public class OrderService {
         return true;
     }
 
+
+    //주문 취소 상태 변경
+    public boolean updateOrderIsCanceled(long orderDetailSeq){
+        //주문이 없으면 false
+        OrderDetailEntity orderDetailEntity = orderDetailRepository.findByOrderDetailSeq(orderDetailSeq);
+        if(orderDetailEntity == null) return false;
+
+        orderDetailEntity.setOrderIsCanceled(true);
+        orderDetailRepository.save(orderDetailEntity);
+        return true;
+    }
+
     // 내 주문 상세 내역 불러오기
     public List<MyOrderDetailResponseDto> getMyOrderDetailInfo(long userSeq, long orderSeq) {
         // 만약 주문이 내가 한 것이 아니라면 null
