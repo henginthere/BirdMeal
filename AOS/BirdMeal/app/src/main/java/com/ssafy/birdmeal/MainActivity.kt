@@ -16,6 +16,8 @@ import com.example.awesomedialog.*
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.utils.FILL_COMPLETED
+import com.ssafy.birdmeal.utils.FILL_ERR
 import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
@@ -30,6 +32,7 @@ import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingPh
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingWalletDialog
 import com.ssafy.birdmeal.view.market.MarketViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
+import com.ssafy.birdmeal.view.my_page.MyPageFragment
 import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -90,6 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) ||
             action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)
         ){
+            showToast("충전 쿠폰 NFC가 인식되었습니다.")
             getNdefMessages(intent)
         }
     }
@@ -111,6 +115,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
             var price = result!!.toInt()
             Log.d(TAG, "getNdefMessages 들어온 금액: $price")
+
+            userViewModel.fillUpToken(price)
+            loadingFillUpDialog.show(supportFragmentManager, "loadingFillUpDialog")
         }
     }
 
@@ -159,6 +166,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             }
             contractErrMsgEvent.observe(this@MainActivity) {
                 contractErrDialog(it)
+            }
+
+            tokenMsgEvent.observe(this@MainActivity) {
+                when (it) {
+                    FILL_COMPLETED -> {
+                        loadingFillUpDialog.dismiss()
+                        completedFillUpDialog()
+                    }
+                    // 컨트랙트 통신 오류
+                    FILL_ERR -> {
+                        loadingFillUpDialog.dismiss()
+                    }
+                }
             }
         }
         orderViewModel.apply {
@@ -235,6 +255,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         if (loadingAssumeDialog.isAdded) loadingAssumeDialog.dismiss()
         if (loadingOrderDialog.isAdded) loadingOrderDialog.dismiss()
         if (loadingWalletDialog.isAdded) loadingWalletDialog.dismiss()
+    }
+
+    // 충전 완료 다이얼로그(아동)
+    private fun completedFillUpDialog() {
+        AwesomeDialog.build(this)
+            .title("충전 완료")
+            .body("충전이 완료되었습니다")
+            .icon(R.drawable.ic_duck)
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
+
+            }
     }
 
     override fun onPause() {
