@@ -34,7 +34,6 @@
                     android:id="@+id/iv_product"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:scaleType="fitXY"
                     cartThumbnail="@{cart.productThumbnailImg}"
                     tools:src="@drawable/meal"
                     app:layout_constraintStart_toStartOf="parent"
