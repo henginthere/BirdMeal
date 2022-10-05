@@ -34,13 +34,13 @@ contract Trade {
 
     // 2. 주문하면서 생긴 트랜잭션과 주문액 매핑하기
     function addOrderSheet(string memory orderTransaction, uint num ) public {
-        orderSheet[orderTransaction] = num;
+        orderSheet[orderTransaction] = num*price;
     }
 
     // 3. 상품인수시 orderSheet에서 방금 보낸 트랜잭션으로 매핑된 크기만큼 컨트랙트에서 판매자에게 돈 송금
     function paying(string memory orderTransaction) public payable {
 
-        uint paymentAmount = orderSheet[orderTransaction]*price;
+        uint paymentAmount = orderSheet[orderTransaction];
 
         _currencyContract.transfer(seller,paymentAmount*10**18);
     }
