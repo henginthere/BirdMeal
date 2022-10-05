@@ -2,7 +2,6 @@ package com.ssafy.birdmeal.view.market.shopping.order
 
 import android.os.Build
 import android.text.InputFilter
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
@@ -11,7 +10,6 @@ import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.base.BaseFragment
 import com.ssafy.birdmeal.databinding.FragmentOrderBinding
 import com.ssafy.birdmeal.di.ApplicationClass
-import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.home.UserViewModel
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderDialog
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
@@ -116,7 +114,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     // 결제 금액 검사
     private fun checkEln(): Boolean {
         binding.apply {
-            if (userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
+            if(userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
                 showToast("보유 금액이 부족합니다.")
                 return false
             } else {
