@@ -54,7 +54,7 @@ public class SellerOrderService {
             UserEntity userEntity = userOptional.get();
 
             // 가격
-            int price = productEntity.getProductPrice() * orderDetailEntity.getOrderQuantity();
+            int price = orderDetailEntity.getProductPrice() * orderDetailEntity.getOrderQuantity();
 
             // 반환값 만들기
             SellerOrderResponseDto sellerOrderResponseDto = SellerOrderResponseDto.builder()
@@ -80,7 +80,7 @@ public class SellerOrderService {
                     .productCa(productEntity.getProductCa())
                     .productThumbnailImg(orderDetailEntity.getProductThumbnailImg())
                     .productDescriptionImg(productEntity.getProductDescriptionImg())
-                    .productIsDeleted(productEntity.isProductIsDeleted())
+                    .productIsDeleted(orderDetailEntity.isProductIsDeleted())
                     .orderIsCanceled(orderDetailEntity.isOrderIsCanceled())
                     .orderIsRefunded(orderDetailEntity.isOrderIsRefunded())
                     .productCreateDate(productEntity.getProductCreateDate())
