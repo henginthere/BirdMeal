@@ -31,7 +31,7 @@ const val BOLCKCHAIN_NETWORK_CHAINID = 31221L
 // 컨트랙트 주소
 const val CA_ELENA = "0x24Dae25c6005577E20D6c6927B56564d97C8aBe3" // 토큰 컨트랙트
 const val CA_FUNDING = "0x1272AD925859Dd4e485b6d36AD941A5163e380De" // 기부 컨트랙트
-const val CA_TRADE_MANAGER = "0xA22F0dF64e4Ec81942662117A5A558E686b9f265" // 거래 매니저 컨트랙트
+const val CA_TRADE_MANAGER = "0x5F0A916710f2Cd1fd96D2896C0026B9585C0224f" // 거래 매니저 컨트랙트
 const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전소 컨트랙트
 const val CA_NFT = "0xCb0eC79c8Cc01a2f257Ba41125e1D65B1e5473b3"   // NFT 컨트랙트
 
@@ -66,5 +66,12 @@ const val ERR_GET_USER_TOKEN = "getUserTokenValue"
 const val ERR_FILLUP_TOKEN = "fillUpToken"
 const val ERR_FILLUP_TOKEN_CHILD = "fillUpTokenChild"
 const val ERR_UPDATE_ORDER_STATE = "updateOrderState"
+const val ERR_UPDATE_CANCEL = "updateCancel"
+const val ERR_UPDATE_REFUND = "updateRefund"
 const val ERR_DO_MINTING = "doMinting"
 const val ERR_GET_MY_NFT = "getMyNft"
+
+// 주문 상세 타입
+const val ORDER_DETAIL_TO_STATE = "oderDetailToState"
+const val ORDER_DETAIL_CANCEL = "oderDetailCancel"
+const val ORDER_DETAIL_REFUND = "oderDetailRefund"

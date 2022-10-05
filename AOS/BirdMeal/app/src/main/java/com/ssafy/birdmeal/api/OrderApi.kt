@@ -30,6 +30,14 @@ interface OrderApi {
     @PUT("order")
     suspend fun updateOrderState(@Body request: OrderStateRequest): BaseResponse<String>
 
+    // 상세 주문 취소
+    @PUT("order/cancel/{order-detail-seq}")
+    suspend fun updateCancel(@Path("order-detail-seq") orderDetailSeq: Int): BaseResponse<String>
+
+    // 상세 주문 환불
+    @PUT("order/refund/{order-detail-seq}")
+    suspend fun updateRefund(@Path("order-detail-seq") orderDetailSeq: Int): BaseResponse<String>
+
     //주문 상세 해시 불러오기
     @GET("order/detail/{order-detail-seq}")
     suspend fun getOrderTHash(@Path("order-detail-seq")orderDetailSeq: Int): BaseResponse<OrderTHashResponse>

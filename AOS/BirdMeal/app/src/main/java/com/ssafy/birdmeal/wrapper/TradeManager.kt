@@ -23,7 +23,6 @@ import org.web3j.tx.TransactionManager
 import org.web3j.tx.gas.ContractGasProvider
 import java.math.BigInteger
 import java.util.*
-import java.util.concurrent.Callable
 
 /**
  *
@@ -95,7 +94,7 @@ class TradeManager : Contract {
         return responses
     }
 
-    fun tradeCreatedEventFlowable(filter: EthFilter?): Flowable<TradeCreatedEventResponse> {
+    fun tradeCreatedEventFlowable(filter: EthFilter): Flowable<TradeCreatedEventResponse> {
         return web3j.ethLogFlowable(filter).map(object : Function<Log, TradeCreatedEventResponse> {
             override fun apply(log: Log): TradeCreatedEventResponse {
                 val eventValues = extractEventParametersWithLog(TRADECREATED_EVENT, log)
@@ -138,14 +137,15 @@ class TradeManager : Contract {
                 object : TypeReference<Utf8String?>() {},
                 object : TypeReference<Address?>() {})
         )
-        return RemoteFunctionCall<Tuple2<String, String>>(function,
-            Callable<Tuple2<String, String>> {
-                val results = executeCallMultipleValueReturn(function)
-                Tuple2(
-                    results[0].value as String,
-                    results[1].value as String
-                )
-            })
+        return RemoteFunctionCall(
+            function
+        ) {
+            val results = executeCallMultipleValueReturn(function)
+            Tuple2(
+                results[0].value as String,
+                results[1].value as String
+            )
+        }
     }
 
     class TradeCreatedEventResponse : BaseEventResponse() {

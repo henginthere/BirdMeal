@@ -33,6 +33,14 @@ class OrderRemoteDataSource @Inject constructor(
         emit(orderApi.updateOrderState(request))
     }
 
+    fun updateCancel(orderDetailSeq: Int):Flow<BaseResponse<String>> = flow{
+        emit(orderApi.updateCancel(orderDetailSeq))
+    }
+
+    fun updateRefund(orderDetailSeq: Int):Flow<BaseResponse<String>> = flow{
+        emit(orderApi.updateRefund(orderDetailSeq))
+    }
+
     fun getOrderTHash(orderDetailSeq: Int): Flow<BaseResponse<OrderTHashResponse>> = flow{
         emit(orderApi.getOrderTHash(orderDetailSeq))
     }

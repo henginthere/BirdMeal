@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.NavController
@@ -15,15 +16,18 @@ import com.example.awesomedialog.*
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.utils.TAG
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
-import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingAssumeDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingDonationDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingLoginDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingMintingDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderAssumeDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderCancelDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderRefundDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingPhotoCardDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingWalletDialog
 import com.ssafy.birdmeal.view.market.MarketViewModel
@@ -84,22 +88,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         super.onNewIntent(intent)
 
         val action = intent!!.action
-        if(action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED) ||
+        if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED) ||
             action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) ||
             action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)
-        ){
+        ) {
             getNdefMessages(intent)
         }
     }
 
-    private fun getNdefMessages(intent: Intent){
+    private fun getNdefMessages(intent: Intent) {
         // 1. 인텐트에서 NdefMessage 배열 데이터를 가져온다
         var messages = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
         // 2. Data 변환
-        if(messages != null){
+        if (messages != null) {
             val msgArr = arrayOfNulls<NdefMessage>(messages.size)
 
-            for(i in msgArr.indices){
+            for (i in msgArr.indices) {
                 msgArr[i] = messages[i] as NdefMessage?
             }
 
@@ -230,7 +234,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         if (loadingFillUpDialog.isAdded) loadingFillUpDialog.dismiss()
         if (loadingLoginDialog.isAdded) loadingLoginDialog.dismiss()
         if (loadingDonationDialog.isAdded) loadingDonationDialog.dismiss()
-        if (loadingAssumeDialog.isAdded) loadingAssumeDialog.dismiss()
+        if (loadingOrderAssumeDialog.isAdded) loadingOrderAssumeDialog.dismiss()
+        if (loadingOrderCancelDialog.isAdded) loadingOrderCancelDialog.dismiss()
+        if (loadingOrderRefundDialog.isAdded) loadingOrderRefundDialog.dismiss()
         if (loadingOrderDialog.isAdded) loadingOrderDialog.dismiss()
         if (loadingWalletDialog.isAdded) loadingWalletDialog.dismiss()
     }

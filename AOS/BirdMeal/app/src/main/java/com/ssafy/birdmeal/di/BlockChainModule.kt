@@ -30,5 +30,5 @@ object BlockChainModule {
     // PollingProcessor DI
     @Singleton
     @Provides
-    fun providePollingProcessor(web3: Web3j) = PollingTransactionReceiptProcessor(web3, 3000, 100)
+    fun providePollingProcessor(web3: Web3j) = PollingTransactionReceiptProcessor(web3, 500, 100)
 }
