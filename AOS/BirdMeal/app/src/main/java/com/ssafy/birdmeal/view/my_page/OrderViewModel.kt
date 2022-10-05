@@ -39,8 +39,14 @@ class OrderViewModel @Inject constructor(
     private val _errMsgEvent = SingleLiveEvent<String>()
     val errMsgEvent get() = _errMsgEvent
 
-    private val _orderDetailSeqMsgEvent = SingleLiveEvent<Int>()
-    val orderDetailSeqMsgEvent get() = _orderDetailSeqMsgEvent
+    private val _orderToStateMsgEvent = SingleLiveEvent<Int>()
+    val orderToStateMsgEvent get() = _orderToStateMsgEvent
+
+    private val _orderCancelMsgEvent = SingleLiveEvent<Int>()
+    val orderCancelMsgEvent get() = _orderCancelMsgEvent
+
+    private val _orderRefundMsgEvent = SingleLiveEvent<Int>()
+    val orderRefundMsgEvent get() = _orderRefundMsgEvent
 
     private val _orderMsgEvent = SingleLiveEvent<String>()
     val orderMsgEvent get() = _orderMsgEvent
@@ -100,32 +106,58 @@ class OrderViewModel @Inject constructor(
     }
 
     //구매 확정
-    fun updateOrderState(orderStateRequest: OrderStateRequest) {
-
+    fun updateOrderState(orderStateRequest: OrderStateRequest) =
         viewModelScope.launch(Dispatchers.IO) {
-            orderRepository.updateOrderState(orderStateRequest).collectLatest {
+
+            // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
+            try {
+                elenaContract.approve(
+                    orderDetailHash.value.productCa,
+                    (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
+                        .fromEtherToWei().toBigInteger()
+                ).sendAsync().get()
+                val result =
+                    tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
+                Log.d(TAG, "updateOrderState: $result")
+
+                // 서버에 인수 호출
+                orderRepository.updateOrderState(orderStateRequest).collectLatest {
+                    if (it is Result.Success) {
+                        if (it.data.success) {
+                            getOrderDetail(_orderSeq.value!!)
+                        } else {
+                            _orderMsgEvent.postValue(it.data.msg)
+                        }
+                    } else if (it is Result.Error) {
+                        _errMsgEvent.postValue("서버 에러 발생")
+                    }
+                }
+            } catch (e: Exception) {
+                _contractErrMsgEvent.postValue(ERR_UPDATE_ORDER_STATE)
+                Log.d(TAG, "updateOrderState err: $e")
+            } finally {
+                _loadingAssumeMsgEvent.postValue(ORDER_DETAIL_TO_STATE)
+            }
+        }
+
+    // 상품 취소
+    fun updateCancel(orderDetailSeq: Int) = viewModelScope.launch(Dispatchers.IO) {
+
+        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
+        try {
+            elenaContract.approve(
+                orderDetailHash.value.productCa,
+                (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
+                    .fromEtherToWei().toBigInteger()
+            ).sendAsync().get()
+            val result = tradeContract.refund(orderDetailHash.value.orderTHash).sendAsync().get()
+            Log.d(TAG, "updateOrderState: $result")
+
+            // 서버에 인수 호출
+            orderRepository.updateCancel(orderDetailSeq).collectLatest {
                 if (it is Result.Success) {
                     if (it.data.success) {
-
-                        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
-                        Log.d(TAG, "buyingList: 주문 컨트랙트 승인 - paying 완료")
-                        try {
-                            elenaContract.approve(
-                                orderDetailHash.value.productCa,
-                                (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
-                                    .fromEtherToWei().toBigInteger()
-                            ).sendAsync().get()
-                            tradeContract.paying(orderDetailHash.value.orderTHash).sendAsync().get()
-                            _orderMsgEvent.postValue(it.data.msg)
-
-                            getOrderDetail(_orderSeq.value!!)
-                        } catch (e: Exception) {
-                            _contractErrMsgEvent.postValue(ERR_UPDATE_ORDER_STATE)
-                            Log.d(TAG, "updateOrderState err: $e")
-                        } finally {
-                            _loadingAssumeMsgEvent.postValue("로딩 종료")
-                        }
-
+                        getOrderDetail(_orderSeq.value!!)
                     } else {
                         _orderMsgEvent.postValue(it.data.msg)
                     }
@@ -133,17 +165,64 @@ class OrderViewModel @Inject constructor(
                     _errMsgEvent.postValue("서버 에러 발생")
                 }
             }
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue(ERR_UPDATE_CANCEL)
+            Log.d(TAG, "updateOrderState err: $e")
+        } finally {
+            _loadingAssumeMsgEvent.postValue(ORDER_DETAIL_CANCEL)
         }
+    }
 
+    // 상품 환불
+    fun updateRefund(orderDetailSeq: Int) = viewModelScope.launch(Dispatchers.IO) {
+
+        // 주문 컨트랙트 엘레나 승인 및 판매자에게 전송
+        try {
+            elenaContract.approve(
+                orderDetailHash.value.productCa,
+                (orderDetailHash.value.productPrice * orderDetailHash.value.orderQuantity).toLong()
+                    .fromEtherToWei().toBigInteger()
+            ).sendAsync().get()
+            val result = tradeContract.refund(orderDetailHash.value.orderTHash).sendAsync().get()
+            Log.d(TAG, "updateOrderState: $result")
+
+            // 서버에 인수 호출
+            orderRepository.updateRefund(orderDetailSeq).collectLatest {
+                if (it is Result.Success) {
+                    if (it.data.success) {
+                        getOrderDetail(_orderSeq.value!!)
+                    } else {
+                        _orderMsgEvent.postValue(it.data.msg)
+                    }
+                } else if (it is Result.Error) {
+                    _errMsgEvent.postValue("서버 에러 발생")
+                }
+            }
+        } catch (e: Exception) {
+            _contractErrMsgEvent.postValue(ERR_UPDATE_REFUND)
+            Log.d(TAG, "updateOrderState err: $e")
+        } finally {
+            _loadingAssumeMsgEvent.postValue(ORDER_DETAIL_REFUND)
+        }
     }
 
     //해시 및 주문 상세 정보 조회
-    fun getOrderTHash(orderDetailSeq: Int) {
+    fun getOrderTHash(orderDetailSeq: Int, type: String) {
         viewModelScope.launch(Dispatchers.IO) {
             orderRepository.getOrderTHash(orderDetailSeq).collectLatest {
                 if (it is Result.Success) {
                     _orderDetailHash.value = it.data.data
-                    _orderDetailSeqMsgEvent.postValue(orderDetailSeq)
+                    when (type) {
+                        ORDER_DETAIL_TO_STATE -> {
+                            _orderToStateMsgEvent.postValue(orderDetailSeq)
+                        }
+                        ORDER_DETAIL_CANCEL -> {
+                            _orderCancelMsgEvent.postValue(orderDetailSeq)
+                        }
+                        ORDER_DETAIL_REFUND -> {
+                            _orderRefundMsgEvent.postValue(orderDetailSeq)
+                        }
+                    }
                     Log.d(TAG, "getOrderTHash: ${_orderDetailHash.value}")
                 }
             }
