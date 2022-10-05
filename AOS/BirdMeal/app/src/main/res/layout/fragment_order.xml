@@ -148,12 +148,26 @@
                     android:padding="8dp"
                     android:enabled="false"
                     android:textSize="16sp"
-                    tools:text="구미시 수출대로 28길 304호"
+                    tools:text="구미시 수출대로 28길 11"
                     android:text="@{userVM.user.userAdd}"
                     android:background="@drawable/et_round_main_color"
                     app:layout_constraintTop_toBottomOf="@id/btn_search_address"
                     app:layout_constraintStart_toStartOf="@id/et_tel_number"
                     app:layout_constraintEnd_toEndOf="@id/btn_search_address"/>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_address_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:textSize="16sp"
+                    tools:text="행복빌 304호"
+                    android:text="@{userVM.user.userAddDetail}"
+                    android:hint="상세 주소"
+                    android:background="@drawable/et_round_main_color"
+                    app:layout_constraintTop_toBottomOf="@id/et_address"
+                    app:layout_constraintStart_toStartOf="@id/et_address"
+                    app:layout_constraintEnd_toEndOf="@id/et_address"/>
 
                 <View
                     android:id="@+id/view2"
@@ -163,7 +177,7 @@
                     android:background="@color/light_grey"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_address" />
+                    app:layout_constraintTop_toBottomOf="@id/et_address_detail" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_header_my_coin"
