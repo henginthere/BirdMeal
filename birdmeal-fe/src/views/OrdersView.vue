@@ -51,8 +51,20 @@
                 <div
                   v-if="!item.orderDeliveryNumber || !item.orderDeliveryCompany"
                 >
-                  <v-icon color="red"> mdi-alert-circle </v-icon>
-                  <p class="text-error">배송전</p>
+                  <div v-if="item.productIsDeleted">
+                    <div v-if="item.orderIsRefunded">
+                      <v-icon color="green"> mdi-alert </v-icon>
+                      <p class="text-green">환불완료</p>
+                    </div>
+                    <div v-else>
+                      <v-icon color="red"> mdi-alert </v-icon>
+                      <p class="text-error">환불!</p>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <v-icon color="red-lighten-1"> mdi-alert-circle </v-icon>
+                    <p class="text-red">배송전</p>
+                  </div>
                 </div>
                 <div v-else>
                   <div v-if="!item.orderToState">
@@ -96,7 +108,14 @@ import OrderDetailItem from '@/components/OrderDetailItem.vue';
 const auth = authState();
 
 /** Variable */
-const filter_list = ref(['전체', '배송전', '배송중', '완료', '주문취소']);
+const filter_list = ref([
+  '전체',
+  '배송전',
+  '배송중',
+  '완료',
+  '주문취소',
+  '환불완료',
+]);
 const filter = ref('전체');
 
 let orderList = [];
@@ -116,6 +135,7 @@ onMounted(async () => {
     pageLength.value = Math.ceil(orderList.length / itemsPerPage);
     updatePageData(1);
   });
+  console.log(orderList);
   filterOrder(order_order.value, null);
 });
 
@@ -139,7 +159,10 @@ async function filterState(newVal, oldVal) {
 
   if (newVal == '배송전') {
     orderList = orderList.filter(
-      (item) => !item.orderDeliveryNumber || !item.orderDeliveryCompany
+      (item) =>
+        (!item.orderDeliveryNumber || !item.orderDeliveryCompany) &&
+        !item.orderIsCanceled &&
+        !item.productIsDeleted
     );
   }
 
@@ -158,6 +181,10 @@ async function filterState(newVal, oldVal) {
 
   if (newVal == '주문취소') {
     orderList = orderList.filter((item) => item.orderIsCanceled);
+  }
+
+  if (newVal == '환불완료') {
+    orderList = orderList.filter((item) => item.orderIsRefunded);
   }
 
   filterOrder(order_order.value, null);
