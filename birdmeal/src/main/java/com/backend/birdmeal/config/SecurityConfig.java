@@ -77,9 +77,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/manager/register").permitAll() //관리자 가입
-//                .antMatchers("/auth/**").permitAll() //로그인 및 토큰재발급
-                .antMatchers("/**").permitAll()
+                .antMatchers("/api/user/login").permitAll() // 로그인
+                .antMatchers("/api/user/register").permitAll() // 관리자 권한 허용
+                .antMatchers("/api/seller/**").permitAll() // 관리자 권한
+                .antMatchers("/api/file/**").permitAll() // 파일 업로드
+                .antMatchers("/api/user/**").hasRole("ADMIN")
+                .antMatchers("/api/donation/**").hasRole("ADMIN")
+                .antMatchers("/api/product/**").hasRole("ADMIN")
+                .antMatchers("/api/order/**").hasRole("ADMIN")
+                .antMatchers("/api/nft/**").hasRole("ADMIN")
+                .antMatchers("/api/user/**").hasRole("CHILD")
+                .antMatchers("/api/donation/**").hasRole("CHILD")
+                .antMatchers("/api/product/**").hasRole("CHILD")
+                .antMatchers("/api/order/**").hasRole("CHILD")
+                .antMatchers("/api/nft/**").hasRole("CHILD")
 
                 .anyRequest().authenticated()
 
