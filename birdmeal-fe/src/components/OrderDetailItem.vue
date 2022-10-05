@@ -87,7 +87,12 @@
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">주소</v-col>
-          <v-col>{{ order.userAdd }} {{ order }}</v-col>
+          <v-col>{{ order.userAdd }}</v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="1" />
+          <v-col cols="2">상세주소</v-col>
+          <v-col>{{ order.userAddDetail }}</v-col>
         </v-row>
         <v-row class="my-2">
           <v-col><v-divider thickness="3"></v-divider></v-col>
@@ -106,6 +111,7 @@
               v-model="company"
               variant="outlined"
               placeholder="택배사 이름"
+              :disabled="order.orderToState"
             ></v-text-field
           ></v-col>
         </v-row>
@@ -117,6 +123,7 @@
               v-model="number"
               variant="outlined"
               placeholder="운송장번호"
+              :disabled="order.orderToState"
             ></v-text-field
           ></v-col>
         </v-row>
@@ -143,8 +150,19 @@
 
         <v-row>
           <v-col class="d-flex justify-center">
-            <v-btn class="mr-3" color="green" @click="save">저장</v-btn>
-            <v-btn @click="dialog = false">취소</v-btn>
+            <v-btn
+              v-if="!order.orderToState"
+              class="mr-3"
+              color="green"
+              @click="save"
+              >저장</v-btn
+            >
+            <v-btn v-else class="mr-3" color="green" @click="dialog = false"
+              >확인</v-btn
+            >
+            <v-btn v-if="!order.orderToState" @click="dialog = false"
+              >취소</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
