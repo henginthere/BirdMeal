@@ -26,31 +26,27 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>(R.layou
             showToast("상품 정보를 전달받지 못했습니다.")
         }
 
-        binding.apply {
-            productCnt = shoppingViewModel.productCnt.value
-        }
+        binding.productCnt = shoppingViewModel.productCnt.value
 
         initClickListener()
 
         initViewModelCallBack()
     }
 
-    private fun initClickListener() {
-        binding.apply {
-            toolbar.setNavigationOnClickListener { // 툴바 뒤로가기
-                findNavController().popBackStack()
-            }
-            ivShoppingCart.setOnClickListener {
-                findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
-            }
-            layoutSellerInfo.setOnClickListener { // 판매자 정보 - 상품
-                val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(binding.product!!.sellerSeq)
-                findNavController().navigate(action)
-            }
-            btnBuy.setOnClickListener { // 구매하기 버튼
-                val dialog = BuyBottomSheetDialog(requireContext(), marketViewModel.product.value, listener)
-                dialog.show()
-            }
+    private fun initClickListener() = with(binding) {
+        toolbar.setNavigationOnClickListener { // 툴바 뒤로가기
+            findNavController().popBackStack()
+        }
+        ivShoppingCart.setOnClickListener {
+            findNavController().navigate(R.id.action_productDetailFragment_to_shoppingCartFragment)
+        }
+        layoutSellerInfo.setOnClickListener { // 판매자 정보 - 상품
+            val action = ProductDetailFragmentDirections.actionProductDetailFragmentToSellerDetailFragment(binding.product!!.sellerSeq)
+            findNavController().navigate(action)
+        }
+        btnBuy.setOnClickListener { // 구매하기 버튼
+            val dialog = BuyBottomSheetDialog(requireContext(), marketViewModel.product.value, listener)
+            dialog.show()
         }
     }
 
