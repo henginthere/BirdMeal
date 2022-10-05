@@ -63,6 +63,7 @@ public class SellerOrderService {
                     .userNickname(userEntity.getUserNickname())
                     .userTel(userEntity.getUserTel())
                     .userAdd(userEntity.getUserAdd())
+                    .userAddDetail(userEntity.getUserAddDetail())
                     .orderPrice(price)
                     .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                     .productSeq(productEntity.getProductSeq())
@@ -80,6 +81,8 @@ public class SellerOrderService {
                     .productThumbnailImg(productEntity.getProductThumbnailImg())
                     .productDescriptionImg(productEntity.getProductDescriptionImg())
                     .productIsDeleted(productEntity.isProductIsDeleted())
+                    .orderIsCanceled(orderDetailEntity.isOrderIsCanceled())
+                    .orderIsRefunded(orderDetailEntity.isOrderIsRefunded())
                     .productCreateDate(productEntity.getProductCreateDate())
                     .productUpdateDate(productEntity.getProductUpdateDate())
                     .build();

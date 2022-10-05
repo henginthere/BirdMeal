@@ -18,6 +18,7 @@ public class SellerOrderResponseDto {
     private String userNickname;
     private String userTel;
     private String userAdd;
+    private String userAddDetail; // 상세주소
     private int orderPrice;
     private long orderDetailSeq;
     private long productSeq;
@@ -35,6 +36,8 @@ public class SellerOrderResponseDto {
     private String productThumbnailImg;
     private String productDescriptionImg;
     private boolean productIsDeleted;
+    private boolean orderIsCanceled;
+    private boolean orderIsRefunded;
     private String productCreateDate;
     private String productUpdateDate;
 }
