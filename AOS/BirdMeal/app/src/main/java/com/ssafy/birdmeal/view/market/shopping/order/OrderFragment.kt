@@ -49,9 +49,10 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             orderSuccessMsgEvent.observe(viewLifecycleOwner) {
                 loadingOrderDialog.dismiss()
 
-                binding.btnBuy.isEnabled = true // 버튼 재활성화
                 showToast(it)
                 findNavController().navigate(R.id.action_orderFragment_to_orderCompletedFragment)
+
+                binding.btnBuy.isEnabled = true // 버튼 재활성화
             }
             donateSuccessMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
@@ -64,8 +65,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         userViewModel.apply {
             // 회원정보 수정이 완료된 경우
             userUpdateMsgEvent.observe(viewLifecycleOwner) {
-                binding.btnSaveInfo.isEnabled = true // 버튼 재활성화
                 showToast(it)
+                binding.btnSaveInfo.isEnabled = true // 버튼 재활성화
             }
         }
     }
@@ -89,7 +90,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
 
                 // 상품 컨트랙트 주문 넣기
                 shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
-
             }
         }
 
@@ -102,6 +102,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                     userNickname = etName.text.toString()
                     userTel = etTelNumber.text.toString()
                     userAdd = etAddress.text.toString()
+                    userAddDetail = etAddressDetail.text.toString()
                 }
                 userViewModel.updateUserProfile()
             }
@@ -135,6 +136,10 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                 return false
             } else if (etAddress.text.isNullOrEmpty()) {
                 showToast("배송지를 입력해주세요.")
+                return false
+            }
+            else if(etAddressDetail.text.isNullOrEmpty()){
+                showToast("상세 주소를 입력해주세요.")
                 return false
             }
             // 유효한 경우

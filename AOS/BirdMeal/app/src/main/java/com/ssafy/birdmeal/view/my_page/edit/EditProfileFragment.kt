@@ -41,7 +41,7 @@ class EditProfileFragment :
 
     private fun initViewModelCallBack() = with(userViewModel) {
         userUpdateMsgEvent.observe(viewLifecycleOwner) {
-//            showToast(it)
+            showToast(it)
             findNavController().popBackStack()
 
             binding.btnSave.isEnabled = true // 버튼 재활성화
