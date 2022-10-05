@@ -33,7 +33,7 @@ spring:
       ddl-auto: update  # 서버를 실행할 때 마다 데이터 베이스 초기화 전략
     properties:
       hibernate:
-        format_sql: true  # 로깅에 표시되는 sql을 보기 좋게 해준다
+        format_sql: false  # 로깅에 표시되는 sql을 보기 좋게 해준다
 
 
 jwt:
