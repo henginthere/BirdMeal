@@ -116,8 +116,8 @@ public class UserController {
      */
     @ApiOperation(value="회원 정보 조회",response = Object.class)
     @GetMapping("/{user-seq}/info")
-    public ResponseEntity<?> getUserInfo(@PathVariable("user-seq") long userSeq){
-
+    public ResponseEntity<?> getUserInfo(@RequestHeader(value="Authorization") String accept, @PathVariable("user-seq") long userSeq){
+        System.out.println("헤더값 : " +   accept);
         UserDto userDto = userService.getUserInfo(userSeq);
         ResponseFrame<?> res;
 

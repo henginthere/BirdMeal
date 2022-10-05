@@ -77,18 +77,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/**").permitAll() // 로그인
-//                .antMatchers("/api/user/register").permitAll() // 관리자 권한 허용
-//                .antMatchers("/api/seller/**").permitAll() // 관리자 권한
-//                .antMatchers("/api/file/**").permitAll() // 파일 업로드
-//                .antMatchers("/api/donation/**").hasRole("ADMIN")
-//                .antMatchers("/api/product/**").hasRole("ADMIN")
-//                .antMatchers("/api/order/**").hasRole("ADMIN")
-//                .antMatchers("/api/nft/**").hasRole("ADMIN")
-//                .antMatchers("/api/donation/**").hasRole("CHILD")
-//                .antMatchers("/api/product/**").hasRole("CHILD")
-//                .antMatchers("/api/order/**").hasRole("CHILD")
-//                .antMatchers("/api/nft/**").hasRole("CHILD")
+//                .antMatchers("/api/**").permitAll() // 로그인
+                .antMatchers("/api/user/register","/api/user/login").permitAll() // 관리자 권한 허용
+                .antMatchers("/api/seller/**").permitAll() // 관리자 권한
+                .antMatchers("/api/file/**").permitAll() // 파일 업로드
+                .antMatchers("/api/donation/**").hasRole("ADMIN")
+                .antMatchers("/api/product/**").hasRole("ADMIN")
+                .antMatchers("/api/order/**").hasRole("ADMIN")
+                .antMatchers("/api/nft/**").hasRole("ADMIN")
+                .antMatchers("/api/donation/**").hasRole("CHILD")
+                .antMatchers("/api/product/**").hasRole("CHILD")
+                .antMatchers("/api/order/**").hasRole("CHILD")
+                .antMatchers("/api/nft/**").hasRole("CHILD")
 
                 .anyRequest().authenticated()
 
