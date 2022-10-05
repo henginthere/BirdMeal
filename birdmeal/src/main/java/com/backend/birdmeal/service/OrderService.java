@@ -189,7 +189,7 @@ public class OrderService {
         List<MyOrderDetailResponseDto> myOrderDetailResponseDtoList = new ArrayList<>();
 
         // 사용자 번호와 주문 번호로 List 개수 구하기
-        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeqOrderByOrderSeqDesc(orderSeq);
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderSeqOrderByOrderDetailSeqDesc(orderSeq);
         int size = orderDetailEntityList.size();
 
         if(size==0) return null;
