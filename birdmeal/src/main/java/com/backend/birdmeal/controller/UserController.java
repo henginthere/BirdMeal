@@ -10,6 +10,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,7 @@ public class UserController {
     @ApiOperation(value="로그인",response = Object.class)
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody GoogleLoginDto googleLoginDto) throws IOException, GeneralSecurityException {
+
         ResponseFrame<?> res;
         String userEmail;
         String googleAccessToken = googleLoginDto.getGoogleAccessToken();
