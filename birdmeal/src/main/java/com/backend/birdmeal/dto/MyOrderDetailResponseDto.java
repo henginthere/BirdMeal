@@ -22,4 +22,7 @@ public class MyOrderDetailResponseDto {
     private String orderDeliveryNumber;
     private String orderDeliveryCompany;
     private String productThumbnailImg;
+    private boolean productIsDeleted;
+    private boolean orderIsCanceled;
+    private boolean orderIsRefunded;
 }
