@@ -77,22 +77,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/user/login").permitAll() // 로그인
+                .antMatchers("/api/user/**").permitAll() // 로그인
                 .antMatchers("/api/user/register").permitAll() // 관리자 권한 허용
                 .antMatchers("/api/seller/**").permitAll() // 관리자 권한
                 .antMatchers("/api/file/**").permitAll() // 파일 업로드
-                .antMatchers("/api/user/**").hasRole("ROLE_ADMIN")
                 .antMatchers("/api/donation/**").hasRole("ROLE_ADMIN")
                 .antMatchers("/api/product/**").hasRole("ROLE_ADMIN")
                 .antMatchers("/api/order/**").hasRole("ROLE_ADMIN")
                 .antMatchers("/api/nft/**").hasRole("ROLE_ADMIN")
-                .antMatchers("/api/user/**").hasRole("ROLE_CHILD")
                 .antMatchers("/api/donation/**").hasRole("ROLE_CHILD")
                 .antMatchers("/api/product/**").hasRole("ROLE_CHILD")
                 .antMatchers("/api/order/**").hasRole("ROLE_CHILD")
                 .antMatchers("/api/nft/**").hasRole("ROLE_CHILD")
 
-                .anyRequest().authenticated()
+                .anyRequest().hasRole("ADMIN")
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider)); // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig 적용
