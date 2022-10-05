@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-05T10:13:57+0900",
+    date = "2022-10-06T01:43:57+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class OrderMapperImpl implements OrderMapper {
 
     @Override
-    public List<OrderEntity> toEntityList(List<OrderDto> dtoList) {
-        if ( dtoList == null ) {
+    public List<OrderEntity> toEntityList(List<OrderDto> arg0) {
+        if ( arg0 == null ) {
             return null;
         }
 
-        List<OrderEntity> list = new ArrayList<OrderEntity>( dtoList.size() );
-        for ( OrderDto orderDto : dtoList ) {
+        List<OrderEntity> list = new ArrayList<OrderEntity>( arg0.size() );
+        for ( OrderDto orderDto : arg0 ) {
             list.add( toEntity( orderDto ) );
         }
 
