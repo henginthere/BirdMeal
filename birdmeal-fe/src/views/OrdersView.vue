@@ -135,7 +135,6 @@ onMounted(async () => {
     pageLength.value = Math.ceil(orderList.length / itemsPerPage);
     updatePageData(1);
   });
-  console.log(orderList);
   filterOrder(order_order.value, null);
 });
 

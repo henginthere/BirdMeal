@@ -54,7 +54,7 @@
         <v-row>
           <v-col cols="1" />
           <v-col cols="2">주문날짜</v-col>
-          <v-col>{{ order.orderDate }}</v-col>
+          <v-col>{{ dateFormat(order.orderDate) }}</v-col>
         </v-row>
         <v-row>
           <v-col cols="1" />
@@ -215,5 +215,15 @@ function save() {
     .catch((err) => {
       console.log('에러 발생', err);
     });
+}
+
+function dateFormat(date) {
+  return (
+    date.substring(0, 4) +
+    '.' +
+    date.substring(4, 6) +
+    '.' +
+    date.substring(6, 8)
+  );
 }
 </script>

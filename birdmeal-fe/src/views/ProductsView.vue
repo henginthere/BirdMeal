@@ -6,6 +6,19 @@
       </v-row>
     </v-container>
     <v-container>
+      <v-row>
+        <v-col lg="2" sm="4" class="mb-0 pb-0">
+          <v-select
+            v-model="select"
+            :items="category"
+            variant="underlined"
+            label="카테고리"
+            density="comfortable"
+          ></v-select>
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
       <v-table fixed-header height="100%">
         <thead>
           <tr>
@@ -17,29 +30,32 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(product, idx) in products"
-            :key="idx"
-            v-on:click="goDetail(product.productSeq)"
-          >
-            <td align="center">
-              <v-card width="120">
-                <v-img
-                  class="bg-white"
-                  width="220"
-                  :aspect-ratio="1"
-                  :src="product.productThumbnailImg"
-                  cover
-                ></v-img>
-              </v-card>
-            </td>
-            <td class="text-center">{{ product.productName }}</td>
-            <td class="text-center">
-              {{ product.productPrice.toLocaleString() }}ELN
-            </td>
-            <td class="text-center">{{ category[product.categorySeq] }}</td>
-            <td class="text-center">{{ product.productCreateDate }}</td>
-          </tr>
+          <template v-for="(product, idx) in products" :key="idx">
+            <tr
+              v-if="select == '전체' || category[product.categorySeq] == select"
+              v-on:click="goDetail(product.productSeq)"
+            >
+              <td align="center">
+                <v-card width="120">
+                  <v-img
+                    class="bg-white"
+                    width="220"
+                    :aspect-ratio="1"
+                    :src="product.productThumbnailImg"
+                    cover
+                  ></v-img>
+                </v-card>
+              </td>
+              <td class="text-center">{{ product.productName }}</td>
+              <td class="text-center">
+                {{ product.productPrice.toLocaleString() }}ELN
+              </td>
+              <td class="text-center">{{ category[product.categorySeq] }}</td>
+              <td class="text-center">
+                {{ dateFormat(product.productCreateDate) }}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </v-table>
     </v-container>
@@ -55,17 +71,19 @@ export default {
   data() {
     return {
       products: null,
-      category: {
-        1: '고기',
-        2: '채소/과일',
-        3: '밀키트/간편식',
-        4: '냉동식품',
-        5: '과자류',
-        6: '음료',
-        7: '베이커리',
-        8: '쌀/반찬',
-        9: '양념/오일',
-      },
+      category: [
+        '전체',
+        '고기',
+        '채소/과일',
+        '밀키트/간편식',
+        '냉동식품',
+        '과자류',
+        '음료',
+        '베이커리',
+        '쌀/반찬',
+        '양념/오일',
+      ],
+      select: '전체',
     };
   },
   methods: {
@@ -90,6 +108,15 @@ export default {
         name: 'product-detail',
         params: { productSeq: productSeq },
       });
+    },
+    dateFormat(date) {
+      return (
+        date.substring(0, 4) +
+        '.' +
+        date.substring(4, 6) +
+        '.' +
+        date.substring(6, 8)
+      );
     },
   },
   mounted() {
