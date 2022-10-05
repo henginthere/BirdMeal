@@ -10,9 +10,15 @@ import com.example.awesomedialog.*
 import com.ssafy.birdmeal.base.BaseActivity
 import com.ssafy.birdmeal.databinding.ActivityMainBinding
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.PACKAGE_NAME
+import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.view.donation.DonationViewModel
 import com.ssafy.birdmeal.view.donation.nft.NFTViewModel
 import com.ssafy.birdmeal.view.home.UserViewModel
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingAssumeDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingDonationDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingMintingDialog
+import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderDialog
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
 import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,18 +76,35 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun initViewModelCallBack() {
         donationViewModel.contractErrMsgEvent.observe(this) {
+            when (it) {
+                ERR_GET_DONATION_AMOUNT -> {}
+                ERR_DO_DONATE -> loadingDonationDialog.dismiss()
+            }
             contractErrdialog(it)
         }
         userViewModel.contractErrMsgEvent.observe(this) {
+            when (it) {
+                ERR_GET_USER_TOKEN -> {}
+                ERR_FILLUP_TOKEN -> loadingFillUpDialog.dismiss()
+                ERR_FILLUP_TOKEN_CHILD -> loadingFillUpDialog.dismiss()
+            }
             contractErrdialog(it)
         }
         orderViewModel.contractErrMsgEvent.observe(this) {
+            when (it) {
+                ERR_UPDATE_ORDER_STATE -> loadingAssumeDialog.dismiss()
+            }
             contractErrdialog(it)
         }
         nftViewModel.contractErrMsgEvent.observe(this) {
+            when (it) {
+                ERR_DO_MINTING -> loadingMintingDialog.dismiss()
+                ERR_GET_MY_NFT -> {}
+            }
             contractErrdialog(it)
         }
         shoppingViewModel.contractErrMsgEvent.observe(this) {
+            loadingOrderDialog.dismiss()
             contractErrdialog(it)
         }
     }

@@ -58,3 +58,13 @@ const val DONATE_ERR = "err" // 컨트랙트 통신 오류
 
 // Info 화면 다시보기 여부
 const val INFO_WALLET = "info_wallet" // 지갑 인포
+
+// 에러 종류
+const val ERR_GET_DONATION_AMOUNT = "getDonationAmount"
+const val ERR_DO_DONATE = "doDonate"
+const val ERR_GET_USER_TOKEN = "getUserTokenValue"
+const val ERR_FILLUP_TOKEN = "fillUpToken"
+const val ERR_FILLUP_TOKEN_CHILD = "fillUpTokenChild"
+const val ERR_UPDATE_ORDER_STATE = "updateOrderState"
+const val ERR_DO_MINTING = "doMinting"
+const val ERR_GET_MY_NFT = "getMyNft"

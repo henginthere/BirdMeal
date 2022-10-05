@@ -31,7 +31,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             shoppingVM = shoppingViewModel
             userVM = userViewModel
 
-            if(shoppingViewModel.userRole.value){ // 아동이면 기부금 텍스트 숨김
+            if (shoppingViewModel.userRole.value) { // 아동이면 기부금 텍스트 숨김
                 tvDonationAmount.visibility = View.GONE
                 tvDonationAmountEln.visibility = View.GONE
             }
@@ -59,11 +59,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             errMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
             }
-
-            // 컨트랙트 오류나면 로딩창 닫기
-            contractErrMsgEvent.observe(viewLifecycleOwner){
-                loadingOrderDialog.dismiss()
-            }
         }
 
         userViewModel.apply {
@@ -83,7 +78,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         }
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
-            if(checkText() && checkEln()){ // 정보 및 결제 금액 유효성 검사
+            if (checkText() && checkEln()) { // 정보 및 결제 금액 유효성 검사
                 loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
 
                 it.isEnabled = false // 버튼 비활성화
@@ -94,12 +89,13 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
 
                 // 상품 컨트랙트 주문 넣기
                 shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
+
             }
         }
 
         // 주문자 정보 저장
         btnSaveInfo.setOnClickListener {
-            if(checkText()){ // 텍스트 유효성검증
+            if (checkText()) { // 텍스트 유효성검증
                 it.isEnabled = false // 버튼 비활성화
 
                 userViewModel.user.value!!.apply { // 정보 업데이트
@@ -117,9 +113,9 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     }
 
     // 결제 금액 검사
-    private fun checkEln() : Boolean {
+    private fun checkEln(): Boolean {
         binding.apply {
-            if(userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0){
+            if (userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
                 showToast("보유 금액이 부족합니다.")
                 return false
             } else {
@@ -129,17 +125,15 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     }
 
     // 유저 정보 유효성 검사
-    private fun checkText() : Boolean {
+    private fun checkText(): Boolean {
         binding.apply {
-            if(etName.text.isNullOrEmpty()){
+            if (etName.text.isNullOrEmpty()) {
                 showToast("이름을 입력해주세요.")
                 return false
-            }
-            else if(etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9){
+            } else if (etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9) {
                 showToast("연락처를 입력해주세요(9자리 이상).")
                 return false
-            }
-            else if(etAddress.text.isNullOrEmpty()){
+            } else if (etAddress.text.isNullOrEmpty()) {
                 showToast("배송지를 입력해주세요.")
                 return false
             }
@@ -154,7 +148,8 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             InputFilter { src, _, _, _, _, _ ->
                 // val ps = Pattern.compile("^[a-zA-Z0-9ㄱ-ㅎ가-흐]+$") // 영문 숫자 한글
                 // 영문 숫자 한글 천지인 middle dot[ᆞ]
-                val ps = Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
+                val ps =
+                    Pattern.compile("^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ\\u318D\\u119E\\u11A2\\u2022\\u2025a\\u00B7\\uFE55]+$")
                 if (src.equals("") || ps.matcher(src).matches()) {
                     return@InputFilter src;
                 }

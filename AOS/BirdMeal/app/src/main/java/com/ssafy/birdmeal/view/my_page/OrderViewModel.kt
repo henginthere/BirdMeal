@@ -12,11 +12,8 @@ import com.ssafy.birdmeal.model.response.OrderDetailResponse
 import com.ssafy.birdmeal.model.response.OrderResponse
 import com.ssafy.birdmeal.model.response.OrderTHashResponse
 import com.ssafy.birdmeal.repository.OrderRepository
+import com.ssafy.birdmeal.utils.*
 import com.ssafy.birdmeal.utils.Converter.DecimalConverter.fromEtherToWei
-import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.USER_SEQ
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -123,7 +120,7 @@ class OrderViewModel @Inject constructor(
 
                             getOrderDetail(_orderSeq.value!!)
                         } catch (e: Exception) {
-                            _contractErrMsgEvent.postValue("updateOrderState")
+                            _contractErrMsgEvent.postValue(ERR_UPDATE_ORDER_STATE)
                             Log.d(TAG, "updateOrderState err: $e")
                         } finally {
                             _loadingAssumeMsgEvent.postValue("로딩 종료")

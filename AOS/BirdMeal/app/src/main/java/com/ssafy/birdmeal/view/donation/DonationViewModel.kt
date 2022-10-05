@@ -95,7 +95,7 @@ class DonationViewModel @Inject constructor(
             _donationMsgEvent.postValue(text)
             Log.d(TAG, "fundingContract.currentBalance: $result")
         } catch (e: Exception) {
-            _contractErrMsgEvent.postValue("getDonationAmount")
+            _contractErrMsgEvent.postValue(ERR_GET_DONATION_AMOUNT)
             Log.d(TAG, "getDonationAmount err: $e")
         }
     }
@@ -143,7 +143,7 @@ class DonationViewModel @Inject constructor(
             _loadingMsgEvent.postValue(DONATE_COMPLETED)
         } catch (e: Exception) {
             _loadingMsgEvent.postValue(DONATE_ERR)
-            _contractErrMsgEvent.postValue("doDonate")
+            _contractErrMsgEvent.postValue(ERR_DO_DONATE)
             Log.d(TAG, "doDonate err: $e")
         }
     }
