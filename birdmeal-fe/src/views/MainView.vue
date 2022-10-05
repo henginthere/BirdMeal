@@ -28,7 +28,11 @@
           <v-row>
             <v-col cols="3">
               <v-avatar size="40">
-                <img src="../assets/birdmeal_logo.png" height="32" />
+                <img
+                  src="../assets/birdmeal_logo.png"
+                  height="32"
+                  @click="router.push('/test')"
+                />
               </v-avatar>
             </v-col>
             <v-col class="d-flex flex-column">
@@ -83,7 +87,7 @@ const links = ref([
   ['상품 등록', '/product/regist'],
   ['주문 목록', '/orders'],
   ['판매자 정보', '/mypage'],
-  ['꽥', '/test'],
+  // ['꽥', '/test'],
 ]);
 
 /** Function */
