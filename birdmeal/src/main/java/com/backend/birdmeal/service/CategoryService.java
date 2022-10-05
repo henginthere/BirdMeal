@@ -40,6 +40,9 @@ public class CategoryService {
         for(int i=0; i<list.size(); i++){
             SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(list.get(i).getSellerSeq());
 
+            // 만약 상품이 없으면 통과
+            if(list.get(i).isProductIsDeleted()) continue;
+
             ProductResponseDto productDto = ProductResponseDto.builder()
                     .productSeq(list.get(i).getProductSeq())
                     .categorySeq(list.get(i).getCategorySeq())

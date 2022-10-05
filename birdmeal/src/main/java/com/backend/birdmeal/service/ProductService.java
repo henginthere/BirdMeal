@@ -23,6 +23,9 @@ public class ProductService {
     public ProductResponseDto getProductDetail(Long productSeq){
         ProductEntity productEntity = productRepository.findByProductSeq(productSeq);
 
+        // 만약 삭제된 것이면 통과
+        if(productEntity.isProductIsDeleted()) return null;
+
         SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(productEntity.getSellerSeq());
 
         ProductResponseDto productDto = ProductResponseDto.builder()
@@ -51,6 +54,9 @@ public class ProductService {
 
         for(int i=0; i<list.size();i++){
             ProductEntity productEntity = list.get(i);
+
+            // 만약 삭제된 것이면 통과
+            if(productEntity.isProductIsDeleted()) continue;
 
             SellerEntity sellerEntity = sellerInfoRepository.findBySellerSeq(productEntity.getSellerSeq());
 
