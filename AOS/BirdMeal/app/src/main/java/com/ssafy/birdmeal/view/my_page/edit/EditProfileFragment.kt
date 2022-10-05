@@ -56,7 +56,7 @@ class EditProfileFragment :
         }
 
         btnSave.setOnClickListener {
-            if(checkText()){
+            if (checkText()) {
                 it.isEnabled = false // 연속 클릭 방지
 
                 userViewModel.user.value!!.apply { // 정보 업데이트
@@ -88,24 +88,26 @@ class EditProfileFragment :
                 requireActivity().finish()
             }
         }
+
+        // 뒤로가기
+        toolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     // 유저 정보 유효성 검사
-    private fun checkText() : Boolean {
+    private fun checkText(): Boolean {
         binding.apply {
-            if(etName.text.isNullOrEmpty()){
+            if (etName.text.isNullOrEmpty()) {
                 showToast("이름을 입력해주세요.")
                 return false
-            }
-            else if(etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9){
+            } else if (etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9) {
                 showToast("연락처를 입력해주세요.")
                 return false
-            }
-            else if(etAddress.text.isNullOrEmpty()){
+            } else if (etAddress.text.isNullOrEmpty()) {
                 showToast("배송지를 입력해주세요.")
                 return false
-            }
-            else if(etAddressDetail.text.isNullOrEmpty()){
+            } else if (etAddressDetail.text.isNullOrEmpty()) {
                 showToast("배송지 상세주소를 입력해주세요.")
                 return false
             }
