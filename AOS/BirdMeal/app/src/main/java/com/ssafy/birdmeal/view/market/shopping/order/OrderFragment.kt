@@ -50,7 +50,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                 showToast(it)
                 findNavController().navigate(R.id.action_orderFragment_to_orderCompletedFragment)
 
-                binding.btnBuy.isEnabled = true // 버튼 재활성화
             }
             donateSuccessMsgEvent.observe(viewLifecycleOwner) {
                 showToast(it)
@@ -80,7 +79,6 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             if (checkText() && checkEln()) { // 정보 및 결제 금액 유효성 검사
                 loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
 
-                it.isEnabled = false // 버튼 비활성화
                 // 상품 컨트랙트 목록 불러오기
                 val contractList: MutableList<Trade> =
                     (requireActivity().application as ApplicationClass)
@@ -114,7 +112,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
     // 결제 금액 검사
     private fun checkEln(): Boolean {
         binding.apply {
-            if(userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
+            if (userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
                 showToast("보유 금액이 부족합니다.")
                 return false
             } else {
@@ -135,8 +133,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
             } else if (etAddress.text.isNullOrEmpty()) {
                 showToast("배송지를 입력해주세요.")
                 return false
-            }
-            else if(etAddressDetail.text.isNullOrEmpty()){
+            } else if (etAddressDetail.text.isNullOrEmpty()) {
                 showToast("상세 주소를 입력해주세요.")
                 return false
             }
