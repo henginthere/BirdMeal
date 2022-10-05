@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object BolckChainModule {
+object BlockChainModule {
 
     // GasProvider DI
     @Singleton
