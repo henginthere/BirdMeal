@@ -9,10 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.birdmeal.di.ApplicationClass.Companion.nftContract
 import com.ssafy.birdmeal.model.dto.ChildPhotoCardDto
 import com.ssafy.birdmeal.repository.NftRepository
-import com.ssafy.birdmeal.utils.Result
-import com.ssafy.birdmeal.utils.SingleLiveEvent
-import com.ssafy.birdmeal.utils.TAG
-import com.ssafy.birdmeal.utils.USER_SEQ
+import com.ssafy.birdmeal.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -133,7 +130,7 @@ class NFTViewModel @Inject constructor(
             _mintingMsgEvent.postValue(imgUrl)
         } catch (e: Exception) {
             _mintingMsgEvent.postValue("")
-            _contractErrMsgEvent.postValue("doMinting")
+            _contractErrMsgEvent.postValue(ERR_DO_MINTING)
             Log.d(TAG, "doMinting err: $e")
         }
     }
@@ -151,7 +148,7 @@ class NFTViewModel @Inject constructor(
             }
             _myNftList.postValue(myList)
         } catch (e: Exception) {
-            _contractErrMsgEvent.postValue("getMyNft")
+            _contractErrMsgEvent.postValue(ERR_GET_MY_NFT)
             Log.d(TAG, "getMyNft err: $e")
         }
     }

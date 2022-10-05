@@ -223,7 +223,7 @@ class UserViewModel @Inject constructor(
             _userBalance.postValue(result.fromWeiToEther().toLong())
             _successMsgEvent.postValue("유저 보유 토큰 불러오기 성공")
         } catch (e: Exception) {
-            _contractErrMsgEvent.postValue("getUserTokenValue")
+            _contractErrMsgEvent.postValue(ERR_GET_USER_TOKEN)
             Log.d(TAG, "getUserTokenValue err: $e")
         }
     }
@@ -241,7 +241,7 @@ class UserViewModel @Inject constructor(
             _successMsgEvent.postValue("충전이 완료되었습니다.")
         } catch (e: Exception) {
             _tokenMsgEvent.postValue(FILL_ERR)
-            _contractErrMsgEvent.postValue("fillUpToken")
+            _contractErrMsgEvent.postValue(ERR_FILLUP_TOKEN)
             Log.d(TAG, "fillUpToken err: $e")
         }
     }
@@ -281,7 +281,7 @@ class UserViewModel @Inject constructor(
             _tokenChildMsgEvent.postValue(FILL_COMPLETED)
         } catch (e: Exception) {
             _tokenChildMsgEvent.postValue(FILL_ERR)
-            _contractErrMsgEvent.postValue("fillUpTokenChild")
+            _contractErrMsgEvent.postValue(ERR_FILLUP_TOKEN_CHILD)
             Log.d(TAG, "fillUpTokenChild err: $e")
         }
 
