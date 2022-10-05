@@ -150,8 +150,8 @@ public class OrderService {
 
 
             // 상세 주문 저장
-            myOrderListResponseDto.setOrderFirstName(productEntity.getProductName());
-            myOrderListResponseDto.setProductThumbnailImg(productEntity.getProductThumbnailImg());
+            myOrderListResponseDto.setOrderFirstName(orderDetailEntity.getProductName());
+            myOrderListResponseDto.setProductThumbnailImg(orderDetailEntity.getProductThumbnailImg());
 
             // 주문 건수 저장
             long cnt = orderDetailEntityList.size()-1;
@@ -292,7 +292,7 @@ public class OrderService {
 
         OrderDetailResponseDto orderDetailResponseDto = OrderDetailResponseDto.builder()
                 .orderQuantity(orderDetailEntity.getOrderQuantity())
-                .productPrice(productEntity.getProductPrice())
+                .productPrice(orderDetailEntity.getProductPrice())
                 .orderDetailSeq(orderDetailEntity.getOrderDetailSeq())
                 .orderTHash(orderDetailEntity.getOrderTHash())
                 .productCa(productEntity.getProductCa())
