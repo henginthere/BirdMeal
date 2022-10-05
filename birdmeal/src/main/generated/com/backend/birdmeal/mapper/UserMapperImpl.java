@@ -10,19 +10,19 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-10-04T11:08:49+0900",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Amazon.com Inc.)"
+    date = "2022-10-05T10:13:58+0900",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.16 (Azul Systems, Inc.)"
 )
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public List<UserDto> toDtoList(List<UserEntity> arg0) {
-        if ( arg0 == null ) {
+    public List<UserDto> toDtoList(List<UserEntity> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<UserDto> list = new ArrayList<UserDto>( arg0.size() );
-        for ( UserEntity userEntity : arg0 ) {
+        List<UserDto> list = new ArrayList<UserDto>( entityList.size() );
+        for ( UserEntity userEntity : entityList ) {
             list.add( toDto( userEntity ) );
         }
 
@@ -30,13 +30,13 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public List<UserEntity> toEntityList(List<UserDto> arg0) {
-        if ( arg0 == null ) {
+    public List<UserEntity> toEntityList(List<UserDto> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<UserEntity> list = new ArrayList<UserEntity>( arg0.size() );
-        for ( UserDto userDto : arg0 ) {
+        List<UserEntity> list = new ArrayList<UserEntity>( dtoList.size() );
+        for ( UserDto userDto : dtoList ) {
             list.add( toEntity( userDto ) );
         }
 
