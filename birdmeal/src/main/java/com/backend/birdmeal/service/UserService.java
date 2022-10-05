@@ -121,9 +121,9 @@ public class UserService {
     public boolean checkChild(StarvingChildDto starvingChildDto){
 
         Optional<StarvingChildEntity> starvingChildOptional = starvingChildRepository.findByChildCardNum(starvingChildDto.getChildCardNum());
-
-        if(starvingChildOptional.isPresent()){
-            //결식 아동이라면 starvingChild에 userSeq Update
+        
+        if(starvingChildOptional.isPresent()&&(starvingChildOptional.get().getUserEmail()==null)){
+            //결식 아동이고 등록된 이메일이 없다면 starvingChild에 userEmail Update
             StarvingChildEntity starvingChild = starvingChildOptional.get();
             starvingChild.setUserEmail(starvingChildDto.getUserEmail());
             return true;

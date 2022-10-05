@@ -171,7 +171,7 @@ public class UserController {
             res = ResponseFrame.of(true,"결식 아동입니다.");
         }
         else{
-            res = ResponseFrame.of(false,"결식 아동이 아닙니다.");
+            res = ResponseFrame.of(false,"잘못된 카드번호입니다.");
         }
 
         return new ResponseEntity<>(res, HttpStatus.OK);
