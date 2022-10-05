@@ -75,6 +75,26 @@ class OrderRepository @Inject constructor(
         emit(Result.Error(e))
     }
 
+    //상품 취소하기
+    fun updateCancel(orderDetailSeq: Int): Flow<Result<BaseResponse<String>>> = flow {
+        emit(Result.Loading)
+        orderRemoteDataSource.updateCancel(orderDetailSeq).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
+    //상품 환불
+    fun updateRefund(orderDetailSeq: Int): Flow<Result<BaseResponse<String>>> = flow {
+        emit(Result.Loading)
+        orderRemoteDataSource.updateRefund(orderDetailSeq).collect {
+            emit(Result.Success(it))
+        }
+    }.catch { e ->
+        emit(Result.Error(e))
+    }
+
     //주문 해시 불러오기
     fun getOrderTHash(orderDetailSeq:Int) : Flow<Result<BaseResponse<OrderTHashResponse>>> = flow {
         emit(Result.Loading)
