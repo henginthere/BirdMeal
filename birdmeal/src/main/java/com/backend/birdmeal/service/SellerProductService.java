@@ -94,23 +94,31 @@ public class SellerProductService {
         // 삭제하기 ( soft delete )
         productEntity.setProductIsDeleted(true);
 
-        // orderDetail에 있는 주문들 삭제하기
+        // orderDetail 중에 삭제하는 productSeq가 있으면 productIsDeleted update 하기
         List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByProductSeq(productSeq);
 
-        for(int i=0; i<orderDetailEntityList.size(); i++){
+        for(int i=0;i<orderDetailEntityList.size();i++){
             OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(i);
-
-            // order삭제하기
-            // order가 있으면
-            if(orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq()) != null){
-                orderRepository.deleteByOrderSeq(orderDetailEntity.getOrderSeq());
-            }
-
-            orderDetailRepository.deleteByOrderDetailSeq(orderDetailEntity.getOrderDetailSeq());
+            orderDetailEntity.setProductIsDeleted(true);
         }
 
-        // 저장
-        sellerProductRepository.save(productEntity);
+//        // orderDetail에 있는 주문들 삭제하기
+//        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByProductSeq(productSeq);
+//
+//        for(int i=0; i<orderDetailEntityList.size(); i++){
+//            OrderDetailEntity orderDetailEntity = orderDetailEntityList.get(i);
+//
+//            // order삭제하기
+//            // order가 있으면
+//            if(orderRepository.findByOrderSeq(orderDetailEntity.getOrderSeq()) != null){
+//                orderRepository.deleteByOrderSeq(orderDetailEntity.getOrderSeq());
+//            }
+//
+//            orderDetailRepository.deleteByOrderDetailSeq(orderDetailEntity.getOrderDetailSeq());
+//        }
+//
+//        // 저장
+//        sellerProductRepository.save(productEntity);
 
         return true;
     }
