@@ -69,6 +69,7 @@
                     android:layout_width="80dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="@dimen/header_margin"
+                    android:visibility="invisible"
                     android:background="@drawable/btn_round_green_color"
                     android:text="저장"
                     android:textColor="@color/white"
@@ -240,7 +241,7 @@
                     android:id="@+id/tv_donation_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="기부 금액"
+                    android:text="기부 금액(주문 금액의 3%)"
                     android:layout_marginTop="16dp"
                     app:layout_constraintTop_toBottomOf="@id/tv_order_amount"
                     app:layout_constraintStart_toStartOf="@id/tv_order_amount" />
