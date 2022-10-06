@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.ssafy.birdmeal.utils.Converter.DecimalConverter" />
+
+        <import type="com.ssafy.birdmeal.utils.Formatter.DateFormatter" />
+
+        <variable
+            name="orderDetail"
+            type="com.ssafy.birdmeal.model.response.OrderDetailResponse" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_product"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_product"
+                productThumbnail="@{orderDetail.productThumbnailImg}"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/img_round"
+                android:clipToOutline="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_order_date"
+                tools:src="@drawable/ic_launcher_foreground" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@{orderDetail.productName}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toTopOf="@id/iv_product"
+                tools:text="미트포유 옛날 삼겹살 구이용 (냉동)" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:text="@{`수량 : `+orderDetail.orderQuantity+` 개`}"
+                app:layout_constraintStart_toEndOf="@+id/iv_product"
+                app:layout_constraintTop_toBottomOf="@+id/tv_product_name"
+                tools:text="수량 : 2 개" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{DecimalConverter.INSTANCE.priceConvert(orderDetail.productPrice*orderDetail.orderQuantity)+` ELN`}"
+                app:layout_constraintBottom_toBottomOf="@id/iv_product"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="10,000 ELN" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{DateFormatter.INSTANCE.formatDate(orderDetail.orderDate)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2022-09-09" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_product"
+                tools:text="배송전입니다" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_delivery_company"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@{orderDetail.orderDeliveryCompany == null ? `` : `택배사 : `+orderDetail.orderDeliveryCompany}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_header"
+                tools:text="택배사 : CJ대한통운" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_delivery_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@{orderDetail.orderDeliveryNumber == null ? `` : `운송장번호 : `+orderDetail.orderDeliveryNumber}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_delivery_company"
+                tools:text="운송장번호 : 536726371628" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_order_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/btn_round_green_color"
+                android:minHeight="28dp"
+                android:text="구매 확정"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_refund"
+                app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_refund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:minHeight="28dp"
+                android:text="환불 하기"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/btn_order_state"
+                app:layout_constraintStart_toEndOf="@id/btn_cancel"
+                app:layout_constraintTop_toTopOf="@id/btn_order_state" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/btn_round_50_main_color"
+                android:minHeight="28dp"
+                android:text="취소 하기"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/btn_refund"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btn_order_state" />
+
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <!--                android:id="@+id/iv_order_state"-->
+            <!--                android:layout_width="100dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:src="@drawable/btn_order_state_false"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tv_delivery_number" />-->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

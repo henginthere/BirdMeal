@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ssafy.birdmeal.view.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_donationFragment"
+            app:destination="@id/donationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createWalletFragment"
+            app:destination="@id/createWalletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/donationFragment"
+        android:name="com.ssafy.birdmeal.view.donation.DonationFragment"
+        android:label="DonationFragment"
+        tools:layout="@layout/fragment_donation">
+        <action
+            android:id="@+id/action_donationFragment_to_donateFragment"
+            app:destination="@id/donateFragment" />
+        <action
+            android:id="@+id/action_donationFragment_to_donationHistoryFragment"
+            app:destination="@id/donationHistoryFragment" />
+        <action
+            android:id="@+id/action_donationFragment_to_canvasFragment"
+            app:destination="@id/canvasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.ssafy.birdmeal.view.market.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_productListFragment"
+            app:destination="@id/productListFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productListFragment"
+        android:name="com.ssafy.birdmeal.view.market.product.ProductListFragment"
+        android:label="fragment_product_list"
+        tools:layout="@layout/fragment_product_list" >
+        <action
+            android:id="@+id/action_productListFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <action
+            android:id="@+id/action_productListFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+        <argument
+            android:name="categorySeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.ssafy.birdmeal.view.market.product.detail.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" >
+        <action
+            android:id="@+id/action_productDetailFragment_to_sellerDetailFragment"
+            app:destination="@id/sellerDetailFragment" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+        <argument
+            android:name="productSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerDetailFragment"
+        android:name="com.ssafy.birdmeal.view.market.product.detail.seller.SellerDetailFragment"
+        android:label="fragment_seller_detail"
+        tools:layout="@layout/fragment_seller_detail" >
+        <argument
+            android:name="sellerSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_sellerDetailFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_sellerDetailFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.ssafy.birdmeal.view.market.shopping.cart.ShoppingCartFragment"
+        android:label="fragment_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" >
+        <action
+            android:id="@+id/action_shoppingCartFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
+        <argument
+            android:name="cart"
+            app:argType="com.ssafy.birdmeal.model.entity.CartEntity"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderFragment"
+        android:name="com.ssafy.birdmeal.view.market.shopping.order.OrderFragment"
+        android:label="fragment_order"
+        tools:layout="@layout/fragment_order" >
+        <action
+            android:id="@+id/action_orderFragment_to_orderCompletedFragment"
+            app:destination="@id/orderCompletedFragment"
+            app:popUpTo="@id/categoryFragment"/>
+        <action
+            android:id="@+id/action_orderFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderCompletedFragment"
+        android:name="com.ssafy.birdmeal.view.market.shopping.order.OrderCompletedFragment"
+        android:label="fragment_order_completed"
+        tools:layout="@layout/fragment_order_completed" >
+        <action
+            android:id="@+id/action_orderCompletedFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.MyPageFragment"
+        android:label="fragment_my_page"
+        tools:layout="@layout/fragment_my_page" >
+        <action
+            android:id="@+id/action_myPageFragment_to_myDonationHistoryFragment"
+            app:destination="@id/myDonationHistoryFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_myOrderHistoryFragment"
+            app:destination="@id/myOrderHistoryFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_myOrderHistoryFragment_to_myOrderDetailFragment"
+            app:destination="@id/myOrderDetailFragment" />
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_myPageFragment_to_myNftListFragment"
+            app:destination="@id/myNftListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myDonationHistoryFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.history.donation.MyDonationHistoryFragment"
+        android:label="fragment_my_donation_history"
+        tools:layout="@layout/fragment_my_donation_history" />
+    <fragment
+        android:id="@+id/myOrderHistoryFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.history.order.MyOrderHistoryFragment"
+        android:label="fragment_my_order_history"
+        tools:layout="@layout/fragment_my_order_history" >
+        <action
+            android:id="@+id/action_myOrderHistoryFragment_to_myOrderDetailFragment"
+            app:destination="@id/myOrderDetailFragment" />
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.edit.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_searchAddressFragment"
+            app:destination="@id/searchAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myOrderDetailFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.history.order.detail.MyOrderDetailFragment"
+        android:label="fragment_my_order_detail"
+        tools:layout="@layout/fragment_my_order_detail">
+        <argument
+            android:name="orderSeq"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchAddressFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.edit.SearchAddressFragment"
+        android:label="SearchAddressFragment"
+        tools:layout="@layout/fragment_search_address" />
+    <fragment
+        android:id="@+id/createWalletFragment"
+        android:name="com.ssafy.birdmeal.view.home.CreateWalletFragment"
+        android:label="CreateWalletFragment"
+        tools:layout="@layout/fragment_create_wallet"/>
+    <fragment
+        android:id="@+id/donateFragment"
+        android:name="com.ssafy.birdmeal.view.donation.DonateFragment"
+        android:label="DonateFragment"
+        tools:layout="@layout/fragment_donate"/>
+    <fragment
+        android:id="@+id/donationHistoryFragment"
+        android:name="com.ssafy.birdmeal.view.donation.history.DonationHistoryFragment"
+        android:label="DonationHistoryFragment"
+        tools:layout="@layout/fragment_donation_history" />
+    <fragment
+        android:id="@+id/canvasFragment"
+        android:name="com.ssafy.birdmeal.view.donation.nft.CanvasFragment"
+        android:label="CanvasFragment"
+        tools:layout="@layout/fragment_canvas" />
+    <fragment
+        android:id="@+id/myNftListFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.nft.MyNftListFragment"
+        android:label="MyNftListFragment"
+        tools:layout="@layout/fragment_my_nft_list">
+        <action
+            android:id="@+id/action_myNftListFragment_to_nftDetailFragment"
+            app:destination="@id/nftDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nftDetailFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.nft.detail.NftDetailFragment"
+        android:label="NftDetailFragment"
+        tools:layout="@layout/fragment_nft_detail"/>
+</navigation>

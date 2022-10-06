@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.ssafy.birdmeal.utils.Converter.DecimalConverter" />
+
+        <import type="com.ssafy.birdmeal.utils.Formatter.DateFormatter" />
+
+        <variable
+            name="donationHistory"
+            type="com.ssafy.birdmeal.model.dto.DonationHistoryDto" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="12dp"
+        android:background="@drawable/background_white_round"
+        android:elevation="2dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:translationZ="1dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{donationHistory.userNickname}"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="닉네임" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_"
+            donationImg="@{donationHistory.donationType}"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+            tools:src="@drawable/ic_donation1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{donationHistory.donationType ? `직접 기부` : `간접 기부`}"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_"
+            app:layout_constraintStart_toEndOf="@id/iv_"
+            app:layout_constraintTop_toTopOf="@id/iv_"
+            tools:text="직접 기부" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DateFormatter.INSTANCE.formatDate(donationHistory.donationDate)}"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2022년 2월 2일" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DecimalConverter.INSTANCE.priceConvert(donationHistory.donationPrice)+` ELN`}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_"
+            tools:text="500 ELN" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

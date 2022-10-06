@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_navi_size">50dp</dimen>
+
+    <dimen name="header_margin">24dp</dimen>
+    <dimen name="header_title">18sp</dimen>
+
+    <dimen name="toolbar_margin">8dp</dimen>
+    <dimen name="toolbar_title">16sp</dimen>
+
+    <dimen name="categoryImg">80dp</dimen>
+
+    <dimen name="thumbnailImgWidth">400dp</dimen>
+    <dimen name="thumbnailImgHeight">250dp</dimen>
+    <dimen name="descriptionImgHeight">1800dp</dimen>
+
+    <dimen name="cartImg">150dp</dimen>
+</resources>

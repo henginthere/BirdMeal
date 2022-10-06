@@ -1,0 +1,50 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.BirdMeal" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_orange</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/second_orange</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/gong_gothic_light</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="toolbar_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/toolbar_title</item>
+        <item name="android:textColor">@color/black_high_emphasis</item>
+        <item name="android:fontFamily">@font/gong_gothic_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="header_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/header_margin</item>
+        <item name="android:layout_marginLeft">@dimen/header_margin</item>
+        <item name="android:textSize">@dimen/header_title</item>
+        <item name="android:textColor">@color/black_high_emphasis</item>
+        <item name="android:fontFamily">@font/gong_gothic_medium</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="NumberPickerStyle">
+        <item name="colorControlNormal">@color/second_orange</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColorPrimary">@color/second_orange</item>
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="colorPrimary">@color/black</item>
+    </style>
+
+    <style name="canvas_icon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+</resources>

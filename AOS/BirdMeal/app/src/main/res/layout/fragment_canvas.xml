@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/back_beige"
+        tools:context=".view.donation.nft.CanvasFragment">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_cancel"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_cancel" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_make_nft"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_nft" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <com.outsbook.libs.canvaseditor.CanvasEditorView
+            android:id="@+id/canvas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/background_white_round"
+            android:clipToOutline="true"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_header" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_do"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/canvas">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_undo"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_undo" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="5"></Space>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_redo"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_redo" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_footer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_do">
+
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_palette"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_palette" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_text"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_text" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+            <!--            <androidx.appcompat.widget.AppCompatImageView-->
+            <!--                android:id="@+id/iv_photo"-->
+            <!--                style="@style/canvas_icon"-->
+            <!--                android:src="@drawable/ic_photo" />-->
+
+            <!--            <Space-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="1dp"-->
+            <!--                android:layout_weight="1"></Space>-->
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_gallery"
+                style="@style/canvas_icon"
+                android:src="@drawable/ic_gallery" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"></Space>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
