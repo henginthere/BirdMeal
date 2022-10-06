@@ -11,9 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.ssafy.birdmeal.R
 import com.ssafy.birdmeal.databinding.DialogFillUpMoneyBinding
-import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingFillUpDialog
 
-class FillUpMoneyDialog(context: Context, private val listener: FillUpMoneyListener) :
+class FillUpMoneyDialog(private val listener: FillUpMoneyListener) :
     DialogFragment() {
 
     private lateinit var binding: DialogFillUpMoneyBinding
