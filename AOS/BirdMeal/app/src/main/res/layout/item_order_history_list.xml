@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.ssafy.birdmeal.utils.Converter.DecimalConverter" />
+
+        <import type="com.ssafy.birdmeal.utils.Formatter.DateFormatter" />
+
+        <variable
+            name="orderHistory"
+            type="com.ssafy.birdmeal.model.response.OrderResponse" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="12dp"
+        android:background="@drawable/background_white_round"
+        android:elevation="2dp"
+        android:padding="20dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:translationZ="1dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_product"
+            productThumbnail="@{orderHistory.productThumbnailImg}"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/img_round"
+            android:clipToOutline="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_date"
+            tools:src="@drawable/ic_launcher_foreground" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            orderHistoryName="@{orderHistory.orderFirstName}"
+            orderHistorySize="@{orderHistory.orderCnt}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_product"
+            app:layout_constraintTop_toTopOf="@id/iv_product"
+            tools:text="미트포유 옛날 삼겹살 구이용 (냉동) 외 2건" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DecimalConverter.INSTANCE.priceConvert(orderHistory.orderPrice)+` ELN`}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_product"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="10,000 ELN" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_order_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DateFormatter.INSTANCE.formatDate(orderHistory.orderDate)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2022-09-09" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

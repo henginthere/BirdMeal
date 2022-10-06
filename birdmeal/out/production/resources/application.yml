@@ -1,0 +1,54 @@
+spring:
+  # mysql DB 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/birdmeal?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://j7d101.p.ssafy.io:3306/birdmeal?serverTimezone=Asia/Seoul
+    username: s07d101
+    password: ssafy7d101
+  security:
+    google_id_token: [ ]
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 603496138054-ap705pl2e3qpvgp856mp0aubcb8mj33v.apps.googleusercontent.com
+            scope: profile, email
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+  thymeleaf:
+    cache: false
+    enabled: true
+    suffix : .html
+
+  # jpa 설정
+  jpa:
+    database: mysql
+    show-sql: true  # jpa나 hibernate를 통해 CRUD를 실행하면 해당 CRUD의 sql을 로깅으로 보여준다
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  # 각기 다른 DB에 맞는 SQL 문법을 처리
+    hibernate:
+      ddl-auto: update  # 서버를 실행할 때 마다 데이터 베이스 초기화 전략
+    properties:
+      hibernate:
+        format_sql: true  # 로깅에 표시되는 sql을 보기 좋게 해준다
+
+
+jwt:
+  header: Authorization
+  secret: dkssudgktpdywjsmsqogPdusdlqslekskdjqtsmsepvlrhsgkekekemfghkdlxldTkdTkdqkuZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  access-token-validity-in-seconds: 1800 # 초 단위
+  refresh-token-validity-in-seconds: 604800
+
+cloud:
+  aws:
+    # AWS S3 bucket Info (S3 버킷정보)
+    s3:
+      bucket: birdmeal
+    region:
+      static: us-west-2
+    stack:
+      auto: false
+
