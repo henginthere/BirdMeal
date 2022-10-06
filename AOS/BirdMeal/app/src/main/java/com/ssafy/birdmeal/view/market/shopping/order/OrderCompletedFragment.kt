@@ -29,7 +29,6 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
                 layoutDonationText.visibility = View.INVISIBLE
             }
             shoppingVM = shoppingViewModel
-            userVM = userViewModel
         }
 
         initClickListener()
@@ -45,7 +44,7 @@ class OrderCompletedFragment : BaseFragment<FragmentOrderCompletedBinding>(R.lay
 
     private fun initViewModelCallBack()= with(userViewModel) {
         user.observe(viewLifecycleOwner) {
-            binding.tvAddressValue.text = it.userAdd
+            binding.userVM = userViewModel
         }
     }
 
