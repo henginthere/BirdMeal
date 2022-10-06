@@ -88,7 +88,6 @@ class EditProfileFragment :
 
         // 로그아웃
         btnLogout.setOnClickListener {
-            sharedPref.edit().remove(USER_SEQ).apply()
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .build()
             val client = GoogleSignIn.getClient(requireActivity(), gso)

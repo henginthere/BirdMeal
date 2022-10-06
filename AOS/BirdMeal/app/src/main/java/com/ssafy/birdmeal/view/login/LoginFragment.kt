@@ -82,14 +82,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
     fun removeWallet() {
         val path = context?.getWalletPath()
         val walletFile = File(path)
-
+        Log.d(TAG, "removeWallet path: $path")
+        Log.d(TAG, "removeWallet walletFile: $walletFile")
         if (walletFile.exists()) {
             val files = walletFile.listFiles()
+            Log.d(TAG, "removeWallet files: $files")
             if (!files.isNullOrEmpty()) {
                 val walletPath = files[0]
                 walletPath.delete()
-                sharedPref.edit().remove(WALLET_PASSWORD)
-                showToast("지갑 삭제 완료")
+//                sharedPref.edit().remove(WALLET_PASSWORD).apply()
+//                showToast("지갑 삭제 완료")
             }
         }
     }
