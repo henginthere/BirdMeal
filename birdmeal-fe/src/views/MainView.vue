@@ -36,7 +36,7 @@
               </v-avatar>
             </v-col>
             <v-col class="d-flex flex-column">
-              <div>판매수익</div>
+              <div>매출액</div>
               <div>{{ auth.userBalance.toLocaleString() }} ELN</div>
             </v-col>
           </v-row>
