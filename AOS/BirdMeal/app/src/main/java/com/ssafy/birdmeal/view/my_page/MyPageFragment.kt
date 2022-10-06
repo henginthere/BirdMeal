@@ -162,9 +162,9 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     // 토큰 충전 다이얼로그 리스너
     private val listener = object : FillUpMoneyListener {
         override fun onItemClick(requestMoney: Int) { // 결제 API 호출
-            userViewModel.fillUpToken(requestMoney)
-            loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
-            // payRequest(requestMoney)
+            // userViewModel.fillUpToken(requestMoney)
+            // loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
+            payRequest(requestMoney)
         }
     }
 
