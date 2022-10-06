@@ -188,4 +188,26 @@ object ViewBindingAdapter {
             }
         }
     }
+
+    // 유저 토큰 NULL 처리
+    @BindingAdapter("myELN")
+    @JvmStatic
+    fun TextView.myELN(userELN: String?) {
+        if (userELN == null) {
+            this.text = "0 ELN"
+        } else {
+            this.text = "$userELN ELN"
+        }
+    }
+
+    // 유저 토큰 NULL 처리
+    @BindingAdapter("myNFT")
+    @JvmStatic
+    fun TextView.myNFT(count: String?) {
+        if (count == null) {
+            this.text = "보유 NFT : 0개"
+        } else {
+            this.text = "보유 NFT : ${count}개"
+        }
+    }
 }

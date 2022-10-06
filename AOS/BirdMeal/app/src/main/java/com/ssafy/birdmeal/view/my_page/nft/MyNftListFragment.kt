@@ -16,7 +16,6 @@ class MyNftListFragment : BaseFragment<FragmentMyNftListBinding>(R.layout.fragme
     private val nftViewModel by activityViewModels<NFTViewModel>()
     private val myNftListAdapter by lazy { MyNftListAdapter() }
 
-
     override fun init() {
         changeStatusBarColor(requireActivity(), WHITE)
 
@@ -44,7 +43,7 @@ class MyNftListFragment : BaseFragment<FragmentMyNftListBinding>(R.layout.fragme
         nftViewModel.apply {
             myNftList.observe(viewLifecycleOwner) {
                 myNftListAdapter.submitList(it)
-                binding.count = if (it.isEmpty()) "0" else it.size.toString()
+                binding.count = it.size.toString()
             }
         }
     }
