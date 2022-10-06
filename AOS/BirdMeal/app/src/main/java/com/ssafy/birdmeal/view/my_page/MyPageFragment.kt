@@ -139,7 +139,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
             // 일반인인 경우
             else {
-                val dialog = FillUpMoneyDialog(requireContext(), listener)
+                val dialog = FillUpMoneyDialog(listener)
                 dialog.show(childFragmentManager, "FillUpMoneyDialog")
             }
         }
