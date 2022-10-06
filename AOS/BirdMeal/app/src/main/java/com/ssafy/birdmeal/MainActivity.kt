@@ -32,9 +32,7 @@ import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOr
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingOrderRefundDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingPhotoCardDialog
 import com.ssafy.birdmeal.view.loading.LoadingFragmentDialog.Companion.loadingWalletDialog
-import com.ssafy.birdmeal.view.market.MarketViewModel
 import com.ssafy.birdmeal.view.market.shopping.ShoppingViewModel
-import com.ssafy.birdmeal.view.my_page.MyPageFragment
 import com.ssafy.birdmeal.view.my_page.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -56,7 +54,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private val orderViewModel by viewModels<OrderViewModel>()
     private val nftViewModel by viewModels<NFTViewModel>()
     private val shoppingViewModel by viewModels<ShoppingViewModel>()
-    private val marketViewModel by viewModels<MarketViewModel>()
 
     override fun init() {
         PACKAGE_NAME = application.packageName
@@ -126,6 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private fun initNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.container_main) as NavHostFragment
+
         navController = navHostFragment.navController
         binding.bottomNav.apply {
             setupWithNavController(navController)
@@ -145,7 +143,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                 if (binding.bottomNav.visibility == View.VISIBLE) {
                     binding.bottomNav.visibility = View.GONE
                 }
-            } else { // 홈 화면 벗어나면 바텀 네비 표시
+            }
+            else { // 홈 화면 벗어나면 바텀 네비 표시
                 if (binding.bottomNav.visibility == View.GONE) {
                     binding.bottomNav.visibility = View.VISIBLE
                 }
@@ -169,7 +168,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             contractErrMsgEvent.observe(this@MainActivity) {
                 contractErrDialog(it)
             }
-
             tokenMsgEvent.observe(this@MainActivity) {
                 when (it) {
                     FILL_COMPLETED -> {
@@ -215,10 +213,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             if (System.currentTimeMillis() - waitTime >= 1500) {
                 waitTime = System.currentTimeMillis()
                 showToast("뒤로가기 버튼을 누르면 종료됩니다.")
-            } else {
+            }
+            else {
                 finish()
             }
-        } else {
+        }
+        else {
             super.onBackPressed()
         }
     }
@@ -231,9 +231,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .title("통신 오류")
             .body("블록체인 네트워크 통신에\n오류가 발생했습니다\n다시 시도해주세요\n$msg")
             .icon(R.drawable.ic_warn)
-            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_main_color) {
-
-            }
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_main_color) {}
     }
 
     private fun serverErrDialog(msg: String) {
@@ -243,9 +241,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .title("통신 오류")
             .body("오류가 발생했습니다\n다시 시도해주세요\n$msg")
             .icon(R.drawable.ic_warn)
-            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_main_color) {
-
-            }
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_main_color) {}
     }
 
     private fun loadingDismiss() {
@@ -267,9 +263,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .title("충전 완료")
             .body("충전이 완료되었습니다")
             .icon(R.drawable.ic_duck)
-            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {
-
-            }
+            .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green) {}
     }
 
     override fun onPause() {
