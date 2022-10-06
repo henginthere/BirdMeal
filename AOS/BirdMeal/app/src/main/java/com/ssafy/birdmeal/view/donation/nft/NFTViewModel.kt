@@ -47,6 +47,9 @@ class NFTViewModel @Inject constructor(
     private val _myNftList = SingleLiveEvent<List<String>>()
     val myNftList get() = _myNftList
 
+    private val _count = SingleLiveEvent<Int>()
+    val count get() = _count
+
     fun setColor(color: Int) {
         _color.value = color
     }
@@ -146,6 +149,7 @@ class NFTViewModel @Inject constructor(
                 val imgUrl = nftContract.tokenURI(it as BigInteger).sendAsync().get()
                 myList.add(imgUrl)
             }
+            _count.postValue(myList.size)
             _myNftList.postValue(myList)
         } catch (e: Exception) {
             _contractErrMsgEvent.postValue(ERR_GET_MY_NFT)
@@ -167,6 +171,7 @@ class NFTViewModel @Inject constructor(
                 // 성공한 경우
                 if (it.data.success) {
                     _myNftList.postValue(it.data.data?.map { it.nftImg })
+                    _count.postValue(_myNftList.value?.size)
                 }
             } else if (it is Result.Error) {
                 _errMsgEvent.postValue("서버 에러 발생")
