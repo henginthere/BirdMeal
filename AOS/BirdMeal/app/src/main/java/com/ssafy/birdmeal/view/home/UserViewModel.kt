@@ -103,6 +103,7 @@ class UserViewModel @Inject constructor(
             setWalletName(walletName)
 
             val password = sharedPreferences.getString(WALLET_PASSWORD, "") ?: ""
+            Log.d(TAG, "checkPrivateKey password: $password ")
             createCredentials(password)
 
             _walletMsgEvent.postValue(true)
@@ -124,7 +125,7 @@ class UserViewModel @Inject constructor(
             val credentials = WalletUtils.loadCredentials(password, "$path/${walletName.value}")
             _credentials.value = credentials
             _walletAddress.value = credentials.address
-
+            Log.d(TAG, "createCredentials address: ${credentials.address}")
         } catch (e: java.lang.Exception) {
             Log.e(TAG, "createCredentials: $e")
             _errMsgEvent.postValue("인증서 가져오기 실패")
@@ -294,7 +295,7 @@ class UserViewModel @Inject constructor(
             when (it) {
                 is Result.Success -> {
                     getUserInfo()
-                    _userUpdateMsgEvent.postValue("아동 충전 상태 변경 성공")
+//                    _userUpdateMsgEvent.postValue("아동 충전 상태 변경 성공")
                 }
                 is Result.Fail -> _errMsgEvent.postValue(it.data.msg)
                 is Result.Error -> _errMsgEvent.postValue("서버 통신에 실패했습니다.")

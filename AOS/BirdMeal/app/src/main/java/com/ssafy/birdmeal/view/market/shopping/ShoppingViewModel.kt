@@ -163,11 +163,14 @@ class ShoppingViewModel @Inject constructor(
                 // 상품 컨트랙트에 대한 엘레나 거래 승인
                 Log.d(TAG, "buyingList: ${p.productName}, ${p.productCount}")
                 var amount = (p.productPrice * p.productCount).toLong().fromEtherToWei()
-                elenaContract.approve(p.productCa, amount.toBigInteger()).sendAsync().get()
+                val result = elenaContract.approve(p.productCa, amount.toBigInteger()).sendAsync().get()
+                Log.d(TAG, "buyingList result: $result")
 
                 // 승인 이후 컨트랙트에 buying 함수 호출
-                var result = tradeContract[idx].buying(p.productCount.toBigInteger()).sendAsync().get()
-                tradeContract[idx].addOrderSheet(result.transactionHash, p.productCount.toBigInteger()).sendAsync().get()
+                var result2 = tradeContract[idx].buying(p.productCount.toBigInteger()).sendAsync().get()
+                Log.d(TAG, "buyingList result2: $result2")
+                val result3 = tradeContract[idx].addOrderSheet(result.transactionHash, p.productCount.toBigInteger()).sendAsync().get()
+                Log.d(TAG, "buyingList result3: $result3")
 
                 _txList.add(result.transactionHash)
             }

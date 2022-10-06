@@ -10,11 +10,17 @@ import com.ssafy.birdmeal.databinding.ItemMyNftListBinding
 class MyNftListAdapter() :
     ListAdapter<String, MyNftListAdapter.ViewHolder>(diffUtil) {
 
+    lateinit var nftClickListener: NftClickListener
+
     inner class ViewHolder(private val binding: ItemMyNftListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: String) = with(binding) {
             imgUrl = data
+
+            binding.root.setOnClickListener {
+                nftClickListener.onClick(bindingAdapterPosition, data)
+            }
         }
     }
 

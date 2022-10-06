@@ -37,13 +37,20 @@ class MyNftListFragment : BaseFragment<FragmentMyNftListBinding>(R.layout.fragme
 
     private fun initAdapter() = with(binding) {
         rvNft.adapter = myNftListAdapter
+        val nftClickListener = object : NftClickListener {
+            override fun onClick(position: Int, url: String) {
+                nftViewModel.currentNftUrl.postValue(url)
+                findNavController().navigate(R.id.action_myNftListFragment_to_nftDetailFragment)
+            }
+        }
+        myNftListAdapter.nftClickListener = nftClickListener
     }
 
     private fun initViewModelCallBack() {
         nftViewModel.apply {
             myNftList.observe(viewLifecycleOwner) {
                 myNftListAdapter.submitList(it)
-                binding.count = it.size.toString()
+                binding.count = if (it.isNullOrEmpty()) "0" else it.size.toString()
             }
         }
     }

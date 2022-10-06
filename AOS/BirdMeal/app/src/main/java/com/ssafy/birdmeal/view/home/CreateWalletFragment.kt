@@ -72,6 +72,7 @@ class CreateWalletFragment :
                 val path = requireContext().getWalletPath()
                 val walletFile = File(path)
 
+                Log.d(TAG, "initClickListener path: $path")
                 val password = etPasswordCreate.text.toString()
 
                 try {

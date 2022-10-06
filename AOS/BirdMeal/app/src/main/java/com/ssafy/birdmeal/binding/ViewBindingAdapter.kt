@@ -146,7 +146,7 @@ object ViewBindingAdapter {
         if (url != null) {
             Glide.with(this.context)
                 .load(url)
-                .placeholder(R.drawable.loading)
+                .placeholder(com.ssafy.birdmeal.R.drawable.loading)
                 .into(this)
         }
     }
