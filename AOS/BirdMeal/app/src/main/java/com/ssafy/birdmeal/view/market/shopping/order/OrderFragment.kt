@@ -77,6 +77,14 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         // 결제하기 버튼 클릭
         btnBuy.setOnClickListener {
             if (checkText() && checkEln()) { // 정보 및 결제 금액 유효성 검사
+                userViewModel.user.value!!.apply { // 정보 업데이트
+                    userNickname = etName.text.toString()
+                    userTel = etTelNumber.text.toString()
+                    userAdd = etAddress.text.toString()
+                    userAddDetail = etAddressDetail.text.toString()
+                }
+                userViewModel.updateUserProfile()
+
                 loadingOrderDialog.show(childFragmentManager, "loadingOrderDialog")
 
                 // 상품 컨트랙트 목록 불러오기
@@ -88,31 +96,46 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
                 shoppingViewModel.buyingList(contractList, userViewModel.user.value!!.userSeq)
             }
         }
-
         // 주문자 정보 저장
-        btnSaveInfo.setOnClickListener {
-            if (checkText()) { // 텍스트 유효성검증
-                it.isEnabled = false // 버튼 비활성화
-
-                userViewModel.user.value!!.apply { // 정보 업데이트
-                    userNickname = etName.text.toString()
-                    userTel = etTelNumber.text.toString()
-                    userAdd = etAddress.text.toString()
-                    userAddDetail = etAddressDetail.text.toString()
-                }
-                userViewModel.updateUserProfile()
-            }
-        }
+//        btnSaveInfo.setOnClickListener {
+//            if (checkText()) { // 텍스트 유효성검증
+//                it.isEnabled = false // 버튼 비활성화
+//
+//                userViewModel.user.value!!.apply { // 정보 업데이트
+//                    userNickname = etName.text.toString()
+//                    userTel = etTelNumber.text.toString()
+//                    userAdd = etAddress.text.toString()
+//                    userAddDetail = etAddressDetail.text.toString()
+//                }
+//                userViewModel.updateUserProfile()
+//            }
+//        }
         // 주소 검색
         btnSearchAddress.setOnClickListener {
-            findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
+            if (etName.text.isNullOrEmpty()) {
+                showToast("이름을 입력해주세요.")
+            }
+            else if (etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9) {
+                showToast("연락처를 입력해주세요.(9자리 이상)")
+            }
+            else { // 정보 수정 후 주소 찾기
+                userViewModel.user.value!!.apply {
+                    userNickname = etName.text.toString()
+                    userTel = etTelNumber.text.toString()
+                }
+                findNavController().navigate(R.id.action_orderFragment_to_searchAddressFragment)
+            }
         }
     }
 
     // 결제 금액 검사
     private fun checkEln(): Boolean {
         binding.apply {
-            if (userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
+            if(userViewModel.userELN.value == null){
+                showToast("블록체인 네트워크 통신에 실패했습니다.")
+                return false
+            }
+            else if(userViewModel.userELN.value!! - shoppingViewModel.totalAmount.value < 0) {
                 showToast("보유 금액이 부족합니다.")
                 return false
             } else {
