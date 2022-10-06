@@ -91,7 +91,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         if (action.equals(NfcAdapter.ACTION_NDEF_DISCOVERED) ||
             action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) ||
             action.equals(NfcAdapter.ACTION_TECH_DISCOVERED)
-        ){
+        ) {
             showToast("충전 쿠폰 NFC가 인식되었습니다.")
             getNdefMessages(intent)
         }
@@ -132,19 +132,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             /*
-            지갑생성, 기부하기, 포토카드, MY NFT, 주소 검색, 결제
+            지갑생성, 기부하기, 포토카드, MY NFT, 주소 검색, 결제, nft자세히보기
             화면에서 바텀 네비 미표시
              */
             if (destination.id == R.id.createWalletFragment ||
                 destination.id == R.id.donateFragment || destination.id == R.id.canvasFragment ||
                 destination.id == R.id.myNftListFragment || destination.id == R.id.searchAddressFragment ||
-                destination.id == R.id.orderFragment
+                destination.id == R.id.orderFragment || destination.id == R.id.nftDetailFragment
             ) {
                 if (binding.bottomNav.visibility == View.VISIBLE) {
                     binding.bottomNav.visibility = View.GONE
                 }
-            }
-            else { // 홈 화면 벗어나면 바텀 네비 표시
+            } else { // 홈 화면 벗어나면 바텀 네비 표시
                 if (binding.bottomNav.visibility == View.GONE) {
                     binding.bottomNav.visibility = View.VISIBLE
                 }
@@ -213,12 +212,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             if (System.currentTimeMillis() - waitTime >= 1500) {
                 waitTime = System.currentTimeMillis()
                 showToast("뒤로가기 버튼을 누르면 종료됩니다.")
-            }
-            else {
+            } else {
                 finish()
             }
-        }
-        else {
+        } else {
             super.onBackPressed()
         }
     }

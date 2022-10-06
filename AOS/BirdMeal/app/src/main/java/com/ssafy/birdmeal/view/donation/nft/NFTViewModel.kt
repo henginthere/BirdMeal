@@ -50,6 +50,8 @@ class NFTViewModel @Inject constructor(
     private val _count = SingleLiveEvent<Int>()
     val count get() = _count
 
+    val currentNftUrl = MutableLiveData<String>()
+
     fun setColor(color: Int) {
         _color.value = color
     }

@@ -25,15 +25,15 @@ const val WALLET_PRIVATE = "private"
 const val WALLET_COMPLETE = "complete"
 
 // 싸피넷 정보
-const val BOLCKCHAIN_NETWORK_URL = "http://20.196.209.2:8545"
-const val BOLCKCHAIN_NETWORK_CHAINID = 31221L
+const val BOLCKCHAIN_NETWORK_URL = "http://13.209.82.138:8545"
+const val BOLCKCHAIN_NETWORK_CHAINID = 1337L
 
 // 컨트랙트 주소
-const val CA_ELENA = "0x24Dae25c6005577E20D6c6927B56564d97C8aBe3" // 토큰 컨트랙트
-const val CA_FUNDING = "0x1272AD925859Dd4e485b6d36AD941A5163e380De" // 기부 컨트랙트
-const val CA_TRADE_MANAGER = "0x5F0A916710f2Cd1fd96D2896C0026B9585C0224f" // 거래 매니저 컨트랙트
-const val CA_EXCHANGE = "0x792bdc2cA619B26B55fe22cC56fe1336A2408dDc"   // 환전소 컨트랙트
-const val CA_NFT = "0xCb0eC79c8Cc01a2f257Ba41125e1D65B1e5473b3"   // NFT 컨트랙트
+const val CA_ELENA = "0xbdDbFAbD1Ca3a84a91C8aF34eaE68fE9c9724545" // 토큰 컨트랙트
+const val CA_FUNDING = "0x90038Bc80325faafACB52CC3eB19af1D689d732b" // 기부 컨트랙트
+const val CA_TRADE_MANAGER = "0x008CA1DC0Dc30bbFA38586217161fbcBB7Abed52" // 거래 매니저 컨트랙트
+const val CA_EXCHANGE = "0x28Fd06c8E713cC32f19d860e4eb07F8A36B2C0ba"   // 환전소 컨트랙트
+const val CA_NFT = "0x7ED1f2F59B936Ed3b21Df5ED310f9A9739D98F06"   // NFT 컨트랙트
 
 // 주소 검색 띄울 주소
 const val ADDRESS_API_URL = "https://searchaddress-2c847.web.app/"

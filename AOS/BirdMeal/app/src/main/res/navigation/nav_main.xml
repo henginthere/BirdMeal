@@ -225,5 +225,14 @@
         android:id="@+id/myNftListFragment"
         android:name="com.ssafy.birdmeal.view.my_page.nft.MyNftListFragment"
         android:label="MyNftListFragment"
-        tools:layout="@layout/fragment_my_nft_list"/>
+        tools:layout="@layout/fragment_my_nft_list">
+        <action
+            android:id="@+id/action_myNftListFragment_to_nftDetailFragment"
+            app:destination="@id/nftDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nftDetailFragment"
+        android:name="com.ssafy.birdmeal.view.my_page.nft.detail.NftDetailFragment"
+        android:label="NftDetailFragment"
+        tools:layout="@layout/fragment_nft_detail"/>
 </navigation>

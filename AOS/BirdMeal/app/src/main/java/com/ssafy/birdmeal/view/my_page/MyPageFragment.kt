@@ -36,7 +36,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             getUserTokenValue()
             getUserInfo()
 
-            if(user.value?.userRole!!){
+            if (user.value?.userRole!!) {
                 binding.btnMyNft.setImageResource(R.drawable.btn_mind)
             }
         }
@@ -169,7 +169,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     // 결제 API 호출
-    private fun payRequest(requestMoney : Int){
+    private fun payRequest(requestMoney: Int) {
         val payload = Payload().apply {
             applicationId = PAY_APPLICATION_ID
             orderName = "BirdMeal 엘레나 토큰 충전"
@@ -185,9 +185,19 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
                     userViewModel.fillUpToken(requestMoney)
                     loadingFillUpDialog.show(childFragmentManager, "loadingFillUpDialog")
                 }
-                override fun onConfirm(data: String?): Boolean { return true }
-                override fun onClose() { Bootpay.removePaymentWindow() }
-                override fun onCancel(data: String?) { Log.d(TAG, "onCancel: $data") }
+
+                override fun onConfirm(data: String?): Boolean {
+                    return true
+                }
+
+                override fun onClose() {
+                    Bootpay.removePaymentWindow()
+                }
+
+                override fun onCancel(data: String?) {
+                    Log.d(TAG, "onCancel: $data")
+                }
+
                 override fun onIssued(data: String?) {} // 가상계좌 설정에 사용됨
                 override fun onError(data: String?) { // 계좌에 예금이 부족한 경우 등 에러 처리
                     Log.d(TAG, "onError: $data")

@@ -137,7 +137,7 @@ class CanvasFragment : BaseFragment<FragmentCanvasBinding>(R.layout.fragment_can
     private fun completedPhotoCardDialog() {
         AwesomeDialog.build(requireActivity())
             .title("알림")
-            .body("포토카드 NFT가 완성되었습니다")
+            .body("포토카드가 완성되었습니다")
             .icon(R.drawable.ic_photocard)
             .onNegative(text = "확인", buttonBackgroundColor = R.drawable.btn_round_10_green)
             .position(AwesomeDialog.POSITIONS.CENTER)

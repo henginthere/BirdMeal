@@ -62,7 +62,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>(R.layout.fragment_order
         userViewModel.apply {
             // 회원정보 수정이 완료된 경우
             userUpdateMsgEvent.observe(viewLifecycleOwner) {
-                showToast(it)
+//                showToast(it)
                 binding.btnSaveInfo.isEnabled = true // 버튼 재활성화
             }
         }
