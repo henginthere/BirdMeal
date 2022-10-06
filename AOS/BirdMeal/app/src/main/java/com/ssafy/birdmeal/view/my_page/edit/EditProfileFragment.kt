@@ -52,7 +52,19 @@ class EditProfileFragment :
 
         // 주소 검색
         btnSearchAddress.setOnClickListener {
-            findNavController().navigate(R.id.action_editProfileFragment_to_searchAddressFragment)
+            if (etName.text.isNullOrEmpty()) {
+                showToast("이름을 입력해주세요.")
+            }
+            else if (etTelNumber.text.isNullOrEmpty() || etTelNumber.text!!.length < 9) {
+                showToast("연락처를 입력해주세요.(9자리 이상)")
+            }
+            else { // 정보 수정 후 주소 찾기
+                userViewModel.user.value!!.apply {
+                    userNickname = etName.text.toString()
+                    userTel = etTelNumber.text.toString()
+                }
+                findNavController().navigate(R.id.action_editProfileFragment_to_searchAddressFragment)
+            }
         }
 
         btnSave.setOnClickListener {
